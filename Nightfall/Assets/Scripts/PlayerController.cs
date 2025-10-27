@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     bool isSprinting;
     bool isJumping;
     int maxHealth;
+    int jumpCount;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -28,6 +29,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Movement();
+
+        Sprint();
     }
 
     void Movement()
@@ -35,6 +38,7 @@ public class PlayerController : MonoBehaviour
         if (controller.isGrounded)
         {
             playerVel = Vector3.zero;
+            jumpCount = 0;
         }
         else
         {
@@ -44,6 +48,29 @@ public class PlayerController : MonoBehaviour
         moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
         controller.Move(moveDir* speed * Time.deltaTime);
 
+        Jump();
         controller.Move(playerVel * Time.deltaTime);
+    }
+
+    void Sprint()
+    {
+        if (Input.GetButtonDown("Sprint"))
+        {
+            speed *= sprintMod;
+            isSprinting = true;
+        }
+        else if (Input.GetButtonUp("Sprint"))
+        {
+            speed /= sprintMod;
+            isSprinting = false;
+        }
+    }
+    void Jump()
+    {
+        if (Input.GetButtonDown("Jump") && jumpCount < jumpCountMax)
+        {
+            playerVel.y = jumpSpeed;
+            jumpCount++;
+        }
     }
 }
