@@ -10,8 +10,11 @@ public class CameraController : MonoBehaviour
     // Toggle for third-person camera, this could most likely be moved to the actual player in case they need changes between first and third person (VERY LIKELY).
     [SerializeField] bool thirdPersonEnabled;
 
-    float rotX;
+    // Camera variables.
+    [SerializeField] int camDist;
 
+    float rotX;
+    float rotY;
     
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -20,6 +23,7 @@ public class CameraController : MonoBehaviour
         
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        ChangeCameraView();
 
     }
 
@@ -43,15 +47,34 @@ public class CameraController : MonoBehaviour
 
         rotX = Mathf.Clamp(rotX, vertLockMin, vertLockMax);
 
-        // Handles vertical mouse rotation.
-        transform.localRotation = Quaternion.Euler(rotX, 0, 0);
+
 
         // Handles horizontal mouse rotation.
-        if (!thirdPersonEnabled) { 
+        //transform.parent.Rotate(Vector2.up * mouseX);
 
-            transform.parent.Rotate(Vector2.up * mouseX);
+        rotY += mouseX;
+
+        // Handles vertical mouse rotation.
+
+        transform.parent.localRotation = Quaternion.Euler(rotX, rotY, 0);
+
+    }
+    
+    public void ChangeCameraView()
+    {
+
+        if (thirdPersonEnabled) { 
+        
+            transform.localPosition = new Vector3(0, 0, -camDist);
+
+        }
+        else
+        {
+
+            transform.localPosition = Vector3.zero;
 
         }
 
     }
+
 }
