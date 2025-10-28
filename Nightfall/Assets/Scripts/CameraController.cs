@@ -3,6 +3,8 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
 
+    [SerializeField] LayerMask ignoreLayer;
+
     [SerializeField] int mouseSens;
     [SerializeField] int vertLockMin, vertLockMax;
     [SerializeField] bool invertY;
@@ -10,9 +12,11 @@ public class CameraController : MonoBehaviour
     // Toggle for third-person camera, this could most likely be moved to the actual player in case they need changes between first and third person (VERY LIKELY).
     [SerializeField] bool thirdPersonEnabled;
 
-    float rotX;
+    // Camera variables.
+    [SerializeField] int camDist;
 
-    
+    float rotX;
+    float rotY;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -20,6 +24,7 @@ public class CameraController : MonoBehaviour
         
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        ChangeCameraView();
 
     }
 
@@ -43,15 +48,43 @@ public class CameraController : MonoBehaviour
 
         rotX = Mathf.Clamp(rotX, vertLockMin, vertLockMax);
 
-        // Handles vertical mouse rotation.
-        transform.localRotation = Quaternion.Euler(rotX, 0, 0);
+        rotY += mouseX;
 
-        // Handles horizontal mouse rotation.
-        if (!thirdPersonEnabled) { 
+        // Handles camera rotation.
 
-            transform.parent.Rotate(Vector2.up * mouseX);
+        transform.parent.localRotation = Quaternion.Euler(rotX, rotY, 0);
+
+        // If camera would go through object, adjust position to last available spot.
+        if (thirdPersonEnabled)
+        {    
+            RaycastHit distToObject;
+            if (Physics.Raycast(transform.parent.position, -transform.parent.forward, out distToObject, camDist, ~ignoreLayer))
+            {
+
+                transform.position = distToObject.point;
+
+            }
+            
+            //Debug.DrawRay(transform.parent.position, -transform.parent.forward * camDist, Color.red);
+        }
+
+    }
+    
+    public void ChangeCameraView()
+    {
+
+        if (thirdPersonEnabled) { 
+        
+            transform.localPosition = new Vector3(0, 0, -camDist);
+
+        }
+        else
+        {
+
+            transform.localPosition = Vector3.zero;
 
         }
 
     }
+
 }
