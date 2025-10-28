@@ -3,6 +3,8 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
 
+    [SerializeField] LayerMask ignoreLayer;
+
     [SerializeField] int mouseSens;
     [SerializeField] int vertLockMin, vertLockMax;
     [SerializeField] bool invertY;
@@ -15,7 +17,6 @@ public class CameraController : MonoBehaviour
 
     float rotX;
     float rotY;
-    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -47,16 +48,25 @@ public class CameraController : MonoBehaviour
 
         rotX = Mathf.Clamp(rotX, vertLockMin, vertLockMax);
 
-
-
-        // Handles horizontal mouse rotation.
-        //transform.parent.Rotate(Vector2.up * mouseX);
-
         rotY += mouseX;
 
-        // Handles vertical mouse rotation.
+        // Handles camera rotation.
 
         transform.parent.localRotation = Quaternion.Euler(rotX, rotY, 0);
+
+        // If camera would go through object, adjust position to last available spot.
+        if (thirdPersonEnabled)
+        {    
+            RaycastHit distToObject;
+            if (Physics.Raycast(transform.parent.position, -transform.parent.forward, out distToObject, camDist, ~ignoreLayer))
+            {
+
+                transform.position = distToObject.point;
+
+            }
+            
+            //Debug.DrawRay(transform.parent.position, -transform.parent.forward * camDist, Color.red);
+        }
 
     }
     
