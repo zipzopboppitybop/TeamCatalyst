@@ -621,10 +621,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48e59729cb3659642a4958c4dd445d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
-  mouseSens: 300
+  mouseSens: 1000
   vertLockMin: -85
   vertLockMax: 85
-  invertY: 1
+  invertY: 0
   thirdPersonEnabled: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
