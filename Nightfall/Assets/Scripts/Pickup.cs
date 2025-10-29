@@ -2,12 +2,7 @@ using UnityEngine;
 
 public class Pickup : MonoBehaviour
 {
-
-    // We can use this to easily make more item types with one pickup script.
-    [SerializeField] enum pickupType { Item }
-
-    [SerializeField] int price;
-    [SerializeField] int sellValue;
+    [SerializeField] ItemData item;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -16,9 +11,10 @@ public class Pickup : MonoBehaviour
 
         if (pickup != null)
         {
-
-            // Do whatever we need to do for each type of item, if we need to do anything.
-
+            if (pickup.AddToInventory(item, 1))
+            {
+                Destroy(gameObject);
+            }
         }
 
     }

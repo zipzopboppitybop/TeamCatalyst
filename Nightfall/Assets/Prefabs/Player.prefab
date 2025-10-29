@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8991321921496165644}
   - component: {fileID: 1593891241800864982}
   - component: {fileID: 9124114808071225985}
+  - component: {fileID: 1232410312956634481}
   - component: {fileID: 7752713144401039623}
   m_Layer: 0
   m_Name: Player
@@ -111,6 +112,21 @@ MonoBehaviour:
   jumpSpeed: 10
   jumpCountMax: 1
   gravity: 35
+--- !u!114 &1232410312956634481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 863791986408343325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d31e9e3f420c2545b272015d676cd8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InventoryHolder
+  inventorySize: 10
+  inventory:
+    inventorySlots: []
 --- !u!143 &7752713144401039623
 CharacterController:
   m_ObjectHideFlags: 0
@@ -286,8 +302,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48e59729cb3659642a4958c4dd445d98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraController
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 0
   mouseSens: 300
   vertLockMin: -90
   vertLockMax: 90
   invertY: 0
   thirdPersonEnabled: 0
+  camDist: 0
