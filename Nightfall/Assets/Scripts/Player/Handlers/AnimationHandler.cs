@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Player
+namespace Catalyst.Player
 {
     public class AnimationHandler : MonoBehaviour
     {

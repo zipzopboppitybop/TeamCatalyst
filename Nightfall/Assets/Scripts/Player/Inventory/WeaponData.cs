@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Player
+namespace Catalyst.Player
 {
     [CreateAssetMenu(fileName = "Weapon", menuName = "Weapon/WeaponData")]
 

@@ -5,7 +5,7 @@ using UnityEngine;
 
 
 
-namespace Player
+namespace Catalyst.Player
 {
     public class PlayerController : MonoBehaviour
     {
@@ -19,7 +19,7 @@ namespace Player
         private float _cinemachineTargetPitch;
         private float _cinemachineTargetYaw;
 
-        public PlayerInputHandler playerInputHandler;
+        public InputHandler playerInputHandler;
         [SerializeField] private PlayerData playerData;
         [SerializeField] private LayerMask ignoreLayer;
         private Vector3 _currentMovement;
@@ -64,7 +64,7 @@ namespace Player
         {
             HandleMovement();
             HandleRotation();
-            ThirdPersonActive();
+
             HandleAttack();
             UpdateInteract();
 
@@ -156,10 +156,16 @@ namespace Player
         }
         private bool ThirdPersonActive()
         {
-            if (playerInputHandler.ToggleCameraTriggered)
-            {
-                thirdPersonCamera.gameObject.SetActive(!thirdPersonCamera.gameObject.activeSelf);
 
+            if (playerInputHandler.ToggleCameraTriggered && !thirdPersonCamera.gameObject.activeSelf)
+            {
+                StartCoroutine(ActivateCamera(thirdPersonCamera));
+            }
+            else if (playerInputHandler.ToggleCameraTriggered && thirdPersonCamera.gameObject.activeSelf)
+            {
+                thirdPersonCamera.gameObject.SetActive(false);
+                //mainCamera.gameObject.SetActive(true);
+                //return false;
             }
 
             return thirdPersonCamera.gameObject.activeSelf;
@@ -178,7 +184,7 @@ namespace Player
             characterController.Move(_currentMovement * Time.deltaTime);
 
             animator.SetFloat(animMoveSpeed, Mathf.Max(Mathf.Max(Mathf.Abs(_currentMovement.z), Mathf.Abs(_currentMovement.x)), Mathf.Abs(mouseXRotation)));
-
+            ThirdPersonActive();
         }
 
         private void ApplyHorizontalRotation(float rotationAmount)
@@ -296,6 +302,12 @@ namespace Player
             //HUDManager.instance.playerDamageScreen.SetActive(true);
             yield return new WaitForSeconds(0.1f);
             //HUDManager.instance.playerDamageScreen.SetActive(false);
+        }
+
+        IEnumerator ActivateCamera(CinemachineCamera cam)
+        {
+            yield return new WaitForEndOfFrame();
+            cam.gameObject.SetActive(true);
         }
 
 

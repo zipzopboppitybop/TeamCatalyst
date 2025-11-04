@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-namespace Player
+namespace Catalyst.Player
 {
     [CreateAssetMenu(fileName = "Player Data", menuName = "Player/PlayerData")]
     public class PlayerData : ScriptableObject
