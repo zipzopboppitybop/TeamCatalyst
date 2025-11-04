@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7441864055681660544}
   - component: {fileID: 8991321921496165644}
   - component: {fileID: 1593891241800864982}
-  - component: {fileID: 9124114808071225985}
   - component: {fileID: 1232410312956634481}
   - component: {fileID: 7752713144401039623}
   m_Layer: 0
@@ -93,25 +92,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &9124114808071225985
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 863791986408343325}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c2f35502642a0543802cab80206ce0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  controller: {fileID: 7752713144401039623}
-  health: 100
-  speed: 2
-  sprintMod: 2
-  jumpSpeed: 10
-  jumpCountMax: 1
-  gravity: 35
 --- !u!114 &1232410312956634481
 MonoBehaviour:
   m_ObjectHideFlags: 0
