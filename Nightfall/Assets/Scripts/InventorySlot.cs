@@ -26,6 +26,12 @@ public class InventorySlot
         stackSize = -1;
     }
 
+    public void UpdateInventorySlot(ItemData item, int amount)
+    {
+        itemData = item;
+        stackSize = amount;
+    }
+
     public bool RoomLeftInStack(int amountToAdd, out int amountRemaining)
     {
         amountRemaining = ItemData.maxStackSize - stackSize;

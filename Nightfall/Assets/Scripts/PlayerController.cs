@@ -101,7 +101,7 @@ public class PlayerController : MonoBehaviour, IPickup
             InventorySlot slot = slots[i];
             if (slot.ItemData == null)
             {
-                slots[i] = new InventorySlot(item, amountToAdd); 
+                slot.UpdateInventorySlot(item, amountToAdd);
                 return true;
             }
         }
