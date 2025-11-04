@@ -33,6 +33,11 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
+    void attack()
+    {
+
+    }
+
     IEnumerator flashRed()
     {
         model.material.color = Color.red;
