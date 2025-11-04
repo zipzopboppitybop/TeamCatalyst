@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] TMP_Text clockText;
     [SerializeField] TMP_Text dayText;
-    [SerializeField] float dayLengthSeconds;
+    [SerializeField] float dayLengthMinutes;
     [SerializeField] int nightStart;
     [SerializeField] int nightEnd;
     [SerializeField] Image dayImage;
@@ -24,22 +24,22 @@ public class GameManager : MonoBehaviour
     //public Image playerHPBar;
 
     float timeScaleOrig;
-    float timeOfDay = 5;
+    float timeOfDay = 7;
     int day = 1;
 
     public bool isPaused;
+    bool wasNight;
     
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        instance = this;
+        //instance = this;
         timeScaleOrig = Time.timeScale;
 
         //player = GameObject.FindWithTag("Player");
-        //playerScript = player.GetComponent<PlayerController>();
-
+       // playerScript = player.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -89,7 +89,8 @@ public class GameManager : MonoBehaviour
     {
         if(!isPaused)
         {
-            float hoursPerSec = 24 / Mathf.Max(0.01f, dayLengthSeconds);
+            float totalTimePerGameDay = Mathf.Max(60f, dayLengthMinutes * 60f);
+            float hoursPerSec = 24f / totalTimePerGameDay;
             timeOfDay += hoursPerSec * Time.deltaTime;
 
         }
@@ -97,27 +98,46 @@ public class GameManager : MonoBehaviour
         if(timeOfDay >= 24)
         {
             timeOfDay -= 24;
+        }
+        int minutes = (int)(timeOfDay * 60);
+        int hour = minutes / 60;
+        int minute = minutes % 60;
+
+        bool isAm = hour < 12;
+        int hourTwelve = hour % 12;
+
+        if (hourTwelve == 0)
+            hourTwelve = 12;
+
+        clockText.text = hourTwelve.ToString("00") + ":" + minute.ToString("00") +(isAm ? " AM" : " PM");
+        
+        bool isNight = IsNightHour(hour, nightStart, nightEnd);
+        if(wasNight && !isNight)
+        {
             day += 1;
         }
 
-        int hour = Mathf.FloorToInt(timeOfDay);
-        int minute = Mathf.FloorToInt((timeOfDay - hour) * 60);
+        if(dayImage) dayImage.gameObject.SetActive(!isNight);
+        if(nightImage) nightImage.gameObject.SetActive(isNight);  
 
-        clockText.text = hour.ToString("00") + ":" + minute.ToString("00");
         dayText.text = "Day " + day.ToString();
-
-        bool isNight = IsNightHour(hour, nightStart, nightEnd);
+        wasNight = isNight;
         
     }
 
     bool IsNightHour(int hour, int startHour, int endHour)
     {
-        if (startHour == endHour)
-            return false;
-        if (startHour < endHour)
-            return hour >= startHour && hour < endHour;
-        else
-            return hour>= startHour || hour < endHour;
+        int nightStartPM = (startHour == 12) ? 12 : startHour +12;
+        int nightEndAM = (endHour == 12) ? 0 : endHour;
+
+       if(nightStartPM < nightEndAM)
+        {
+            return hour >= nightStartPM && hour < nightEndAM;
+        }
+       else
+        {
+            return hour >=nightStartPM || hour < nightEndAM;
+        }
     }
 
 }
