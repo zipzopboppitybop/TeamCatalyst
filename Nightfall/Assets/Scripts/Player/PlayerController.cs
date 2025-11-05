@@ -56,17 +56,21 @@ namespace Catalyst.Player
             //if (ThirdPersonActive())
             ApplyThirdPersonRotation(mouseYRotation, mouseXRotation);
 
+
+
         }
 
         //private float CurrentSpeed => playerData.Speed * (playerInputHandler.SprintTriggered ? playerData.SprintMultiplier : 1);
 
         void Update()
         {
+
             HandleMovement();
             HandleRotation();
 
             HandleAttack();
             UpdateInteract();
+            ThirdPersonActive();
 
         }
 
@@ -154,26 +158,18 @@ namespace Catalyst.Player
 
             }
         }
-        private bool ThirdPersonActive()
+        private void ThirdPersonActive()
         {
 
-            if (playerInputHandler.ToggleCameraTriggered && !thirdPersonCamera.gameObject.activeSelf)
+            if (playerInputHandler.ToggleCameraTriggered)
             {
-                StartCoroutine(ActivateCamera(thirdPersonCamera));
+                StartCoroutine(ToggleCamera(thirdPersonCamera));
             }
-            else if (playerInputHandler.ToggleCameraTriggered && thirdPersonCamera.gameObject.activeSelf)
-            {
-                thirdPersonCamera.gameObject.SetActive(false);
-                //mainCamera.gameObject.SetActive(true);
-                //return false;
-            }
-
-            return thirdPersonCamera.gameObject.activeSelf;
         }
 
         private void HandleMovement()
         {
-            //ThirdPersonActive();
+
             playerDir = CalculatePlayerDirection();
 
             _currentMovement.x = playerDir.x * CurrentSpeed();
@@ -184,7 +180,7 @@ namespace Catalyst.Player
             characterController.Move(_currentMovement * Time.deltaTime);
 
             animator.SetFloat(animMoveSpeed, Mathf.Max(Mathf.Max(Mathf.Abs(_currentMovement.z), Mathf.Abs(_currentMovement.x)), Mathf.Abs(mouseXRotation)));
-            ThirdPersonActive();
+            //ThirdPersonActive();
         }
 
         private void ApplyHorizontalRotation(float rotationAmount)
@@ -304,16 +300,17 @@ namespace Catalyst.Player
             //HUDManager.instance.playerDamageScreen.SetActive(false);
         }
 
-        IEnumerator ActivateCamera(CinemachineCamera cam)
+        IEnumerator ToggleCamera(CinemachineCamera cam)
         {
-            yield return new WaitForEndOfFrame();
-            cam.gameObject.SetActive(true);
+            // Stop everything a bit to avoid multiple toggles      
+            playerInputHandler.enabled = false;
+            cam.gameObject.SetActive(!cam.gameObject.activeSelf);
+            yield return new WaitForSeconds(1.0f);
+            playerInputHandler.enabled = true;
         }
 
 
-
     }
-
-
-
 }
+
+
