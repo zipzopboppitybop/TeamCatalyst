@@ -19,8 +19,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] Image dayImage;
     [SerializeField] Image nightImage;
 
-    //public GameObject player;
-    //public PlayerController playerScript;
+    public GameObject player;
+    public PlayerController playerScript;
     //public Image playerHPBar;
 
     float timeScaleOrig;
@@ -29,17 +29,19 @@ public class GameManager : MonoBehaviour
 
     public bool isPaused;
     bool wasNight;
-    
 
+    private void Awake()
+    {
+        instance = this;
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //instance = this;
         timeScaleOrig = Time.timeScale;
 
-        //player = GameObject.FindWithTag("Player");
-       // playerScript = player.GetComponent<PlayerController>();
+        player = GameObject.FindWithTag("Player");
+        playerScript = player.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame

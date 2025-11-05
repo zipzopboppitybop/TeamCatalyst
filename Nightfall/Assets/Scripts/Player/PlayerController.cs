@@ -42,7 +42,7 @@ namespace Catalyst.Player
         private CharacterController characterController;
         private Vector3 playerDir;
 
-        InventoryHolder inventoryHolder;
+        private InventoryHolder inventoryHolder;
 
         private void Start()
         {
@@ -293,6 +293,7 @@ namespace Catalyst.Player
                     if (slot.RoomLeftInStack(amountToAdd))
                     {
                         slot.AddToStack(amountToAdd);
+                        playerInventory.NotifySlotChanged(slot);
                         return true;
                     }
                 }
@@ -304,6 +305,7 @@ namespace Catalyst.Player
                 if (slot.ItemData == null)
                 {
                     slot.UpdateInventorySlot(item, amountToAdd);
+                    playerInventory.NotifySlotChanged(slot);
                     return true;
                 }
             }
