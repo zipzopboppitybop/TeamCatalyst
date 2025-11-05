@@ -11,12 +11,12 @@
 .slots {
     flex-direction: row;
     justify-content: space-between;
-    width: 600px;
+    width: 800px;
 }
 
 .slot {
-    width: 64px;
-    height: 64px;
+    width: 96px;
+    height: 96px;
     border-width: 2px;
     border-color: rgb(136, 136, 136);
     border-radius: 6px;
@@ -30,9 +30,9 @@
 }
 
 .count {
-    width: 16px;
-    height: 16px;
-    font-size: 16px;
+    width: 32px;
+    height: 32px;
+    font-size: 32px;
 }
 
 .slotIndex {
