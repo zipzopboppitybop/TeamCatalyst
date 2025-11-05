@@ -563,7 +563,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             ]
         },
         {
-            ""name"": ""FPS"",
+            ""name"": ""Farmer"",
             ""id"": ""1cb090b6-5a97-4f81-be71-7852a1a49ab1"",
             ""actions"": [
                 {
@@ -1813,23 +1813,23 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Player_Previous = m_Player.FindAction("Previous", throwIfNotFound: true);
         m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
-        // FPS
-        m_FPS = asset.FindActionMap("FPS", throwIfNotFound: true);
-        m_FPS_Move = m_FPS.FindAction("Move", throwIfNotFound: true);
-        m_FPS_Look = m_FPS.FindAction("Look", throwIfNotFound: true);
-        m_FPS_Attack = m_FPS.FindAction("Attack", throwIfNotFound: true);
-        m_FPS_Interact = m_FPS.FindAction("Interact", throwIfNotFound: true);
-        m_FPS_Crouch = m_FPS.FindAction("Crouch", throwIfNotFound: true);
-        m_FPS_Prone = m_FPS.FindAction("Prone", throwIfNotFound: true);
-        m_FPS_Jump = m_FPS.FindAction("Jump", throwIfNotFound: true);
-        m_FPS_Previous = m_FPS.FindAction("Previous", throwIfNotFound: true);
-        m_FPS_Next = m_FPS.FindAction("Next", throwIfNotFound: true);
-        m_FPS_Sprint = m_FPS.FindAction("Sprint", throwIfNotFound: true);
-        m_FPS_Aim = m_FPS.FindAction("Aim", throwIfNotFound: true);
-        m_FPS_Fire = m_FPS.FindAction("Fire", throwIfNotFound: true);
-        m_FPS_Dive = m_FPS.FindAction("Dive", throwIfNotFound: true);
-        m_FPS_Pause = m_FPS.FindAction("Pause", throwIfNotFound: true);
-        m_FPS_ToggleCamera = m_FPS.FindAction("ToggleCamera", throwIfNotFound: true);
+        // Farmer
+        m_Farmer = asset.FindActionMap("Farmer", throwIfNotFound: true);
+        m_Farmer_Move = m_Farmer.FindAction("Move", throwIfNotFound: true);
+        m_Farmer_Look = m_Farmer.FindAction("Look", throwIfNotFound: true);
+        m_Farmer_Attack = m_Farmer.FindAction("Attack", throwIfNotFound: true);
+        m_Farmer_Interact = m_Farmer.FindAction("Interact", throwIfNotFound: true);
+        m_Farmer_Crouch = m_Farmer.FindAction("Crouch", throwIfNotFound: true);
+        m_Farmer_Prone = m_Farmer.FindAction("Prone", throwIfNotFound: true);
+        m_Farmer_Jump = m_Farmer.FindAction("Jump", throwIfNotFound: true);
+        m_Farmer_Previous = m_Farmer.FindAction("Previous", throwIfNotFound: true);
+        m_Farmer_Next = m_Farmer.FindAction("Next", throwIfNotFound: true);
+        m_Farmer_Sprint = m_Farmer.FindAction("Sprint", throwIfNotFound: true);
+        m_Farmer_Aim = m_Farmer.FindAction("Aim", throwIfNotFound: true);
+        m_Farmer_Fire = m_Farmer.FindAction("Fire", throwIfNotFound: true);
+        m_Farmer_Dive = m_Farmer.FindAction("Dive", throwIfNotFound: true);
+        m_Farmer_Pause = m_Farmer.FindAction("Pause", throwIfNotFound: true);
+        m_Farmer_ToggleCamera = m_Farmer.FindAction("ToggleCamera", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1847,7 +1847,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     ~@PlayerInput()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, PlayerInput.Player.Disable() has not been called.");
-        UnityEngine.Debug.Assert(!m_FPS.enabled, "This will cause a leak and performance issues, PlayerInput.FPS.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Farmer.enabled, "This will cause a leak and performance issues, PlayerInput.Farmer.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_UI.enabled, "This will cause a leak and performance issues, PlayerInput.UI.Disable() has not been called.");
     }
 
@@ -2105,99 +2105,99 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     /// </summary>
     public PlayerActions @Player => new PlayerActions(this);
 
-    // FPS
-    private readonly InputActionMap m_FPS;
-    private List<IFPSActions> m_FPSActionsCallbackInterfaces = new List<IFPSActions>();
-    private readonly InputAction m_FPS_Move;
-    private readonly InputAction m_FPS_Look;
-    private readonly InputAction m_FPS_Attack;
-    private readonly InputAction m_FPS_Interact;
-    private readonly InputAction m_FPS_Crouch;
-    private readonly InputAction m_FPS_Prone;
-    private readonly InputAction m_FPS_Jump;
-    private readonly InputAction m_FPS_Previous;
-    private readonly InputAction m_FPS_Next;
-    private readonly InputAction m_FPS_Sprint;
-    private readonly InputAction m_FPS_Aim;
-    private readonly InputAction m_FPS_Fire;
-    private readonly InputAction m_FPS_Dive;
-    private readonly InputAction m_FPS_Pause;
-    private readonly InputAction m_FPS_ToggleCamera;
+    // Farmer
+    private readonly InputActionMap m_Farmer;
+    private List<IFarmerActions> m_FarmerActionsCallbackInterfaces = new List<IFarmerActions>();
+    private readonly InputAction m_Farmer_Move;
+    private readonly InputAction m_Farmer_Look;
+    private readonly InputAction m_Farmer_Attack;
+    private readonly InputAction m_Farmer_Interact;
+    private readonly InputAction m_Farmer_Crouch;
+    private readonly InputAction m_Farmer_Prone;
+    private readonly InputAction m_Farmer_Jump;
+    private readonly InputAction m_Farmer_Previous;
+    private readonly InputAction m_Farmer_Next;
+    private readonly InputAction m_Farmer_Sprint;
+    private readonly InputAction m_Farmer_Aim;
+    private readonly InputAction m_Farmer_Fire;
+    private readonly InputAction m_Farmer_Dive;
+    private readonly InputAction m_Farmer_Pause;
+    private readonly InputAction m_Farmer_ToggleCamera;
     /// <summary>
-    /// Provides access to input actions defined in input action map "FPS".
+    /// Provides access to input actions defined in input action map "Farmer".
     /// </summary>
-    public struct FPSActions
+    public struct FarmerActions
     {
         private @PlayerInput m_Wrapper;
 
         /// <summary>
         /// Construct a new instance of the input action map wrapper class.
         /// </summary>
-        public FPSActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
+        public FarmerActions(@PlayerInput wrapper) { m_Wrapper = wrapper; }
         /// <summary>
-        /// Provides access to the underlying input action "FPS/Move".
+        /// Provides access to the underlying input action "Farmer/Move".
         /// </summary>
-        public InputAction @Move => m_Wrapper.m_FPS_Move;
+        public InputAction @Move => m_Wrapper.m_Farmer_Move;
         /// <summary>
-        /// Provides access to the underlying input action "FPS/Look".
+        /// Provides access to the underlying input action "Farmer/Look".
         /// </summary>
-        public InputAction @Look => m_Wrapper.m_FPS_Look;
+        public InputAction @Look => m_Wrapper.m_Farmer_Look;
         /// <summary>
-        /// Provides access to the underlying input action "FPS/Attack".
+        /// Provides access to the underlying input action "Farmer/Attack".
         /// </summary>
-        public InputAction @Attack => m_Wrapper.m_FPS_Attack;
+        public InputAction @Attack => m_Wrapper.m_Farmer_Attack;
         /// <summary>
-        /// Provides access to the underlying input action "FPS/Interact".
+        /// Provides access to the underlying input action "Farmer/Interact".
         /// </summary>
-        public InputAction @Interact => m_Wrapper.m_FPS_Interact;
+        public InputAction @Interact => m_Wrapper.m_Farmer_Interact;
         /// <summary>
-        /// Provides access to the underlying input action "FPS/Crouch".
+        /// Provides access to the underlying input action "Farmer/Crouch".
         /// </summary>
-        public InputAction @Crouch => m_Wrapper.m_FPS_Crouch;
+        public InputAction @Crouch => m_Wrapper.m_Farmer_Crouch;
         /// <summary>
-        /// Provides access to the underlying input action "FPS/Prone".
+        /// Provides access to the underlying input action "Farmer/Prone".
         /// </summary>
-        public InputAction @Prone => m_Wrapper.m_FPS_Prone;
+        public InputAction @Prone => m_Wrapper.m_Farmer_Prone;
         /// <summary>
-        /// Provides access to the underlying input action "FPS/Jump".
+        /// Provides access to the underlying input action "Farmer/Jump".
         /// </summary>
-        public InputAction @Jump => m_Wrapper.m_FPS_Jump;
+        public InputAction @Jump => m_Wrapper.m_Farmer_Jump;
         /// <summary>
-        /// Provides access to the underlying input action "FPS/Previous".
+        /// Provides access to the underlying input action "Farmer/Previous".
         /// </summary>
-        public InputAction @Previous => m_Wrapper.m_FPS_Previous;
+        public InputAction @Previous => m_Wrapper.m_Farmer_Previous;
         /// <summary>
-        /// Provides access to the underlying input action "FPS/Next".
+        /// Provides access to the underlying input action "Farmer/Next".
         /// </summary>
-        public InputAction @Next => m_Wrapper.m_FPS_Next;
+        public InputAction @Next => m_Wrapper.m_Farmer_Next;
         /// <summary>
-        /// Provides access to the underlying input action "FPS/Sprint".
+        /// Provides access to the underlying input action "Farmer/Sprint".
         /// </summary>
-        public InputAction @Sprint => m_Wrapper.m_FPS_Sprint;
+        public InputAction @Sprint => m_Wrapper.m_Farmer_Sprint;
         /// <summary>
-        /// Provides access to the underlying input action "FPS/Aim".
+        /// Provides access to the underlying input action "Farmer/Aim".
         /// </summary>
-        public InputAction @Aim => m_Wrapper.m_FPS_Aim;
+        public InputAction @Aim => m_Wrapper.m_Farmer_Aim;
         /// <summary>
-        /// Provides access to the underlying input action "FPS/Fire".
+        /// Provides access to the underlying input action "Farmer/Fire".
         /// </summary>
-        public InputAction @Fire => m_Wrapper.m_FPS_Fire;
+        public InputAction @Fire => m_Wrapper.m_Farmer_Fire;
         /// <summary>
-        /// Provides access to the underlying input action "FPS/Dive".
+        /// Provides access to the underlying input action "Farmer/Dive".
         /// </summary>
-        public InputAction @Dive => m_Wrapper.m_FPS_Dive;
+        public InputAction @Dive => m_Wrapper.m_Farmer_Dive;
         /// <summary>
-        /// Provides access to the underlying input action "FPS/Pause".
+        /// Provides access to the underlying input action "Farmer/Pause".
         /// </summary>
-        public InputAction @Pause => m_Wrapper.m_FPS_Pause;
+        public InputAction @Pause => m_Wrapper.m_Farmer_Pause;
         /// <summary>
-        /// Provides access to the underlying input action "FPS/ToggleCamera".
+        /// Provides access to the underlying input action "Farmer/ToggleCamera".
         /// </summary>
-        public InputAction @ToggleCamera => m_Wrapper.m_FPS_ToggleCamera;
+        public InputAction @ToggleCamera => m_Wrapper.m_Farmer_ToggleCamera;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
-        public InputActionMap Get() { return m_Wrapper.m_FPS; }
+        public InputActionMap Get() { return m_Wrapper.m_Farmer; }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Enable()" />
         public void Enable() { Get().Enable(); }
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.Disable()" />
@@ -2205,9 +2205,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <inheritdoc cref="UnityEngine.InputSystem.InputActionMap.enabled" />
         public bool enabled => Get().enabled;
         /// <summary>
-        /// Implicitly converts an <see ref="FPSActions" /> to an <see ref="InputActionMap" /> instance.
+        /// Implicitly converts an <see ref="FarmerActions" /> to an <see ref="InputActionMap" /> instance.
         /// </summary>
-        public static implicit operator InputActionMap(FPSActions set) { return set.Get(); }
+        public static implicit operator InputActionMap(FarmerActions set) { return set.Get(); }
         /// <summary>
         /// Adds <see cref="InputAction.started"/>, <see cref="InputAction.performed"/> and <see cref="InputAction.canceled"/> callbacks provided via <param cref="instance" /> on all input actions contained in this map.
         /// </summary>
@@ -2215,11 +2215,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c> or <paramref name="instance"/> have already been added this method does nothing.
         /// </remarks>
-        /// <seealso cref="FPSActions" />
-        public void AddCallbacks(IFPSActions instance)
+        /// <seealso cref="FarmerActions" />
+        public void AddCallbacks(IFarmerActions instance)
         {
-            if (instance == null || m_Wrapper.m_FPSActionsCallbackInterfaces.Contains(instance)) return;
-            m_Wrapper.m_FPSActionsCallbackInterfaces.Add(instance);
+            if (instance == null || m_Wrapper.m_FarmerActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_FarmerActionsCallbackInterfaces.Add(instance);
             @Move.started += instance.OnMove;
             @Move.performed += instance.OnMove;
             @Move.canceled += instance.OnMove;
@@ -2273,8 +2273,8 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <remarks>
         /// Calling this method when <paramref name="instance" /> have not previously been registered has no side-effects.
         /// </remarks>
-        /// <seealso cref="FPSActions" />
-        private void UnregisterCallbacks(IFPSActions instance)
+        /// <seealso cref="FarmerActions" />
+        private void UnregisterCallbacks(IFarmerActions instance)
         {
             @Move.started -= instance.OnMove;
             @Move.performed -= instance.OnMove;
@@ -2324,12 +2324,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         }
 
         /// <summary>
-        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="FPSActions.UnregisterCallbacks(IFPSActions)" />.
+        /// Unregisters <param cref="instance" /> and unregisters all input action callbacks via <see cref="FarmerActions.UnregisterCallbacks(IFarmerActions)" />.
         /// </summary>
-        /// <seealso cref="FPSActions.UnregisterCallbacks(IFPSActions)" />
-        public void RemoveCallbacks(IFPSActions instance)
+        /// <seealso cref="FarmerActions.UnregisterCallbacks(IFarmerActions)" />
+        public void RemoveCallbacks(IFarmerActions instance)
         {
-            if (m_Wrapper.m_FPSActionsCallbackInterfaces.Remove(instance))
+            if (m_Wrapper.m_FarmerActionsCallbackInterfaces.Remove(instance))
                 UnregisterCallbacks(instance);
         }
 
@@ -2339,21 +2339,21 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <remarks>
         /// If <paramref name="instance" /> is <c>null</c>, calling this method will only unregister all existing callbacks but not register any new callbacks.
         /// </remarks>
-        /// <seealso cref="FPSActions.AddCallbacks(IFPSActions)" />
-        /// <seealso cref="FPSActions.RemoveCallbacks(IFPSActions)" />
-        /// <seealso cref="FPSActions.UnregisterCallbacks(IFPSActions)" />
-        public void SetCallbacks(IFPSActions instance)
+        /// <seealso cref="FarmerActions.AddCallbacks(IFarmerActions)" />
+        /// <seealso cref="FarmerActions.RemoveCallbacks(IFarmerActions)" />
+        /// <seealso cref="FarmerActions.UnregisterCallbacks(IFarmerActions)" />
+        public void SetCallbacks(IFarmerActions instance)
         {
-            foreach (var item in m_Wrapper.m_FPSActionsCallbackInterfaces)
+            foreach (var item in m_Wrapper.m_FarmerActionsCallbackInterfaces)
                 UnregisterCallbacks(item);
-            m_Wrapper.m_FPSActionsCallbackInterfaces.Clear();
+            m_Wrapper.m_FarmerActionsCallbackInterfaces.Clear();
             AddCallbacks(instance);
         }
     }
     /// <summary>
-    /// Provides a new <see cref="FPSActions" /> instance referencing this action map.
+    /// Provides a new <see cref="FarmerActions" /> instance referencing this action map.
     /// </summary>
-    public FPSActions @FPS => new FPSActions(this);
+    public FarmerActions @Farmer => new FarmerActions(this);
 
     // UI
     private readonly InputActionMap m_UI;
@@ -2686,11 +2686,11 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
     }
     /// <summary>
-    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "FPS" which allows adding and removing callbacks.
+    /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "Farmer" which allows adding and removing callbacks.
     /// </summary>
-    /// <seealso cref="FPSActions.AddCallbacks(IFPSActions)" />
-    /// <seealso cref="FPSActions.RemoveCallbacks(IFPSActions)" />
-    public interface IFPSActions
+    /// <seealso cref="FarmerActions.AddCallbacks(IFarmerActions)" />
+    /// <seealso cref="FarmerActions.RemoveCallbacks(IFarmerActions)" />
+    public interface IFarmerActions
     {
         /// <summary>
         /// Method invoked when associated input action "Move" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.

@@ -493,6 +493,10 @@ PrefabInstance:
       propertyPath: m_CullingMode
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4961241792348632301, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6811085360175029284, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.21063
@@ -594,6 +598,10 @@ PrefabInstance:
     - target: {fileID: 2230182899915472152, guid: 617c8c4489988e6409e797881cdffbf0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5104596142776321197, guid: 617c8c4489988e6409e797881cdffbf0, type: 3}
+      propertyPath: actionMapName
+      value: Farmer
       objectReference: {fileID: 0}
     - target: {fileID: 5682934555037395579, guid: 617c8c4489988e6409e797881cdffbf0, type: 3}
       propertyPath: player
