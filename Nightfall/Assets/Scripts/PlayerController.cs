@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour, IPickup
 
     public bool AddToInventory(ItemData item, int amountToAdd)
     {
-        Inventory playerInventory = inventoryHolder.Inventory;
+        Inventory playerInventory = inventoryHolder.PrimaryInventory;
         List<InventorySlot> slots = playerInventory.InventorySlots;
 
         for (int i = 0; i < slots.Count; i++)

@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace Catalyst.Player
 {
-    public class PlayerController : MonoBehaviour, IPickup
+    public class PlayerController : MonoBehaviour
     {
         [Header("References")]
 
@@ -279,41 +279,6 @@ namespace Catalyst.Player
                 }
             }
         }
-
-        public bool AddToInventory(ItemData item, int amountToAdd)
-        {
-            Inventory playerInventory = inventoryHolder.Inventory;
-            List<InventorySlot> slots = playerInventory.InventorySlots;
-
-            for (int i = 0; i < slots.Count; i++)
-            {
-                InventorySlot slot = slots[i];
-                if (slot.ItemData == item)
-                {
-                    if (slot.RoomLeftInStack(amountToAdd))
-                    {
-                        slot.AddToStack(amountToAdd);
-                        playerInventory.NotifySlotChanged(slot);
-                        return true;
-                    }
-                }
-            }
-
-            for (int i = 0; i < slots.Count; i++)
-            {
-                InventorySlot slot = slots[i];
-                if (slot.ItemData == null)
-                {
-                    slot.UpdateInventorySlot(item, amountToAdd);
-                    playerInventory.NotifySlotChanged(slot);
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-
 
         public void TakeDamage(int amount)
         {

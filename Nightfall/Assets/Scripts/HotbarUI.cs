@@ -16,7 +16,7 @@ public class HotbarUI : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        inventory = player.GetComponent<InventoryHolder>().Inventory;
+        inventory = player.GetComponent<InventoryHolder>().PrimaryInventory;
         root = GetComponent<UIDocument>().rootVisualElement;
         VisualElement slotsContainer = root.Q<VisualElement>("Slots");
 
