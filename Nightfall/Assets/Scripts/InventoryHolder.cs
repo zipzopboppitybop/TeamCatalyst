@@ -6,6 +6,8 @@ public class InventoryHolder : MonoBehaviour
     [SerializeField] private int inventorySize;
     [SerializeField] protected Inventory inventory;
 
+    public static UnityAction<Inventory> OnDynamicInventoryDisplayRequested;
+
     public Inventory Inventory => inventory;
 
     private void Awake()

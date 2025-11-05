@@ -91,6 +91,7 @@ public class PlayerController : MonoBehaviour, IPickup
                 if (slot.RoomLeftInStack(amountToAdd))
                 {
                     slot.AddToStack(amountToAdd);
+                    playerInventory.OnInventorySlotChanged?.Invoke(slot);
                     return true;
                 }
             }
@@ -102,6 +103,7 @@ public class PlayerController : MonoBehaviour, IPickup
             if (slot.ItemData == null)
             {
                 slot.UpdateInventorySlot(item, amountToAdd);
+                playerInventory.OnInventorySlotChanged?.Invoke(slot);
                 return true;
             }
         }

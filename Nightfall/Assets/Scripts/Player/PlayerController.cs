@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ using UnityEngine;
 
 namespace Catalyst.Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IPickup
     {
         [Header("References")]
 
@@ -41,6 +42,8 @@ namespace Catalyst.Player
         private CharacterController characterController;
         private Vector3 playerDir;
 
+        InventoryHolder inventoryHolder;
+
         private void Start()
         {
             characterController = GetComponent<CharacterController>();
@@ -49,6 +52,7 @@ namespace Catalyst.Player
             //Cursor.visible = false;
             thirdPersonCamera.gameObject.SetActive(false);
             //animator.SetBool(animGrounded, true);
+            inventoryHolder = GetComponent<InventoryHolder>();
         }
 
         private void LateUpdate()
@@ -274,6 +278,37 @@ namespace Catalyst.Player
 
                 }
             }
+        }
+
+        public bool AddToInventory(ItemData item, int amountToAdd)
+        {
+            Inventory playerInventory = inventoryHolder.Inventory;
+            List<InventorySlot> slots = playerInventory.InventorySlots;
+
+            for (int i = 0; i < slots.Count; i++)
+            {
+                InventorySlot slot = slots[i];
+                if (slot.ItemData == item)
+                {
+                    if (slot.RoomLeftInStack(amountToAdd))
+                    {
+                        slot.AddToStack(amountToAdd);
+                        return true;
+                    }
+                }
+            }
+
+            for (int i = 0; i < slots.Count; i++)
+            {
+                InventorySlot slot = slots[i];
+                if (slot.ItemData == null)
+                {
+                    slot.UpdateInventorySlot(item, amountToAdd);
+                    return true;
+                }
+            }
+
+            return false;
         }
 
 
