@@ -481,10 +481,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: NEW_Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1086156132800043347, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: Priority.Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2704039868389915847, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: playerInputHandler
       value: 
       objectReference: {fileID: 2977490348142827824}
+    - target: {fileID: 4961241792348632301, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: m_CullingMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6811085360175029284, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.21063
@@ -523,6 +531,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6811085360175029284, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8277316637815074276, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: BlendHint
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
