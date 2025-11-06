@@ -82,7 +82,7 @@
                     "name": "Sprint",
                     "type": "Button",
                     "id": "641cd816-40e6-41b4-8c3d-04687c349290",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -477,7 +477,7 @@
             ]
         },
         {
-            "name": "FPS",
+            "name": "Farmer",
             "id": "1cb090b6-5a97-4f81-be71-7852a1a49ab1",
             "actions": [
                 {
