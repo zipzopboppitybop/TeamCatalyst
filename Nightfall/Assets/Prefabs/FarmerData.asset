@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21ce41aed7a58494c8fe81590cd47615, type: 3}
+  m_Name: FarmerData
+  m_EditorClassIdentifier: Assembly-CSharp::Catalyst.Player.PlayerData
+  playerPrefab: {fileID: 3254236867938559691, guid: d2ece2b1f4dba7245af6cb946d922540, type: 3}
+  nameTag: Mr. Farmer
+  score: 0
+  health: 100
+  healthMax: 100
+  stamina: 10
+  staminaRegen: 10
+  staminaMax: 10
+  stealth: 5
+  interactRange: 2
+  shootDamage: 0
+  shootRate: 0
+  shootDist: 0
+  ammoCount: 0
+  ammoMax: 0
+  walkingSpeed: 3
+  sprintSpeed: 10
+  jumpForce: 3
+  gravityMultiplier: 1
+  jumpMax: 1
+  mouseSensitivity: 0.1
+  rotationSpeed: 0.5
+  upLookRange: 60
+  downLookRange: 60
+  keysCollected: 0
+  notesCollected: 0
+  roomsClear: 0
+  guns: []

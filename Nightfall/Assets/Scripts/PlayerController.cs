@@ -1,6 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IPickup
 {
     [SerializeField] CharacterController controller;
 
@@ -19,10 +20,13 @@ public class PlayerController : MonoBehaviour
     int maxHealth;
     int jumpCount;
 
+    InventoryHolder inventoryHolder;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         maxHealth = health;
+        inventoryHolder = GetComponent<InventoryHolder>();
     }
 
     // Update is called once per frame
@@ -73,4 +77,36 @@ public class PlayerController : MonoBehaviour
             jumpCount++;
         }
     }
+
+    public bool AddToInventory(ItemData item, int amountToAdd)
+    {
+        Inventory playerInventory = inventoryHolder.Inventory;
+        List<InventorySlot> slots = playerInventory.InventorySlots;
+
+        for (int i = 0; i < slots.Count; i++)
+        {
+            InventorySlot slot = slots[i];
+            if (slot.ItemData == item)
+            {
+                if (slot.RoomLeftInStack(amountToAdd))
+                {
+                    slot.AddToStack(amountToAdd);
+                    return true;
+                }
+            }
+        }
+
+        for (int i = 0; i < slots.Count; i++)
+        {
+            InventorySlot slot = slots[i];
+            if (slot.ItemData == null)
+            {
+                slot.UpdateInventorySlot(item, amountToAdd);
+                return true;
+            }
+        }
+
+        return false;
+    }
 }
+
