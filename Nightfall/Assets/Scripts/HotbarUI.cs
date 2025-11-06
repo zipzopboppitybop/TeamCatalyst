@@ -12,11 +12,13 @@ public class HotbarUI : MonoBehaviour
     private VisualElement root;
     private InventorySlot draggedSlot;
     private VisualElement draggedIcon;
+    private int draggedSlotIndex = -1;
+    private Inventory draggedFromInventory = null;
     private bool isDragging => draggedSlot != null;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        inventory = player.GetComponent<InventoryHolder>().PrimaryInventory;
+        inventory = player.GetComponent<PlayerInventoryHolder>().PrimaryInventory;
         root = GetComponent<UIDocument>().rootVisualElement;
         VisualElement slotsContainer = root.Q<VisualElement>("Slots");
 
@@ -130,42 +132,42 @@ public class HotbarUI : MonoBehaviour
     private void OnSlotPointerDown(int index, PointerDownEvent e)
     {
         InventorySlot slot = inventory.InventorySlots[index];
-        if (slot.ItemData != null && !isDragging)
-        {
-            draggedSlot = new InventorySlot(slot.ItemData, slot.StackSize);
-
-            draggedIcon = new VisualElement();
-            draggedIcon.style.backgroundImage = new StyleBackground(slot.ItemData.Icon);
-            draggedIcon.style.position = Position.Absolute;
-            draggedIcon.style.width = 64;
-            draggedIcon.style.height = 64;
-            draggedIcon.style.opacity = 0.8f;
-            draggedIcon.style.scale = new Scale(new Vector3(1.1f, 1.1f, 1));
-
-            root.Add(draggedIcon);
-
-            slot.UpdateInventorySlot(null, 0);
-            RefreshHotbar();
-        }
-    }
-
-    private void OnSlotPointerUp(int index, PointerUpEvent e)
-    {
-        if (draggedSlot == null)
+        if (slot.ItemData == null || draggedSlot != null)
         {
             return;
         }
 
+        draggedSlot = new InventorySlot(slot.ItemData, slot.StackSize);
+        draggedSlotIndex = index;
+        draggedFromInventory = inventory;
+
+
+        slot.UpdateInventorySlot(null, 0);
+
+
+        draggedIcon = new VisualElement();
+        draggedIcon.style.width = 64;
+        draggedIcon.style.height = 64;
+        draggedIcon.style.opacity = 0.8f;
+        draggedIcon.style.position = Position.Absolute;
+        draggedIcon.style.backgroundImage = new StyleBackground(draggedSlot.ItemData.Icon);
+
+        root.Add(draggedIcon);
+    }
+
+    private void OnSlotPointerUp(int index, PointerUpEvent e)
+    {
+        if (draggedSlot == null) return;
+
         InventorySlot target = inventory.InventorySlots[index];
-        InventorySlot source = draggedSlot;
 
         if (target.ItemData == null)
         {
-            target.UpdateInventorySlot(source.ItemData, source.StackSize);
+            target.UpdateInventorySlot(draggedSlot.ItemData, draggedSlot.StackSize);
         }
-        else if (target.ItemData == source.ItemData)
+        else if (target.ItemData == draggedSlot.ItemData)
         {
-            int total = target.StackSize + source.StackSize;
+            int total = target.StackSize + draggedSlot.StackSize;
             int max = target.ItemData.maxStackSize;
 
             if (total <= max)
@@ -174,10 +176,8 @@ public class HotbarUI : MonoBehaviour
             }
             else
             {
-                int remainder = total - max;
                 target.UpdateInventorySlot(target.ItemData, max);
-                source.UpdateInventorySlot(source.ItemData, remainder);
-                ReturnItemToFirstEmptySlot(source);
+                draggedFromInventory.InventorySlots[draggedSlotIndex].UpdateInventorySlot(draggedSlot.ItemData, total - max);
             }
         }
         else
@@ -185,38 +185,19 @@ public class HotbarUI : MonoBehaviour
             ItemData tempItem = target.ItemData;
             int tempCount = target.StackSize;
 
-            target.UpdateInventorySlot(source.ItemData, source.StackSize);
-            ReturnItemToFirstEmptySlot(new InventorySlot(tempItem, tempCount));
+            target.UpdateInventorySlot(draggedSlot.ItemData, draggedSlot.StackSize);
+            draggedFromInventory.InventorySlots[draggedSlotIndex].UpdateInventorySlot(tempItem, tempCount);
         }
 
-        EndDrag();
-        RefreshHotbar();
-    }
-
-    private void ReturnItemToFirstEmptySlot(InventorySlot slotToReturn)
-    {
-        if (slotToReturn == null || slotToReturn.ItemData == null)
-        {
-            return;
-        }
-
-        foreach (InventorySlot slot in inventory.InventorySlots)
-        {
-            if (slot.ItemData == null)
-            {
-                slot.UpdateInventorySlot(slotToReturn.ItemData, slotToReturn.StackSize);
-                return;
-            }
-        }
-    }
-
-    private void EndDrag()
-    {
         if (draggedIcon != null)
         {
             root.Remove(draggedIcon);
             draggedIcon = null;
         }
         draggedSlot = null;
+        draggedSlotIndex = -1;
+        draggedFromInventory = null;
+
+        RefreshHotbar();
     }
 }

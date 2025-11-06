@@ -2405,7 +2405,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1746317241588825310, guid: 2ea92dcc5b7e3d34997474e9075b3699, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1898425670}
+      addedObject: {fileID: 1898425668}
   m_SourcePrefab: {fileID: 100100000, guid: 2ea92dcc5b7e3d34997474e9075b3699, type: 3}
 --- !u!1 &997424747 stripped
 GameObject:
@@ -4105,7 +4105,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInventoryUI
   player: {fileID: 526803327}
-  isHotbar: 0
 --- !u!1 &1871879558
 GameObject:
   m_ObjectHideFlags: 0
@@ -4187,7 +4186,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3170298285995465051, guid: 2ea92dcc5b7e3d34997474e9075b3699, type: 3}
   m_PrefabInstance: {fileID: 858755775}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1898425670
+--- !u!114 &1898425668
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4196,11 +4195,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 997424747}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8d5be07c4c084a409a8fa42c321aca3, type: 3}
+  m_Script: {fileID: 11500000, guid: 1c6bc19445758524b8e4acc012858216, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventoryUI
+  m_EditorClassIdentifier: Assembly-CSharp::HotbarUI
   player: {fileID: 526803327}
-  isHotbar: 1
 --- !u!1 &1993059094
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,8 @@ public class InventoryHolder : MonoBehaviour
 
     public Inventory PrimaryInventory => primaryInventory;
 
+    public Inventory SecondaryInventory { get; internal set; }
+
     protected virtual void Awake()
     {
         primaryInventory = new Inventory(primaryInventorySize);
