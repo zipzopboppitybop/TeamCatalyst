@@ -11,6 +11,7 @@ public class PlayerInventoryUI : MonoBehaviour
     private VisualElement root;
     private VisualElement[] slots;
     private int slotCount;
+    private int selectedSlot;
 
     private InventorySlot draggingSlotOriginal;
     private int draggingSlotIndex;
@@ -57,10 +58,19 @@ public class PlayerInventoryUI : MonoBehaviour
 
         inventory.OnInventorySlotChanged += RefreshInventory;
         RefreshInventory();
+        if (isHotbar)
+        {
+            SelectSlot(0);
+        }
     }
 
     void Update()
     {
+        if (isHotbar)
+        {
+            HandleInput();
+        }
+
         if (InventoryDragManager.draggedIcon != null)
         {
             Vector2 mousePos = Input.mousePosition;
@@ -71,6 +81,45 @@ public class PlayerInventoryUI : MonoBehaviour
             InventoryDragManager.draggedIcon.style.left = panelPos.x - InventoryDragManager.draggedIcon.resolvedStyle.width / 2f;
             InventoryDragManager.draggedIcon.style.top = panelPos.y - InventoryDragManager.draggedIcon.resolvedStyle.height / 2f;
             InventoryDragManager.draggedIcon.pickingMode = PickingMode.Ignore;
+        }
+    }
+
+    private void HandleInput()
+    {
+        for (int i = 0; i < slotCount; i++)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1 + i))
+            {
+                SelectSlot(i);
+                return;
+            }
+        }
+
+        float scroll = Input.mouseScrollDelta.y;
+        if (scroll > 0)
+        {
+            SelectSlot((selectedSlot - 1 + slotCount) % slotCount);
+        }
+        else if (scroll < 0)
+        {
+            SelectSlot((selectedSlot + 1) % slotCount);
+        }
+    }
+
+    private void SelectSlot(int index)
+    {
+        selectedSlot = index;
+        UpdateSelection();
+    }
+
+    private void UpdateSelection()
+    {
+        for (int i = 0; i < slotCount; i++)
+        {
+            if (slots[i] != null)
+            {
+                slots[i].EnableInClassList("selected", i == selectedSlot);
+            }
         }
     }
 
