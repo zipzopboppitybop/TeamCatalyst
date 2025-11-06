@@ -3,17 +3,17 @@ using UnityEngine.SceneManagement;
 
 public class ButtonFunctions : MonoBehaviour
 {
-   public void resume()
+   public void Resume()
     {
-        GameManager.instance.stateUnpause();
+        GameManager.instance.StateUnpause();
     }
-    public void restart()
+    public void Restart()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        GameManager.instance.stateUnpause();
+        GameManager.instance.StateUnpause();
     }
 
-    public void quit()
+    public void Quit()
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;

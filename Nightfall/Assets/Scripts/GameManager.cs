@@ -2,26 +2,25 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    [SerializeField] Cycles cycle;
+    [SerializeField] private PauseMenuUI menuPause;
+
     [SerializeField] GameObject menuActive;
-    [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
 
-    [SerializeField] TMP_Text clockText;
-    [SerializeField] TMP_Text dayText;
+    
     [SerializeField] float dayLengthMinutes;
     [SerializeField] int nightStart;
     [SerializeField] int nightEnd;
     [SerializeField] Image dayImage;
     [SerializeField] Image nightImage;
-
-    //public GameObject player;
-    //public PlayerController playerScript;
-    //public Image playerHPBar;
 
     float timeScaleOrig;
     float timeOfDay = 7;
@@ -35,11 +34,8 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //instance = this;
+        instance = this;
         timeScaleOrig = Time.timeScale;
-
-        //player = GameObject.FindWithTag("Player");
-       // playerScript = player.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
@@ -47,45 +43,44 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Cancel"))
         {
-            if (menuActive == null)
+            if (menuActive == null && !isPaused)
             {
-                statePause();
-                menuActive = menuPause;
-                menuActive.SetActive(true);
+                StatePause();
+                if (menuPause != null) menuPause.Show();
             }
-            else if (menuActive == menuPause)
+            else
             {
-                stateUnpause();
+                StateUnpause();
+                if (menuPause !=null) menuPause.Hide();
             }
         }
-        updateGameClock();
+        UpdateGameClock();
 
     }
-    public void statePause()
+    public void StatePause()
     {
-        isPaused = !isPaused;
+        isPaused = true;
         Time.timeScale = 0;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
-    public void stateUnpause()
+    public void StateUnpause()
     {
-        isPaused = !isPaused;
+        isPaused = false;
         Time.timeScale = timeScaleOrig;
+        
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        menuActive.SetActive(false);
-        menuActive = null;
+        
 
     }
-    public void youLose()
+    public void YouLose()
     {
-        statePause();
-        menuActive = menuLose;
-        menuActive.SetActive(true);
+        StatePause();
+        
     }
 
-    void updateGameClock()
+    void UpdateGameClock()
     {
         if(!isPaused)
         {
@@ -109,18 +104,24 @@ public class GameManager : MonoBehaviour
         if (hourTwelve == 0)
             hourTwelve = 12;
 
-        clockText.text = hourTwelve.ToString("00") + ":" + minute.ToString("00") +(isAm ? " AM" : " PM");
+        cycle.ClockText = hourTwelve.ToString("00") + ":" + minute.ToString("00") + (isAm ? " AM" : " PM");
+        
         
         bool isNight = IsNightHour(hour, nightStart, nightEnd);
         if(wasNight && !isNight)
         {
             day += 1;
         }
+        cycle.DayText = "Day " + day.ToString();
+
+        if(dayImage && cycle.DayImage)
+            dayImage.sprite = cycle.DayImage;
+        if(nightImage && cycle.NightImage)
+            nightImage.sprite = cycle.NightImage;
 
         if(dayImage) dayImage.gameObject.SetActive(!isNight);
         if(nightImage) nightImage.gameObject.SetActive(isNight);  
 
-        dayText.text = "Day " + day.ToString();
         wasNight = isNight;
         
     }
