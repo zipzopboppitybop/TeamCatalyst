@@ -24,7 +24,6 @@
     border-width: 2px;
     border-color: rgb(136, 136, 136);
     border-radius: 6px;
-    border-style: solid;
     background-color: rgba(50, 50, 50, 0.8);
 }
 

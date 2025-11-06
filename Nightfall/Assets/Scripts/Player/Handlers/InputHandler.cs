@@ -48,6 +48,7 @@ namespace Catalyst.Player
         [SerializeField] private string fire = "Fire";
         [SerializeField] private string pause = "Pause";
         [SerializeField] private string toggleCamera = "ToggleCamera";
+        [SerializeField] private string toggleInventory = "Inventory";
 
         private InputAction _pauseAction;
         private InputAction _previousAction;
@@ -55,6 +56,8 @@ namespace Catalyst.Player
         private InputAction _aimAction;
         private InputAction _fireAction;
         private InputAction _toggleCameraAction;
+        private InputAction _toggleInventoryAction;
+        private bool _inventoryPressedThisFrame;
 
 
         private PlayerController _playerController;
@@ -76,6 +79,7 @@ namespace Catalyst.Player
         public bool FireTriggered { get; private set; }
         public bool PauseTriggered { get; private set; }
         public bool ToggleCameraTriggered { get; private set; }
+        public bool ToggleInventoryTriggered { get; private set; }
 
 
         public PlayerController PlayerController => _playerController;
@@ -104,6 +108,7 @@ namespace Catalyst.Player
             _fireAction = mapReference.FindAction(fire);
             _pauseAction = mapReference.FindAction(pause);
             _toggleCameraAction = mapReference.FindAction(toggleCamera);
+            _toggleInventoryAction = mapReference.FindAction(toggleInventory);
             SubscribeActionValuesToInputEvents();
         }
 
@@ -148,6 +153,8 @@ namespace Catalyst.Player
             _toggleCameraAction.performed += inputInfo => ToggleCameraTriggered = true;
             _toggleCameraAction.canceled += inputInfo => ToggleCameraTriggered = false;
 
+            _toggleInventoryAction.performed += inputInfo => _inventoryPressedThisFrame = true;
+
         }
 
         private void OnEnable()
@@ -158,6 +165,12 @@ namespace Catalyst.Player
         private void OnDisable()
         {
             playerControls.FindActionMap(actionMapName).Disable();
+        }
+
+        private void Update()
+        {
+            ToggleInventoryTriggered = _inventoryPressedThisFrame;
+            _inventoryPressedThisFrame = false;
         }
 
     }

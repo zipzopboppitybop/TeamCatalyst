@@ -1,6 +1,9 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+using Catalyst.Player;
 
 public class PlayerInventoryUI : MonoBehaviour
 {
@@ -16,10 +19,16 @@ public class PlayerInventoryUI : MonoBehaviour
     private InventorySlot draggingSlotOriginal;
     private int draggingSlotIndex;
     private Inventory draggingFromInventory;
+    private InputHandler inputHandler;
+    private bool toggleInventory;
+
+    private Catalyst.Player.PlayerController playerController;
 
     void Start()
     {
         inventory = isHotbar ? player.GetComponent<PlayerInventoryHolder>().PrimaryInventory : player.GetComponent<PlayerInventoryHolder>().SecondaryInventory;
+        playerController = player.GetComponent<Catalyst.Player.PlayerController>();
+        inputHandler = playerController.playerInputHandler;
 
         root = GetComponent<UIDocument>().rootVisualElement;
 
@@ -33,13 +42,12 @@ public class PlayerInventoryUI : MonoBehaviour
             for (int i = 0; i < slots.Length; i++)
             {
                 slots[i] = slotsContainer.Q<VisualElement>($"Slot-{i}");
-                int index = i;
-                RegisterSlotCallbacks(index);
+                RegisterSlotCallbacks(i);
             }
         }
         else
         {
-            var rows = slotsContainer.Query<VisualElement>(className: "row").ToList();
+            List<VisualElement> rows = slotsContainer.Query<VisualElement>(className: "row").ToList();
             int index = 0;
             foreach (VisualElement row in rows)
             {
@@ -54,10 +62,13 @@ public class PlayerInventoryUI : MonoBehaviour
                     index++;
                 }
             }
+
+            root.style.display = DisplayStyle.None;
         }
 
         inventory.OnInventorySlotChanged += RefreshInventory;
         RefreshInventory();
+
         if (isHotbar)
         {
             SelectSlot(0);
@@ -68,7 +79,11 @@ public class PlayerInventoryUI : MonoBehaviour
     {
         if (isHotbar)
         {
-            HandleInput();
+            HandleHotBarInput();
+        }
+        else
+        {
+            HandleInventoryInput();
         }
 
         if (InventoryDragManager.draggedIcon != null)
@@ -84,7 +99,7 @@ public class PlayerInventoryUI : MonoBehaviour
         }
     }
 
-    private void HandleInput()
+    private void HandleHotBarInput()
     {
         for (int i = 0; i < slotCount; i++)
         {
@@ -103,6 +118,27 @@ public class PlayerInventoryUI : MonoBehaviour
         else if (scroll < 0)
         {
             SelectSlot((selectedSlot + 1) % slotCount);
+        }
+    }
+
+    private void HandleInventoryInput()
+    {
+        if (inputHandler.ToggleInventoryTriggered)
+        {
+            toggleInventory = !toggleInventory;
+            playerController.isInventoryOpen = toggleInventory;
+            root.style.display = toggleInventory ? DisplayStyle.Flex : DisplayStyle.None;
+
+            if (toggleInventory)
+            {
+                UnityEngine.Cursor.lockState = CursorLockMode.None;
+                UnityEngine.Cursor.visible = true;
+            }
+            else
+            {
+                UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+                UnityEngine.Cursor.visible = false;
+            }
         }
     }
 

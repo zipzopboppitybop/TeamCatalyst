@@ -26,6 +26,7 @@ namespace Catalyst.Player
         private Vector3 _currentMovement;
         private float _verticalRotation;
         public bool isInverted;
+        public bool isInventoryOpen;
 
         private float mouseXRotation;
         private float mouseYRotation;
@@ -42,8 +43,6 @@ namespace Catalyst.Player
         private CharacterController characterController;
         private Vector3 playerDir;
 
-        private InventoryHolder inventoryHolder;
-
         private void Start()
         {
             characterController = GetComponent<CharacterController>();
@@ -52,7 +51,6 @@ namespace Catalyst.Player
             //Cursor.visible = false;
             thirdPersonCamera.gameObject.SetActive(false);
             //animator.SetBool(animGrounded, true);
-            inventoryHolder = GetComponent<InventoryHolder>();
         }
 
         private void LateUpdate()
@@ -89,8 +87,18 @@ namespace Catalyst.Player
 
         }
 
+        public void EnablePlayerInput(bool enabled)
+        {
+            playerInputHandler.enabled = enabled;
+        }
+
         private void HandleAttack()
         {
+            if (isInventoryOpen)
+            {
+                return;
+            }
+
             if (playerInputHandler.AttackTriggered)
             {
                 // Attack logic here
@@ -173,6 +181,10 @@ namespace Catalyst.Player
 
         private void HandleMovement()
         {
+            if (isInventoryOpen)
+            {
+                return;
+            }
 
             playerDir = CalculatePlayerDirection();
 
@@ -220,6 +232,11 @@ namespace Catalyst.Player
 
         private void HandleRotation()
         {
+            if (isInventoryOpen)
+            {
+                return;
+            }
+
             mouseXRotation = playerInputHandler.RotationInput.x * playerData.MouseSensitivity * playerData.RotationSpeed;
             mouseYRotation = playerInputHandler.RotationInput.y * playerData.MouseSensitivity;
 
