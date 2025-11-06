@@ -401,8 +401,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a6b861810af5244bb012d92a22c2dcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TilePainter
-  testTile: {fileID: 0}
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  testTile: {fileID: 11400000, guid: 1b9655edb1c7e594391e5d026091828c, type: 2}
   map: {fileID: 304404058}
+  placeDist: 10
 --- !u!4 &395952192
 Transform:
   m_ObjectHideFlags: 0
