@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 namespace WTIM.UI
 {
-    public class MenuScript : MonoBehaviour
+    public class StartScreenReferenceScript : MonoBehaviour
     {
         [SerializeField] private UIDocument _document;
         [SerializeField] private StyleSheet _styleSheet;
