@@ -2,16 +2,12 @@ using UnityEngine;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 
-public class TowerBase : MonoBehaviour
+public class TowerBase : MonoBehaviour, IDamage
 {
 
     [SerializeField] enum TowerType { Crop, Defensive, Offensive };
-    [SerializeField] enum CropType { None, Carrot };
-    [SerializeField] enum OffenseType { None, Sprinkler };
 
     [SerializeField] TowerType typeTower;
-    [SerializeField] CropType typeCrop;
-    [SerializeField] OffenseType typeOffense;
 
     [SerializeField] int hp;
     [SerializeField] int damage;
@@ -146,10 +142,10 @@ public class TowerBase : MonoBehaviour
 
     }
 
-    void TakeDamage(int amt)
+    public void takeDamage(int amount)
     {
 
-        hp -= amt;
+        hp -= amount;
         if (hp <= 0)
         {
             if (typeTower == TowerType.Crop)
