@@ -9,6 +9,7 @@ public class PlayerInventoryUI : MonoBehaviour
 {
     [SerializeField] private GameObject player;
     [SerializeField] private bool isHotbar;
+    [SerializeField] private PlayerInventoryUI hotbarUI;
 
     private Inventory inventory;
     private VisualElement root;
@@ -21,18 +22,35 @@ public class PlayerInventoryUI : MonoBehaviour
     private Inventory draggingFromInventory;
     private InputHandler inputHandler;
     private bool toggleInventory;
+    public bool isChestUI;
 
     private Catalyst.Player.PlayerController playerController;
 
-    void Start()
+    void Awake()
     {
-        inventory = isHotbar ? player.GetComponent<PlayerInventoryHolder>().PrimaryInventory : player.GetComponent<PlayerInventoryHolder>().SecondaryInventory;
         playerController = player.GetComponent<Catalyst.Player.PlayerController>();
         inputHandler = playerController.playerInputHandler;
-
         root = GetComponent<UIDocument>().rootVisualElement;
 
+        if (!isChestUI)
+        {
+            inventory = isHotbar
+                ? player.GetComponent<PlayerInventoryHolder>().PrimaryInventory
+                : player.GetComponent<PlayerInventoryHolder>().SecondaryInventory;
+        }
+
+        if (!isHotbar)
+            root.style.display = DisplayStyle.None;
+    }
+    void Start()
+    {
         VisualElement slotsContainer = root.Q<VisualElement>("Slots");
+        slots = null;
+
+        if (inventory == null)
+        {
+            return;
+        }
 
         slotCount = inventory.InventorySize;
         slots = new VisualElement[slotCount];
@@ -81,7 +99,8 @@ public class PlayerInventoryUI : MonoBehaviour
         {
             HandleHotBarInput();
         }
-        else
+
+        if (!isHotbar && !isChestUI)
         {
             HandleInventoryInput();
         }
@@ -123,6 +142,11 @@ public class PlayerInventoryUI : MonoBehaviour
 
     private void HandleInventoryInput()
     {
+        if (inputHandler == null)
+        {
+            return;
+        }
+
         if (inputHandler.ToggleInventoryTriggered)
         {
             toggleInventory = !toggleInventory;
@@ -270,5 +294,59 @@ public class PlayerInventoryUI : MonoBehaviour
         draggingSlotOriginal = null;
         draggingSlotIndex = -1;
         draggingFromInventory = null;
+    }
+
+    public void SetInventory(Inventory newInventory)
+    {
+        if (newInventory == null)
+        {
+            return;
+        }
+
+
+        if (inventory != null)
+        {
+            inventory.OnInventorySlotChanged -= RefreshInventory;
+        }
+            
+
+        inventory = newInventory;
+        inventory.OnInventorySlotChanged += RefreshInventory;
+
+        BuildChestSlots();
+
+        RefreshInventory();
+    }
+
+    private void BuildChestSlots()
+    {
+        VisualElement slotsContainer = root.Q<VisualElement>("Slots");
+        if (slotsContainer == null)
+        {
+            return;
+        }
+
+        slotCount = inventory.InventorySize;
+        slots = new VisualElement[slotCount];
+
+        List<VisualElement> rows = slotsContainer.Query<VisualElement>(className: "row").ToList();
+        int index = 0;
+        foreach (VisualElement row in rows)
+        {
+            foreach (VisualElement slot in row.Children())
+            {
+                if (!slot.ClassListContains("slot")) continue;
+                if (index >= slotCount) break;
+
+                slots[index] = slot;
+                int currentIndex = index;
+                RegisterSlotCallbacks(currentIndex);
+                index++;
+            }
+        }
+    }
+    public void Show(bool show)
+    {
+        root.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
     }
 }

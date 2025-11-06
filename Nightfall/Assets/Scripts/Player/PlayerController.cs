@@ -1,10 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
-
-
-
 
 namespace Catalyst.Player
 {
@@ -276,12 +272,15 @@ namespace Catalyst.Player
 
         public void UpdateInteract()
         {
-            if (playerInputHandler.InteractTriggered)
+            if (Input.GetKeyDown(KeyCode.E))
             {
+                Debug.DrawRay(mainCamera.transform.position, mainCamera.transform.forward * playerData.InteractRange, Color.red, 1f);
+
                 if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out RaycastHit hit, playerData.InteractRange, ~ignoreLayer))
-                {
+                    {
+                    TryOpenChest(hit);
                     // logging the collider the raycast hit //
-                    Debug.Log(hit.collider.name);
+                    Debug.Log("Hit " + hit.collider.name);
 
                     // if the collider has the IDamage interface, we store it in 'target'
                     //IInteractable target = hit.collider.GetComponent<IInteractable>();
@@ -290,6 +289,15 @@ namespace Catalyst.Player
                     //target?.Interact();
 
                 }
+            }
+        }
+
+        private void TryOpenChest(RaycastHit hit)
+        {
+            Chest chest = hit.collider.GetComponent<Chest>();
+            if (chest != null)
+            {
+                chest.OpenChest();
             }
         }
 
@@ -327,8 +335,6 @@ namespace Catalyst.Player
             yield return new WaitForSeconds(1.0f);
             playerInputHandler.enabled = true;
         }
-
-
     }
 }
 

@@ -109,6 +109,7 @@ namespace Catalyst.Player
             _pauseAction = mapReference.FindAction(pause);
             _toggleCameraAction = mapReference.FindAction(toggleCamera);
             _toggleInventoryAction = mapReference.FindAction(toggleInventory);
+            _interactAction = mapReference.FindAction(interact);
             SubscribeActionValuesToInputEvents();
         }
 
