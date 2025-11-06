@@ -1,0 +1,122 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/Hotbar.uss?fileID=7433441132597879392&amp;guid=347f77356adf7594e8d92101dcaf3341&amp;type=3#Hotbar" />
+    <Style src="project://database/Assets/PlayerInventory.uss?fileID=7433441132597879392&amp;guid=b3d19eb93c616264b9d7645c1a4c1710&amp;type=3#PlayerInventory" />
+    <ui:VisualElement name="Inventory" class="inventory" style="flex-grow: 1; bottom: 50%; left: 50%;">
+        <ui:VisualElement name="Slots" class="slots" style="flex-grow: 1;">
+            <ui:VisualElement name="Row" class="row" style="flex-grow: 1;">
+                <ui:VisualElement name="Slot-0" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-1" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-2" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-3" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-4" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-5" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-6" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-7" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-8" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="Row" class="row" style="flex-grow: 1;">
+                <ui:VisualElement name="Slot-9" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-10" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-11" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-12" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-13" class="slot" style="flex-grow: 1;">
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-14" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-15" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-16" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-17" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement name="Row" class="row" style="flex-grow: 1;">
+                <ui:VisualElement name="Slot-18" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-19" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-20" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-21" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-22" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-23" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-24" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-25" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Slot-26" class="slot" style="flex-grow: 1;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
+                    <ui:Label text="Label" name="Count" class="count" style="bottom: -3px; position: absolute; right: 4px; font-size: 16px; width: 19px; color: rgb(255, 255, 255);" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

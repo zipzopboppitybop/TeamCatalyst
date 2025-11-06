@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fff52d00b5194643aee23e84ee9b49b, type: 3}
   m_Name: Carrot
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  Icon: {fileID: 0}
-  id: 1
+  Icon: {fileID: 21300000, guid: 73e2a05c61e022847b8c16bbb41024e7, type: 3}
   displayName: Carrot
-  currentStackSize: 0
+  id: 1
+  sellValue: 0
+  price: 0
   maxStackSize: 5

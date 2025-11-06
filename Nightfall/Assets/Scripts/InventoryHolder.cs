@@ -3,13 +3,17 @@ using UnityEngine.Events;
 
 public class InventoryHolder : MonoBehaviour
 {
-    [SerializeField] private int inventorySize;
-    [SerializeField] protected Inventory inventory;
+    [SerializeField] private int primaryInventorySize;
+    [SerializeField] protected Inventory primaryInventory;
 
-    public Inventory Inventory => inventory;
+    public static UnityAction<Inventory> OnDynamicInventoryDisplayRequested;
 
-    private void Awake()
+    public Inventory PrimaryInventory => primaryInventory;
+
+    public Inventory SecondaryInventory { get; internal set; }
+
+    protected virtual void Awake()
     {
-        inventory = new Inventory(inventorySize);
+        primaryInventory = new Inventory(primaryInventorySize);
     }
 }

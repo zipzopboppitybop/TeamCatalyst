@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5016394b39a2f648a0ac18a106d7ac8, type: 3}
+  m_Name: DayCycles
+  m_EditorClassIdentifier: Assembly-CSharp::Cycles
+  clockText: 07:43 AM
+  dayText: Day 2
+  dayImage: {fileID: -1238024564, guid: 0fed4ca4ea9dfc447b6fbf56ac912c66, type: 3}
+  nightImage: {fileID: -68224195, guid: cfa614717cbdf5648b1f4667a9649b01, type: 3}

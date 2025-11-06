@@ -700,6 +700,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Inventory"",
+                    ""type"": ""Button"",
+                    ""id"": ""651179ae-9bab-45f6-b40f-8c4dd13170d5"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -1217,6 +1226,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
                     ""action"": ""ToggleCamera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eae3173a-7592-4e71-b5ce-9983553fe907"",
+                    ""path"": ""<Keyboard>/i"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Inventory"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1830,6 +1850,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Farmer_Dive = m_Farmer.FindAction("Dive", throwIfNotFound: true);
         m_Farmer_Pause = m_Farmer.FindAction("Pause", throwIfNotFound: true);
         m_Farmer_ToggleCamera = m_Farmer.FindAction("ToggleCamera", throwIfNotFound: true);
+        m_Farmer_Inventory = m_Farmer.FindAction("Inventory", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -2123,6 +2144,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Farmer_Dive;
     private readonly InputAction m_Farmer_Pause;
     private readonly InputAction m_Farmer_ToggleCamera;
+    private readonly InputAction m_Farmer_Inventory;
     /// <summary>
     /// Provides access to input actions defined in input action map "Farmer".
     /// </summary>
@@ -2195,6 +2217,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @ToggleCamera => m_Wrapper.m_Farmer_ToggleCamera;
         /// <summary>
+        /// Provides access to the underlying input action "Farmer/Inventory".
+        /// </summary>
+        public InputAction @Inventory => m_Wrapper.m_Farmer_Inventory;
+        /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
         public InputActionMap Get() { return m_Wrapper.m_Farmer; }
@@ -2265,6 +2291,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @ToggleCamera.started += instance.OnToggleCamera;
             @ToggleCamera.performed += instance.OnToggleCamera;
             @ToggleCamera.canceled += instance.OnToggleCamera;
+            @Inventory.started += instance.OnInventory;
+            @Inventory.performed += instance.OnInventory;
+            @Inventory.canceled += instance.OnInventory;
         }
 
         /// <summary>
@@ -2321,6 +2350,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @ToggleCamera.started -= instance.OnToggleCamera;
             @ToggleCamera.performed -= instance.OnToggleCamera;
             @ToggleCamera.canceled -= instance.OnToggleCamera;
+            @Inventory.started -= instance.OnInventory;
+            @Inventory.performed -= instance.OnInventory;
+            @Inventory.canceled -= instance.OnInventory;
         }
 
         /// <summary>
@@ -2797,6 +2829,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnToggleCamera(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Inventory" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnInventory(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
