@@ -14,8 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
-
-    
+   
     [SerializeField] float dayLengthMinutes;
     [SerializeField] int nightStart;
     [SerializeField] int nightEnd;
@@ -26,7 +25,7 @@ public class GameManager : MonoBehaviour
     float timeOfDay = 7;
     int day = 1;
 
-    public bool isPaused;
+    public bool isPaused = false;
     bool wasNight;
     
 
@@ -76,8 +75,7 @@ public class GameManager : MonoBehaviour
     }
     public void YouLose()
     {
-        StatePause();
-        
+        StatePause();  
     }
 
     void UpdateGameClock()
