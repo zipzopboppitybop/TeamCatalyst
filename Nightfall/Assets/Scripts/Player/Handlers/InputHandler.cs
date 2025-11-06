@@ -33,12 +33,12 @@ namespace Catalyst.Player
 
         [SerializeField] private string interact = "Interact";
         [SerializeField] private string crouch = "Crouch";
-        [SerializeField] private string prone = "Prone";
+        [SerializeField] private string dodge = "Dodge";
         [SerializeField] private string jump = "Jump";
 
         private InputAction _interactAction;
         private InputAction _crouchAction;
-        private InputAction _proneAction;
+        private InputAction _dodgeAction;
         private InputAction _jumpAction;
 
         [Header("UI Input & Triggers Actions")]
@@ -68,7 +68,7 @@ namespace Catalyst.Player
 
         public bool InteractTriggered { get; private set; }
         public bool CrouchTriggered { get; private set; }
-        public bool IsProning { get; private set; }
+        public bool DodgeTriggered { get; private set; }
         public bool JumpTriggered { get; private set; }
         public bool PrevTriggered { get; private set; }
         public bool NextTriggered { get; private set; }
@@ -94,7 +94,7 @@ namespace Catalyst.Player
             _diveAction = mapReference.FindAction(dive);
             _interactAction = mapReference.FindAction(interact);
             _crouchAction = mapReference.FindAction(crouch);
-            _proneAction = mapReference.FindAction(prone);
+            _dodgeAction = mapReference.FindAction(dodge);
             _jumpAction = mapReference.FindAction(jump);
 
             // Top Buttons
@@ -129,8 +129,8 @@ namespace Catalyst.Player
 
             _crouchAction.performed += inputInfo => CrouchTriggered = true;
             _crouchAction.canceled += inputInfo => CrouchTriggered = false;
-            _proneAction.performed += inputInfo => IsProning = true;
-            _proneAction.canceled += inputInfo => IsProning = false;
+            _dodgeAction.performed += inputInfo => DodgeTriggered = true;
+            _dodgeAction.canceled += inputInfo => DodgeTriggered = false;
 
             _previousAction.performed += inputInfo => PrevTriggered = true;
             _previousAction.canceled += inputInfo => PrevTriggered = false;

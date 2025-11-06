@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -35,6 +36,7 @@ namespace Catalyst.Player
         private int animGrounded;
         private int animSprinting;
         private int animAttack;
+        private int animDodge;
 
         private int jumpCount = 0;
 
@@ -69,6 +71,7 @@ namespace Catalyst.Player
             HandleRotation();
 
             HandleAttack();
+            HandleDodge();
             UpdateInteract();
             ThirdPersonActive();
 
@@ -81,6 +84,8 @@ namespace Catalyst.Player
             animGrounded = Animator.StringToHash("Grounded");
             animSprinting = Animator.StringToHash("Sprinting");
             animAttack = Animator.StringToHash("Attack");
+            animDodge = Animator.StringToHash("Dodge");
+
 
 
         }
@@ -156,6 +161,20 @@ namespace Catalyst.Player
                 animator.SetBool(animGrounded, false);
                 animator.ResetTrigger(animJump);
 
+            }
+        }
+
+        private void HandleDodge()
+        {
+            if (playerInputHandler.DodgeTriggered)
+            {
+                // Dodge logic here
+                animator.SetTrigger(animDodge);
+
+            }
+            else
+            {
+                animator.ResetTrigger(animDodge);
             }
         }
         private void ThirdPersonActive()
