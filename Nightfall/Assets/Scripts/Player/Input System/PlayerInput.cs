@@ -612,7 +612,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Prone"",
+                    ""name"": ""Dodge"",
                     ""type"": ""Button"",
                     ""id"": ""eb13e0be-57cd-402b-941d-5f197e97a3b3"",
                     ""expectedControlType"": """",
@@ -1192,7 +1192,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""Prone"",
+                    ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1203,7 +1203,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Prone"",
+                    ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1840,7 +1840,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Farmer_Attack = m_Farmer.FindAction("Attack", throwIfNotFound: true);
         m_Farmer_Interact = m_Farmer.FindAction("Interact", throwIfNotFound: true);
         m_Farmer_Crouch = m_Farmer.FindAction("Crouch", throwIfNotFound: true);
-        m_Farmer_Prone = m_Farmer.FindAction("Prone", throwIfNotFound: true);
+        m_Farmer_Dodge = m_Farmer.FindAction("Dodge", throwIfNotFound: true);
         m_Farmer_Jump = m_Farmer.FindAction("Jump", throwIfNotFound: true);
         m_Farmer_Previous = m_Farmer.FindAction("Previous", throwIfNotFound: true);
         m_Farmer_Next = m_Farmer.FindAction("Next", throwIfNotFound: true);
@@ -2134,7 +2134,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Farmer_Attack;
     private readonly InputAction m_Farmer_Interact;
     private readonly InputAction m_Farmer_Crouch;
-    private readonly InputAction m_Farmer_Prone;
+    private readonly InputAction m_Farmer_Dodge;
     private readonly InputAction m_Farmer_Jump;
     private readonly InputAction m_Farmer_Previous;
     private readonly InputAction m_Farmer_Next;
@@ -2177,9 +2177,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Crouch => m_Wrapper.m_Farmer_Crouch;
         /// <summary>
-        /// Provides access to the underlying input action "Farmer/Prone".
+        /// Provides access to the underlying input action "Farmer/Dodge".
         /// </summary>
-        public InputAction @Prone => m_Wrapper.m_Farmer_Prone;
+        public InputAction @Dodge => m_Wrapper.m_Farmer_Dodge;
         /// <summary>
         /// Provides access to the underlying input action "Farmer/Jump".
         /// </summary>
@@ -2261,9 +2261,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Crouch.started += instance.OnCrouch;
             @Crouch.performed += instance.OnCrouch;
             @Crouch.canceled += instance.OnCrouch;
-            @Prone.started += instance.OnProne;
-            @Prone.performed += instance.OnProne;
-            @Prone.canceled += instance.OnProne;
+            @Dodge.started += instance.OnDodge;
+            @Dodge.performed += instance.OnDodge;
+            @Dodge.canceled += instance.OnDodge;
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
@@ -2320,9 +2320,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Crouch.started -= instance.OnCrouch;
             @Crouch.performed -= instance.OnCrouch;
             @Crouch.canceled -= instance.OnCrouch;
-            @Prone.started -= instance.OnProne;
-            @Prone.performed -= instance.OnProne;
-            @Prone.canceled -= instance.OnProne;
+            @Dodge.started -= instance.OnDodge;
+            @Dodge.performed -= instance.OnDodge;
+            @Dodge.canceled -= instance.OnDodge;
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
@@ -2760,12 +2760,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnCrouch(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Prone" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Dodge" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnProne(InputAction.CallbackContext context);
+        void OnDodge(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Jump" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

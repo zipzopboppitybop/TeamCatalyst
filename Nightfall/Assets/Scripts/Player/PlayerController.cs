@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -33,6 +34,8 @@ namespace Catalyst.Player
         private int animGrounded;
         private int animSprinting;
         private int animAttack;
+        private int animDodge;
+        private int animDash;
 
         private int jumpCount = 0;
 
@@ -43,10 +46,7 @@ namespace Catalyst.Player
         {
             characterController = GetComponent<CharacterController>();
             SetupAnimator();
-            //Cursor.lockState = CursorLockMode.Locked;
-            //Cursor.visible = false;
             thirdPersonCamera.gameObject.SetActive(false);
-            //animator.SetBool(animGrounded, true);
         }
 
         private void LateUpdate()
@@ -67,6 +67,8 @@ namespace Catalyst.Player
             HandleRotation();
 
             HandleAttack();
+            HandleDodge();
+            HandleDash();
             UpdateInteract();
             ThirdPersonActive();
 
@@ -79,6 +81,10 @@ namespace Catalyst.Player
             animGrounded = Animator.StringToHash("Grounded");
             animSprinting = Animator.StringToHash("Sprinting");
             animAttack = Animator.StringToHash("Attack");
+            animDodge = Animator.StringToHash("Dodge");
+            animDash = Animator.StringToHash("Dash");
+
+
 
 
         }
@@ -165,6 +171,24 @@ namespace Catalyst.Player
                 animator.ResetTrigger(animJump);
 
             }
+        }
+
+        private void HandleDodge()
+        {
+            if (playerInputHandler.DodgeTriggered)
+            {
+                // Dodge logic here
+                animator.SetTrigger(animDodge);
+
+            }
+            else
+            {
+                animator.ResetTrigger(animDodge);
+            }
+        }
+
+        private void HandleDash()
+        {             // Dash logic here
         }
         private void ThirdPersonActive()
         {
