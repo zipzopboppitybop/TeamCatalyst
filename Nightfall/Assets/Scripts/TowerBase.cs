@@ -18,8 +18,9 @@ public class TowerBase : MonoBehaviour, IDamage
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject shootPos;
 
-    bool isFullyGrown;
-    bool EnemyInRange;
+    bool isFullyGrown = false;
+    bool EnemyInRange = true;
+    bool isWatered = false;
 
     int enemiesInRange;
     [SerializeField] List<Transform> enemyPos;
@@ -47,7 +48,7 @@ public class TowerBase : MonoBehaviour, IDamage
         {        
             shootTime += Time.deltaTime;
 
-            if (shootTime >= attSpeed)
+            if (shootTime >= attSpeed && EnemyInRange)
             {
 
                 Vector3 chosenEnemyPos = ChooseClosestPos();
@@ -64,7 +65,8 @@ public class TowerBase : MonoBehaviour, IDamage
     void Grow()
     {
 
-        isFullyGrown = true;
+        if (isWatered) 
+            isFullyGrown = true;
 
     }
 
@@ -98,7 +100,12 @@ public class TowerBase : MonoBehaviour, IDamage
 
     }
 
+    void WaterCrop()
+    {
 
+        isWatered = true;
+
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -148,7 +155,7 @@ public class TowerBase : MonoBehaviour, IDamage
         hp -= amount;
         if (hp <= 0)
         {
-            if (typeTower == TowerType.Crop)
+            if (typeTower == TowerType.Crop && isFullyGrown)
                 Instantiate(itemDrop, transform.position, transform.rotation);
             Destroy(gameObject);
         }

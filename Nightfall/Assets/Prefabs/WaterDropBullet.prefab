@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7540912599550116735}
   - component: {fileID: 4615074129772477254}
   - component: {fileID: 8679911106028331363}
+  - component: {fileID: 913942978157401171}
   m_Layer: 0
   m_Name: WaterDropBullet
   m_TagString: Untagged
@@ -201,3 +202,21 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &913942978157401171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7802366829314756072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54a8bf38ea7baff40b78a280505cc14e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Damage
+  type: 1
+  rb: {fileID: 8679911106028331363}
+  dmgAmt: 0
+  speed: 8
+  destroyTime: 3
+  dmgRate: 0
