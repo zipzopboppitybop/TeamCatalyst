@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -25,6 +26,7 @@ namespace Catalyst.Player
         private Vector3 _currentMovement;
         private float _verticalRotation;
         public bool isInverted;
+        public bool isInventoryOpen;
 
         private float mouseXRotation;
         private float mouseYRotation;
@@ -85,8 +87,18 @@ namespace Catalyst.Player
 
         }
 
+        public void EnablePlayerInput(bool enabled)
+        {
+            playerInputHandler.enabled = enabled;
+        }
+
         private void HandleAttack()
         {
+            if (isInventoryOpen)
+            {
+                return;
+            }
+
             if (playerInputHandler.AttackTriggered)
             {
                 // Attack logic here
@@ -169,6 +181,10 @@ namespace Catalyst.Player
 
         private void HandleMovement()
         {
+            if (isInventoryOpen)
+            {
+                return;
+            }
 
             playerDir = CalculatePlayerDirection();
 
@@ -216,6 +232,11 @@ namespace Catalyst.Player
 
         private void HandleRotation()
         {
+            if (isInventoryOpen)
+            {
+                return;
+            }
+
             mouseXRotation = playerInputHandler.RotationInput.x * playerData.MouseSensitivity * playerData.RotationSpeed;
             mouseYRotation = playerInputHandler.RotationInput.y * playerData.MouseSensitivity;
 
@@ -271,8 +292,6 @@ namespace Catalyst.Player
                 }
             }
         }
-
-
 
         public void TakeDamage(int amount)
         {

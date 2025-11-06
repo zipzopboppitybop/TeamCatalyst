@@ -23,4 +23,8 @@ public class Inventory
             inventorySlots.Add(new InventorySlot());
         }
     }
+    public void NotifySlotChanged(InventorySlot slot)
+    {
+        OnInventorySlotChanged?.Invoke(slot);
+    }
 }
