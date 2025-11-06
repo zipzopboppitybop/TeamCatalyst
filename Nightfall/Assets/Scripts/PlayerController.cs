@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour, IPickup
 
     public bool AddToInventory(ItemData item, int amountToAdd)
     {
-        Inventory playerInventory = inventoryHolder.Inventory;
+        Inventory playerInventory = inventoryHolder.PrimaryInventory;
         List<InventorySlot> slots = playerInventory.InventorySlots;
 
         for (int i = 0; i < slots.Count; i++)
@@ -91,6 +91,7 @@ public class PlayerController : MonoBehaviour, IPickup
                 if (slot.RoomLeftInStack(amountToAdd))
                 {
                     slot.AddToStack(amountToAdd);
+                    playerInventory.OnInventorySlotChanged?.Invoke(slot);
                     return true;
                 }
             }
@@ -102,6 +103,7 @@ public class PlayerController : MonoBehaviour, IPickup
             if (slot.ItemData == null)
             {
                 slot.UpdateInventorySlot(item, amountToAdd);
+                playerInventory.OnInventorySlotChanged?.Invoke(slot);
                 return true;
             }
         }

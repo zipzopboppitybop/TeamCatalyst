@@ -2,9 +2,6 @@ using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
 
-
-
-
 namespace Catalyst.Player
 {
     public class PlayerController : MonoBehaviour
@@ -25,6 +22,7 @@ namespace Catalyst.Player
         private Vector3 _currentMovement;
         private float _verticalRotation;
         public bool isInverted;
+        public bool isInventoryOpen;
 
         private float mouseXRotation;
         private float mouseYRotation;
@@ -85,8 +83,18 @@ namespace Catalyst.Player
 
         }
 
+        public void EnablePlayerInput(bool enabled)
+        {
+            playerInputHandler.enabled = enabled;
+        }
+
         private void HandleAttack()
         {
+            if (isInventoryOpen)
+            {
+                return;
+            }
+
             if (playerInputHandler.AttackTriggered)
             {
                 // Attack logic here
@@ -169,6 +177,10 @@ namespace Catalyst.Player
 
         private void HandleMovement()
         {
+            if (isInventoryOpen)
+            {
+                return;
+            }
 
             playerDir = CalculatePlayerDirection();
 
@@ -216,6 +228,11 @@ namespace Catalyst.Player
 
         private void HandleRotation()
         {
+            if (isInventoryOpen)
+            {
+                return;
+            }
+
             mouseXRotation = playerInputHandler.RotationInput.x * playerData.MouseSensitivity * playerData.RotationSpeed;
             mouseYRotation = playerInputHandler.RotationInput.y * playerData.MouseSensitivity;
 
@@ -255,12 +272,15 @@ namespace Catalyst.Player
 
         public void UpdateInteract()
         {
-            if (playerInputHandler.InteractTriggered)
+            if (Input.GetKeyDown(KeyCode.E))
             {
+                Debug.DrawRay(mainCamera.transform.position, mainCamera.transform.forward * playerData.InteractRange, Color.red, 1f);
+
                 if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out RaycastHit hit, playerData.InteractRange, ~ignoreLayer))
-                {
+                    {
+                    TryOpenChest(hit);
                     // logging the collider the raycast hit //
-                    Debug.Log(hit.collider.name);
+                    Debug.Log("Hit " + hit.collider.name);
 
                     // if the collider has the IDamage interface, we store it in 'target'
                     //IInteractable target = hit.collider.GetComponent<IInteractable>();
@@ -272,7 +292,14 @@ namespace Catalyst.Player
             }
         }
 
-
+        private void TryOpenChest(RaycastHit hit)
+        {
+            Chest chest = hit.collider.GetComponent<Chest>();
+            if (chest != null)
+            {
+                chest.OpenChest();
+            }
+        }
 
         public void TakeDamage(int amount)
         {
@@ -308,8 +335,6 @@ namespace Catalyst.Player
             yield return new WaitForSeconds(1.0f);
             playerInputHandler.enabled = true;
         }
-
-
     }
 }
 
