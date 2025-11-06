@@ -25,13 +25,16 @@ public class TilePainter : MonoBehaviour
     void Update()
     {
         
-        RaycastHit hit;
-
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, placeDist, ~ignoreLayer))
+        if (Input.GetButtonDown("Interact"))
         {        
-            currentCell = map.WorldToCell(hit.point);
-            map.SetTile(currentCell, testTile);
-        }
+            RaycastHit hit;
 
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, placeDist, ~ignoreLayer))
+            {
+                currentCell = map.WorldToCell(hit.point);
+                RuleTile selectedTile = (RuleTile)map.GetTile(currentCell);
+                map.SetTile(currentCell, testTile);
+            }
+}
     }
 }
