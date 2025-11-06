@@ -37,6 +37,7 @@ namespace Catalyst.Player
         private int animSprinting;
         private int animAttack;
         private int animDodge;
+        private int animDash;
 
         private int jumpCount = 0;
 
@@ -47,10 +48,7 @@ namespace Catalyst.Player
         {
             characterController = GetComponent<CharacterController>();
             SetupAnimator();
-            //Cursor.lockState = CursorLockMode.Locked;
-            //Cursor.visible = false;
             thirdPersonCamera.gameObject.SetActive(false);
-            //animator.SetBool(animGrounded, true);
         }
 
         private void LateUpdate()
@@ -72,6 +70,7 @@ namespace Catalyst.Player
 
             HandleAttack();
             HandleDodge();
+            HandleDash();
             UpdateInteract();
             ThirdPersonActive();
 
@@ -85,6 +84,8 @@ namespace Catalyst.Player
             animSprinting = Animator.StringToHash("Sprinting");
             animAttack = Animator.StringToHash("Attack");
             animDodge = Animator.StringToHash("Dodge");
+            animDash = Animator.StringToHash("Dash");
+
 
 
 
@@ -176,6 +177,10 @@ namespace Catalyst.Player
             {
                 animator.ResetTrigger(animDodge);
             }
+        }
+
+        private void HandleDash()
+        {             // Dash logic here
         }
         private void ThirdPersonActive()
         {
