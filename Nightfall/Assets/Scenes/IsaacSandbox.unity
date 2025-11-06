@@ -175,6 +175,7 @@ MonoBehaviour:
   itemDrop: {fileID: 0}
   bullet: {fileID: 0}
   shootPos: {fileID: 0}
+  enemyPos: []
 --- !u!65 &98019905
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -526,6 +527,8 @@ MonoBehaviour:
   itemDrop: {fileID: 0}
   bullet: {fileID: 7802366829314756072, guid: 59f4905e1f1955642b6c61f28622f736, type: 3}
   shootPos: {fileID: 1768085065}
+  enemyPos:
+  - {fileID: 1314897069}
 --- !u!65 &572883539
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -750,7 +753,7 @@ GameObject:
   - component: {fileID: 1314897070}
   m_Layer: 0
   m_Name: DefensiveTest
-  m_TagString: Enemy
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -791,6 +794,7 @@ MonoBehaviour:
   itemDrop: {fileID: 0}
   bullet: {fileID: 0}
   shootPos: {fileID: 0}
+  enemyPos: []
 --- !u!65 &1314897071
 BoxCollider:
   m_ObjectHideFlags: 0
