@@ -32,12 +32,10 @@ namespace Catalyst.Player
         private InputAction _diveAction;
 
         [SerializeField] private string interact = "Interact";
-        [SerializeField] private string crouch = "Crouch";
         [SerializeField] private string dodge = "Dodge";
         [SerializeField] private string jump = "Jump";
 
         private InputAction _interactAction;
-        private InputAction _crouchAction;
         private InputAction _dodgeAction;
         private InputAction _jumpAction;
 
@@ -70,7 +68,6 @@ namespace Catalyst.Player
         public bool DiveTriggered { get; private set; }
 
         public bool InteractTriggered { get; private set; }
-        public bool CrouchTriggered { get; private set; }
         public bool DodgeTriggered { get; private set; }
         public bool JumpTriggered { get; private set; }
         public bool PrevTriggered { get; private set; }
@@ -97,7 +94,6 @@ namespace Catalyst.Player
             _attackAction = mapReference.FindAction(attack);
             _diveAction = mapReference.FindAction(dive);
             _interactAction = mapReference.FindAction(interact);
-            _crouchAction = mapReference.FindAction(crouch);
             _dodgeAction = mapReference.FindAction(dodge);
             _jumpAction = mapReference.FindAction(jump);
 
@@ -133,8 +129,6 @@ namespace Catalyst.Player
             _interactAction.performed += inputInfo => InteractTriggered = true;
             _interactAction.canceled += inputInfo => InteractTriggered = false;
 
-            _crouchAction.performed += inputInfo => CrouchTriggered = true;
-            _crouchAction.canceled += inputInfo => CrouchTriggered = false;
             _dodgeAction.performed += inputInfo => DodgeTriggered = true;
             _dodgeAction.canceled += inputInfo => DodgeTriggered = false;
 

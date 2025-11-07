@@ -111,7 +111,8 @@ namespace Catalyst.Player
             if (playerInputHandler.AttackTriggered)
             {
                 // Attack logic here
-                animator.SetTrigger(animAttack);
+                StartCoroutine(Attack());
+
 
             }
             else
@@ -141,11 +142,25 @@ namespace Catalyst.Player
 
             }
         }
-        private Vector3 CalculatePlayerDirection()
+        private Vector3 CalculateMoveDirection()
         {
             Vector3 inputDirection = new Vector3(playerInputHandler.MoveInput.x, 0f, playerInputHandler.MoveInput.y);
-            Vector3 playerDirection = transform.TransformDirection(inputDirection);
-            return playerDirection.normalized;
+
+
+
+
+            Vector3 camForward = mainCamera.transform.forward;
+            Vector3 camRight = mainCamera.transform.right;
+
+            camForward.y = 0f;
+            camRight.y = 0f;
+
+            camForward.Normalize();
+            camRight.Normalize();
+            Vector3 moveDirection = (camForward * inputDirection.z) + (camRight * inputDirection.x);
+
+
+            return moveDirection.normalized;
         }
 
         private void HandleJumping()
@@ -213,7 +228,7 @@ namespace Catalyst.Player
                 return;
             }
 
-            playerDir = CalculatePlayerDirection();
+            playerDir = CalculateMoveDirection();
 
             _currentMovement.x = playerDir.x * CurrentSpeed();
             _currentMovement.z = playerDir.z * CurrentSpeed();
@@ -300,7 +315,7 @@ namespace Catalyst.Player
 
         public void UpdateInteract()
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (playerInputHandler.InteractTriggered)
             {
                 Debug.DrawRay(mainCamera.transform.position, mainCamera.transform.forward * playerData.InteractRange, Color.red, 1f);
 
@@ -313,7 +328,7 @@ namespace Catalyst.Player
                     // if the collider has the IDamage interface, we store it in 'target'
                     //IInteractable target = hit.collider.GetComponent<IInteractable>();
 
-                    // null check on the target. if target is not null, we call 'TakeDamage'
+                    // null check on the target. if target is not null, we call 'interact'
                     //target?.Interact();
 
                 }
@@ -360,6 +375,14 @@ namespace Catalyst.Player
             // Stop everything a bit to avoid multiple toggles      
             playerInputHandler.enabled = false;
             cam.gameObject.SetActive(!cam.gameObject.activeSelf);
+            yield return new WaitForSeconds(1.0f);
+            playerInputHandler.enabled = true;
+        }
+
+        IEnumerator Attack()
+        {
+            playerInputHandler.enabled = false;
+            animator.SetTrigger(animAttack);
             yield return new WaitForSeconds(1.0f);
             playerInputHandler.enabled = true;
         }
