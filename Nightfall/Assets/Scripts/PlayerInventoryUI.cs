@@ -16,6 +16,7 @@ public class PlayerInventoryUI : MonoBehaviour
     private VisualElement[] slots;
     private int slotCount;
     private int selectedSlot;
+    private InventorySlot selectedInventorySlot;
 
     private InventorySlot draggingSlotOriginal;
     private int draggingSlotIndex;
@@ -118,6 +119,11 @@ public class PlayerInventoryUI : MonoBehaviour
             InventoryDragManager.draggedIcon.style.top = panelPos.y - InventoryDragManager.draggedIcon.resolvedStyle.height / 2f;
             InventoryDragManager.draggedIcon.pickingMode = PickingMode.Ignore;
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            DropSelectedItem();
+        }
     }
 
     private void HandleHotBarInput()
@@ -171,6 +177,7 @@ public class PlayerInventoryUI : MonoBehaviour
     private void SelectSlot(int index)
     {
         selectedSlot = index;
+        selectedInventorySlot = inventory.InventorySlots[index];
         UpdateSelection();
     }
 
@@ -370,5 +377,41 @@ public class PlayerInventoryUI : MonoBehaviour
     public bool IsVisible()
     {
         return isVisible && root.style.display == DisplayStyle.Flex;
+    }
+
+    public InventorySlot GetSelectedSlot()
+    {
+        return selectedInventorySlot;
+    }
+
+    public ItemData GetSelectedItem()
+    {
+        return selectedInventorySlot?.ItemData;
+    }
+
+
+    public void DropSelectedItem()
+    {
+        if (selectedInventorySlot == null || selectedInventorySlot.ItemData == null)
+        {
+            return;
+        }
+
+        GameObject dropPrefab = selectedInventorySlot.ItemData.dropPrefab;
+        if (dropPrefab != null)
+        {
+            Vector3 dropPosition = player.transform.position + player.transform.forward * 1.5f;
+            GameObject.Instantiate(dropPrefab, dropPosition, Quaternion.identity);
+        }
+
+        selectedInventorySlot.RemoveFromStack(1);
+
+        if (selectedInventorySlot.StackSize <= 0)
+        {
+            selectedInventorySlot.UpdateInventorySlot(null, 0);
+        }
+
+        inventory.OnInventorySlotChanged?.Invoke(selectedInventorySlot);
+        RefreshInventory();
     }
 }
