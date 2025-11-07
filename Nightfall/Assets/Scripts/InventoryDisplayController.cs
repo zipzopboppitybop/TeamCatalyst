@@ -59,11 +59,18 @@ public class InventoryDisplayController : MonoBehaviour
 
     public void CloseChest()
     {
-        chestInventoryUI.Show(false);  
-        playerInventoryUI.Show(false);
-        chestInventoryUI.isChestUI = false;
+        if (!chestOpen)
+        {
+            return;
+        }
+
+        chestInventoryUI.Show(false);
+        chestInventoryUI.SetInventory(null); 
+        chestInventoryUI.isChestUI = true;
+
         chestOpen = false;
 
+        playerInventoryUI.Show(false);
         playerController.isInventoryOpen = false;
 
         Cursor.lockState = CursorLockMode.Locked;

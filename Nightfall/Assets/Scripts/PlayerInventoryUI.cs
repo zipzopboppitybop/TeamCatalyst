@@ -25,6 +25,7 @@ public class PlayerInventoryUI : MonoBehaviour
     public bool isChestUI;
 
     private Catalyst.Player.PlayerController playerController;
+    private bool isVisible = false;
 
     void Awake()
     {
@@ -298,24 +299,27 @@ public class PlayerInventoryUI : MonoBehaviour
 
     public void SetInventory(Inventory newInventory)
     {
-        if (newInventory == null)
-        {
-            return;
-        }
-
-
+        // Unsubscribe from previous if any
         if (inventory != null)
         {
             inventory.OnInventorySlotChanged -= RefreshInventory;
         }
-            
 
         inventory = newInventory;
-        inventory.OnInventorySlotChanged += RefreshInventory;
 
-        BuildChestSlots();
-
-        RefreshInventory();
+        if (inventory != null)
+        {
+            inventory.OnInventorySlotChanged += RefreshInventory;
+            BuildChestSlots();
+            RefreshInventory();
+        }
+        else
+        {
+            // If inventory is null, ensure the UI clears itself and is not visible
+            // (Important for chest UI to not re-appear with old data)
+            root.style.display = DisplayStyle.None;
+            isVisible = false;
+        }
     }
 
     private void BuildChestSlots()
@@ -347,6 +351,27 @@ public class PlayerInventoryUI : MonoBehaviour
     }
     public void Show(bool show)
     {
+        if (isChestUI)
+        {
+            if (!show)
+            {
+                root.style.display = DisplayStyle.None;
+                return;
+            }
+
+            if (inventory == null)
+            {
+                root.style.display = DisplayStyle.None;
+                return;
+            }
+        }
+
         root.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+    }
+
+    public bool IsVisible()
+    {
+        // Use our tracked flag (and sanity-check root style)
+        return isVisible && root.style.display == DisplayStyle.Flex;
     }
 }
