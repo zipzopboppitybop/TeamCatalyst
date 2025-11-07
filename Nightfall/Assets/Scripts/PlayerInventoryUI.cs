@@ -35,13 +35,14 @@ public class PlayerInventoryUI : MonoBehaviour
 
         if (!isChestUI)
         {
-            inventory = isHotbar
-                ? player.GetComponent<PlayerInventoryHolder>().PrimaryInventory
-                : player.GetComponent<PlayerInventoryHolder>().SecondaryInventory;
+            inventory = isHotbar ? player.GetComponent<PlayerInventoryHolder>().PrimaryInventory : player.GetComponent<PlayerInventoryHolder>().SecondaryInventory;
         }
 
         if (!isHotbar)
+        {
             root.style.display = DisplayStyle.None;
+        }
+           
     }
     void Start()
     {
