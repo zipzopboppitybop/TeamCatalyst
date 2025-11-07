@@ -239,6 +239,15 @@ namespace Catalyst.Player
 
             animator.SetFloat(animVelocityX, Mathf.SmoothDamp(animator.GetFloat(animVelocityX), _currentMovement.x, ref _velocityX, 0.1f));
             animator.SetFloat(animVelocityZ, Mathf.SmoothDamp(animator.GetFloat(animVelocityZ), _currentMovement.z, ref _velocityZ, 0.1f));
+
+            // Rotate player towards movement direction if there's input
+            //Vector3 flatMovement = new Vector3(_currentMovement.x, 0, _currentMovement.z);
+            //if (flatMovement.magnitude > 0.1f)
+            //{
+            //    Quaternion targetRotation = Quaternion.LookRotation(flatMovement);
+            //    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, playerData.RotationSpeed * Time.deltaTime);
+            //}
+
         }
 
         private void ApplyHorizontalRotation(float rotationAmount)
@@ -305,6 +314,7 @@ namespace Catalyst.Player
 
             _cinemachineTargetYaw = UpdateRotation(_cinemachineTargetYaw, yaw, float.MinValue, float.MaxValue, false);
             followTarget.rotation = Quaternion.Euler(_cinemachineTargetPitch, _cinemachineTargetYaw, followTarget.eulerAngles.z);
+
         }
 
         private float UpdateRotation(float currentRotation, float input, float min, float max, bool isXAxis)
