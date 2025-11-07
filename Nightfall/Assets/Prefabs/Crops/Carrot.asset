@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Carrot
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   Icon: {fileID: 21300000, guid: 73e2a05c61e022847b8c16bbb41024e7, type: 3}
-  dropPrefab: {fileID: 1000014111768446, guid: 2cf13a738fc434c46bda5ebf7ca44756, type: 3}
+  dropPrefab: {fileID: 2909803302003888380, guid: 4e85cafb5039f5049bbfe8582346e40f, type: 3}
   displayName: Carrot
   id: 1
   sellValue: 0
