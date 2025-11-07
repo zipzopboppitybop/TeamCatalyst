@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Catalyst.Player
 {
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoBehaviour, IDamage
     {
         [Header("References")]
 
@@ -342,34 +342,7 @@ namespace Catalyst.Player
                 }
             }
         }
-        private void TryOpenChest(RaycastHit hit)
-        {
-            Chest chest = hit.collider.GetComponent<Chest>();
-            if (chest != null)
-            {
-                chest.OpenChest();
-            }
-        }
 
-        public void TakeDamage(int amount)
-        {
-            playerData.Health -= amount;
-
-            /*if (isLowHealth && !InfoManager.instance.IsInfoShowing())
-            {
-
-                InfoManager.instance.ShowMessage("WARNING!", "Health Critical!", Color.red, 2);
-            }
-
-            UpdatePlayerHealthBarUI();*/
-
-            StartCoroutine(FlashDamageScreen());
-
-            if (playerData.Health <= 0)
-            {
-                // GameManager.Instance.YouLose();
-            }
-        }
         IEnumerator FlashDamageScreen()
         {
             //HUDManager.instance.playerDamageScreen.SetActive(true);
@@ -392,6 +365,26 @@ namespace Catalyst.Player
             animator.SetTrigger(animAttack);
             yield return new WaitForSeconds(1.0f);
             playerInputHandler.enabled = true;
+        }
+
+        public void takeDamage(int amount)
+        {
+            playerData.Health -= amount;
+
+            /*if (isLowHealth && !InfoManager.instance.IsInfoShowing())
+            {
+
+                InfoManager.instance.ShowMessage("WARNING!", "Health Critical!", Color.red, 2);
+            }
+
+            UpdatePlayerHealthBarUI();*/
+
+            StartCoroutine(FlashDamageScreen());
+
+            if (playerData.Health <= 0)
+            {
+                Debug.Log("You are dead!");
+            }
         }
     }
 }

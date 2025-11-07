@@ -15,7 +15,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
 
-    
+    public GameObject player;
+    public Catalyst.Player.PlayerController playerScript;
+    public GameObject playerSpawnPos;
+
     [SerializeField] float dayLengthMinutes;
     [SerializeField] int nightStart;
     [SerializeField] int nightEnd;
@@ -36,6 +39,9 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         timeScaleOrig = Time.timeScale;
+
+        player = GameObject.FindWithTag("Player");
+        playerScript = player.GetComponent<Catalyst.Player.PlayerController>();
     }
 
     // Update is called once per frame
