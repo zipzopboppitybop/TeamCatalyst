@@ -1,5 +1,7 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Tilemaps;
 using Unity.VisualScripting;
 
 public class TowerBase : MonoBehaviour, IDamage
@@ -9,20 +11,26 @@ public class TowerBase : MonoBehaviour, IDamage
 
     [SerializeField] TowerType typeTower;
 
-    [SerializeField] int hp;
+    [SerializeField] Tilemap map;
+
+    [SerializeField] int hpMax;
     [SerializeField] int damage;
+    [SerializeField] int healAmt;
 
     [SerializeField] float attSpeed;
+    [SerializeField] float healSpeed;
 
     [SerializeField] GameObject itemDrop;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject shootPos;
 
     bool isFullyGrown = false;
-    bool EnemyInRange = true;
+    bool EnemyInRange = false;
     bool isWatered = false;
+    bool isHealing = false;
 
     int enemiesInRange;
+    public int hp = 5;
     [SerializeField] List<Transform> enemyPos;
 
     float shootTime;
@@ -43,6 +51,13 @@ public class TowerBase : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
+
+        if (hp < hpMax && !isHealing)
+        {
+
+            StartCoroutine(Heal());
+
+        }
 
         if (typeTower == TowerType.Offensive)
         {        
@@ -157,9 +172,30 @@ public class TowerBase : MonoBehaviour, IDamage
         {
             if (typeTower == TowerType.Crop && isFullyGrown)
                 Instantiate(itemDrop, transform.position, transform.rotation);
+
+            map = GameObject.Find("Towers/Buildings").GetComponent<Tilemap>();
+            if (map)
+                map.SetTile(map.WorldToCell(transform.position), null);
+
             Destroy(gameObject);
+            
         }
 
+    }
+
+    IEnumerator Heal()
+    {
+        isHealing = true;
+        if (typeTower == TowerType.Defensive)
+            takeDamage(1);
+        else
+            hp += healAmt;
+        if (hp > hpMax)
+        {
+            hp = hpMax;
+        }
+        yield return new WaitForSeconds(healSpeed);
+        isHealing = false;
     }
 
 }

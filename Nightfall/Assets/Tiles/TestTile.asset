@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: TestTile
   m_EditorClassIdentifier: Unity.2D.Tilemap.Extras::UnityEngine.RuleTile
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 6590940025105313857, guid: 669261105159e9848a63643d6f7d262f, type: 3}
+  m_DefaultGameObject: {fileID: 7632616995248582593, guid: 0e151effee1cb8c4d813f6d1e3e7f42b, type: 3}
   m_DefaultColliderType: 0
   m_TilingRules: []
