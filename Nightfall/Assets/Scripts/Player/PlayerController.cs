@@ -25,17 +25,20 @@ namespace Catalyst.Player
         public bool isInverted;
         public bool isInventoryOpen;
 
-        private float mouseXRotation;
-        private float mouseYRotation;
+        private float _mouseXRotation;
+        private float _mouseYRotation;
+        private float _velocityX;
+        private float _velocityZ;
 
         [Header("Animation")]
-        private int animMoveSpeed;
         private int animJump;
         private int animGrounded;
         private int animSprinting;
         private int animAttack;
         private int animDodge;
         private int animDash;
+        private int animVelocityX;
+        private int animVelocityZ;
 
         private int jumpCount = 0;
 
@@ -47,12 +50,13 @@ namespace Catalyst.Player
             characterController = GetComponent<CharacterController>();
             SetupAnimator();
             thirdPersonCamera.gameObject.SetActive(false);
+
         }
 
         private void LateUpdate()
         {
             //if (ThirdPersonActive())
-            ApplyThirdPersonRotation(mouseYRotation, mouseXRotation);
+            ApplyThirdPersonRotation(_mouseYRotation, _mouseXRotation);
 
 
 
@@ -76,13 +80,16 @@ namespace Catalyst.Player
 
         private void SetupAnimator()
         {
-            animMoveSpeed = Animator.StringToHash("Speed");
+
             animJump = Animator.StringToHash("Jump");
             animGrounded = Animator.StringToHash("Grounded");
             animSprinting = Animator.StringToHash("Sprinting");
             animAttack = Animator.StringToHash("Attack");
             animDodge = Animator.StringToHash("Dodge");
             animDash = Animator.StringToHash("Dash");
+
+            animVelocityX = Animator.StringToHash("Velocity X");
+            animVelocityZ = Animator.StringToHash("Velocity Z");
 
 
 
@@ -104,7 +111,8 @@ namespace Catalyst.Player
             if (playerInputHandler.AttackTriggered)
             {
                 // Attack logic here
-                animator.SetTrigger(animAttack);
+                StartCoroutine(Attack());
+
 
             }
             else
@@ -134,11 +142,25 @@ namespace Catalyst.Player
 
             }
         }
-        private Vector3 CalculatePlayerDirection()
+        private Vector3 CalculateMoveDirection()
         {
             Vector3 inputDirection = new Vector3(playerInputHandler.MoveInput.x, 0f, playerInputHandler.MoveInput.y);
-            Vector3 playerDirection = transform.TransformDirection(inputDirection);
-            return playerDirection.normalized;
+
+
+
+
+            Vector3 camForward = mainCamera.transform.forward;
+            Vector3 camRight = mainCamera.transform.right;
+
+            camForward.y = 0f;
+            camRight.y = 0f;
+
+            camForward.Normalize();
+            camRight.Normalize();
+            Vector3 moveDirection = (camForward * inputDirection.z) + (camRight * inputDirection.x);
+
+
+            return moveDirection.normalized;
         }
 
         private void HandleJumping()
@@ -206,7 +228,7 @@ namespace Catalyst.Player
                 return;
             }
 
-            playerDir = CalculatePlayerDirection();
+            playerDir = CalculateMoveDirection();
 
             _currentMovement.x = playerDir.x * CurrentSpeed();
             _currentMovement.z = playerDir.z * CurrentSpeed();
@@ -215,16 +237,13 @@ namespace Catalyst.Player
 
             characterController.Move(_currentMovement * Time.deltaTime);
 
-            animator.SetFloat(animMoveSpeed, Mathf.Max(Mathf.Max(Mathf.Abs(_currentMovement.z), Mathf.Abs(_currentMovement.x)), Mathf.Abs(mouseXRotation)));
-            //ThirdPersonActive();
+            animator.SetFloat(animVelocityX, Mathf.SmoothDamp(animator.GetFloat(animVelocityX), _currentMovement.x, ref _velocityX, 0.1f));
+            animator.SetFloat(animVelocityZ, Mathf.SmoothDamp(animator.GetFloat(animVelocityZ), _currentMovement.z, ref _velocityZ, 0.1f));
         }
 
         private void ApplyHorizontalRotation(float rotationAmount)
         {
-
-
             transform.Rotate(0, rotationAmount, 0);
-
         }
 
 
@@ -257,13 +276,13 @@ namespace Catalyst.Player
                 return;
             }
 
-            mouseXRotation = playerInputHandler.RotationInput.x * playerData.MouseSensitivity * playerData.RotationSpeed;
-            mouseYRotation = playerInputHandler.RotationInput.y * playerData.MouseSensitivity;
+            _mouseXRotation = playerInputHandler.RotationInput.x * playerData.MouseSensitivity * playerData.RotationSpeed;
+            _mouseYRotation = playerInputHandler.RotationInput.y * playerData.MouseSensitivity;
 
 
 
-            ApplyHorizontalRotation(mouseXRotation);
-            ApplyVerticalRotation(mouseYRotation);
+            ApplyHorizontalRotation(_mouseXRotation);
+            ApplyVerticalRotation(_mouseYRotation);
 
         }
 
@@ -296,12 +315,12 @@ namespace Catalyst.Player
 
         public void UpdateInteract()
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (playerInputHandler.InteractTriggered)
             {
                 Debug.DrawRay(mainCamera.transform.position, mainCamera.transform.forward * playerData.InteractRange, Color.red, 1f);
 
                 if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out RaycastHit hit, playerData.InteractRange, ~ignoreLayer))
-                    {
+                {
                     TryOpenChest(hit);
                     // logging the collider the raycast hit //
                     Debug.Log("Hit " + hit.collider.name);
@@ -309,7 +328,7 @@ namespace Catalyst.Player
                     // if the collider has the IDamage interface, we store it in 'target'
                     //IInteractable target = hit.collider.GetComponent<IInteractable>();
 
-                    // null check on the target. if target is not null, we call 'TakeDamage'
+                    // null check on the target. if target is not null, we call 'interact'
                     //target?.Interact();
 
                 }
@@ -356,6 +375,14 @@ namespace Catalyst.Player
             // Stop everything a bit to avoid multiple toggles      
             playerInputHandler.enabled = false;
             cam.gameObject.SetActive(!cam.gameObject.activeSelf);
+            yield return new WaitForSeconds(1.0f);
+            playerInputHandler.enabled = true;
+        }
+
+        IEnumerator Attack()
+        {
+            playerInputHandler.enabled = false;
+            animator.SetTrigger(animAttack);
             yield return new WaitForSeconds(1.0f);
             playerInputHandler.enabled = true;
         }
