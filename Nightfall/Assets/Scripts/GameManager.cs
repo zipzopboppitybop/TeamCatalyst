@@ -14,28 +14,37 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
-
-    
+   
     [SerializeField] float dayLengthMinutes;
     [SerializeField] int nightStart;
     [SerializeField] int nightEnd;
     [SerializeField] Image dayImage;
     [SerializeField] Image nightImage;
 
+    public GameObject player;
+    public GameObject playerSpawnPos;
+
     float timeScaleOrig;
     float timeOfDay = 7;
     int day = 1;
 
-    public bool isPaused;
+    public bool isPaused = false;
     bool wasNight;
-    
+
+    void Awake()
+    {
+        instance = this;
+        timeScaleOrig = Time.timeScale;
+
+        player = GameObject.FindWithTag("Player");
+        playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
+    }
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        instance = this;
-        timeScaleOrig = Time.timeScale;
+        Debug.Log("Starting GameManager");
     }
 
     // Update is called once per frame
@@ -76,8 +85,7 @@ public class GameManager : MonoBehaviour
     }
     public void YouLose()
     {
-        StatePause();
-        
+        StatePause();  
     }
 
     void UpdateGameClock()

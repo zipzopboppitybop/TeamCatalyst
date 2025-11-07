@@ -25,6 +25,7 @@ public class PlayerInventoryUI : MonoBehaviour
     public bool isChestUI;
 
     private Catalyst.Player.PlayerController playerController;
+    private bool isVisible = false;
 
     void Awake()
     {
@@ -34,13 +35,14 @@ public class PlayerInventoryUI : MonoBehaviour
 
         if (!isChestUI)
         {
-            inventory = isHotbar
-                ? player.GetComponent<PlayerInventoryHolder>().PrimaryInventory
-                : player.GetComponent<PlayerInventoryHolder>().SecondaryInventory;
+            inventory = isHotbar ? player.GetComponent<PlayerInventoryHolder>().PrimaryInventory : player.GetComponent<PlayerInventoryHolder>().SecondaryInventory;
         }
 
         if (!isHotbar)
+        {
             root.style.display = DisplayStyle.None;
+        }
+           
     }
     void Start()
     {
@@ -298,24 +300,24 @@ public class PlayerInventoryUI : MonoBehaviour
 
     public void SetInventory(Inventory newInventory)
     {
-        if (newInventory == null)
-        {
-            return;
-        }
-
-
         if (inventory != null)
         {
             inventory.OnInventorySlotChanged -= RefreshInventory;
         }
-            
 
         inventory = newInventory;
-        inventory.OnInventorySlotChanged += RefreshInventory;
 
-        BuildChestSlots();
-
-        RefreshInventory();
+        if (inventory != null)
+        {
+            inventory.OnInventorySlotChanged += RefreshInventory;
+            BuildChestSlots();
+            RefreshInventory();
+        }
+        else
+        {
+            root.style.display = DisplayStyle.None;
+            isVisible = false;
+        }
     }
 
     private void BuildChestSlots()
@@ -347,6 +349,26 @@ public class PlayerInventoryUI : MonoBehaviour
     }
     public void Show(bool show)
     {
+        if (isChestUI)
+        {
+            if (!show)
+            {
+                root.style.display = DisplayStyle.None;
+                return;
+            }
+
+            if (inventory == null)
+            {
+                root.style.display = DisplayStyle.None;
+                return;
+            }
+        }
+
         root.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+    }
+
+    public bool IsVisible()
+    {
+        return isVisible && root.style.display == DisplayStyle.Flex;
     }
 }
