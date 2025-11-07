@@ -34,8 +34,8 @@ MonoBehaviour:
   jumpMax: 1
   mouseSensitivity: 0.1
   rotationSpeed: 0.5
-  upLookRange: 60
-  downLookRange: 60
+  upLookRange: 90
+  downLookRange: 90
   keysCollected: 0
   notesCollected: 0
   roomsClear: 0
