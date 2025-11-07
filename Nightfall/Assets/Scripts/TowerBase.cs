@@ -7,9 +7,9 @@ using Unity.VisualScripting;
 public class TowerBase : MonoBehaviour, IDamage
 {
 
-    [SerializeField] enum TowerType { Crop, Defensive, Offensive };
+    [SerializeField] public enum TowerType { Crop, Defensive, Offensive, Farmland };
 
-    [SerializeField] TowerType typeTower;
+    [SerializeField] public TowerType typeTower;
 
     [SerializeField] Tilemap map;
 
@@ -27,6 +27,7 @@ public class TowerBase : MonoBehaviour, IDamage
     bool isFullyGrown = false;
     bool EnemyInRange = false;
     bool isWatered = false;
+    bool isFertilized = false;
     bool isHealing = false;
 
     int enemiesInRange;
