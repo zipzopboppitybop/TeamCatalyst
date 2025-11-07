@@ -7,7 +7,6 @@ using Catalyst.Player;
 
 public class PlayerInventoryUI : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
     [SerializeField] private bool isHotbar;
     [SerializeField] private PlayerInventoryUI hotbarUI;
 
@@ -26,17 +25,19 @@ public class PlayerInventoryUI : MonoBehaviour
     public bool isChestUI;
 
     private Catalyst.Player.PlayerController playerController;
+    private GameObject player;
     private bool isVisible = false;
 
     void Awake()
     {
+        player = GameManager.instance.player;
         playerController = player.GetComponent<Catalyst.Player.PlayerController>();
         inputHandler = playerController.playerInputHandler;
         root = GetComponent<UIDocument>().rootVisualElement;
 
         if (!isChestUI)
         {
-            inventory = isHotbar ? player.GetComponent<PlayerInventoryHolder>().PrimaryInventory : player.GetComponent<PlayerInventoryHolder>().SecondaryInventory;
+            inventory = isHotbar ? GameManager.instance.player.GetComponent<PlayerInventoryHolder>().PrimaryInventory : GameManager.instance.player.GetComponent<PlayerInventoryHolder>().SecondaryInventory;
         }
 
         if (!isHotbar)

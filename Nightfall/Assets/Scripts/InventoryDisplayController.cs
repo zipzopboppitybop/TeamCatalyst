@@ -5,7 +5,6 @@ public class InventoryDisplayController : MonoBehaviour
 {
     [SerializeField] private PlayerInventoryUI playerInventoryUI;
     [SerializeField] private PlayerInventoryUI chestInventoryUI;
-    [SerializeField] private GameObject player;
 
     private Catalyst.Player.PlayerController playerController;
     private bool chestOpen = false;
@@ -14,7 +13,7 @@ public class InventoryDisplayController : MonoBehaviour
 
     private void Start()
     {
-        playerController = player.GetComponent<Catalyst.Player.PlayerController>();
+        playerController = GameManager.instance.player.GetComponent<Catalyst.Player.PlayerController>();
         playerInventoryUI.Show(false);
         chestInventoryUI.Show(false);
         chestOpen = false;
