@@ -8,6 +8,7 @@ using UnityEngine;
 public class ItemData : ScriptableObject
 {
     public Sprite Icon;
+    public GameObject dropPrefab;
     public string displayName;
     public int id;
     public float sellValue;
