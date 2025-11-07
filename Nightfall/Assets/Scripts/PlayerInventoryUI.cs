@@ -299,7 +299,6 @@ public class PlayerInventoryUI : MonoBehaviour
 
     public void SetInventory(Inventory newInventory)
     {
-        // Unsubscribe from previous if any
         if (inventory != null)
         {
             inventory.OnInventorySlotChanged -= RefreshInventory;
@@ -315,8 +314,6 @@ public class PlayerInventoryUI : MonoBehaviour
         }
         else
         {
-            // If inventory is null, ensure the UI clears itself and is not visible
-            // (Important for chest UI to not re-appear with old data)
             root.style.display = DisplayStyle.None;
             isVisible = false;
         }
@@ -371,7 +368,6 @@ public class PlayerInventoryUI : MonoBehaviour
 
     public bool IsVisible()
     {
-        // Use our tracked flag (and sanity-check root style)
         return isVisible && root.style.display == DisplayStyle.Flex;
     }
 }

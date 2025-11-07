@@ -325,26 +325,23 @@ namespace Catalyst.Player
 
         public void UpdateInteract()
         {
-            if (playerInputHandler.InteractTriggered)
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                Debug.DrawRay(mainCamera.transform.position, mainCamera.transform.forward * playerData.InteractRange, Color.red, 1f);
+                Vector3 origin = mainCamera.transform.position;
+                Vector3 direction = mainCamera.transform.forward;
 
-                if (Physics.Raycast(mainCamera.transform.position, mainCamera.transform.forward, out RaycastHit hit, playerData.InteractRange, ~ignoreLayer))
+                Debug.DrawRay(origin, direction * playerData.InteractRange, Color.red, 1f);
+
+                if (Physics.Raycast(origin, direction, out RaycastHit hit, playerData.InteractRange, ~ignoreLayer))
                 {
-                    TryOpenChest(hit);
-                    // logging the collider the raycast hit //
-                    Debug.Log("Hit " + hit.collider.name);
-
-                    // if the collider has the IDamage interface, we store it in 'target'
-                    //IInteractable target = hit.collider.GetComponent<IInteractable>();
-
-                    // null check on the target. if target is not null, we call 'interact'
-                    //target?.Interact();
-
+                    Chest chest = hit.collider.GetComponent<Chest>();
+                    if (chest != null)
+                    {
+                        chest.OpenChest();
+                    }
                 }
             }
         }
-
         private void TryOpenChest(RaycastHit hit)
         {
             Chest chest = hit.collider.GetComponent<Chest>();
