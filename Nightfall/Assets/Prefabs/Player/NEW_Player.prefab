@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 101605453515531810}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.518, z: -0.00031995773}
+  m_LocalPosition: {x: -0.000000074505806, y: 1.565, z: 0.10500002}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -66,7 +66,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.4
+  near clip plane: 0.6
   far clip plane: 1000
   field of view: 60.000004
   orthographic: 0
@@ -317,6 +317,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   isInverted: 0
+  isInventoryOpen: 0
 --- !u!143 &1149818978128675595
 CharacterController:
   m_ObjectHideFlags: 0
@@ -354,8 +355,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d31e9e3f420c2545b272015d676cd8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InventoryHolder
-  inventorySize: 10
-  inventory:
+  primaryInventorySize: 0
+  primaryInventory:
     inventorySlots: []
 --- !u!1 &911967790513804149
 GameObject:
@@ -1401,7 +1402,7 @@ Transform:
   m_GameObject: {fileID: 5028370697536180988}
   serializedVersion: 2
   m_LocalRotation: {x: -2.9321115e-19, y: 7.8019063e-10, z: -0.000000024896487, w: 1}
-  m_LocalPosition: {x: 0, y: 1.518, z: -0.00031995773}
+  m_LocalPosition: {x: 0, y: 1.565, z: 0.105}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1422,7 +1423,7 @@ MonoBehaviour:
   Priority:
     Enabled: 1
     m_Value: 0
-  OutputChannel: 1
+  OutputChannel: 2
   StandbyUpdate: 2
   m_StreamingVersion: 20241001
   m_LegacyPriority: 0
@@ -1433,7 +1434,7 @@ MonoBehaviour:
   Lens:
     FieldOfView: 60.000004
     OrthographicSize: 5
-    NearClipPlane: 0.4
+    NearClipPlane: 0.6
     FarClipPlane: 1000
     Dutch: 0
     ModeOverride: 0
