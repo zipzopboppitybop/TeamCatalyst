@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Catalyst.GamePlay.Farming;
+
 using UnityEngine;
 
 
@@ -7,6 +9,7 @@ namespace Catalyst.Player
     [CreateAssetMenu(fileName = "Player Data", menuName = "Player/PlayerData")]
     public class PlayerData : ScriptableObject
     {
+
         [SerializeField] GameObject playerPrefab;
         [Header("Player Data")]
         [SerializeField] private string nameTag = "Player";
@@ -19,6 +22,7 @@ namespace Catalyst.Player
         [SerializeField, Range(0, 30)] private int stealth = 5;
         [SerializeField, Range(0, 5)] private int interactRange = 2;
         [SerializeField] private int currency = 0;
+        [SerializeField] private FarmingStateMachine.FarmingState currentFarmingState = FarmingStateMachine.FarmingState.None;
 
         [Header("Weapon Data")]
         [SerializeField] private int shootDamage;
@@ -125,5 +129,36 @@ namespace Catalyst.Player
             currency = 0;
 
         }
+
+        public FarmingStateMachine.FarmingState CurrentFarmingState
+        {
+            get => currentFarmingState;
+            set => currentFarmingState = value;
+        }
+        //public void FarmingStateMachine(FarmingState newState)
+        //{
+        //    currentFarmingState = newState;
+
+        //    switch (currentFarmingState)
+        //    {
+        //        case FarmingState.None:
+        //            // Handle None state
+        //            break;
+        //        case FarmingState.Plowing:
+        //            // Handle Plowing state
+        //            break;
+        //        case FarmingState.Watering:
+        //            // Handle Watering state
+        //            break;
+        //        case FarmingState.Planting:
+        //            // Handle Planting state
+        //            break;
+        //        case FarmingState.Harvesting:
+        //            // Handle Harvesting state
+        //            break;
+        //        default:
+        //            break;
+        //    }
+        //}
     }
 }
