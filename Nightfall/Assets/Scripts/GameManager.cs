@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
 
     public bool isPaused = false;
     bool wasNight;
+    public bool IsNight;
 
     void Awake()
     {
@@ -116,7 +117,9 @@ public class GameManager : MonoBehaviour
         
         
         bool isNight = IsNightHour(hour, nightStart, nightEnd);
-        if(wasNight && !isNight)
+        IsNight = isNight;
+
+        if (wasNight && !isNight)
         {
             day += 1;
         }
@@ -150,17 +153,17 @@ public class GameManager : MonoBehaviour
 
     bool IsNightHour(int hour, int startHour, int endHour)
     {
-        int nightStartPM = (startHour == 12) ? 12 : startHour +12;
-        int nightEndAM = (endHour == 12) ? 0 : endHour;
+        int nightStart24 = (startHour < 12) ? startHour + 12 : startHour; 
+        int nightEnd24 = (endHour == 12) ? 0 : endHour;                  
 
-       if(nightStartPM < nightEndAM)
+        if (nightStart24 > nightEnd24)
         {
-            return hour >= nightStartPM && hour < nightEndAM;
+            return hour >= nightStart24 || hour < nightEnd24;
         }
-       else
+            
+        else
         {
-            return hour >=nightStartPM || hour < nightEndAM;
-        }
+            return hour >= nightStart24 && hour < nightEnd24;
+        }  
     }
-
 }
