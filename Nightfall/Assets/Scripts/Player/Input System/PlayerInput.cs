@@ -612,6 +612,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""Crouch"",
+                    ""type"": ""Button"",
+                    ""id"": ""cd4f30fb-93b0-4681-b74a-f1367b14cef7"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""106493c1-bfc3-4606-ba7d-193b39391b05"",
@@ -1206,6 +1215,28 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Inventory"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8fe42166-c7b8-40e9-b7b4-6f6465559cec"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a2d2bd04-001e-4769-8298-f00b5a866ce6"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1809,6 +1840,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Farmer_Attack = m_Farmer.FindAction("Attack", throwIfNotFound: true);
         m_Farmer_Interact = m_Farmer.FindAction("Interact", throwIfNotFound: true);
         m_Farmer_Dodge = m_Farmer.FindAction("Dodge", throwIfNotFound: true);
+        m_Farmer_Crouch = m_Farmer.FindAction("Crouch", throwIfNotFound: true);
         m_Farmer_Jump = m_Farmer.FindAction("Jump", throwIfNotFound: true);
         m_Farmer_Previous = m_Farmer.FindAction("Previous", throwIfNotFound: true);
         m_Farmer_Next = m_Farmer.FindAction("Next", throwIfNotFound: true);
@@ -2102,6 +2134,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Farmer_Attack;
     private readonly InputAction m_Farmer_Interact;
     private readonly InputAction m_Farmer_Dodge;
+    private readonly InputAction m_Farmer_Crouch;
     private readonly InputAction m_Farmer_Jump;
     private readonly InputAction m_Farmer_Previous;
     private readonly InputAction m_Farmer_Next;
@@ -2143,6 +2176,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Farmer/Dodge".
         /// </summary>
         public InputAction @Dodge => m_Wrapper.m_Farmer_Dodge;
+        /// <summary>
+        /// Provides access to the underlying input action "Farmer/Crouch".
+        /// </summary>
+        public InputAction @Crouch => m_Wrapper.m_Farmer_Crouch;
         /// <summary>
         /// Provides access to the underlying input action "Farmer/Jump".
         /// </summary>
@@ -2224,6 +2261,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Dodge.started += instance.OnDodge;
             @Dodge.performed += instance.OnDodge;
             @Dodge.canceled += instance.OnDodge;
+            @Crouch.started += instance.OnCrouch;
+            @Crouch.performed += instance.OnCrouch;
+            @Crouch.canceled += instance.OnCrouch;
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
@@ -2280,6 +2320,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Dodge.started -= instance.OnDodge;
             @Dodge.performed -= instance.OnDodge;
             @Dodge.canceled -= instance.OnDodge;
+            @Crouch.started -= instance.OnCrouch;
+            @Crouch.performed -= instance.OnCrouch;
+            @Crouch.canceled -= instance.OnCrouch;
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
@@ -2716,6 +2759,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDodge(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Crouch" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnCrouch(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Jump" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

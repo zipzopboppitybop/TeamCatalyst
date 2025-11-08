@@ -13,6 +13,8 @@ namespace Catalyst.Player
         public CinemachineCamera mainCamera;
         public CinemachineCamera thirdPersonCamera;
         [SerializeField] private Transform followTarget;
+        [SerializeField] GameObject gunModel;
+        public AudioSource aud;
 
         private float _cinemachineTargetPitch;
         private float _cinemachineTargetYaw;
@@ -31,25 +33,29 @@ namespace Catalyst.Player
         private float _velocityZ;
 
         [Header("Animation")]
-        private int animJump;
-        private int animGrounded;
-        private int animAttack;
-        private int animDodge;
-        private int animDash;
-        private int animAim;
-        private int animVelocityX;
-        private int animVelocityZ;
+        private int _animJump;
+        private int _animGrounded;
+        private int _animAttack;
+        private int _animDodge;
+        private int _animDash;
+        private int _animAim;
+        private int _animShoot;
+        private int _animVelocityX;
+        private int _animVelocityZ;
 
-        private int jumpCount = 0;
+        private int _jumpCount = 0;
+        private float _shootTimer = 0f;
 
         private CharacterController characterController;
         private Vector3 playerDir;
+        private int _gunListPos;
 
         private void Start()
         {
             characterController = GetComponent<CharacterController>();
             SetupAnimator();
             thirdPersonCamera.gameObject.SetActive(false);
+
 
         }
 
@@ -72,6 +78,7 @@ namespace Catalyst.Player
             HandleRotation();
 
             HandleAttack();
+            HandleAim();
             HandleDodge();
             HandleDash();
             UpdateInteract();
@@ -82,14 +89,15 @@ namespace Catalyst.Player
         private void SetupAnimator()
         {
 
-            animJump = Animator.StringToHash("Jump");
-            animGrounded = Animator.StringToHash("Grounded");
-            animAttack = Animator.StringToHash("Attack");
-            animDodge = Animator.StringToHash("Dodge");
-            animDash = Animator.StringToHash("Dash");
-            animAim = Animator.StringToHash("Aim");
-            animVelocityX = Animator.StringToHash("Velocity X");
-            animVelocityZ = Animator.StringToHash("Velocity Z");
+            _animJump = Animator.StringToHash("Jump");
+            _animGrounded = Animator.StringToHash("Grounded");
+            _animAttack = Animator.StringToHash("Attack");
+            _animDodge = Animator.StringToHash("Dodge");
+            _animDash = Animator.StringToHash("Dash");
+            _animAim = Animator.StringToHash("Aiming");
+            _animShoot = Animator.StringToHash("Shoot");
+            _animVelocityX = Animator.StringToHash("Velocity X");
+            _animVelocityZ = Animator.StringToHash("Velocity Z");
 
 
 
@@ -129,19 +137,19 @@ namespace Catalyst.Player
         {
             if (characterController.isGrounded)
             {
-                jumpCount = 0;
+                _jumpCount = 0;
 
                 _currentMovement.y = -1f; // Small downward force to keep the player grounded
 
-                animator.SetBool(animGrounded, true);
+                animator.SetBool(_animGrounded, true);
 
-                if (playerInputHandler.JumpTriggered && jumpCount < playerData.JumpMax)
+                if (playerInputHandler.JumpTriggered && _jumpCount < playerData.JumpMax)
                 {
 
                     _currentMovement.y = playerData.JumpForce;
 
                     StartCoroutine(Jump());
-                    jumpCount++;
+                    _jumpCount++;
 
                 }
 
@@ -152,8 +160,8 @@ namespace Catalyst.Player
             {
 
                 _currentMovement.y += Physics.gravity.y * playerData.GravityMultiplier * Time.deltaTime;
-                animator.SetBool(animGrounded, false);
-                animator.ResetTrigger(animJump);
+                animator.SetBool(_animGrounded, false);
+                animator.ResetTrigger(_animJump);
 
             }
         }
@@ -187,6 +195,7 @@ namespace Catalyst.Player
 
         private void HandleMovement()
         {
+            _shootTimer += Time.deltaTime;
             if (isInventoryOpen)
             {
                 return;
@@ -198,14 +207,13 @@ namespace Catalyst.Player
             _currentMovement.x = playerDir.x * CurrentSpeed;
             _currentMovement.z = playerDir.z * CurrentSpeed;
             HandleJumping();
-            HandleAttack();
 
-            HandleAim();
+
 
             characterController.Move(_currentMovement * Time.deltaTime);
 
-            animator.SetFloat(animVelocityX, Mathf.SmoothDamp(animator.GetFloat(animVelocityX), playerInputHandler.MoveInput.x * _currentMovement.magnitude, ref _velocityX, 0.1f));
-            animator.SetFloat(animVelocityZ, Mathf.SmoothDamp(animator.GetFloat(animVelocityZ), playerInputHandler.MoveInput.y * _currentMovement.magnitude, ref _velocityZ, 0.1f));
+            animator.SetFloat(_animVelocityX, Mathf.SmoothDamp(animator.GetFloat(_animVelocityX), playerInputHandler.MoveInput.x * _currentMovement.magnitude, ref _velocityX, 0.1f));
+            animator.SetFloat(_animVelocityZ, Mathf.SmoothDamp(animator.GetFloat(_animVelocityZ), playerInputHandler.MoveInput.y * _currentMovement.magnitude, ref _velocityZ, 0.1f));
             HandleDodge();
 
 
@@ -318,7 +326,57 @@ namespace Catalyst.Player
         {
             if (playerInputHandler.AimTriggered)
             {
-                StartCoroutine(Aim());
+                animator.SetBool(_animAim, true);
+                Debug.Log("Aiming");
+                HandleShoot();
+
+            }
+            else
+            {
+                animator.SetBool(_animAim, false);
+
+            }
+
+        }
+
+        private void HandleShoot()
+        {
+            if (playerInputHandler.FireTriggered && _shootTimer > playerData.ShootRate)
+            {
+                _shootTimer = 0f;
+                Shoot();
+                animator.SetTrigger("Shoot");
+                Debug.Log("Shooting");
+                //animator.ResetTrigger("Shoot");
+
+            }
+        }
+
+        private void Shoot()
+        {
+            void shoot()
+            {
+                _shootTimer = 0;
+                playerData.Guns[_gunListPos].ammoCur--;
+                aud.PlayOneShot(playerData.Guns[_gunListPos].shootSounds[Random.Range(0, playerData.Guns[_gunListPos].shootSounds.Length)], playerData.Guns[_gunListPos].shootVolume);
+                //updatePlayerUI();
+
+                RaycastHit hit;
+                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, playerData.ShootDist, ~ignoreLayer))
+                {
+                    Instantiate(playerData.Guns[_gunListPos].hitEffect, hit.point, Quaternion.identity);
+
+                    Debug.Log(hit.collider.name);
+
+                    IDamage dmg = hit.collider.GetComponent<IDamage>();
+
+                    if (dmg != null)
+                    {
+
+                        dmg.takeDamage(playerData.ShootDamage);
+                    }
+
+                }
             }
         }
 
@@ -340,42 +398,36 @@ namespace Catalyst.Player
 
         IEnumerator Attack()
         {
-            playerInputHandler.enabled = false;
-            animator.SetTrigger(animAttack);
+
+            animator.SetTrigger(_animAttack);
             yield return new WaitForSeconds(1.0f);
-            playerInputHandler.enabled = true;
+            animator.ResetTrigger(_animAttack);
+            playerInputHandler.AttackTriggered = false;
         }
 
         IEnumerator Dash()
         {
-            playerInputHandler.enabled = false;
-            animator.SetTrigger(animDash);
+
+            //animator.SetTrigger(animDash);
             yield return new WaitForSeconds(1.0f);
-            playerInputHandler.enabled = true;
+            //playerInputHandler.DashTriggered = false;
         }
 
-        IEnumerator Aim()
-        {
-            while (playerInputHandler.AimTriggered)
-                animator.SetBool(animAim, true);
-            yield return new WaitForSeconds(0.1f);
-            animator.SetBool(animAim, false);
-
-        }
 
         IEnumerator Dodge()
         {
 
-            animator.SetTrigger(animDodge);
+            animator.SetTrigger(_animDodge);
             yield return new WaitForSeconds(1.0f);
-            playerInputHandler.DiveTriggered = false;
+            animator.ResetTrigger(_animDodge);
+            playerInputHandler.DodgeTriggered = false;
         }
 
         IEnumerator Jump()
         {
-            animator.SetTrigger(animJump);
+            animator.SetTrigger(_animJump);
             yield return new WaitForSeconds(0.5f);
-            animator.ResetTrigger(animJump);
+            animator.ResetTrigger(_animJump);
             playerInputHandler.JumpTriggered = false;
         }
 
@@ -398,7 +450,9 @@ namespace Catalyst.Player
                 Debug.Log("You are dead!");
             }
         }
+
     }
 }
+
 
 
