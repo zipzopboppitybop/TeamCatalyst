@@ -18,11 +18,11 @@ MonoBehaviour:
   health: 100
   healthMax: 100
   stamina: 10
-  staminaRegen: 100
+  staminaRegen: 10
   staminaMax: 10
   stealth: 5
   interactRange: 2
-  currency: 5
+  currency: 0
   shootDamage: 0
   shootRate: 0
   shootDist: 0
@@ -34,9 +34,10 @@ MonoBehaviour:
   gravityMultiplier: 1
   jumpMax: 1
   mouseSensitivity: 0.1
-  rotationSpeed: 0.5
-  upLookRange: 90
-  downLookRange: 90
+  cameraRotationSpeed: 0.5
+  rotationSpeed: 10
+  upLookRange: 89
+  downLookRange: 89
   keysCollected: 0
   notesCollected: 0
   roomsClear: 0

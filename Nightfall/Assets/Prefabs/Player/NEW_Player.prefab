@@ -104,8 +104,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
-  m_Name:
-  m_EditorClassIdentifier:
+  m_Name: 
+  m_EditorClassIdentifier: 
   m_RenderShadows: 1
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
@@ -148,7 +148,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineBrain
   ShowDebugText: 0
   ShowCameraFrustum: 1
@@ -291,7 +291,7 @@ Animator:
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0
-  m_WarningMessage:
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
@@ -306,7 +306,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d2602afaa71c0374a8ac4e4c23eaf689, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.Controller.PlayerController
   animator: {fileID: 4961241792348632301}
   mainCamera: {fileID: 3444322935365968269}
@@ -354,7 +354,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2ee2b8d0c15c874285d824d1397e2b5, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInventoryHolder
   primaryInventorySize: 9
   primaryInventory:
@@ -823,7 +823,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
   Priority:
     Enabled: 1
@@ -866,7 +866,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineBasicMultiChannelPerlin
   NoiseProfile: {fileID: 11400000, guid: e9ce97b7a206dc64d90931ea044e0c72, type: 2}
   PivotOffset: {x: 0, y: 0, z: 0.5}
@@ -1111,7 +1111,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f9dfa5b682dcd46bda6128250e975f58, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineCamera
   Priority:
     Enabled: 1
@@ -1154,12 +1154,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2588cc5dedbb75e49a44aada63f7b939, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineThirdPersonAim
   AimCollisionFilter:
     serializedVersion: 2
     m_Bits: 1
-  IgnoreTag:
+  IgnoreTag: 
   AimDistance: 200
   NoiseCancellation: 1
 --- !u!114 &3133442214757443783
@@ -1172,7 +1172,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 625c14eee3ad46c99df7c7c891ef668a, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineThirdPersonFollow
   Damping: {x: 0.1, y: 0.5, z: 0.3}
   ShoulderOffset: {x: 0.5, y: -0.4, z: 0}
@@ -1184,7 +1184,7 @@ MonoBehaviour:
     CollisionFilter:
       serializedVersion: 2
       m_Bits: 1
-    IgnoreTag:
+    IgnoreTag: 
     CameraRadius: 0.2
     DampingIntoCollision: 0
     DampingFromCollision: 0.5
@@ -2291,43 +2291,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5199384780881427304, guid: 6134b32c8d8602a48b13183afaa4ef03, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.000503
+      value: 0.000567
       objectReference: {fileID: 0}
     - target: {fileID: 5199384780881427304, guid: 6134b32c8d8602a48b13183afaa4ef03, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.007884
+      value: 0.007972
       objectReference: {fileID: 0}
     - target: {fileID: 5199384780881427304, guid: 6134b32c8d8602a48b13183afaa4ef03, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.000888
+      value: 0.001097
       objectReference: {fileID: 0}
     - target: {fileID: 5199384780881427304, guid: 6134b32c8d8602a48b13183afaa4ef03, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.016659312
+      value: -0.009281566
       objectReference: {fileID: 0}
     - target: {fileID: 5199384780881427304, guid: 6134b32c8d8602a48b13183afaa4ef03, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.0075236876
+      value: -0.031734698
       objectReference: {fileID: 0}
     - target: {fileID: 5199384780881427304, guid: 6134b32c8d8602a48b13183afaa4ef03, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.09148662
+      value: -0.03430014
       objectReference: {fileID: 0}
     - target: {fileID: 5199384780881427304, guid: 6134b32c8d8602a48b13183afaa4ef03, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.9956386
+      value: 0.99886453
       objectReference: {fileID: 0}
     - target: {fileID: 5199384780881427304, guid: 6134b32c8d8602a48b13183afaa4ef03, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: -10.482
+      value: 3.963
       objectReference: {fileID: 0}
     - target: {fileID: 5199384780881427304, guid: 6134b32c8d8602a48b13183afaa4ef03, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: -1.051
+      value: -3.607
       objectReference: {fileID: 0}
     - target: {fileID: 5199384780881427304, guid: 6134b32c8d8602a48b13183afaa4ef03, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 182.014
+      value: 180.94
       objectReference: {fileID: 0}
     - target: {fileID: 5199384780881427304, guid: 6134b32c8d8602a48b13183afaa4ef03, type: 3}
       propertyPath: m_ConstrainProportionsScale

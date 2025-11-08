@@ -111,14 +111,7 @@ namespace Catalyst.Player
 
             if (playerInputHandler.AttackTriggered)
             {
-                // Attack logic here
                 StartCoroutine(Attack());
-
-
-            }
-            else
-            {
-                animator.ResetTrigger(animAttack);
             }
 
         }
@@ -181,13 +174,14 @@ namespace Catalyst.Player
         private void HandleDash()
         {             // Dash logic here
         }
-        private void ThirdPersonActive()
+        private bool ThirdPersonActive()
         {
 
             if (playerInputHandler.ToggleCameraTriggered)
             {
                 StartCoroutine(ToggleCamera(thirdPersonCamera));
             }
+            return thirdPersonCamera.gameObject.activeSelf;
         }
 
         private void HandleMovement()
@@ -214,7 +208,24 @@ namespace Catalyst.Player
 
         private void ApplyHorizontalRotation(float rotationAmount)
         {
-            transform.Rotate(0, rotationAmount, 0);
+            if (ThirdPersonActive() && playerInputHandler.MoveInput.magnitude < 0.1)
+            {
+                return;
+            }
+            else if (ThirdPersonActive() && playerInputHandler.MoveInput.magnitude >= 0.1)
+            { // make the player face the movement direction in third person smoothly
+                //Vector3 movementDirection = new Vector3(playerInputHandler.MoveInput.x, 0, playerInputHandler.MoveInput.y);
+                //float targetAngle = Mathf.Atan2(movementDirection.x, movementDirection.z) * Mathf.Rad2Deg + followTarget.eulerAngles.y; 
+                //float smoothedAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _cinemachineTargetYaw, 0.1f);
+                //transform.rotation = Quaternion.Euler(0, smoothedAngle, 0);
+                //transform.rotation = Quaternion.Euler(0, followTarget.eulerAngles.y, 0);
+
+                // lerp the transform rotation to the follow target rotation
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, followTarget.eulerAngles.y, 0), Time.deltaTime * playerData.CameraRotationSpeed * playerData.RotationSpeed);
+            }
+
+            else
+                transform.Rotate(0, rotationAmount, 0);
         }
 
 
@@ -247,7 +258,7 @@ namespace Catalyst.Player
                 return;
             }
 
-            _mouseXRotation = playerInputHandler.RotationInput.x * playerData.MouseSensitivity * playerData.RotationSpeed;
+            _mouseXRotation = playerInputHandler.RotationInput.x * playerData.MouseSensitivity * playerData.CameraRotationSpeed;
             _mouseYRotation = playerInputHandler.RotationInput.y * playerData.MouseSensitivity;
 
 
@@ -263,14 +274,14 @@ namespace Catalyst.Player
 
             if (isInverted)
             {
-                Debug.Log("Applying INVERTED third person rotation");
+                //Debug.Log("Applying INVERTED third person rotation");
                 _cinemachineTargetPitch = UpdateRotation(_cinemachineTargetPitch, -pitch, -playerData.DownLookRange, playerData.UpLookRange, true);
 
             }
             else if (!isInverted)
             {
 
-                Debug.Log("Applying third person rotation");
+                //Debug.Log("Applying third person rotation");
                 _cinemachineTargetPitch = UpdateRotation(_cinemachineTargetPitch, pitch, -playerData.DownLookRange, playerData.UpLookRange, true);
             }
 
