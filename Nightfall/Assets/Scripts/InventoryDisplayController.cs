@@ -5,7 +5,6 @@ public class InventoryDisplayController : MonoBehaviour
 {
     [SerializeField] private PlayerInventoryUI playerInventoryUI;
     [SerializeField] private PlayerInventoryUI chestInventoryUI;
-    [SerializeField] private GameObject player;
 
     private Catalyst.Player.PlayerController playerController;
     private bool chestOpen = false;
@@ -14,7 +13,7 @@ public class InventoryDisplayController : MonoBehaviour
 
     private void Start()
     {
-        playerController = player.GetComponent<Catalyst.Player.PlayerController>();
+        playerController = GameManager.instance.player.GetComponent<Catalyst.Player.PlayerController>();
         playerInventoryUI.Show(false);
         chestInventoryUI.Show(false);
         chestOpen = false;
@@ -56,16 +55,12 @@ public class InventoryDisplayController : MonoBehaviour
 
     private void ShowChestInventory(Inventory chestInventory)
     {
-        if (chestOpen)
+        if (chestOpen) return;
+
+        if (Time.time - lastChestOpenTime < 0.2f)
         {
             return;
         }
-
-        if (chestInventory == null)
-        {
-            return;
-        }
-
         chestOpen = true;
         lastChestOpenTime = Time.time;
         currentChestInventory = chestInventory;
@@ -73,7 +68,6 @@ public class InventoryDisplayController : MonoBehaviour
         chestInventoryUI.isChestUI = true;
         chestInventoryUI.SetInventory(chestInventory);
         chestInventoryUI.Show(true);
-
         playerInventoryUI.Show(true);
         playerController.isInventoryOpen = true;
 
@@ -86,10 +80,11 @@ public class InventoryDisplayController : MonoBehaviour
         if (!chestOpen) return;
 
         chestInventoryUI.Show(false);
-        chestInventoryUI.SetInventory(null); 
+        chestInventoryUI.SetInventory(null);
         chestInventoryUI.isChestUI = true;
 
         chestOpen = false;
+        lastChestOpenTime = Time.time;
 
         playerInventoryUI.Show(false);
         playerController.isInventoryOpen = false;
