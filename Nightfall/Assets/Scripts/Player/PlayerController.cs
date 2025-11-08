@@ -62,7 +62,8 @@ namespace Catalyst.Player
 
         }
 
-        //private float CurrentSpeed => playerData.Speed * (playerInputHandler.SprintTriggered ? playerData.SprintMultiplier : 1);
+        private float CurrentSpeed => playerData.Speed * (playerInputHandler.SprintTriggered ? playerData.SprintSpeed : 1);
+
 
         void Update()
         {
@@ -121,44 +122,12 @@ namespace Catalyst.Player
             }
 
         }
-        // Rewrite this to use playerData.Speed and playerData.SprintMultiplier with isSprinting bool
-        private float CurrentSpeed()
-        {
-            if (!characterController.isGrounded)
-            {
-                animator.SetBool(animSprinting, false);
-                return playerData.Speed;
-            }
-            if (playerInputHandler.SprintTriggered)
-            {
-                animator.SetBool(animSprinting, true);
-                return playerData.SprintSpeed;
 
-            }
-            else
-            {
-                animator.SetBool(animSprinting, false);
-                return playerData.Speed;
-
-            }
-        }
         private Vector3 CalculateMoveDirection()
         {
             Vector3 inputDirection = new Vector3(playerInputHandler.MoveInput.x, 0f, playerInputHandler.MoveInput.y);
 
-
-
-
-            Vector3 camForward = mainCamera.transform.forward;
-            Vector3 camRight = mainCamera.transform.right;
-
-            camForward.y = 0f;
-            camRight.y = 0f;
-
-            camForward.Normalize();
-            camRight.Normalize();
-            Vector3 moveDirection = (camForward * inputDirection.z) + (camRight * inputDirection.x);
-
+            Vector3 moveDirection = transform.TransformDirection(inputDirection);
 
             return moveDirection.normalized;
         }
@@ -230,23 +199,16 @@ namespace Catalyst.Player
 
             playerDir = CalculateMoveDirection();
 
-            _currentMovement.x = playerDir.x * CurrentSpeed();
-            _currentMovement.z = playerDir.z * CurrentSpeed();
+            _currentMovement.x = playerDir.x * CurrentSpeed;
+            _currentMovement.z = playerDir.z * CurrentSpeed;
             HandleJumping();
 
 
             characterController.Move(_currentMovement * Time.deltaTime);
 
-            animator.SetFloat(animVelocityX, Mathf.SmoothDamp(animator.GetFloat(animVelocityX), _currentMovement.x, ref _velocityX, 0.1f));
-            animator.SetFloat(animVelocityZ, Mathf.SmoothDamp(animator.GetFloat(animVelocityZ), _currentMovement.z, ref _velocityZ, 0.1f));
+            animator.SetFloat(animVelocityX, Mathf.SmoothDamp(animator.GetFloat(animVelocityX), playerInputHandler.MoveInput.x * _currentMovement.magnitude, ref _velocityX, 0.1f));
+            animator.SetFloat(animVelocityZ, Mathf.SmoothDamp(animator.GetFloat(animVelocityZ), playerInputHandler.MoveInput.y * _currentMovement.magnitude, ref _velocityZ, 0.1f));
 
-            // Rotate player towards movement direction if there's input
-            //Vector3 flatMovement = new Vector3(_currentMovement.x, 0, _currentMovement.z);
-            //if (flatMovement.magnitude > 0.1f)
-            //{
-            //    Quaternion targetRotation = Quaternion.LookRotation(flatMovement);
-            //    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, playerData.RotationSpeed * Time.deltaTime);
-            //}
 
         }
 
