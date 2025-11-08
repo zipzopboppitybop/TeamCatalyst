@@ -217,6 +217,6 @@ MonoBehaviour:
   type: 1
   rb: {fileID: 8679911106028331363}
   dmgAmt: 0
-  speed: 8
+  speed: 12
   destroyTime: 3
   dmgRate: 0
