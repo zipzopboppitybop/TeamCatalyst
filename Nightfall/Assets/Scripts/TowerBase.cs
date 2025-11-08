@@ -27,7 +27,7 @@ public class TowerBase : MonoBehaviour, IDamage
     bool isFullyGrown = false;
     bool EnemyInRange = false;
     bool isWatered = false;
-    bool isFertilized = false;
+    public bool isFertilized = false;
     bool isHealing = false;
 
     int enemiesInRange;
@@ -39,11 +39,19 @@ public class TowerBase : MonoBehaviour, IDamage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        
+
+        map = (Tilemap)FindAnyObjectByType(typeof(Tilemap));
+
         if (typeTower == TowerType.Offensive)
         {
 
             //enemyPos = new List<Transform>();
+
+        }
+        if (typeTower == TowerType.Farmland)
+        {
+
+            Fertilize();
 
         }
 
@@ -78,7 +86,7 @@ public class TowerBase : MonoBehaviour, IDamage
 
     }
 
-    void Grow()
+    public void Grow()
     {
 
         if (isWatered) 
@@ -116,11 +124,16 @@ public class TowerBase : MonoBehaviour, IDamage
 
     }
 
-    void WaterCrop()
+    public void WaterCrop()
     {
 
         isWatered = true;
 
+    }
+
+    public void Fertilize()
+    {
+        isFertilized = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -174,7 +187,6 @@ public class TowerBase : MonoBehaviour, IDamage
             if (typeTower == TowerType.Crop && isFullyGrown)
                 Instantiate(itemDrop, transform.position, transform.rotation);
 
-            map = GameObject.Find("Towers/Buildings").GetComponent<Tilemap>();
             if (map)
                 map.SetTile(map.WorldToCell(transform.position), null);
 
