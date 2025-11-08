@@ -62,22 +62,22 @@ namespace Catalyst.Player
 
         public Vector2 MoveInput { get; private set; }
         public Vector2 RotationInput { get; private set; }
-        public bool SprintTriggered { get; private set; }
+        public bool SprintTriggered { get; set; }
 
 
-        public bool AttackTriggered { get; private set; }
-        public bool DiveTriggered { get; private set; }
+        public bool AttackTriggered { get; set; }
+        public bool DiveTriggered { get; set; }
 
-        public bool InteractTriggered { get; private set; }
-        public bool DodgeTriggered { get; private set; }
-        public bool JumpTriggered { get; private set; }
-        public bool PrevTriggered { get; private set; }
-        public bool NextTriggered { get; private set; }
-        public bool AimTriggered { get; private set; }
-        public bool FireTriggered { get; private set; }
-        public bool PauseTriggered { get; private set; }
-        public bool ToggleCameraTriggered { get; private set; }
-        public bool ToggleInventoryTriggered { get; private set; }
+        public bool InteractTriggered { get; set; }
+        public bool DodgeTriggered { get;  set; }
+        public bool JumpTriggered { get; set; }
+        public bool PrevTriggered { get; set; }
+        public bool NextTriggered { get; set; }
+        public bool AimTriggered { get; set; }
+        public bool FireTriggered { get; set; }
+        public bool PauseTriggered { get; set; }
+        public bool ToggleCameraTriggered { get; set; }
+        public bool ToggleInventoryTriggered { get; set; }
 
 
         public PlayerController PlayerController => _playerController;

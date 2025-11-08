@@ -33,10 +33,10 @@ namespace Catalyst.Player
         [Header("Animation")]
         private int animJump;
         private int animGrounded;
-        private int animSprinting;
         private int animAttack;
         private int animDodge;
         private int animDash;
+        private int animAim;
         private int animVelocityX;
         private int animVelocityZ;
 
@@ -84,11 +84,10 @@ namespace Catalyst.Player
 
             animJump = Animator.StringToHash("Jump");
             animGrounded = Animator.StringToHash("Grounded");
-            animSprinting = Animator.StringToHash("Sprinting");
             animAttack = Animator.StringToHash("Attack");
             animDodge = Animator.StringToHash("Dodge");
             animDash = Animator.StringToHash("Dash");
-
+            animAim = Animator.StringToHash("Aim");
             animVelocityX = Animator.StringToHash("Velocity X");
             animVelocityZ = Animator.StringToHash("Velocity Z");
 
@@ -104,6 +103,7 @@ namespace Catalyst.Player
 
         private void HandleAttack()
         {
+
             if (isInventoryOpen)
             {
                 return;
@@ -139,9 +139,10 @@ namespace Catalyst.Player
                 {
 
                     _currentMovement.y = playerData.JumpForce;
-                    animator.SetTrigger(animJump);
+
+                    StartCoroutine(Jump());
                     jumpCount++;
-                    animator.ResetTrigger(animJump);
+
                 }
 
 
@@ -161,18 +162,18 @@ namespace Catalyst.Player
         {
             if (playerInputHandler.DodgeTriggered)
             {
-                // Dodge logic here
-                animator.SetTrigger(animDodge);
+                StartCoroutine(Dodge());
 
             }
-            else
-            {
-                animator.ResetTrigger(animDodge);
-            }
+
         }
 
         private void HandleDash()
         {             // Dash logic here
+            if (playerInputHandler.DiveTriggered)
+            {
+                StartCoroutine(Dash());
+            }
         }
         private bool ThirdPersonActive()
         {
@@ -191,17 +192,21 @@ namespace Catalyst.Player
                 return;
             }
 
+
             playerDir = CalculateMoveDirection();
 
             _currentMovement.x = playerDir.x * CurrentSpeed;
             _currentMovement.z = playerDir.z * CurrentSpeed;
             HandleJumping();
+            HandleAttack();
 
+            HandleAim();
 
             characterController.Move(_currentMovement * Time.deltaTime);
 
             animator.SetFloat(animVelocityX, Mathf.SmoothDamp(animator.GetFloat(animVelocityX), playerInputHandler.MoveInput.x * _currentMovement.magnitude, ref _velocityX, 0.1f));
             animator.SetFloat(animVelocityZ, Mathf.SmoothDamp(animator.GetFloat(animVelocityZ), playerInputHandler.MoveInput.y * _currentMovement.magnitude, ref _velocityZ, 0.1f));
+            HandleDodge();
 
 
         }
@@ -213,14 +218,7 @@ namespace Catalyst.Player
                 return;
             }
             else if (ThirdPersonActive() && playerInputHandler.MoveInput.magnitude >= 0.1)
-            { // make the player face the movement direction in third person smoothly
-                //Vector3 movementDirection = new Vector3(playerInputHandler.MoveInput.x, 0, playerInputHandler.MoveInput.y);
-                //float targetAngle = Mathf.Atan2(movementDirection.x, movementDirection.z) * Mathf.Rad2Deg + followTarget.eulerAngles.y; 
-                //float smoothedAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _cinemachineTargetYaw, 0.1f);
-                //transform.rotation = Quaternion.Euler(0, smoothedAngle, 0);
-                //transform.rotation = Quaternion.Euler(0, followTarget.eulerAngles.y, 0);
-
-                // lerp the transform rotation to the follow target rotation
+            {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, followTarget.eulerAngles.y, 0), Time.deltaTime * playerData.CameraRotationSpeed * playerData.RotationSpeed);
             }
 
@@ -316,6 +314,14 @@ namespace Catalyst.Player
             }
         }
 
+        private void HandleAim()
+        {
+            if (playerInputHandler.AimTriggered)
+            {
+                StartCoroutine(Aim());
+            }
+        }
+
         IEnumerator FlashDamageScreen()
         {
             //HUDManager.instance.playerDamageScreen.SetActive(true);
@@ -338,6 +344,39 @@ namespace Catalyst.Player
             animator.SetTrigger(animAttack);
             yield return new WaitForSeconds(1.0f);
             playerInputHandler.enabled = true;
+        }
+
+        IEnumerator Dash()
+        {
+            playerInputHandler.enabled = false;
+            animator.SetTrigger(animDash);
+            yield return new WaitForSeconds(1.0f);
+            playerInputHandler.enabled = true;
+        }
+
+        IEnumerator Aim()
+        {
+            while (playerInputHandler.AimTriggered)
+                animator.SetBool(animAim, true);
+            yield return new WaitForSeconds(0.1f);
+            animator.SetBool(animAim, false);
+
+        }
+
+        IEnumerator Dodge()
+        {
+
+            animator.SetTrigger(animDodge);
+            yield return new WaitForSeconds(1.0f);
+            playerInputHandler.DiveTriggered = false;
+        }
+
+        IEnumerator Jump()
+        {
+            animator.SetTrigger(animJump);
+            yield return new WaitForSeconds(0.5f);
+            animator.ResetTrigger(animJump);
+            playerInputHandler.JumpTriggered = false;
         }
 
         public void takeDamage(int amount)
