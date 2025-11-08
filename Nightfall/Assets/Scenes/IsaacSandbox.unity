@@ -230,63 +230,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 161052620}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &197782437
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 197782439}
-  - component: {fileID: 197782438}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &197782438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 197782437}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3dad75000e9a4f4393aca98b7edd8ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  cycle: {fileID: 0}
-  menuPause: {fileID: 0}
-  menuActive: {fileID: 0}
-  menuWin: {fileID: 0}
-  menuLose: {fileID: 0}
-  dayLengthMinutes: 1000
-  nightStart: 500
-  nightEnd: 1000
-  dayImage: {fileID: 0}
-  nightImage: {fileID: 0}
-  player: {fileID: 0}
-  playerSpawnPos: {fileID: 0}
-  isPaused: 0
---- !u!4 &197782439
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 197782437}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6162, y: 0, z: 1.17078}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &228485253
 GameObject:
   m_ObjectHideFlags: 0
@@ -927,6 +870,7 @@ MonoBehaviour:
   itemDrop: {fileID: 0}
   bullet: {fileID: 7802366829314756072, guid: 59f4905e1f1955642b6c61f28622f736, type: 3}
   shootPos: {fileID: 1768085065}
+  isWatered: 0
   isFertilized: 0
   hp: 10
   enemyPos: []
@@ -3326,10 +3270,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1619452957}
     m_Modifications:
-    - target: {fileID: 469334515918470217, guid: e919fa56c4ce6c54e852b9d8b2c41c34, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5518194028879325840, guid: e919fa56c4ce6c54e852b9d8b2c41c34, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4
@@ -3450,4 +3390,3 @@ SceneRoots:
   - {fileID: 395952192}
   - {fileID: 497310211}
   - {fileID: 720217878}
-  - {fileID: 197782439}

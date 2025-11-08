@@ -26,7 +26,7 @@ public class TowerBase : MonoBehaviour, IDamage
 
     bool isFullyGrown = false;
     bool EnemyInRange = false;
-    bool isWatered = false;
+    public bool isWatered = false;
     public bool isFertilized = false;
     bool isHealing = false;
 
