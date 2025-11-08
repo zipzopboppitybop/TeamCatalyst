@@ -13,8 +13,8 @@ public class ItemData : ScriptableObject
     [Range(0, 1)] public float audVol;
     public string displayName;
     public int id;
-    public float sellValue;
-    public float price;
+    public int sellValue;
+    public int price;
     public int maxStackSize;
     public enum itemType { Crop };
 }

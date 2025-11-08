@@ -22,7 +22,7 @@ MonoBehaviour:
   staminaMax: 10
   stealth: 5
   interactRange: 2
-  currency: 0
+  currency: 1
   shootDamage: 0
   shootRate: 0
   shootDist: 0

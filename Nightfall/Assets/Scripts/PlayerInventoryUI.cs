@@ -22,7 +22,7 @@ public class PlayerInventoryUI : MonoBehaviour
     private int draggingSlotIndex;
     private Inventory draggingFromInventory;
     private InputHandler inputHandler;
-    private bool toggleInventory;
+    public bool toggleInventory;
     public bool isChestUI;
 
     private Catalyst.Player.PlayerController playerController;
