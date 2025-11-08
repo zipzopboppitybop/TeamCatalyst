@@ -141,7 +141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6811085360175029284, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.02
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6811085360175029284, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: m_LocalPosition.z
@@ -655,6 +655,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8272304274015388471, guid: 850d76213ccfce441b81d97e44a5b046, type: 3}
+      propertyPath: hotbarUI
+      value: 
+      objectReference: {fileID: 1932196211}
     - target: {fileID: 9123029653283244616, guid: 850d76213ccfce441b81d97e44a5b046, type: 3}
       propertyPath: m_Name
       value: PlayerInventory
@@ -1040,6 +1044,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1932196211 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 183008615394390395, guid: 2ea92dcc5b7e3d34997474e9075b3699, type: 3}
+  m_PrefabInstance: {fileID: 1317579050}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8d5be07c4c084a409a8fa42c321aca3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventoryUI
 --- !u!1 &2103391245
 GameObject:
   m_ObjectHideFlags: 0

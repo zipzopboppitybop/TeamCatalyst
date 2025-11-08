@@ -19,5 +19,5 @@ MonoBehaviour:
   displayName: Carrot
   id: 1
   sellValue: 0
-  price: 0
+  price: 1
   maxStackSize: 5

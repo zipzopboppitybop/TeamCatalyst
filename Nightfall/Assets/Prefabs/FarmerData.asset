@@ -23,11 +23,11 @@ MonoBehaviour:
   stealth: 5
   interactRange: 2
   currency: 0
-  shootDamage: 0
-  shootRate: 0
-  shootDist: 0
-  ammoCount: 0
-  ammoMax: 0
+  shootDamage: 5
+  shootRate: 1
+  shootDist: 20
+  ammoCount: 20
+  ammoMax: 20
   walkingSpeed: 0.5
   sprintSpeed: 5
   jumpForce: 5
