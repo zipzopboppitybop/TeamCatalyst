@@ -9,6 +9,7 @@ public class PlayerInventoryUI : MonoBehaviour
 {
     [SerializeField] private bool isHotbar;
     [SerializeField] private PlayerInventoryUI hotbarUI;
+    [SerializeField] private UIDocument document;
 
     private Inventory inventory;
     private VisualElement root;
@@ -28,12 +29,26 @@ public class PlayerInventoryUI : MonoBehaviour
     private GameObject player;
     private bool isVisible = false;
 
-    void Awake()
+    void Start()
     {
         player = GameManager.instance.player;
         playerController = player.GetComponent<Catalyst.Player.PlayerController>();
         inputHandler = playerController.playerInputHandler;
-        root = GetComponent<UIDocument>().rootVisualElement;
+        if (document == null)
+        {
+            document = GetComponent<UIDocument>();
+        }
+
+
+        root = document.rootVisualElement;
+
+        Debug.Log($"Root picking mode: {root.pickingMode}");
+        root.pickingMode = PickingMode.Ignore;
+
+        if (root != null)
+        {
+            Debug.Log("hello");
+        }
 
         if (!isChestUI)
         {
@@ -44,10 +59,7 @@ public class PlayerInventoryUI : MonoBehaviour
         {
             root.style.display = DisplayStyle.None;
         }
-           
-    }
-    void Start()
-    {
+
         VisualElement slotsContainer = root.Q<VisualElement>("Slots");
         slots = null;
 
