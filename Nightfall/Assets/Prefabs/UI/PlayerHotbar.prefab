@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3170298285995465051}
   - component: {fileID: 7307711384107351066}
+  - component: {fileID: 183008615394390395}
   m_Layer: 5
   m_Name: PlayerHotbar
   m_TagString: Untagged
@@ -25,9 +26,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1746317241588825310}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.18276, y: 0, z: -4.93769}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -960.52277, y: -426.40845, z: -9.086076}
+  m_LocalScale: {x: 0.89878714, y: 0.89878714, z: 0.89878714}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -44,10 +45,10 @@ MonoBehaviour:
   m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
-  m_PanelSettings: {fileID: 11400000, guid: 1aa67fa1198a12649ae38300a9e697e2, type: 2}
+  m_PanelSettings: {fileID: 11400000, guid: 33638fa3bbfc28144a1ef94f1ab382ff, type: 2}
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 622ee6995450375409cbeed9b7632897, type: 3}
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_Position: 0
   m_WorldSpaceSizeMode: 1
   m_WorldSpaceWidth: 1920
@@ -55,3 +56,19 @@ MonoBehaviour:
   m_PivotReferenceSize: 0
   m_Pivot: 0
   m_WorldSpaceCollider: {fileID: 0}
+--- !u!114 &183008615394390395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1746317241588825310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8d5be07c4c084a409a8fa42c321aca3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventoryUI
+  isHotbar: 1
+  hotbarUI: {fileID: 0}
+  document: {fileID: 7307711384107351066}
+  isChestUI: 0

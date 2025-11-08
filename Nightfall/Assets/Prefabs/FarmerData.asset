@@ -18,10 +18,11 @@ MonoBehaviour:
   health: 100
   healthMax: 100
   stamina: 10
-  staminaRegen: 10
+  staminaRegen: 100
   staminaMax: 10
   stealth: 5
   interactRange: 2
+  currency: 5
   shootDamage: 0
   shootRate: 0
   shootDist: 0

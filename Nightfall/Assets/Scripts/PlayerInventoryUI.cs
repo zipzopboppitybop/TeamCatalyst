@@ -7,15 +7,16 @@ using Catalyst.Player;
 
 public class PlayerInventoryUI : MonoBehaviour
 {
-    [SerializeField] private GameObject player;
     [SerializeField] private bool isHotbar;
     [SerializeField] private PlayerInventoryUI hotbarUI;
+    [SerializeField] private UIDocument document;
 
     private Inventory inventory;
     private VisualElement root;
     private VisualElement[] slots;
     private int slotCount;
     private int selectedSlot;
+    private InventorySlot selectedInventorySlot;
 
     private InventorySlot draggingSlotOriginal;
     private int draggingSlotIndex;
@@ -25,26 +26,40 @@ public class PlayerInventoryUI : MonoBehaviour
     public bool isChestUI;
 
     private Catalyst.Player.PlayerController playerController;
+    private GameObject player;
     private bool isVisible = false;
 
-    void Awake()
+    void Start()
     {
+        player = GameManager.instance.player;
         playerController = player.GetComponent<Catalyst.Player.PlayerController>();
         inputHandler = playerController.playerInputHandler;
-        root = GetComponent<UIDocument>().rootVisualElement;
+        if (document == null)
+        {
+            document = GetComponent<UIDocument>();
+        }
+
+
+        root = document.rootVisualElement;
+
+        Debug.Log($"Root picking mode: {root.pickingMode}");
+        root.pickingMode = PickingMode.Ignore;
+
+        if (root != null)
+        {
+            Debug.Log("hello");
+        }
 
         if (!isChestUI)
         {
-            inventory = isHotbar
-                ? player.GetComponent<PlayerInventoryHolder>().PrimaryInventory
-                : player.GetComponent<PlayerInventoryHolder>().SecondaryInventory;
+            inventory = isHotbar ? GameManager.instance.player.GetComponent<PlayerInventoryHolder>().PrimaryInventory : GameManager.instance.player.GetComponent<PlayerInventoryHolder>().SecondaryInventory;
         }
 
         if (!isHotbar)
+        {
             root.style.display = DisplayStyle.None;
-    }
-    void Start()
-    {
+        }
+
         VisualElement slotsContainer = root.Q<VisualElement>("Slots");
         slots = null;
 
@@ -117,6 +132,11 @@ public class PlayerInventoryUI : MonoBehaviour
             InventoryDragManager.draggedIcon.style.top = panelPos.y - InventoryDragManager.draggedIcon.resolvedStyle.height / 2f;
             InventoryDragManager.draggedIcon.pickingMode = PickingMode.Ignore;
         }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            DropSelectedItem();
+        }
     }
 
     private void HandleHotBarInput()
@@ -170,6 +190,7 @@ public class PlayerInventoryUI : MonoBehaviour
     private void SelectSlot(int index)
     {
         selectedSlot = index;
+        selectedInventorySlot = inventory.InventorySlots[index];
         UpdateSelection();
     }
 
@@ -369,5 +390,41 @@ public class PlayerInventoryUI : MonoBehaviour
     public bool IsVisible()
     {
         return isVisible && root.style.display == DisplayStyle.Flex;
+    }
+
+    public InventorySlot GetSelectedSlot()
+    {
+        return selectedInventorySlot;
+    }
+
+    public ItemData GetSelectedItem()
+    {
+        return selectedInventorySlot?.ItemData;
+    }
+
+
+    public void DropSelectedItem()
+    {
+        if (selectedInventorySlot == null || selectedInventorySlot.ItemData == null)
+        {
+            return;
+        }
+
+        GameObject dropPrefab = selectedInventorySlot.ItemData.dropPrefab;
+        if (dropPrefab != null)
+        {
+            Vector3 dropPosition = player.transform.position + player.transform.forward * 1.5f;
+            GameObject.Instantiate(dropPrefab, dropPosition, Quaternion.identity);
+        }
+
+        selectedInventorySlot.RemoveFromStack(1);
+
+        if (selectedInventorySlot.StackSize <= 0)
+        {
+            selectedInventorySlot.UpdateInventorySlot(null, 0);
+        }
+
+        inventory.OnInventorySlotChanged?.Invoke(selectedInventorySlot);
+        RefreshInventory();
     }
 }
