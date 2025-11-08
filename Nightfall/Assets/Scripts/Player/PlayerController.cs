@@ -12,6 +12,7 @@ namespace Catalyst.Player
         [SerializeField] private Animator animator;
         public CinemachineCamera mainCamera;
         public CinemachineCamera thirdPersonCamera;
+        public Camera gunCam;
         [SerializeField] private Transform followTarget;
         [SerializeField] GameObject gunModel;
         public AudioSource aud;
@@ -241,13 +242,12 @@ namespace Catalyst.Player
 
             if (isInverted)
             {
-                _verticalRotation = Mathf.Clamp(_verticalRotation + rotationAmount, -playerData.UpLookRange, playerData.DownLookRange);
+                _verticalRotation = Mathf.Clamp(_verticalRotation + rotationAmount, -playerData.FPSVerticalRange, playerData.FPSVerticalRange);
 
             }
             else if (!isInverted)
             {
-
-                _verticalRotation = Mathf.Clamp(_verticalRotation - rotationAmount, -playerData.UpLookRange, playerData.DownLookRange);
+                _verticalRotation = Mathf.Clamp(_verticalRotation - rotationAmount, -playerData.FPSVerticalRange, playerData.FPSVerticalRange);
 
             }
 
@@ -380,6 +380,16 @@ namespace Catalyst.Player
             }
         }
 
+        private void ToggleGunCam()
+        {
+            if (gunCam == null)
+                return;
+            if (thirdPersonCamera.gameObject.activeSelf)
+                gunCam.enabled = false;
+
+            else gunCam.enabled = true;
+
+        }
         IEnumerator FlashDamageScreen()
         {
             //HUDManager.instance.playerDamageScreen.SetActive(true);
@@ -392,9 +402,11 @@ namespace Catalyst.Player
             // Stop everything a bit to avoid multiple toggles      
             playerInputHandler.enabled = false;
             cam.gameObject.SetActive(!cam.gameObject.activeSelf);
+            ToggleGunCam();
             yield return new WaitForSeconds(1.0f);
             playerInputHandler.enabled = true;
         }
+
 
         IEnumerator Attack()
         {
@@ -416,11 +428,26 @@ namespace Catalyst.Player
 
         IEnumerator Dodge()
         {
+            // move the player quickly in the dodge direction with a burst of speed
+
+
+
 
             animator.SetTrigger(_animDodge);
+            PlayerDodge();
             yield return new WaitForSeconds(1.0f);
             animator.ResetTrigger(_animDodge);
             playerInputHandler.DodgeTriggered = false;
+        }
+        private void PlayerDodge()
+        {
+            Vector3 dodgeDirection = CalculateMoveDirection();
+            if (dodgeDirection == Vector3.zero)
+            {
+                dodgeDirection = -transform.forward;
+            }
+            characterController.Move(dodgeDirection.normalized * playerData.SprintSpeed * 2 * Time.deltaTime);
+
         }
 
         IEnumerator Jump()
