@@ -9,6 +9,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform headPos;
     [SerializeField] GameObject itemDrop;
+    [SerializeField] GameObject targetObj;
 
     [SerializeField] int hp;
     [SerializeField] int faceTargetSpeed;
@@ -25,10 +26,10 @@ public class enemyAI : MonoBehaviour, IDamage
 
     float biteTimer;
     float roamTimer;
-    float angleToPlayer;
+    float angleToTarget;
     float stoppingDistOrg;
 
-    Vector3 playerDir;
+    Vector3 targetDir;
     Vector3 startingPos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -52,7 +53,7 @@ public class enemyAI : MonoBehaviour, IDamage
         }
         if (targetsPlayer)
         {        
-            if (playerInRange && !CanSeePlayer())
+            if (playerInRange && !CanSeeTarget())
             {
                 CheckRoam();
             }
@@ -65,7 +66,7 @@ public class enemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         hp -= amount;
-        agent.SetDestination(GameManager.instance.player.transform.position);
+        agent.SetDestination(targetObj.transform.position);
 
         if (hp <= 0)
         {
@@ -102,24 +103,24 @@ public class enemyAI : MonoBehaviour, IDamage
         agent.SetDestination(hit.position);
     }
 
-bool CanSeePlayer()
+bool CanSeeTarget()
 {
-    playerDir = GameManager.instance.player.transform.position - headPos.position;
-    angleToPlayer = Vector3.Angle(playerDir, transform.forward);
-    Debug.DrawRay(headPos.position, playerDir, Color.red);
+    targetDir = targetObj.transform.position - headPos.position;
+    angleToTarget = Vector3.Angle(targetDir, transform.forward);
+    Debug.DrawRay(headPos.position, targetDir, Color.red);
 
     RaycastHit hit;
-    if (Physics.Raycast(headPos.position, playerDir, out hit))
+    if (Physics.Raycast(headPos.position, targetDir, out hit))
     {
         Debug.Log(hit.collider.name);
 
-        if (angleToPlayer <= FOV)
+        if (angleToTarget <= FOV)
         {
-            agent.SetDestination(GameManager.instance.player.transform.position);
+            agent.SetDestination(targetObj.transform.position);
 
             if (biteTimer > biteRate && agent.remainingDistance <= stoppingDistOrg)
             {
-                attack(GameManager.instance.player); 
+                attack(targetObj);
                 biteTimer = 0; 
             }
 
@@ -136,7 +137,7 @@ bool CanSeePlayer()
 }
     void FaceTarget()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
+        Quaternion rot = Quaternion.LookRotation(new Vector3(targetDir.x, 0, targetDir.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
 
