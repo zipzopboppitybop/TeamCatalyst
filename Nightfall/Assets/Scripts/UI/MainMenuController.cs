@@ -46,7 +46,6 @@ public class MainMenuController : MonoBehaviour
     private void OnPlayButtonClicked()
     {
         SceneManager.LoadScene("ShowcaseLevel");
-        Hide();
     }
     private void OnSettingsButtonClicked()
     {
