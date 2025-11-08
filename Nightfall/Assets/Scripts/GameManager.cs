@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
     float timeScaleOrig;
     float timeOfDay = 7;
     int day = 1;
+    int cropCount = 0;
 
     public bool isPaused = false;
     bool wasNight;
@@ -131,6 +132,20 @@ public class GameManager : MonoBehaviour
 
         wasNight = isNight;
         
+    }
+
+    public void UpdateCropCount(int amt)
+    {
+
+        cropCount += amt;
+
+    }
+
+    public int GetDay()
+    {
+
+        return day;
+
     }
 
     bool IsNightHour(int hour, int startHour, int endHour)
