@@ -1,0 +1,11 @@
+:root {
+}
+
+.Menu-Button {
+}
+
+.Menu-Button:hover {
+    rotate: -10deg;
+    transition-duration: 0.2s;
+    transition-timing-function: ease;
+}

@@ -18,6 +18,7 @@ namespace Catalyst.Player
         [SerializeField] private int staminaMax = 10;
         [SerializeField, Range(0, 30)] private int stealth = 5;
         [SerializeField, Range(0, 5)] private int interactRange = 2;
+        [SerializeField] private int currency = 0;
 
         [Header("Weapon Data")]
         [SerializeField] private int shootDamage;
@@ -39,7 +40,8 @@ namespace Catalyst.Player
 
         [Header("Look Parameters")]
         [SerializeField] private float mouseSensitivity = 0.1f;
-        [SerializeField, Range(0, 1f)] private float rotationSpeed = 0.5f;
+        [SerializeField, Range(0, 1f)] private float cameraRotationSpeed = 0.5f;
+        [SerializeField, Range(1, 20)] private int rotationSpeed = 10;
         [SerializeField] private float upLookRange = 60f;
         [SerializeField] private float downLookRange = 60f;
 
@@ -58,6 +60,7 @@ namespace Catalyst.Player
         public int StaminaMax { get => staminaMax; set => staminaMax = value; }
         public int Stealth { get => stealth; set => stealth = value; }
         public int InteractRange { get => interactRange; set => interactRange = value; }
+        public int Currency { get => currency; set => currency = value; }
 
 
         public int ShootDamage { get => shootDamage; set => shootDamage = value; }
@@ -71,7 +74,8 @@ namespace Catalyst.Player
 
         public float Speed => walkingSpeed;
         public float SprintSpeed => sprintSpeed;
-        public float RotationSpeed => rotationSpeed;
+        public float CameraRotationSpeed => cameraRotationSpeed;
+        public int RotationSpeed => rotationSpeed;
 
 
 
@@ -118,6 +122,7 @@ namespace Catalyst.Player
             keysCollected = 0;
             notesCollected = 0;
             roomsClear = 0;
+            currency = 0;
 
         }
     }

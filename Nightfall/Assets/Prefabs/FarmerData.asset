@@ -22,20 +22,22 @@ MonoBehaviour:
   staminaMax: 10
   stealth: 5
   interactRange: 2
+  currency: 0
   shootDamage: 0
   shootRate: 0
   shootDist: 0
   ammoCount: 0
   ammoMax: 0
-  walkingSpeed: 3
-  sprintSpeed: 10
-  jumpForce: 3
+  walkingSpeed: 0.5
+  sprintSpeed: 5
+  jumpForce: 5
   gravityMultiplier: 1
   jumpMax: 1
   mouseSensitivity: 0.1
-  rotationSpeed: 0.5
-  upLookRange: 90
-  downLookRange: 90
+  cameraRotationSpeed: 0.5
+  rotationSpeed: 10
+  upLookRange: 89
+  downLookRange: 89
   keysCollected: 0
   notesCollected: 0
   roomsClear: 0

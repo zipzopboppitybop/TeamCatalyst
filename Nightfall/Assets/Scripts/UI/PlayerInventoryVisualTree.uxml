@@ -1,7 +1,7 @@
 <ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/Hotbar.uss?fileID=7433441132597879392&amp;guid=347f77356adf7594e8d92101dcaf3341&amp;type=3#Hotbar" />
-    <Style src="project://database/Assets/PlayerInventory.uss?fileID=7433441132597879392&amp;guid=b3d19eb93c616264b9d7645c1a4c1710&amp;type=3#PlayerInventory" />
-    <ui:VisualElement name="Inventory" class="inventory" style="flex-grow: 1; bottom: 20%; left: 50%;">
+    <Style src="project://database/Assets/Scripts/UI/Hotbar.uss?fileID=7433441132597879392&amp;guid=347f77356adf7594e8d92101dcaf3341&amp;type=3#Hotbar" />
+    <Style src="project://database/Assets/Scripts/UI/PlayerInventory.uss?fileID=7433441132597879392&amp;guid=b3d19eb93c616264b9d7645c1a4c1710&amp;type=3#PlayerInventory" />
+    <ui:VisualElement name="Inventory" class="inventory" style="flex-grow: 1; bottom: 20%; left: 50%; display: none;">
         <ui:VisualElement name="Slots" class="slots" style="flex-grow: 1;">
             <ui:VisualElement name="Row" class="row" style="flex-grow: 1;">
                 <ui:VisualElement name="Slot-0" class="slot" style="flex-grow: 1;">

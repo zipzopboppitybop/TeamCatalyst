@@ -59,6 +59,7 @@ namespace Catalyst.Player
 
 
         private PlayerController _playerController;
+
         public Vector2 MoveInput { get; private set; }
         public Vector2 RotationInput { get; private set; }
         public bool SprintTriggered { get; private set; }

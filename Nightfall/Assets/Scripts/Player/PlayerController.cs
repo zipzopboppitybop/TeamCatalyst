@@ -62,7 +62,8 @@ namespace Catalyst.Player
 
         }
 
-        //private float CurrentSpeed => playerData.Speed * (playerInputHandler.SprintTriggered ? playerData.SprintMultiplier : 1);
+        private float CurrentSpeed => playerData.Speed * (playerInputHandler.SprintTriggered ? playerData.SprintSpeed : 1);
+
 
         void Update()
         {
@@ -110,55 +111,16 @@ namespace Catalyst.Player
 
             if (playerInputHandler.AttackTriggered)
             {
-                // Attack logic here
                 StartCoroutine(Attack());
-
-
-            }
-            else
-            {
-                animator.ResetTrigger(animAttack);
             }
 
         }
-        // Rewrite this to use playerData.Speed and playerData.SprintMultiplier with isSprinting bool
-        private float CurrentSpeed()
-        {
-            if (!characterController.isGrounded)
-            {
-                animator.SetBool(animSprinting, false);
-                return playerData.Speed;
-            }
-            if (playerInputHandler.SprintTriggered)
-            {
-                animator.SetBool(animSprinting, true);
-                return playerData.SprintSpeed;
 
-            }
-            else
-            {
-                animator.SetBool(animSprinting, false);
-                return playerData.Speed;
-
-            }
-        }
         private Vector3 CalculateMoveDirection()
         {
             Vector3 inputDirection = new Vector3(playerInputHandler.MoveInput.x, 0f, playerInputHandler.MoveInput.y);
 
-
-
-
-            Vector3 camForward = mainCamera.transform.forward;
-            Vector3 camRight = mainCamera.transform.right;
-
-            camForward.y = 0f;
-            camRight.y = 0f;
-
-            camForward.Normalize();
-            camRight.Normalize();
-            Vector3 moveDirection = (camForward * inputDirection.z) + (camRight * inputDirection.x);
-
+            Vector3 moveDirection = transform.TransformDirection(inputDirection);
 
             return moveDirection.normalized;
         }
@@ -212,13 +174,14 @@ namespace Catalyst.Player
         private void HandleDash()
         {             // Dash logic here
         }
-        private void ThirdPersonActive()
+        private bool ThirdPersonActive()
         {
 
             if (playerInputHandler.ToggleCameraTriggered)
             {
                 StartCoroutine(ToggleCamera(thirdPersonCamera));
             }
+            return thirdPersonCamera.gameObject.activeSelf;
         }
 
         private void HandleMovement()
@@ -230,29 +193,39 @@ namespace Catalyst.Player
 
             playerDir = CalculateMoveDirection();
 
-            _currentMovement.x = playerDir.x * CurrentSpeed();
-            _currentMovement.z = playerDir.z * CurrentSpeed();
+            _currentMovement.x = playerDir.x * CurrentSpeed;
+            _currentMovement.z = playerDir.z * CurrentSpeed;
             HandleJumping();
 
 
             characterController.Move(_currentMovement * Time.deltaTime);
 
-            animator.SetFloat(animVelocityX, Mathf.SmoothDamp(animator.GetFloat(animVelocityX), _currentMovement.x, ref _velocityX, 0.1f));
-            animator.SetFloat(animVelocityZ, Mathf.SmoothDamp(animator.GetFloat(animVelocityZ), _currentMovement.z, ref _velocityZ, 0.1f));
+            animator.SetFloat(animVelocityX, Mathf.SmoothDamp(animator.GetFloat(animVelocityX), playerInputHandler.MoveInput.x * _currentMovement.magnitude, ref _velocityX, 0.1f));
+            animator.SetFloat(animVelocityZ, Mathf.SmoothDamp(animator.GetFloat(animVelocityZ), playerInputHandler.MoveInput.y * _currentMovement.magnitude, ref _velocityZ, 0.1f));
 
-            // Rotate player towards movement direction if there's input
-            //Vector3 flatMovement = new Vector3(_currentMovement.x, 0, _currentMovement.z);
-            //if (flatMovement.magnitude > 0.1f)
-            //{
-            //    Quaternion targetRotation = Quaternion.LookRotation(flatMovement);
-            //    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, playerData.RotationSpeed * Time.deltaTime);
-            //}
 
         }
 
         private void ApplyHorizontalRotation(float rotationAmount)
         {
-            transform.Rotate(0, rotationAmount, 0);
+            if (ThirdPersonActive() && playerInputHandler.MoveInput.magnitude < 0.1)
+            {
+                return;
+            }
+            else if (ThirdPersonActive() && playerInputHandler.MoveInput.magnitude >= 0.1)
+            { // make the player face the movement direction in third person smoothly
+                //Vector3 movementDirection = new Vector3(playerInputHandler.MoveInput.x, 0, playerInputHandler.MoveInput.y);
+                //float targetAngle = Mathf.Atan2(movementDirection.x, movementDirection.z) * Mathf.Rad2Deg + followTarget.eulerAngles.y; 
+                //float smoothedAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref _cinemachineTargetYaw, 0.1f);
+                //transform.rotation = Quaternion.Euler(0, smoothedAngle, 0);
+                //transform.rotation = Quaternion.Euler(0, followTarget.eulerAngles.y, 0);
+
+                // lerp the transform rotation to the follow target rotation
+                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, followTarget.eulerAngles.y, 0), Time.deltaTime * playerData.CameraRotationSpeed * playerData.RotationSpeed);
+            }
+
+            else
+                transform.Rotate(0, rotationAmount, 0);
         }
 
 
@@ -285,7 +258,7 @@ namespace Catalyst.Player
                 return;
             }
 
-            _mouseXRotation = playerInputHandler.RotationInput.x * playerData.MouseSensitivity * playerData.RotationSpeed;
+            _mouseXRotation = playerInputHandler.RotationInput.x * playerData.MouseSensitivity * playerData.CameraRotationSpeed;
             _mouseYRotation = playerInputHandler.RotationInput.y * playerData.MouseSensitivity;
 
 
@@ -301,14 +274,14 @@ namespace Catalyst.Player
 
             if (isInverted)
             {
-                Debug.Log("Applying INVERTED third person rotation");
+                //Debug.Log("Applying INVERTED third person rotation");
                 _cinemachineTargetPitch = UpdateRotation(_cinemachineTargetPitch, -pitch, -playerData.DownLookRange, playerData.UpLookRange, true);
 
             }
             else if (!isInverted)
             {
 
-                Debug.Log("Applying third person rotation");
+                //Debug.Log("Applying third person rotation");
                 _cinemachineTargetPitch = UpdateRotation(_cinemachineTargetPitch, pitch, -playerData.DownLookRange, playerData.UpLookRange, true);
             }
 
