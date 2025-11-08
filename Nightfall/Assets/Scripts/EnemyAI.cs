@@ -8,17 +8,20 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform headPos;
+    [SerializeField] GameObject itemDrop;
 
     [SerializeField] int hp;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int FOV;
     [SerializeField] int roamDist;
     [SerializeField] int roamPauseTime;
+    [Range(0, 100)][SerializeField] int dropChance;
     [SerializeField] float biteRate;
 
     Color colorOrig;
 
     bool playerInRange;
+    bool targetsPlayer = true;
 
     float biteTimer;
     float roamTimer;
@@ -47,14 +50,16 @@ public class enemyAI : MonoBehaviour, IDamage
         {
             roamTimer += Time.deltaTime;
         }
-
-        if (playerInRange && !CanSeePlayer())
-        {
-            CheckRoam();
-        }
-        else if (!playerInRange)
-        {
-            CheckRoam();
+        if (targetsPlayer)
+        {        
+            if (playerInRange && !CanSeePlayer())
+            {
+                CheckRoam();
+            }
+            else if (!playerInRange)
+            {
+                CheckRoam();
+            }
         }
     }
     public void takeDamage(int amount)
@@ -64,6 +69,10 @@ public class enemyAI : MonoBehaviour, IDamage
 
         if (hp <= 0)
         {
+            if (Random.Range(1, 100) <= dropChance && itemDrop != null)
+            {
+                Instantiate(itemDrop, headPos);
+            }
             Destroy(gameObject);
         }
         else

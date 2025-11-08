@@ -1,28 +1,37 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Tilemaps;
 using Unity.VisualScripting;
 
 public class TowerBase : MonoBehaviour, IDamage
 {
 
-    [SerializeField] enum TowerType { Crop, Defensive, Offensive };
+    [SerializeField] public enum TowerType { Crop, Defensive, Offensive, Farmland };
 
-    [SerializeField] TowerType typeTower;
+    [SerializeField] public TowerType typeTower;
 
-    [SerializeField] int hp;
+    [SerializeField] Tilemap map;
+
+    [SerializeField] int hpMax;
     [SerializeField] int damage;
+    [SerializeField] int healAmt;
 
     [SerializeField] float attSpeed;
+    [SerializeField] float healSpeed;
 
     [SerializeField] GameObject itemDrop;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject shootPos;
 
     bool isFullyGrown = false;
-    bool EnemyInRange = true;
+    bool EnemyInRange = false;
     bool isWatered = false;
+    public bool isFertilized = false;
+    bool isHealing = false;
 
     int enemiesInRange;
+    public int hp = 5;
     [SerializeField] List<Transform> enemyPos;
 
     float shootTime;
@@ -30,11 +39,19 @@ public class TowerBase : MonoBehaviour, IDamage
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        
+
+        map = (Tilemap)FindAnyObjectByType(typeof(Tilemap));
+
         if (typeTower == TowerType.Offensive)
         {
 
             //enemyPos = new List<Transform>();
+
+        }
+        if (typeTower == TowerType.Farmland)
+        {
+
+            Fertilize();
 
         }
 
@@ -43,6 +60,13 @@ public class TowerBase : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
+
+        if (hp < hpMax && !isHealing)
+        {
+
+            StartCoroutine(Heal());
+
+        }
 
         if (typeTower == TowerType.Offensive)
         {        
@@ -62,7 +86,7 @@ public class TowerBase : MonoBehaviour, IDamage
 
     }
 
-    void Grow()
+    public void Grow()
     {
 
         if (isWatered) 
@@ -100,11 +124,16 @@ public class TowerBase : MonoBehaviour, IDamage
 
     }
 
-    void WaterCrop()
+    public void WaterCrop()
     {
 
         isWatered = true;
 
+    }
+
+    public void Fertilize()
+    {
+        isFertilized = true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -157,9 +186,29 @@ public class TowerBase : MonoBehaviour, IDamage
         {
             if (typeTower == TowerType.Crop && isFullyGrown)
                 Instantiate(itemDrop, transform.position, transform.rotation);
+
+            if (map)
+                map.SetTile(map.WorldToCell(transform.position), null);
+
             Destroy(gameObject);
+            
         }
 
+    }
+
+    IEnumerator Heal()
+    {
+        isHealing = true;
+        if (typeTower == TowerType.Defensive)
+            takeDamage(1);
+        else
+            hp += healAmt;
+        if (hp > hpMax)
+        {
+            hp = hpMax;
+        }
+        yield return new WaitForSeconds(healSpeed);
+        isHealing = false;
     }
 
 }

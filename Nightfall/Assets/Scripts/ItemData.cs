@@ -9,6 +9,8 @@ public class ItemData : ScriptableObject
 {
     public Sprite Icon;
     public GameObject dropPrefab;
+    public AudioClip pickupSound;
+    [Range(0, 1)] public float audVol;
     public string displayName;
     public int id;
     public float sellValue;

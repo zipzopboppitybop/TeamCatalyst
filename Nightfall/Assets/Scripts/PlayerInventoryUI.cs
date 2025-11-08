@@ -42,13 +42,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
         root = document.rootVisualElement;
 
-        Debug.Log($"Root picking mode: {root.pickingMode}");
         root.pickingMode = PickingMode.Ignore;
-
-        if (root != null)
-        {
-            Debug.Log("hello");
-        }
 
         if (!isChestUI)
         {
