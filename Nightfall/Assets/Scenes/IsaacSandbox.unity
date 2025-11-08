@@ -317,7 +317,7 @@ GameObject:
   - component: {fileID: 405784633}
   m_Layer: 3
   m_Name: DummyPlayer
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -405,7 +405,7 @@ GameObject:
   - component: {fileID: 449008469}
   - component: {fileID: 449008468}
   - component: {fileID: 449008467}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -517,7 +517,7 @@ GameObject:
   - component: {fileID: 497310213}
   - component: {fileID: 497310215}
   - component: {fileID: 497310214}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rabbit
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -605,6 +605,7 @@ MonoBehaviour:
   agent: {fileID: 497310215}
   headPos: {fileID: 693303583}
   itemDrop: {fileID: 1915537940091514794, guid: 4e85cafb5039f5049bbfe8582346e40f, type: 3}
+  targetObj: {fileID: 2063344720653133702}
   hp: 5
   faceTargetSpeed: 8
   FOV: 90
@@ -622,7 +623,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -940,7 +941,7 @@ GameObject:
   - component: {fileID: 583248035}
   - component: {fileID: 583248034}
   - component: {fileID: 583248033}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BodyPH
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1059,7 +1060,7 @@ GameObject:
   - component: {fileID: 649860655}
   - component: {fileID: 649860654}
   - component: {fileID: 649860653}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EarRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1169,7 +1170,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 693303583}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: HeadPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1191,6 +1192,70 @@ Transform:
   m_Children: []
   m_Father: {fileID: 497310211}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &792760358
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 792760360}
+  - component: {fileID: 792760359}
+  m_Layer: 0
+  m_Name: NavMesh Surface
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &792760359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792760358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a5ac11cc976e418e8d13136b07e1f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.AI.Navigation::Unity.AI.Navigation.NavMeshSurface
+  m_SerializedVersion: 0
+  m_AgentTypeID: 0
+  m_CollectObjects: 0
+  m_Size: {x: 10, y: 10, z: 10}
+  m_Center: {x: 0, y: 2, z: 0}
+  m_LayerMask:
+    serializedVersion: 2
+    m_Bits: 247
+  m_UseGeometry: 0
+  m_DefaultArea: 0
+  m_GenerateLinks: 0
+  m_IgnoreNavMeshAgent: 1
+  m_IgnoreNavMeshObstacle: 1
+  m_OverrideTileSize: 0
+  m_TileSize: 256
+  m_OverrideVoxelSize: 0
+  m_VoxelSize: 0.16666667
+  m_MinRegionArea: 2
+  m_NavMeshData: {fileID: 23800000, guid: f600fccd99daf1542b3aea8658f99c44, type: 2}
+  m_BuildHeightMesh: 0
+--- !u!4 &792760360
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792760358}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.71791, y: -0, z: 4.85863}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &863758018 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7687449030119716703, guid: e66fded5ead68c74cbbd304ff95793d9, type: 3}
@@ -1208,7 +1273,7 @@ GameObject:
   - component: {fileID: 1082177529}
   - component: {fileID: 1082177528}
   - component: {fileID: 1082177527}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1353,7 +1418,7 @@ GameObject:
   - component: {fileID: 1545066192}
   - component: {fileID: 1545066191}
   - component: {fileID: 1545066190}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Foot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1464,7 +1529,7 @@ GameObject:
   - component: {fileID: 1557024739}
   - component: {fileID: 1557024738}
   - component: {fileID: 1557024737}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Foot (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1609,7 +1674,7 @@ GameObject:
   - component: {fileID: 1669688811}
   - component: {fileID: 1669688810}
   - component: {fileID: 1669688809}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Foot (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1910,7 +1975,7 @@ GameObject:
   - component: {fileID: 1841488515}
   - component: {fileID: 1841488514}
   - component: {fileID: 1841488513}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Foot (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2021,7 +2086,7 @@ GameObject:
   - component: {fileID: 1855892818}
   - component: {fileID: 1855892817}
   - component: {fileID: 1855892816}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EarLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2373,3 +2438,4 @@ SceneRoots:
   - {fileID: 8713218311977317757}
   - {fileID: 395952192}
   - {fileID: 497310211}
+  - {fileID: 792760360}

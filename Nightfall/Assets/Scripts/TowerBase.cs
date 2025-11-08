@@ -86,13 +86,12 @@ public class TowerBase : MonoBehaviour, IDamage
             if (shootTime >= attSpeed && EnemyInRange)
             {
 
-                Vector3 chosenEnemyPos = ChooseClosestPos() - transform.position;
-                Quaternion rot = Quaternion.LookRotation(chosenEnemyPos);
-                transform.rotation = rot;
+                FaceTarget();
                 Shoot();
                 shootTime = 0;
 
             }
+
         }
 
         if (typeTower == TowerType.Crop)
@@ -120,13 +119,21 @@ public class TowerBase : MonoBehaviour, IDamage
         for (int i = 0; i < enemyPos.Count; i++)
         {
 
-            if (Vector3.Distance(enemyPos[i].position, transform.position) < shortestDistance)
+            if (enemyPos[i] != null && Vector3.Distance(enemyPos[i].position, transform.position) < shortestDistance)
             {
 
                 shortestDistance = Vector3.Distance(enemyPos[i].position, transform.position);
                 closestPos = enemyPos[i].position;
 
             }
+
+        }
+
+        if (closestPos == Vector3.zero)
+        {
+
+            EnemyInRange = false;
+            enemiesInRange = 0;
 
         }
 
@@ -138,6 +145,15 @@ public class TowerBase : MonoBehaviour, IDamage
     {
 
         Instantiate(bullet, shootPos.transform.position, transform.rotation);
+
+    }
+
+    void FaceTarget()
+    {
+
+        Vector3 chosenEnemyPos = ChooseClosestPos() - transform.position;
+        Quaternion rot = Quaternion.LookRotation(chosenEnemyPos);
+        transform.rotation = rot;
 
     }
 
@@ -214,7 +230,8 @@ public class TowerBase : MonoBehaviour, IDamage
             if (map)
                 map.SetTile(map.WorldToCell(transform.position), null);
 
-            GameManager.instance.UpdateCropCount(-1);
+            if (GameManager.instance != null)
+                GameManager.instance.UpdateCropCount(-1);
             Destroy(gameObject);
             
         }
