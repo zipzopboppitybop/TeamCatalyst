@@ -13,6 +13,8 @@ public class Pickup : MonoBehaviour
         {
             if (pickup.AddToInventory(item, 1))
             {
+                AudioSource.PlayClipAtPoint(item.pickupSound, Camera.main.transform.position, item.audVol);
+
                 Destroy(gameObject);
             }
         }
