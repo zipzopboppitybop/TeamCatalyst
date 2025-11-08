@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2909803302003888380
+--- !u!1 &1915537940091514794
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,11 +8,12 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5396577825440381841}
-  - component: {fileID: 382403509117949202}
-  - component: {fileID: 4624208522210612609}
-  - component: {fileID: -505348003884273544}
-  - component: {fileID: 7782905054966646910}
+  - component: {fileID: 7599765503975202549}
+  - component: {fileID: 6362541717325393959}
+  - component: {fileID: 485258501577082909}
+  - component: {fileID: 8684085911951629471}
+  - component: {fileID: 3844735671634277743}
+  - component: {fileID: 4847475448979562735}
   m_Layer: 0
   m_Name: Carrot_Fruit
   m_TagString: Untagged
@@ -20,36 +21,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5396577825440381841
+--- !u!4 &7599765503975202549
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2909803302003888380}
+  m_GameObject: {fileID: 1915537940091514794}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.23129, y: 0, z: 10.03496}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.04786001, y: 0.63, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &382403509117949202
+--- !u!33 &6362541717325393959
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2909803302003888380}
+  m_GameObject: {fileID: 1915537940091514794}
   m_Mesh: {fileID: 4300022, guid: b69b26c8b73b8bd49bf243bbe541a2e0, type: 3}
---- !u!23 &4624208522210612609
+--- !u!23 &485258501577082909
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2909803302003888380}
+  m_GameObject: {fileID: 1915537940091514794}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -91,26 +92,26 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &-505348003884273544
+--- !u!114 &8684085911951629471
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2909803302003888380}
+  m_GameObject: {fileID: 1915537940091514794}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 18c5569e2d426d7499b88c61a968348f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Pickup
   item: {fileID: 11400000, guid: 9134455b50eaecd4f8f1655262ce501a, type: 2}
---- !u!64 &7782905054966646910
+--- !u!64 &3844735671634277743
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2909803302003888380}
+  m_GameObject: {fileID: 1915537940091514794}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -126,3 +127,24 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300022, guid: b69b26c8b73b8bd49bf243bbe541a2e0, type: 3}
+--- !u!135 &4847475448979562735
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915537940091514794}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.8
+  m_Center: {x: 0, y: 0, z: 0}
