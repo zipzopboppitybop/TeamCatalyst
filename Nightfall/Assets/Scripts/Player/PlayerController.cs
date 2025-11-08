@@ -14,8 +14,7 @@ namespace Catalyst.Player
         public CinemachineCamera thirdPersonCamera;
         [SerializeField] private Transform followTarget;
 
-        private float _cinemachineTargetPitch;
-        private float _cinemachineTargetYaw;
+
 
         public InputHandler playerInputHandler;
         [SerializeField] private PlayerData playerData;
@@ -25,29 +24,34 @@ namespace Catalyst.Player
         public bool isInverted;
         public bool isInventoryOpen;
 
+
+
+        [Header("Animation")]
+        private int _animJump;
+        private int _animGrounded;
+        private int _animSprinting;
+        private int _animAttack;
+        private int _animDodge;
+        private int _animDash;
+        private int _animVelocityX;
+        private int _animVelocityZ;
+
+        private int _jumpCount = 0;
+
+        private CharacterController _characterController;
+        private Vector3 _playerDir;
+        private float _cinemachineTargetPitch;
+        private float _cinemachineTargetYaw;
         private float _mouseXRotation;
         private float _mouseYRotation;
         private float _velocityX;
         private float _velocityZ;
 
-        [Header("Animation")]
-        private int animJump;
-        private int animGrounded;
-        private int animSprinting;
-        private int animAttack;
-        private int animDodge;
-        private int animDash;
-        private int animVelocityX;
-        private int animVelocityZ;
-
-        private int jumpCount = 0;
-
-        private CharacterController characterController;
-        private Vector3 playerDir;
+        public Vector3 MovementDirection => _playerDir;
 
         private void Start()
         {
-            characterController = GetComponent<CharacterController>();
+            _characterController = GetComponent<CharacterController>();
             SetupAnimator();
             thirdPersonCamera.gameObject.SetActive(false);
 
@@ -55,18 +59,15 @@ namespace Catalyst.Player
 
         private void LateUpdate()
         {
-            //if (ThirdPersonActive())
+            //if (IsThirdPersonActive())
             ApplyThirdPersonRotation(_mouseYRotation, _mouseXRotation);
-
-
-
         }
 
         //private float CurrentSpeed => playerData.Speed * (playerInputHandler.SprintTriggered ? playerData.SprintMultiplier : 1);
 
         void Update()
         {
-
+            ThirdPersonActive();
             HandleMovement();
             HandleRotation();
 
@@ -74,22 +75,22 @@ namespace Catalyst.Player
             HandleDodge();
             HandleDash();
             UpdateInteract();
-            ThirdPersonActive();
+
 
         }
 
         private void SetupAnimator()
         {
 
-            animJump = Animator.StringToHash("Jump");
-            animGrounded = Animator.StringToHash("Grounded");
-            animSprinting = Animator.StringToHash("Sprinting");
-            animAttack = Animator.StringToHash("Attack");
-            animDodge = Animator.StringToHash("Dodge");
-            animDash = Animator.StringToHash("Dash");
+            _animJump = Animator.StringToHash("Jump");
+            _animGrounded = Animator.StringToHash("Grounded");
+            _animSprinting = Animator.StringToHash("Sprinting");
+            _animAttack = Animator.StringToHash("Attack");
+            _animDodge = Animator.StringToHash("Dodge");
+            _animDash = Animator.StringToHash("Dash");
 
-            animVelocityX = Animator.StringToHash("Velocity X");
-            animVelocityZ = Animator.StringToHash("Velocity Z");
+            _animVelocityX = Animator.StringToHash("Velocity X");
+            _animVelocityZ = Animator.StringToHash("Velocity Z");
 
 
 
@@ -117,80 +118,75 @@ namespace Catalyst.Player
             }
             else
             {
-                animator.ResetTrigger(animAttack);
+                animator.ResetTrigger(_animAttack);
             }
 
         }
-        // Rewrite this to use playerData.Speed and playerData.SprintMultiplier with isSprinting bool
+
         private float CurrentSpeed()
         {
-            if (!characterController.isGrounded)
+            if (!_characterController.isGrounded)
             {
-                animator.SetBool(animSprinting, false);
+                animator.SetBool(_animSprinting, false);
                 return playerData.Speed;
             }
             if (playerInputHandler.SprintTriggered)
             {
-                animator.SetBool(animSprinting, true);
+                animator.SetBool(_animSprinting, true);
                 return playerData.SprintSpeed;
 
             }
             else
             {
-                animator.SetBool(animSprinting, false);
+                animator.SetBool(_animSprinting, false);
                 return playerData.Speed;
 
             }
         }
-        private Vector3 CalculateMoveDirection()
+        private Vector3 CalculatePlayerDirection()
         {
             Vector3 inputDirection = new Vector3(playerInputHandler.MoveInput.x, 0f, playerInputHandler.MoveInput.y);
 
+            Vector3 playerDirection = transform.TransformDirection(inputDirection);
+            return playerDirection.normalized;
 
 
-
-            Vector3 camForward = mainCamera.transform.forward;
-            Vector3 camRight = mainCamera.transform.right;
-
-            camForward.y = 0f;
-            camRight.y = 0f;
-
-            camForward.Normalize();
-            camRight.Normalize();
-            Vector3 moveDirection = (camForward * inputDirection.z) + (camRight * inputDirection.x);
+        }
 
 
-            return moveDirection.normalized;
+        private bool IsThirdPersonActive()
+        {
+            return thirdPersonCamera.isActiveAndEnabled && playerInputHandler.isActiveAndEnabled;
         }
 
         private void HandleJumping()
         {
-            if (characterController.isGrounded)
+            if (_characterController.isGrounded)
             {
-                jumpCount = 0;
+                _jumpCount = 0;
 
                 _currentMovement.y = -1f; // Small downward force to keep the player grounded
 
-                animator.SetBool(animGrounded, true);
+                animator.SetBool(_animGrounded, true);
 
-                if (playerInputHandler.JumpTriggered && jumpCount < playerData.JumpMax)
+                if (playerInputHandler.JumpTriggered && _jumpCount < playerData.JumpMax)
                 {
 
                     _currentMovement.y = playerData.JumpForce;
-                    animator.SetTrigger(animJump);
-                    jumpCount++;
-                    animator.ResetTrigger(animJump);
+                    animator.SetTrigger(_animJump);
+                    _jumpCount++;
+                    animator.ResetTrigger(_animJump);
                 }
 
 
             }
 
-            else if (!characterController.isGrounded)
+            else if (!_characterController.isGrounded)
             {
 
                 _currentMovement.y += Physics.gravity.y * playerData.GravityMultiplier * Time.deltaTime;
-                animator.SetBool(animGrounded, false);
-                animator.ResetTrigger(animJump);
+                animator.SetBool(_animGrounded, false);
+                animator.ResetTrigger(_animJump);
 
             }
         }
@@ -200,12 +196,12 @@ namespace Catalyst.Player
             if (playerInputHandler.DodgeTriggered)
             {
                 // Dodge logic here
-                animator.SetTrigger(animDodge);
+                animator.SetTrigger(_animDodge);
 
             }
             else
             {
-                animator.ResetTrigger(animDodge);
+                animator.ResetTrigger(_animDodge);
             }
         }
 
@@ -228,31 +224,26 @@ namespace Catalyst.Player
                 return;
             }
 
-            playerDir = CalculateMoveDirection();
-
-            _currentMovement.x = playerDir.x * CurrentSpeed();
-            _currentMovement.z = playerDir.z * CurrentSpeed();
+            _playerDir = CalculatePlayerDirection();
+            Debug.DrawRay(transform.position, _playerDir * 5f, Color.green);
+            _currentMovement.x = _playerDir.x * CurrentSpeed();
+            _currentMovement.z = _playerDir.z * CurrentSpeed();
             HandleJumping();
 
 
-            characterController.Move(_currentMovement * Time.deltaTime);
+            _characterController.Move(_currentMovement * Time.deltaTime);
 
-            animator.SetFloat(animVelocityX, Mathf.SmoothDamp(animator.GetFloat(animVelocityX), _currentMovement.x, ref _velocityX, 0.1f));
-            animator.SetFloat(animVelocityZ, Mathf.SmoothDamp(animator.GetFloat(animVelocityZ), _currentMovement.z, ref _velocityZ, 0.1f));
+            animator.SetFloat(_animVelocityX, Mathf.SmoothDamp(animator.GetFloat(_animVelocityX), _currentMovement.x, ref _velocityX, 0.1f));
+            animator.SetFloat(_animVelocityZ, Mathf.SmoothDamp(animator.GetFloat(_animVelocityZ), _currentMovement.z, ref _velocityZ, 0.1f));
 
-            // Rotate player towards movement direction if there's input
-            //Vector3 flatMovement = new Vector3(_currentMovement.x, 0, _currentMovement.z);
-            //if (flatMovement.magnitude > 0.1f)
-            //{
-            //    Quaternion targetRotation = Quaternion.LookRotation(flatMovement);
-            //    transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, playerData.RotationSpeed * Time.deltaTime);
-            //}
+
 
         }
 
         private void ApplyHorizontalRotation(float rotationAmount)
         {
             transform.Rotate(0, rotationAmount, 0);
+
         }
 
 
@@ -290,8 +281,13 @@ namespace Catalyst.Player
 
 
 
+
             ApplyHorizontalRotation(_mouseXRotation);
             ApplyVerticalRotation(_mouseYRotation);
+
+
+
+
 
         }
 
@@ -313,6 +309,9 @@ namespace Catalyst.Player
             }
 
             _cinemachineTargetYaw = UpdateRotation(_cinemachineTargetYaw, yaw, float.MinValue, float.MaxValue, false);
+
+
+
             followTarget.rotation = Quaternion.Euler(_cinemachineTargetPitch, _cinemachineTargetYaw, followTarget.eulerAngles.z);
 
         }
@@ -392,7 +391,7 @@ namespace Catalyst.Player
         IEnumerator Attack()
         {
             playerInputHandler.enabled = false;
-            animator.SetTrigger(animAttack);
+            animator.SetTrigger(_animAttack);
             yield return new WaitForSeconds(1.0f);
             playerInputHandler.enabled = true;
         }
