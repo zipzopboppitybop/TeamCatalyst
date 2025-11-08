@@ -7,7 +7,7 @@ using Unity.VisualScripting;
 public class TowerBase : MonoBehaviour, IDamage
 {
 
-    [SerializeField] public enum TowerType { Crop, Defensive, Offensive, Farmland };
+    [SerializeField] public enum TowerType { Crop, Defensive, Sprinkler, Farmland };
 
     [SerializeField] public TowerType typeTower;
 
@@ -26,11 +26,12 @@ public class TowerBase : MonoBehaviour, IDamage
 
     bool isFullyGrown = false;
     bool EnemyInRange = false;
-    bool isWatered = false;
+    public bool isWatered = false;
     public bool isFertilized = false;
     bool isHealing = false;
 
     int enemiesInRange;
+    int dayPlanted;
     public int hp = 5;
     [SerializeField] List<Transform> enemyPos;
 
@@ -42,7 +43,7 @@ public class TowerBase : MonoBehaviour, IDamage
 
         map = (Tilemap)FindAnyObjectByType(typeof(Tilemap));
 
-        if (typeTower == TowerType.Offensive)
+        if (typeTower == TowerType.Sprinkler)
         {
 
             //enemyPos = new List<Transform>();
@@ -52,6 +53,16 @@ public class TowerBase : MonoBehaviour, IDamage
         {
 
             Fertilize();
+
+        }
+        if (typeTower == TowerType.Crop)
+        {
+
+            if (GameManager.instance != null)
+            {
+                GameManager.instance.UpdateCropCount(1);
+                dayPlanted = GameManager.instance.GetDay();
+            }
 
         }
 
@@ -68,20 +79,26 @@ public class TowerBase : MonoBehaviour, IDamage
 
         }
 
-        if (typeTower == TowerType.Offensive)
+        if (typeTower == TowerType.Sprinkler)
         {        
             shootTime += Time.deltaTime;
 
             if (shootTime >= attSpeed && EnemyInRange)
             {
 
-                Vector3 chosenEnemyPos = ChooseClosestPos();
+                Vector3 chosenEnemyPos = ChooseClosestPos() - transform.position;
                 Quaternion rot = Quaternion.LookRotation(chosenEnemyPos);
                 transform.rotation = rot;
                 Shoot();
                 shootTime = 0;
 
             }
+        }
+
+        if (typeTower == TowerType.Crop)
+        {
+            if (GameManager.instance != null && dayPlanted < GameManager.instance.GetDay() && !isFullyGrown)
+                Grow();
         }
 
     }
@@ -97,16 +114,16 @@ public class TowerBase : MonoBehaviour, IDamage
     Vector3 ChooseClosestPos()
     {
 
-        float shortestDistance = 1000;
+        float shortestDistance = 10000;
         Vector3 closestPos = Vector3.zero;
 
         for (int i = 0; i < enemyPos.Count; i++)
         {
 
-            if ((enemyPos[i].position - transform.position).normalized.magnitude < shortestDistance)
+            if (Vector3.Distance(enemyPos[i].position, transform.position) < shortestDistance)
             {
 
-                shortestDistance = (enemyPos[i].position - transform.position).normalized.magnitude;
+                shortestDistance = Vector3.Distance(enemyPos[i].position, transform.position);
                 closestPos = enemyPos[i].position;
 
             }
@@ -145,6 +162,13 @@ public class TowerBase : MonoBehaviour, IDamage
             enemiesInRange++;
             enemyPos.Add(other.transform);
             CheckForEnemies();
+
+        }
+        if (other.GetComponent<TowerBase>())
+        {
+
+            TowerBase towerScript = other.GetComponent<TowerBase>();
+            towerScript.WaterCrop();
 
         }
 
@@ -190,6 +214,7 @@ public class TowerBase : MonoBehaviour, IDamage
             if (map)
                 map.SetTile(map.WorldToCell(transform.position), null);
 
+            GameManager.instance.UpdateCropCount(-1);
             Destroy(gameObject);
             
         }
