@@ -28,9 +28,9 @@ MonoBehaviour:
   shootDist: 0
   ammoCount: 0
   ammoMax: 0
-  walkingSpeed: 3
-  sprintSpeed: 10
-  jumpForce: 3
+  walkingSpeed: 0.5
+  sprintSpeed: 5
+  jumpForce: 5
   gravityMultiplier: 1
   jumpMax: 1
   mouseSensitivity: 0.1
