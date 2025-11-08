@@ -127,46 +127,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 135378360160624985, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.000567
-      objectReference: {fileID: 0}
-    - target: {fileID: 135378360160624985, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.007972
-      objectReference: {fileID: 0}
-    - target: {fileID: 135378360160624985, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.001097
-      objectReference: {fileID: 0}
-    - target: {fileID: 135378360160624985, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: -0.009281566
-      objectReference: {fileID: 0}
-    - target: {fileID: 135378360160624985, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.031734698
-      objectReference: {fileID: 0}
-    - target: {fileID: 135378360160624985, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.03430014
-      objectReference: {fileID: 0}
-    - target: {fileID: 135378360160624985, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.99886453
-      objectReference: {fileID: 0}
-    - target: {fileID: 135378360160624985, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 3.963
-      objectReference: {fileID: 0}
-    - target: {fileID: 135378360160624985, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -3.607
-      objectReference: {fileID: 0}
-    - target: {fileID: 135378360160624985, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 180.94
-      objectReference: {fileID: 0}
     - target: {fileID: 906805268855091345, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: m_Name
       value: NEW_Player
