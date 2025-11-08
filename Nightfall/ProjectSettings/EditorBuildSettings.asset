@@ -5,9 +5,15 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/QuantumSandbox.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: e5fd0129b0bc95946a9b3e7fb2d48653
+  - enabled: 1
+    path: Assets/Scenes/ShowcaseLevel.unity
+    guid: 22bb5769de84e5c4cbf7eb25992a6d5f
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: b5f4a3bcfd003f24392728f8d0359a08, type: 3}
   m_UseUCBPForAssetBundles: 0
