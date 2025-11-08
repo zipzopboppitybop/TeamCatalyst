@@ -8,11 +8,18 @@ public class MainMenuController : MonoBehaviour
 
     private VisualElement root;
     private VisualElement mainMenu;
+    private VisualElement settingsMenu;
+    private VisualElement creditsMenu;
 
     private Button playButton;
     private Button settingsButton;
     private Button creditsButton;
     private Button quitButton;
+    private Button backButton;
+    private Button creditBackButton;
+
+    private SliderInt volume;
+    private SliderInt music;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
@@ -23,10 +30,19 @@ public class MainMenuController : MonoBehaviour
         root = uiDocument.rootVisualElement;
 
         mainMenu = root.Q<VisualElement>("MainMenu");
+        settingsMenu = root.Q<VisualElement>("SettingsMenu");
+        creditsMenu = root.Q<VisualElement>("CreditsMenu");
+
         playButton = root.Q<Button>("PlayButton");
         settingsButton = root.Q<Button>("SettingsButton");
         creditsButton = root.Q<Button>("CreditsButton");
         quitButton = root.Q<Button>("QuitButton");
+        backButton = root.Q<Button>("BackButton");
+        creditBackButton = root.Q<Button>("CreditBackButton");
+
+        volume = root.Q<SliderInt>("VolumeSlider");
+        music = root.Q<SliderInt>("MusicSlider");
+
 
         Show();
 
@@ -42,6 +58,10 @@ public class MainMenuController : MonoBehaviour
         if (quitButton != null)
             quitButton.clicked += OnQuitButtonClicked;
 
+        if(backButton != null)
+            backButton.clicked += OnBackSettingsButtonClicked;
+        if (creditBackButton != null)
+            creditBackButton.clicked += OnCreditsBackButtonClicked;
     }
     private void OnPlayButtonClicked()
     {
@@ -49,11 +69,23 @@ public class MainMenuController : MonoBehaviour
     }
     private void OnSettingsButtonClicked()
     {
-
+        Hide();
+        settingsMenu.style.display = DisplayStyle.Flex;
     }
     private void OnCreditsButtonClicked()
     {
-
+        Hide();
+        creditsMenu.style.display = DisplayStyle.Flex;
+    }
+    private void OnBackSettingsButtonClicked()
+    {
+        settingsMenu.style.display = DisplayStyle.None;
+        Show();
+    }
+    private void OnCreditsBackButtonClicked()
+    {
+        creditsMenu.style.display = DisplayStyle.None;
+        Show();
     }
     private void OnQuitButtonClicked()
     {
