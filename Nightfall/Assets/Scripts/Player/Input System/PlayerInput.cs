@@ -603,7 +603,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Dodge"",
+                    ""name"": ""Dash"",
                     ""type"": ""Button"",
                     ""id"": ""eb13e0be-57cd-402b-941d-5f197e97a3b3"",
                     ""expectedControlType"": """",
@@ -1170,7 +1170,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": ""Hold"",
                     ""processors"": """",
                     ""groups"": "";Gamepad"",
-                    ""action"": ""Dodge"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1181,7 +1181,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Dodge"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1839,7 +1839,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Farmer_Look = m_Farmer.FindAction("Look", throwIfNotFound: true);
         m_Farmer_Attack = m_Farmer.FindAction("Attack", throwIfNotFound: true);
         m_Farmer_Interact = m_Farmer.FindAction("Interact", throwIfNotFound: true);
-        m_Farmer_Dodge = m_Farmer.FindAction("Dodge", throwIfNotFound: true);
+        m_Farmer_Dodge = m_Farmer.FindAction("Dash", throwIfNotFound: true);
         m_Farmer_Crouch = m_Farmer.FindAction("Crouch", throwIfNotFound: true);
         m_Farmer_Jump = m_Farmer.FindAction("Jump", throwIfNotFound: true);
         m_Farmer_Previous = m_Farmer.FindAction("Previous", throwIfNotFound: true);

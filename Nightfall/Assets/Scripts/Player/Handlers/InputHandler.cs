@@ -32,7 +32,7 @@ namespace Catalyst.Player
         private InputAction _diveAction;
 
         [SerializeField] private string interact = "Interact";
-        [SerializeField] private string dodge = "Dodge";
+        [SerializeField] private string dodge = "Dash";
         [SerializeField] private string jump = "Jump";
 
         private InputAction _interactAction;
@@ -69,7 +69,7 @@ namespace Catalyst.Player
         public bool DiveTriggered { get; set; }
 
         public bool InteractTriggered { get; set; }
-        public bool DodgeTriggered { get;  set; }
+        public bool DodgeTriggered { get; set; }
         public bool JumpTriggered { get; set; }
         public bool PrevTriggered { get; set; }
         public bool NextTriggered { get; set; }
