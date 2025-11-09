@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Animations.Rigging;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
