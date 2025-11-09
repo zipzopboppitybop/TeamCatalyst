@@ -6,8 +6,9 @@ public class PlayerInventoryHolder : InventoryHolder, IPickup
 {
     [SerializeField] protected int secondaryInventorySize = 16;
     [SerializeField] protected Inventory secondaryInventory;
+    [SerializeField] private PlayerInventoryUI hotbarUI;
 
-    public Inventory SecondaryInventory => secondaryInventory;
+    public new Inventory SecondaryInventory => secondaryInventory;
 
     protected override void Awake()
     {
@@ -66,5 +67,15 @@ public class PlayerInventoryHolder : InventoryHolder, IPickup
         }
 
         return false;
+    }
+
+    public ItemData GetHeldItem()
+    {
+        return hotbarUI != null ? hotbarUI.GetSelectedItem() : null;
+    }
+
+    public InventorySlot GetHeldSlot()
+    {
+        return hotbarUI != null ? hotbarUI.GetSelectedSlot() : null;
     }
 }

@@ -39,13 +39,14 @@ public class GameManager : MonoBehaviour
 
         player = GameObject.FindWithTag("Player");
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
+        DontDestroyOnLoad(gameObject);
     }
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Debug.Log("Starting GameManager");
+        //Debug.Log("Starting GameManager");
     }
 
     // Update is called once per frame

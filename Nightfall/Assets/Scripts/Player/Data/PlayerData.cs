@@ -36,6 +36,7 @@ namespace Catalyst.Player
         [Header("Movement Speeds")]
         [SerializeField] private float walkingSpeed = 3;
         [SerializeField] private float sprintSpeed = 10f;
+        [SerializeField] private float dashSpeed = 15f;
 
         [Header("Jump Parameters")]
         [SerializeField] private float jumpForce = 3;
@@ -80,6 +81,7 @@ namespace Catalyst.Player
 
         public float Speed => walkingSpeed;
         public float SprintSpeed => sprintSpeed;
+        public float DashSpeed => dashSpeed;
         public float CameraRotationSpeed => cameraRotationSpeed;
         public int RotationSpeed => rotationSpeed;
 

@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Potato
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   Icon: {fileID: 21300000, guid: e08cd903e3c3038419203cb865b805d8, type: 3}
-  dropPrefab: {fileID: 0}
+  itemType: 3
+  dropPrefab: {fileID: 4354320320779713590, guid: 5cf60363393045b41b421da9e6fc103e, type: 3}
   pickupSound: {fileID: 8300000, guid: 81535e34a5a320e4eba0fc963db81088, type: 3}
   audVol: 0.1
   displayName: Potato

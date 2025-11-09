@@ -12,7 +12,7 @@ namespace FGUIStarter
         RectTransform textRect;
         Vector2 originalTextPos;
 
-        bool isHeld;
+        //bool isHeld;
         protected override void Awake()
         {
             base.Awake();
@@ -23,14 +23,14 @@ namespace FGUIStarter
         public override void OnPointerDown(PointerEventData eventData)
         {
             base.OnPointerDown(eventData);
-            isHeld = true;
+            //isHeld = true;
             ApplyPressedVisual();
         }
 
         public override void OnPointerUp(PointerEventData eventData)
         {
             base.OnPointerUp(eventData);
-            isHeld = false;
+           // isHeld = false;
             ApplyNormalVisual();
         }
 

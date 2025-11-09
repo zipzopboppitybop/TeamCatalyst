@@ -29,8 +29,9 @@ MonoBehaviour:
   shootDist: 20
   ammoCount: 20
   ammoMax: 20
-  walkingSpeed: 0.5
+  walkingSpeed: 1
   sprintSpeed: 5
+  dashSpeed: 5
   jumpForce: 5
   gravityMultiplier: 1
   jumpMax: 1
