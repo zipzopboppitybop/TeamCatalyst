@@ -21,9 +21,9 @@ MonoBehaviour:
   shootVolume: 0.5
   gunType: 1
   shootDamage: 10
-  shootDistance: 20
+  shootDistance: 100
   shootRate: 1
-  ammoCur: 100
+  ammoCur: 50
   ammoMax: 50
   reloadTime: 0
   hitEffect: {fileID: 8567743453655228817, guid: 212ef1a41838ce044a9ac54994866708, type: 3}

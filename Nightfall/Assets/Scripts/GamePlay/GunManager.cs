@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using Catalyst.Audio;
 using Catalyst.Player;
 using UnityEngine;
@@ -20,7 +19,7 @@ namespace Catalyst.GamePlay
 
         private WeaponData _currentWeapon;
 
-        [SerializeField] private AudioClip shootSound;
+        private AudioClip[] shootSound;
 
 
         [SerializeField] private LayerMask ignoreLayer;
@@ -29,6 +28,8 @@ namespace Catalyst.GamePlay
 
         private int _animAim;
         private int _animShoot;
+        //private int _animReload;
+        private int _animArmed;
 
         private float _shootTimer = 0f;
 
@@ -46,7 +47,8 @@ namespace Catalyst.GamePlay
         private void Update()
         {
             _shootTimer += Time.deltaTime;
-            HandleAim();
+
+
             SelectWeapon();
         }
 
@@ -56,16 +58,13 @@ namespace Catalyst.GamePlay
         {
             if (player.Guns.Count == 0) return;
 
-            _currentWeapon = player.Guns[0];
+            ChangeWeapon();
+            animator.SetBool(_animArmed, true);
 
         }
 
         public void GetWeaponData(WeaponData weaponData)
         {
-            //if (weapons.HasItem(weaponData))
-            //{
-
-            //}
             player.Guns.Add(weaponData);
             _gunListPos = player.Guns.IndexOf(weaponData);
             ChangeWeapon();
@@ -73,11 +72,18 @@ namespace Catalyst.GamePlay
         private void ChangeWeapon()
         {
             _currentWeapon = player.Guns[_gunListPos];
+            shootSound = player.Guns[_gunListPos].shootSounds;
             Debug.Log("Equipped " + _currentWeapon.name);
             gunModel.GetComponent<MeshFilter>().sharedMesh = player.Guns[_gunListPos].model.GetComponent<MeshFilter>().sharedMesh;
             gunModel.GetComponent<MeshRenderer>().sharedMaterial = player.Guns[_gunListPos].model.GetComponent<MeshRenderer>().sharedMaterial;
 
-            SoundManager.instance.playSFX(transform, new AudioClip[] { player.Guns[_gunListPos].pickUpSound }, 0.5f, 1f, 128);
+            aud.PlayOneShot(player.Guns[_gunListPos].pickUpSound, 0.5f);
+
+            player.ShootDamage = player.Guns[_gunListPos].shootDamage;
+            player.ShootDist = player.Guns[_gunListPos].shootDistance;
+            player.ShootRate = player.Guns[_gunListPos].shootRate;
+            player.AmmoCount = player.Guns[_gunListPos].ammoCur;
+            player.AmmoMax = player.Guns[_gunListPos].ammoMax;
 
         }
         private void SelectWeapon()
@@ -100,17 +106,26 @@ namespace Catalyst.GamePlay
                 }
                 ChangeWeapon();
             }
+            HandleAim();
 
         }
         private void SetupCombatAnimator()
         {
             _animAim = Animator.StringToHash("Aiming");
             _animShoot = Animator.StringToHash("Shoot");
+            //_animReload = Animator.StringToHash("isReloading");
+            _animArmed = Animator.StringToHash("isArmed");
         }
 
         private bool PlayerCanShoot()
         {
-            return player.Guns[_gunListPos].ammoCur > 0 && !isReloading;
+            // Fix: Remove the invalid null-conditional operator and identifier error.
+            // Check if ammoCur is greater than 0 and not reloading.
+            if (player.Guns.Count == 0) return false;
+            if (_gunListPos < 0 || _gunListPos >= player.Guns.Count) return false;
+            if (player.Guns[_gunListPos].ammoCur <= 0) return false;
+            if (isReloading) return false;
+            return true;
         }
 
 
@@ -119,7 +134,7 @@ namespace Catalyst.GamePlay
 
             if (!PlayerCanShoot())
             {
-                animator.SetBool(_animAim, false);
+                animator.SetBool(_animArmed, false);
                 return;
             }
             if (playerInputHandler.AimTriggered)
@@ -155,8 +170,6 @@ namespace Catalyst.GamePlay
 
         public void Shoot()
         {
-
-            _shootTimer = 0;
             player.Guns[_gunListPos].ammoCur--;
             aud.PlayOneShot(player.Guns[_gunListPos].shootSounds[Random.Range(0, player.Guns[_gunListPos].shootSounds.Length)], player.Guns[_gunListPos].shootVolume);
             //updatePlayerUI();
@@ -182,6 +195,10 @@ namespace Catalyst.GamePlay
 
             }
 
+        }
+        public bool HasGun(WeaponData gun)
+        {
+            return player.Guns.Contains(gun);
         }
 
     }

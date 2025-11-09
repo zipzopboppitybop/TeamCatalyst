@@ -162,9 +162,6 @@ namespace Catalyst.Player
             InitializePlayer();
         }
 
-        public bool HasGun(WeaponData gun)
-        {
-            return guns.Contains(gun);
-        }
+       
     }
 }

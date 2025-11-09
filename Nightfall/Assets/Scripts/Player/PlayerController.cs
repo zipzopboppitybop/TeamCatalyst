@@ -1,4 +1,5 @@
 using System.Collections;
+using Catalyst.GamePlay;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -9,11 +10,15 @@ namespace Catalyst.Player
         [Header("References")]
 
         [SerializeField] private Animator animator;
-        public CinemachineCamera mainCamera;
+        public Camera sceneCam;
+        public CinemachineCamera FPSCamera;
         public CinemachineCamera thirdPersonCamera;
         public Camera gunCam;
         [SerializeField] private Transform followTarget;
         [SerializeField] private LayerMask ignoreLayer;
+        [SerializeField] private LayerMask gunCamLayers;
+        [SerializeField] private LayerMask thirdPersonLayers;
+        [SerializeField] private GameObject[] hideInFPS;
         public AudioSource aud;
 
         private float _cinemachineTargetPitch;
@@ -52,6 +57,7 @@ namespace Catalyst.Player
             characterController = GetComponent<CharacterController>();
             SetupAnimator();
             thirdPersonCamera.gameObject.SetActive(false);
+            ToggleCullingLayer();
 
 
         }
@@ -75,7 +81,7 @@ namespace Catalyst.Player
             HandleRotation();
 
             HandleAttack();
-
+            HandleDash();
             UpdateInteract();
             ThirdPersonActive();
 
@@ -163,6 +169,7 @@ namespace Catalyst.Player
             if (playerInputHandler.DashTriggered)
             {
                 StartCoroutine(Dash());
+                PlayerDash();
             }
         }
         private bool ThirdPersonActive()
@@ -189,16 +196,11 @@ namespace Catalyst.Player
             _currentMovement.z = playerDir.z * CurrentSpeed;
             HandleJumping();
 
-
-
-
             characterController.Move(_currentMovement * Time.deltaTime);
-            HandleDash();
+
+
             animator.SetFloat(_animVelocityX, Mathf.SmoothDamp(animator.GetFloat(_animVelocityX), playerInputHandler.MoveInput.x * _currentMovement.magnitude, ref _velocityX, 0.1f));
             animator.SetFloat(_animVelocityZ, Mathf.SmoothDamp(animator.GetFloat(_animVelocityZ), playerInputHandler.MoveInput.y * _currentMovement.magnitude, ref _velocityZ, 0.1f));
-
-
-
         }
 
         private void ApplyHorizontalRotation(float rotationAmount)
@@ -210,8 +212,7 @@ namespace Catalyst.Player
             else if (ThirdPersonActive() && playerInputHandler.MoveInput.magnitude >= 0.1)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, followTarget.eulerAngles.y, 0), Time.deltaTime * playerData.CameraRotationSpeed * playerData.RotationSpeed);
-                //gunCam.transform.rotation = Quaternion.Slerp(gunCam.transform.rotation, Quaternion.Euler(0, followTarget.eulerAngles.y, 0), Time.deltaTime * playerData.CameraRotationSpeed * playerData.RotationSpeed);
-                //gunModel.transform.rotation = Quaternion.Slerp(gunModel.transform.rotation, Quaternion.Euler(0, followTarget.eulerAngles.y, 0), Time.deltaTime * playerData.CameraRotationSpeed * playerData.RotationSpeed);
+
             }
 
             else
@@ -232,7 +233,7 @@ namespace Catalyst.Player
                 _verticalRotation = Mathf.Clamp(_verticalRotation - rotationAmount, -playerData.FPSVerticalRange, playerData.FPSVerticalRange);
             }
 
-            mainCamera.transform.localRotation = Quaternion.Euler(_verticalRotation, 0, 0);
+            FPSCamera.transform.localRotation = Quaternion.Euler(_verticalRotation, 0, 0);
         }
 
 
@@ -281,20 +282,21 @@ namespace Catalyst.Player
 
         public void UpdateInteract()
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetKeyDown(KeyCode.E) || playerInputHandler.InteractTriggered)
             {
-                Vector3 origin = mainCamera.transform.position;
-                Vector3 direction = mainCamera.transform.forward;
+                Vector3 origin = FPSCamera.transform.position;
+                Vector3 direction = FPSCamera.transform.forward;
 
                 Debug.DrawRay(origin, direction * playerData.InteractRange, Color.red, 1f);
 
                 if (Physics.Raycast(origin, direction, out RaycastHit hit, playerData.InteractRange, ~ignoreLayer))
                 {
                     Chest chest = hit.collider.GetComponent<Chest>();
-                    if (chest != null)
-                    {
-                        chest.OpenChest();
-                    }
+                    chest?.OpenChest();
+
+                    IInteractable target = hit.collider.GetComponent<IInteractable>();
+
+                    target?.Interact();
                 }
             }
         }
@@ -306,10 +308,54 @@ namespace Catalyst.Player
             if (gunCam == null)
                 return;
             if (thirdPersonCamera.gameObject.activeSelf)
+            {
                 gunCam.enabled = false;
 
-            else gunCam.enabled = true;
+            }
 
+            else
+            {
+                gunCam.enabled = true;
+                Debug.Log("Gun cam enabled");
+                // enable ignore layers on main camera 
+
+            }
+            ToggleCullingLayer();
+        }
+
+        private void ToggleCullingLayer()
+        {
+            if (FPSCamera == null)
+                return;
+            if (thirdPersonCamera.gameObject.activeSelf)
+            {
+
+                Debug.Log("Adding culling layers to main camera");
+                sceneCam.cullingMask |= thirdPersonLayers;
+
+
+                foreach (GameObject go in hideInFPS)
+                {
+                    go.SetActive(true);
+                }
+
+                if (playerData.AmmoCount > 0)
+                {
+                    sceneCam.cullingMask |= ~gunCamLayers;
+                }
+
+
+            }
+            else
+            {
+                //   Debug.Log("Removing culling layers from main camera");
+                sceneCam.cullingMask &= ~thirdPersonLayers;
+                sceneCam.cullingMask &= ~gunCamLayers;
+                foreach (GameObject go in hideInFPS)
+                {
+                    go.SetActive(false);
+                }
+            }
         }
         IEnumerator FlashDamageScreen()
         {
@@ -352,6 +398,7 @@ namespace Catalyst.Player
         IEnumerator Dash()
         {
             animator.SetTrigger(_animDash);
+
             yield return new WaitForSeconds(1.0f);
             animator.ResetTrigger(_animDash);
             playerInputHandler.DashTriggered = false;

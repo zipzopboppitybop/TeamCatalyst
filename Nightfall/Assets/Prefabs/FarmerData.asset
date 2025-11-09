@@ -24,14 +24,14 @@ MonoBehaviour:
   interactRange: 2
   currency: 0
   currentFarmingState: 0
-  shootDamage: 5
+  shootDamage: 10
   shootRate: 1
-  shootDist: 20
-  ammoCount: 20
-  ammoMax: 20
+  shootDist: 100
+  ammoCount: 40
+  ammoMax: 50
   walkingSpeed: 1
   sprintSpeed: 5
-  dashSpeed: 5
+  dashSpeed: 3
   jumpForce: 5
   gravityMultiplier: 1
   jumpMax: 1
@@ -44,4 +44,5 @@ MonoBehaviour:
   keysCollected: 0
   notesCollected: 0
   roomsClear: 0
-  guns: []
+  guns:
+  - {fileID: 11400000, guid: 5e17b70c5f1b7444a830bd25d57ae966, type: 2}
