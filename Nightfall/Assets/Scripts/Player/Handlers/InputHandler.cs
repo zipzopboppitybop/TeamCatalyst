@@ -26,17 +26,15 @@ namespace Catalyst.Player
 
         [Header("In-Game Input Actions")]
         [SerializeField] private string attack = "Attack";
-        [SerializeField] private string dive = "Dive";
 
         private InputAction _attackAction;
-        private InputAction _diveAction;
 
         [SerializeField] private string interact = "Interact";
-        [SerializeField] private string dodge = "Dash";
+        [SerializeField] private string dash = "Dash";
         [SerializeField] private string jump = "Jump";
 
         private InputAction _interactAction;
-        private InputAction _dodgeAction;
+        private InputAction _dashAction;
         private InputAction _jumpAction;
 
         [Header("UI Input & Triggers Actions")]
@@ -69,7 +67,7 @@ namespace Catalyst.Player
         public bool DiveTriggered { get; set; }
 
         public bool InteractTriggered { get; set; }
-        public bool DodgeTriggered { get; set; }
+        public bool DashTriggered { get; set; }
         public bool JumpTriggered { get; set; }
         public bool PrevTriggered { get; set; }
         public bool NextTriggered { get; set; }
@@ -93,9 +91,8 @@ namespace Catalyst.Player
 
             //  D-Pad
             _attackAction = mapReference.FindAction(attack);
-            _diveAction = mapReference.FindAction(dive);
             _interactAction = mapReference.FindAction(interact);
-            _dodgeAction = mapReference.FindAction(dodge);
+            _dashAction = mapReference.FindAction(dash);
             _jumpAction = mapReference.FindAction(jump);
 
             // Top Buttons
@@ -124,14 +121,12 @@ namespace Catalyst.Player
 
             _attackAction.performed += inputInfo => AttackTriggered = true;
             _attackAction.canceled += inputInfo => AttackTriggered = false;
-            _diveAction.performed += inputInfo => DiveTriggered = true;
-            _diveAction.canceled += inputInfo => DiveTriggered = false;
 
             _interactAction.performed += inputInfo => InteractTriggered = true;
             _interactAction.canceled += inputInfo => InteractTriggered = false;
 
-            _dodgeAction.performed += inputInfo => DodgeTriggered = true;
-            _dodgeAction.canceled += inputInfo => DodgeTriggered = false;
+            _dashAction.performed += inputInfo => DashTriggered = true;
+            _dashAction.canceled += inputInfo => DashTriggered = false;
 
             _previousAction.performed += inputInfo => PrevTriggered = true;
             _previousAction.canceled += inputInfo => PrevTriggered = false;

@@ -605,19 +605,10 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Dash"",
                     ""type"": ""Button"",
-                    ""id"": ""eb13e0be-57cd-402b-941d-5f197e97a3b3"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Crouch"",
-                    ""type"": ""Button"",
                     ""id"": ""cd4f30fb-93b0-4681-b74a-f1367b14cef7"",
                     ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -669,15 +660,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""name"": ""Fire"",
                     ""type"": ""Button"",
                     ""id"": ""09ddf40b-e26e-4d24-ae70-664802458cb1"",
-                    ""expectedControlType"": """",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Dive"",
-                    ""type"": ""Button"",
-                    ""id"": ""c1356f62-b735-449f-a37c-934d84ad05a2"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -1121,28 +1103,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""7e3970db-8b31-4f22-af20-c5a81b8f73ce"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Dive"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3c4024dc-dbb3-406f-97f2-7d8cd30c80ef"",
-                    ""path"": ""<Keyboard>/f"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Dive"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""62becfc1-316b-48e9-bffe-ccf57ad9accf"",
                     ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
@@ -1160,28 +1120,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Pause"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""528112bf-d93d-4693-9af1-94e66bb39a79"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
-                    ""interactions"": ""Hold"",
-                    ""processors"": """",
-                    ""groups"": "";Gamepad"",
-                    ""action"": ""Dash"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""7d2405cf-8738-49d7-9154-f953edf19e05"",
-                    ""path"": ""<Keyboard>/c"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": "";Keyboard&Mouse"",
-                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1225,7 +1163,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Crouch"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1236,7 +1174,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Crouch"",
+                    ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1839,15 +1777,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_Farmer_Look = m_Farmer.FindAction("Look", throwIfNotFound: true);
         m_Farmer_Attack = m_Farmer.FindAction("Attack", throwIfNotFound: true);
         m_Farmer_Interact = m_Farmer.FindAction("Interact", throwIfNotFound: true);
-        m_Farmer_Dodge = m_Farmer.FindAction("Dash", throwIfNotFound: true);
-        m_Farmer_Crouch = m_Farmer.FindAction("Crouch", throwIfNotFound: true);
+        m_Farmer_Dash = m_Farmer.FindAction("Dash", throwIfNotFound: true);
         m_Farmer_Jump = m_Farmer.FindAction("Jump", throwIfNotFound: true);
         m_Farmer_Previous = m_Farmer.FindAction("Previous", throwIfNotFound: true);
         m_Farmer_Next = m_Farmer.FindAction("Next", throwIfNotFound: true);
         m_Farmer_Sprint = m_Farmer.FindAction("Sprint", throwIfNotFound: true);
         m_Farmer_Aim = m_Farmer.FindAction("Aim", throwIfNotFound: true);
         m_Farmer_Fire = m_Farmer.FindAction("Fire", throwIfNotFound: true);
-        m_Farmer_Dive = m_Farmer.FindAction("Dive", throwIfNotFound: true);
         m_Farmer_Pause = m_Farmer.FindAction("Pause", throwIfNotFound: true);
         m_Farmer_ToggleCamera = m_Farmer.FindAction("ToggleCamera", throwIfNotFound: true);
         m_Farmer_Inventory = m_Farmer.FindAction("Inventory", throwIfNotFound: true);
@@ -2133,15 +2069,13 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_Farmer_Look;
     private readonly InputAction m_Farmer_Attack;
     private readonly InputAction m_Farmer_Interact;
-    private readonly InputAction m_Farmer_Dodge;
-    private readonly InputAction m_Farmer_Crouch;
+    private readonly InputAction m_Farmer_Dash;
     private readonly InputAction m_Farmer_Jump;
     private readonly InputAction m_Farmer_Previous;
     private readonly InputAction m_Farmer_Next;
     private readonly InputAction m_Farmer_Sprint;
     private readonly InputAction m_Farmer_Aim;
     private readonly InputAction m_Farmer_Fire;
-    private readonly InputAction m_Farmer_Dive;
     private readonly InputAction m_Farmer_Pause;
     private readonly InputAction m_Farmer_ToggleCamera;
     private readonly InputAction m_Farmer_Inventory;
@@ -2173,13 +2107,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Interact => m_Wrapper.m_Farmer_Interact;
         /// <summary>
-        /// Provides access to the underlying input action "Farmer/Dodge".
+        /// Provides access to the underlying input action "Farmer/Dash".
         /// </summary>
-        public InputAction @Dodge => m_Wrapper.m_Farmer_Dodge;
-        /// <summary>
-        /// Provides access to the underlying input action "Farmer/Crouch".
-        /// </summary>
-        public InputAction @Crouch => m_Wrapper.m_Farmer_Crouch;
+        public InputAction @Dash => m_Wrapper.m_Farmer_Dash;
         /// <summary>
         /// Provides access to the underlying input action "Farmer/Jump".
         /// </summary>
@@ -2204,10 +2134,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Farmer/Fire".
         /// </summary>
         public InputAction @Fire => m_Wrapper.m_Farmer_Fire;
-        /// <summary>
-        /// Provides access to the underlying input action "Farmer/Dive".
-        /// </summary>
-        public InputAction @Dive => m_Wrapper.m_Farmer_Dive;
         /// <summary>
         /// Provides access to the underlying input action "Farmer/Pause".
         /// </summary>
@@ -2258,12 +2184,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Interact.started += instance.OnInteract;
             @Interact.performed += instance.OnInteract;
             @Interact.canceled += instance.OnInteract;
-            @Dodge.started += instance.OnDodge;
-            @Dodge.performed += instance.OnDodge;
-            @Dodge.canceled += instance.OnDodge;
-            @Crouch.started += instance.OnCrouch;
-            @Crouch.performed += instance.OnCrouch;
-            @Crouch.canceled += instance.OnCrouch;
+            @Dash.started += instance.OnDash;
+            @Dash.performed += instance.OnDash;
+            @Dash.canceled += instance.OnDash;
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
@@ -2282,9 +2205,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Fire.started += instance.OnFire;
             @Fire.performed += instance.OnFire;
             @Fire.canceled += instance.OnFire;
-            @Dive.started += instance.OnDive;
-            @Dive.performed += instance.OnDive;
-            @Dive.canceled += instance.OnDive;
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
@@ -2317,12 +2237,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Interact.started -= instance.OnInteract;
             @Interact.performed -= instance.OnInteract;
             @Interact.canceled -= instance.OnInteract;
-            @Dodge.started -= instance.OnDodge;
-            @Dodge.performed -= instance.OnDodge;
-            @Dodge.canceled -= instance.OnDodge;
-            @Crouch.started -= instance.OnCrouch;
-            @Crouch.performed -= instance.OnCrouch;
-            @Crouch.canceled -= instance.OnCrouch;
+            @Dash.started -= instance.OnDash;
+            @Dash.performed -= instance.OnDash;
+            @Dash.canceled -= instance.OnDash;
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
@@ -2341,9 +2258,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Fire.started -= instance.OnFire;
             @Fire.performed -= instance.OnFire;
             @Fire.canceled -= instance.OnFire;
-            @Dive.started -= instance.OnDive;
-            @Dive.performed -= instance.OnDive;
-            @Dive.canceled -= instance.OnDive;
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
@@ -2753,19 +2667,12 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnInteract(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Dodge" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Dash" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnDodge(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Crouch" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnCrouch(InputAction.CallbackContext context);
+        void OnDash(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Jump" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
@@ -2808,13 +2715,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnFire(InputAction.CallbackContext context);
-        /// <summary>
-        /// Method invoked when associated input action "Dive" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
-        /// </summary>
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
-        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnDive(InputAction.CallbackContext context);
         /// <summary>
         /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>

@@ -37,7 +37,6 @@ namespace Catalyst.Player
         private int _animJump;
         private int _animGrounded;
         private int _animAttack;
-        private int _animDodge;
         private int _animDash;
         private int _animAim;
         private int _animShoot;
@@ -80,8 +79,7 @@ namespace Catalyst.Player
 
             HandleAttack();
             HandleAim();
-            HandleDodge();
-            HandleDash();
+
             UpdateInteract();
             ThirdPersonActive();
 
@@ -93,7 +91,6 @@ namespace Catalyst.Player
             _animJump = Animator.StringToHash("Jump");
             _animGrounded = Animator.StringToHash("Grounded");
             _animAttack = Animator.StringToHash("Attack");
-            _animDodge = Animator.StringToHash("Dash");
             _animDash = Animator.StringToHash("Dash");
             _animAim = Animator.StringToHash("Aiming");
             _animShoot = Animator.StringToHash("Shoot");
@@ -167,19 +164,9 @@ namespace Catalyst.Player
             }
         }
 
-        private void HandleDodge()
-        {
-            if (playerInputHandler.DodgeTriggered)
-            {
-                StartCoroutine(Dash());
-
-            }
-
-        }
-
         private void HandleDash()
         {             // Dash logic here
-            if (playerInputHandler.DiveTriggered)
+            if (playerInputHandler.DashTriggered)
             {
                 StartCoroutine(Dash());
             }
@@ -211,11 +198,12 @@ namespace Catalyst.Player
 
 
 
-            characterController.Move(_currentMovement * Time.deltaTime);
 
+            characterController.Move(_currentMovement * Time.deltaTime);
+            HandleDash();
             animator.SetFloat(_animVelocityX, Mathf.SmoothDamp(animator.GetFloat(_animVelocityX), playerInputHandler.MoveInput.x * _currentMovement.magnitude, ref _velocityX, 0.1f));
             animator.SetFloat(_animVelocityZ, Mathf.SmoothDamp(animator.GetFloat(_animVelocityZ), playerInputHandler.MoveInput.y * _currentMovement.magnitude, ref _velocityZ, 0.1f));
-            HandleDodge();
+
 
 
         }
@@ -229,6 +217,8 @@ namespace Catalyst.Player
             else if (ThirdPersonActive() && playerInputHandler.MoveInput.magnitude >= 0.1)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, followTarget.eulerAngles.y, 0), Time.deltaTime * playerData.CameraRotationSpeed * playerData.RotationSpeed);
+                //gunCam.transform.rotation = Quaternion.Slerp(gunCam.transform.rotation, Quaternion.Euler(0, followTarget.eulerAngles.y, 0), Time.deltaTime * playerData.CameraRotationSpeed * playerData.RotationSpeed);
+                //gunModel.transform.rotation = Quaternion.Slerp(gunModel.transform.rotation, Quaternion.Euler(0, followTarget.eulerAngles.y, 0), Time.deltaTime * playerData.CameraRotationSpeed * playerData.RotationSpeed);
             }
 
             else
@@ -244,6 +234,7 @@ namespace Catalyst.Player
             {
                 _verticalRotation = Mathf.Clamp(_verticalRotation + rotationAmount, -playerData.FPSVerticalRange, playerData.FPSVerticalRange);
 
+
             }
             else if (!isInverted)
             {
@@ -252,10 +243,12 @@ namespace Catalyst.Player
 
 
 
+
             }
 
             mainCamera.transform.localRotation = Quaternion.Euler(_verticalRotation, 0, 0);
-            gunCam.transform.localRotation = Quaternion.Euler(_verticalRotation, 0, 0);
+            //gunCam.transform.localRotation = Quaternion.Euler(_verticalRotation, 0, 0);
+            //gunModel.transform.localRotation = Quaternion.Euler(_verticalRotation, 0, 0);
 
 
         }
@@ -349,7 +342,7 @@ namespace Catalyst.Player
             if (playerInputHandler.FireTriggered && _shootTimer > playerData.ShootRate)
             {
                 _shootTimer = 0f;
-                Shoot();
+
                 animator.SetTrigger("Shoot");
                 Debug.Log("Shooting");
                 //animator.ResetTrigger("Shoot");
@@ -424,10 +417,12 @@ namespace Catalyst.Player
 
         IEnumerator Dash()
         {
-            animator.SetTrigger(_animDodge);
+            PlayerDash();
+            animator.SetTrigger(_animDash);
+
             yield return new WaitForSeconds(1.0f);
-            animator.ResetTrigger(_animDodge);
-            playerInputHandler.DodgeTriggered = false;
+            animator.ResetTrigger(_animDash);
+            playerInputHandler.DashTriggered = false;
         }
         public void PlayerDash()
         {
