@@ -9,6 +9,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform headPos;
     [SerializeField] GameObject itemDrop;
+    [SerializeField] GameObject targetObj;
 
     [SerializeField] int hp;
     [SerializeField] int faceTargetSpeed;
@@ -22,19 +23,23 @@ public class enemyAI : MonoBehaviour, IDamage
 
     bool playerInRange;
     bool targetsPlayer = true;
+    bool isScared = false;
 
     float biteTimer;
     float roamTimer;
-    float angleToPlayer;
+    float angleToTarget;
     float stoppingDistOrg;
 
-    Vector3 playerDir;
+    int roamTimeOrig;
+
+    Vector3 targetDir;
     Vector3 startingPos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         colorOrig = model.material.color;
+        roamTimeOrig = roamPauseTime;
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
     }
@@ -52,7 +57,7 @@ public class enemyAI : MonoBehaviour, IDamage
         }
         if (targetsPlayer)
         {        
-            if (playerInRange && !CanSeePlayer())
+            if (playerInRange && !CanSeeTarget())
             {
                 CheckRoam();
             }
@@ -65,14 +70,29 @@ public class enemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         hp -= amount;
-        agent.SetDestination(GameManager.instance.player.transform.position);
+        if (GameManager.instance != null && targetsPlayer)
+        {
+            targetObj = GameManager.instance.player;
+            agent.SetDestination(targetObj.transform.position);
+        }
+            
+
+        else if (!isScared)
+        {
+            StartCoroutine(getScared());
+            agent.stoppingDistance = 0;
+        }
+        
 
         if (hp <= 0)
         {
+
             if (Random.Range(1, 100) <= dropChance && itemDrop != null)
             {
-                Instantiate(itemDrop, headPos);
+                Debug.Log("Spawn!");
+                Instantiate(itemDrop, headPos.position, transform.rotation);
             }
+
             Destroy(gameObject);
         }
         else
@@ -102,33 +122,38 @@ public class enemyAI : MonoBehaviour, IDamage
         agent.SetDestination(hit.position);
     }
 
-bool CanSeePlayer()
+bool CanSeeTarget()
 {
-    playerDir = GameManager.instance.player.transform.position - headPos.position;
-    angleToPlayer = Vector3.Angle(playerDir, transform.forward);
-    Debug.DrawRay(headPos.position, playerDir, Color.red);
-
-    RaycastHit hit;
-    if (Physics.Raycast(headPos.position, playerDir, out hit))
+    if (!isScared)
     {
-        Debug.Log(hit.collider.name);
+        targetDir = targetObj.transform.position - headPos.position;
+        angleToTarget = Vector3.Angle(targetDir, transform.forward);
+        Debug.DrawRay(headPos.position, targetDir, Color.red);
 
-        if (angleToPlayer <= FOV)
+        RaycastHit hit;
+        if (Physics.Raycast(headPos.position, targetDir, out hit))
         {
-            agent.SetDestination(GameManager.instance.player.transform.position);
+            Debug.Log(hit.collider.name);
 
-            if (biteTimer > biteRate && agent.remainingDistance <= stoppingDistOrg)
+            if (angleToTarget <= FOV)
             {
-                attack(GameManager.instance.player); 
-                biteTimer = 0; 
+                agent.SetDestination(targetObj.transform.position);
+
+                if (biteTimer > biteRate && agent.remainingDistance <= stoppingDistOrg)
+                {
+                    attack(targetObj);
+                    biteTimer = 0;
+                }
+
+                if (agent.remainingDistance <= stoppingDistOrg)
+                    FaceTarget();
+
+                agent.stoppingDistance = stoppingDistOrg;
+                return true;
             }
 
-            if (agent.remainingDistance <= stoppingDistOrg)
-                FaceTarget();
-
-            agent.stoppingDistance = stoppingDistOrg;
-            return true;
         }
+
     }
 
     agent.stoppingDistance = 0;
@@ -136,7 +161,7 @@ bool CanSeePlayer()
 }
     void FaceTarget()
     {
-        Quaternion rot = Quaternion.LookRotation(new Vector3(playerDir.x, 0, playerDir.z));
+        Quaternion rot = Quaternion.LookRotation(new Vector3(targetDir.x, 0, targetDir.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
 
@@ -162,11 +187,11 @@ bool CanSeePlayer()
 
         if (target == null) return;
 
-        IDamage playerHealth = target.GetComponent<IDamage>();
-        if (playerHealth != null)
+        IDamage targetHealth = target.GetComponent<IDamage>();
+        if (targetHealth != null)
         {
             Debug.Log("Attack");
-            playerHealth.takeDamage(1);
+            targetHealth.takeDamage(1);
         }
     }
 
@@ -175,5 +200,16 @@ bool CanSeePlayer()
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         model.material.color = colorOrig;
+    }
+
+    IEnumerator getScared()
+    {
+
+        isScared = true;
+        roamPauseTime = 1;
+        yield return new WaitForSeconds(5);
+        roamPauseTime = roamTimeOrig;
+        isScared = false;
+
     }
 }

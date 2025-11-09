@@ -134,6 +134,8 @@ MonoBehaviour:
   itemDrop: {fileID: 0}
   bullet: {fileID: 0}
   shootPos: {fileID: 0}
+  model: {fileID: 5963499359417274394}
+  isWatered: 0
   isFertilized: 0
   hp: 1
   enemyPos: []
