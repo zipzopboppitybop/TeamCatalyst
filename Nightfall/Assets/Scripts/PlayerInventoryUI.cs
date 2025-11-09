@@ -11,7 +11,7 @@ public class PlayerInventoryUI : MonoBehaviour
     [SerializeField] private PlayerInventoryUI hotbarUI;
     [SerializeField] private UIDocument document;
 
-    private Inventory inventory;
+    public Inventory inventory;
     private VisualElement root;
     private VisualElement[] slots;
     private int slotCount;
@@ -205,7 +205,7 @@ public class PlayerInventoryUI : MonoBehaviour
         slots[index].RegisterCallback<PointerUpEvent>(e => OnSlotPointerUp(index));
     }
 
-    private void RefreshInventory(InventorySlot _ = null)
+    public void RefreshInventory(InventorySlot _ = null)
     {
         for (int i = 0; i < slotCount; i++)
         {

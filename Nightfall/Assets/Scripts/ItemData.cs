@@ -7,7 +7,9 @@ using UnityEngine;
 
 public class ItemData : ScriptableObject
 {
+    public enum ItemType { Tool, Seed, Weapon, Resource }
     public Sprite Icon;
+    public ItemType itemType;
     public GameObject dropPrefab;
     public AudioClip pickupSound;
     [Range(0, 1)] public float audVol;
@@ -16,5 +18,4 @@ public class ItemData : ScriptableObject
     public int sellValue;
     public int price;
     public int maxStackSize;
-    public enum itemType { Crop };
 }
