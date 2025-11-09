@@ -93,7 +93,7 @@ namespace Catalyst.Player
             _animJump = Animator.StringToHash("Jump");
             _animGrounded = Animator.StringToHash("Grounded");
             _animAttack = Animator.StringToHash("Attack");
-            _animDodge = Animator.StringToHash("Dodge");
+            _animDodge = Animator.StringToHash("Dash");
             _animDash = Animator.StringToHash("Dash");
             _animAim = Animator.StringToHash("Aiming");
             _animShoot = Animator.StringToHash("Shoot");
@@ -171,7 +171,7 @@ namespace Catalyst.Player
         {
             if (playerInputHandler.DodgeTriggered)
             {
-                StartCoroutine(Dodge());
+                StartCoroutine(Dash());
 
             }
 
@@ -249,9 +249,14 @@ namespace Catalyst.Player
             {
                 _verticalRotation = Mathf.Clamp(_verticalRotation - rotationAmount, -playerData.FPSVerticalRange, playerData.FPSVerticalRange);
 
+
+
+
             }
 
             mainCamera.transform.localRotation = Quaternion.Euler(_verticalRotation, 0, 0);
+            gunCam.transform.localRotation = Quaternion.Euler(_verticalRotation, 0, 0);
+
 
         }
 
@@ -352,32 +357,31 @@ namespace Catalyst.Player
             }
         }
 
-        private void Shoot()
+        public void Shoot()
         {
-            void shoot()
+
+            _shootTimer = 0;
+            playerData.Guns[_gunListPos].ammoCur--;
+            aud.PlayOneShot(playerData.Guns[_gunListPos].shootSounds[Random.Range(0, playerData.Guns[_gunListPos].shootSounds.Length)], playerData.Guns[_gunListPos].shootVolume);
+            //updatePlayerUI();
+
+            RaycastHit hit;
+            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, playerData.ShootDist, ~ignoreLayer))
             {
-                _shootTimer = 0;
-                playerData.Guns[_gunListPos].ammoCur--;
-                aud.PlayOneShot(playerData.Guns[_gunListPos].shootSounds[Random.Range(0, playerData.Guns[_gunListPos].shootSounds.Length)], playerData.Guns[_gunListPos].shootVolume);
-                //updatePlayerUI();
+                Instantiate(playerData.Guns[_gunListPos].hitEffect, hit.point, Quaternion.identity);
 
-                RaycastHit hit;
-                if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, playerData.ShootDist, ~ignoreLayer))
+                Debug.Log(hit.collider.name);
+
+                IDamage dmg = hit.collider.GetComponent<IDamage>();
+
+                if (dmg != null)
                 {
-                    Instantiate(playerData.Guns[_gunListPos].hitEffect, hit.point, Quaternion.identity);
 
-                    Debug.Log(hit.collider.name);
-
-                    IDamage dmg = hit.collider.GetComponent<IDamage>();
-
-                    if (dmg != null)
-                    {
-
-                        dmg.takeDamage(playerData.ShootDamage);
-                    }
-
+                    dmg.takeDamage(playerData.ShootDamage);
                 }
+
             }
+
         }
 
         private void ToggleGunCam()
@@ -417,36 +421,22 @@ namespace Catalyst.Player
             playerInputHandler.AttackTriggered = false;
         }
 
+
         IEnumerator Dash()
         {
-
-            //animator.SetTrigger(animDash);
-            yield return new WaitForSeconds(1.0f);
-            //playerInputHandler.DashTriggered = false;
-        }
-
-
-        IEnumerator Dodge()
-        {
-            // move the player quickly in the dodge direction with a burst of speed
-
-
-
-
             animator.SetTrigger(_animDodge);
-            PlayerDodge();
             yield return new WaitForSeconds(1.0f);
             animator.ResetTrigger(_animDodge);
             playerInputHandler.DodgeTriggered = false;
         }
-        private void PlayerDodge()
+        public void PlayerDash()
         {
             Vector3 dodgeDirection = CalculateMoveDirection();
             if (dodgeDirection == Vector3.zero)
             {
                 dodgeDirection = -transform.forward;
             }
-            characterController.Move(dodgeDirection.normalized * playerData.SprintSpeed * 2 * Time.deltaTime);
+            characterController.Move(dodgeDirection.normalized * playerData.DashSpeed * Time.deltaTime);
 
         }
 
