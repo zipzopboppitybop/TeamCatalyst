@@ -22,7 +22,7 @@ public class enemyAI : MonoBehaviour, IDamage
     Color colorOrig;
 
     bool playerInRange;
-    bool targetsPlayer = true;
+    [SerializeField] bool targetsPlayer = true;
     bool isScared = false;
 
     float biteTimer;
@@ -75,12 +75,12 @@ public class enemyAI : MonoBehaviour, IDamage
             targetObj = GameManager.instance.player;
             agent.SetDestination(targetObj.transform.position);
         }
-            
-
-        else if (!isScared)
+        else if (!targetsPlayer)
         {
+            StopCoroutine(getScared());
+            isScared = false;
             StartCoroutine(getScared());
-            agent.stoppingDistance = 0;
+            Roam();
         }
         
 
@@ -122,43 +122,44 @@ public class enemyAI : MonoBehaviour, IDamage
         agent.SetDestination(hit.position);
     }
 
-bool CanSeeTarget()
-{
-    if (!isScared)
+    bool CanSeeTarget()
     {
-        targetDir = targetObj.transform.position - headPos.position;
-        angleToTarget = Vector3.Angle(targetDir, transform.forward);
-        Debug.DrawRay(headPos.position, targetDir, Color.red);
-
-        RaycastHit hit;
-        if (Physics.Raycast(headPos.position, targetDir, out hit))
+        if (!isScared)
         {
-            Debug.Log(hit.collider.name);
+            targetDir = targetObj.transform.position - headPos.position;
+            angleToTarget = Vector3.Angle(targetDir, transform.forward);
+            Debug.DrawRay(headPos.position, targetDir, Color.red);
 
-            if (angleToTarget <= FOV)
+            RaycastHit hit;
+            if (Physics.Raycast(headPos.position, targetDir, out hit))
             {
-                agent.SetDestination(targetObj.transform.position);
+                Debug.Log(hit.collider.name);
+                Debug.DrawRay(headPos.position, headPos.transform.forward, Color.red);
 
-                if (biteTimer > biteRate && agent.remainingDistance <= stoppingDistOrg)
+                if (angleToTarget <= FOV)
                 {
-                    attack(targetObj);
-                    biteTimer = 0;
+                    agent.SetDestination(targetObj.transform.position);
+
+                    if (biteTimer > biteRate && agent.remainingDistance <= stoppingDistOrg)
+                    {
+                        attack(targetObj);
+                        biteTimer = 0;
+                    }
+
+                    if (agent.remainingDistance <= stoppingDistOrg)
+                        FaceTarget();
+
+                    agent.stoppingDistance = stoppingDistOrg;
+                    return true;
                 }
 
-                if (agent.remainingDistance <= stoppingDistOrg)
-                    FaceTarget();
-
-                agent.stoppingDistance = stoppingDistOrg;
-                return true;
             }
-
         }
 
-    }
+        agent.stoppingDistance = 0;
+        return false;
 
-    agent.stoppingDistance = 0;
-    return false;
-}
+    }
     void FaceTarget()
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(targetDir.x, 0, targetDir.z));
@@ -167,7 +168,7 @@ bool CanSeeTarget()
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.GetComponent<TowerBase>() && other.GetComponent<TowerBase>().typeTower == TowerBase.TowerType.Crop)
         {
             playerInRange = true;
         }
@@ -175,7 +176,7 @@ bool CanSeeTarget()
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.GetComponent<TowerBase>() && other.GetComponent<TowerBase>().typeTower == TowerBase.TowerType.Crop)
         {
             playerInRange = false;
             agent.stoppingDistance = 0;
@@ -207,7 +208,7 @@ bool CanSeeTarget()
 
         isScared = true;
         roamPauseTime = 1;
-        yield return new WaitForSeconds(5);
+        yield return new WaitForSeconds(10);
         roamPauseTime = roamTimeOrig;
         isScared = false;
 

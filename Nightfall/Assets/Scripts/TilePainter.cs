@@ -15,6 +15,9 @@ public class TilePainter : MonoBehaviour
 
     int tileType = 0;
 
+    // 0 = Farmland
+    // 1 = Crop
+
     Vector3Int currentCell;
 
     
@@ -62,7 +65,6 @@ public class TilePainter : MonoBehaviour
                             Destroy(tower);
                             map.SetTile(currentCell, null);
                             map.SetTile(currentCell, selectedTile[tileType]);
-                            tileType = 0;
 
                         }
                     }
@@ -71,8 +73,9 @@ public class TilePainter : MonoBehaviour
                 {
                     if (selectedTower.GetComponent<TowerBase>().typeTower != TowerBase.TowerType.Crop)
                     {
-                        map.SetTile(currentCell, selectedTile[0]);
-                        tileType = 1;
+
+                        map.SetTile(currentCell, selectedTile[tileType]);
+                        
                     }
                         
                 }
@@ -81,13 +84,6 @@ public class TilePainter : MonoBehaviour
 
             }
 }
-    }
-
-    void ChangeTile()
-    {
-
-
-
     }
 
 }
