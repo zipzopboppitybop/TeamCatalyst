@@ -21,7 +21,7 @@ namespace Catalyst.Player
         [SerializeField] private int staminaMax = 10;
         [SerializeField, Range(0, 30)] private int stealth = 5;
         [SerializeField, Range(0, 5)] private int interactRange = 2;
-        [SerializeField] private int currency = 0;
+        [SerializeField, Range (0, 999999)] private int currency = 0;
         [SerializeField] private FarmingStateMachine.FarmingState currentFarmingState = FarmingStateMachine.FarmingState.None;
 
         [Header("Weapon Data")]
