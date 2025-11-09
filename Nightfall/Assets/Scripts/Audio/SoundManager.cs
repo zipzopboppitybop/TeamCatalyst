@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-namespace WTIM.Audio
+namespace Catalyst.Audio
 {
     public class SoundManager : MonoBehaviour
     {

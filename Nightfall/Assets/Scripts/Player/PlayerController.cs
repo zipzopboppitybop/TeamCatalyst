@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Runtime.CompilerServices;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -14,7 +13,7 @@ namespace Catalyst.Player
         public CinemachineCamera thirdPersonCamera;
         public Camera gunCam;
         [SerializeField] private Transform followTarget;
-        [SerializeField] GameObject gunModel;
+        [SerializeField] private LayerMask ignoreLayer;
         public AudioSource aud;
 
         private float _cinemachineTargetPitch;
@@ -22,7 +21,7 @@ namespace Catalyst.Player
 
         public InputHandler playerInputHandler;
         [SerializeField] private PlayerData playerData;
-        [SerializeField] private LayerMask ignoreLayer;
+
         private Vector3 _currentMovement;
         private float _verticalRotation;
         public bool isInverted;
@@ -38,17 +37,15 @@ namespace Catalyst.Player
         private int _animGrounded;
         private int _animAttack;
         private int _animDash;
-        private int _animAim;
-        private int _animShoot;
+
         private int _animVelocityX;
         private int _animVelocityZ;
 
         private int _jumpCount = 0;
-        private float _shootTimer = 0f;
 
         private CharacterController characterController;
         private Vector3 playerDir;
-        private int _gunListPos;
+
 
         private void Start()
         {
@@ -78,7 +75,6 @@ namespace Catalyst.Player
             HandleRotation();
 
             HandleAttack();
-            HandleAim();
 
             UpdateInteract();
             ThirdPersonActive();
@@ -92,8 +88,6 @@ namespace Catalyst.Player
             _animGrounded = Animator.StringToHash("Grounded");
             _animAttack = Animator.StringToHash("Attack");
             _animDash = Animator.StringToHash("Dash");
-            _animAim = Animator.StringToHash("Aiming");
-            _animShoot = Animator.StringToHash("Shoot");
             _animVelocityX = Animator.StringToHash("Velocity X");
             _animVelocityZ = Animator.StringToHash("Velocity Z");
 
@@ -183,7 +177,6 @@ namespace Catalyst.Player
 
         private void HandleMovement()
         {
-            _shootTimer += Time.deltaTime;
             if (isInventoryOpen)
             {
                 return;
@@ -233,24 +226,13 @@ namespace Catalyst.Player
             if (isInverted)
             {
                 _verticalRotation = Mathf.Clamp(_verticalRotation + rotationAmount, -playerData.FPSVerticalRange, playerData.FPSVerticalRange);
-
-
             }
             else if (!isInverted)
             {
                 _verticalRotation = Mathf.Clamp(_verticalRotation - rotationAmount, -playerData.FPSVerticalRange, playerData.FPSVerticalRange);
-
-
-
-
-
             }
 
             mainCamera.transform.localRotation = Quaternion.Euler(_verticalRotation, 0, 0);
-            //gunCam.transform.localRotation = Quaternion.Euler(_verticalRotation, 0, 0);
-            //gunModel.transform.localRotation = Quaternion.Euler(_verticalRotation, 0, 0);
-
-
         }
 
 
@@ -265,11 +247,8 @@ namespace Catalyst.Player
             _mouseXRotation = playerInputHandler.RotationInput.x * playerData.MouseSensitivity * playerData.CameraRotationSpeed;
             _mouseYRotation = playerInputHandler.RotationInput.y * playerData.MouseSensitivity;
 
-
-
             ApplyHorizontalRotation(_mouseXRotation);
             ApplyVerticalRotation(_mouseYRotation);
-
         }
 
         private void ApplyThirdPersonRotation(float pitch, float yaw)
@@ -320,62 +299,7 @@ namespace Catalyst.Player
             }
         }
 
-        private void HandleAim()
-        {
-            if (playerInputHandler.AimTriggered)
-            {
-                animator.SetBool(_animAim, true);
-                Debug.Log("Aiming");
-                HandleShoot();
 
-            }
-            else
-            {
-                animator.SetBool(_animAim, false);
-
-            }
-
-        }
-
-        private void HandleShoot()
-        {
-            if (playerInputHandler.FireTriggered && _shootTimer > playerData.ShootRate)
-            {
-                _shootTimer = 0f;
-
-                animator.SetTrigger("Shoot");
-                Debug.Log("Shooting");
-                //animator.ResetTrigger("Shoot");
-
-            }
-        }
-
-        public void Shoot()
-        {
-
-            _shootTimer = 0;
-            playerData.Guns[_gunListPos].ammoCur--;
-            aud.PlayOneShot(playerData.Guns[_gunListPos].shootSounds[Random.Range(0, playerData.Guns[_gunListPos].shootSounds.Length)], playerData.Guns[_gunListPos].shootVolume);
-            //updatePlayerUI();
-
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, playerData.ShootDist, ~ignoreLayer))
-            {
-                Instantiate(playerData.Guns[_gunListPos].hitEffect, hit.point, Quaternion.identity);
-
-                Debug.Log(hit.collider.name);
-
-                IDamage dmg = hit.collider.GetComponent<IDamage>();
-
-                if (dmg != null)
-                {
-
-                    dmg.takeDamage(playerData.ShootDamage);
-                }
-
-            }
-
-        }
 
         private void ToggleGunCam()
         {
@@ -414,16 +338,6 @@ namespace Catalyst.Player
             playerInputHandler.AttackTriggered = false;
         }
 
-
-        IEnumerator Dash()
-        {
-            PlayerDash();
-            animator.SetTrigger(_animDash);
-
-            yield return new WaitForSeconds(1.0f);
-            animator.ResetTrigger(_animDash);
-            playerInputHandler.DashTriggered = false;
-        }
         public void PlayerDash()
         {
             Vector3 dodgeDirection = CalculateMoveDirection();
@@ -434,6 +348,15 @@ namespace Catalyst.Player
             characterController.Move(dodgeDirection.normalized * playerData.DashSpeed * Time.deltaTime);
 
         }
+
+        IEnumerator Dash()
+        {
+            animator.SetTrigger(_animDash);
+            yield return new WaitForSeconds(1.0f);
+            animator.ResetTrigger(_animDash);
+            playerInputHandler.DashTriggered = false;
+        }
+
 
         IEnumerator Jump()
         {

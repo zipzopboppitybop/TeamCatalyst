@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Catalyst.GamePlay.Farming;
 
+
 using UnityEngine;
 
 
@@ -141,6 +142,29 @@ namespace Catalyst.Player
             set => currentFarmingState = value;
         }
 
+        public void AddScore(int amount)
+        {
+            score += amount;
+        }
+        public void RemoveScore(int amount)
+        {
+            score -= amount;
+        }
 
+        public void Update()
+        {
+            // This method can be used to update player data if needed
+
+
+        }
+        public void Reset()
+        {
+            InitializePlayer();
+        }
+
+        public bool HasGun(WeaponData gun)
+        {
+            return guns.Contains(gun);
+        }
     }
 }
