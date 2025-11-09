@@ -19,8 +19,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] float dayLengthMinutes;
     [SerializeField] int nightStart;
     [SerializeField] int nightEnd;
-    [SerializeField] Image dayImage;
-    [SerializeField] Image nightImage;
+    //[SerializeField] Image dayImage;
+    //[SerializeField] Image nightImage;
 
     public GameObject player;
     public GameObject playerSpawnPos;
@@ -175,13 +175,13 @@ public class GameManager : MonoBehaviour
         }
         cycle.DayText = "Day " + day.ToString();
 
-        if(dayImage && cycle.DayImage)
-            dayImage.sprite = cycle.DayImage;
-        if(nightImage && cycle.NightImage)
-            nightImage.sprite = cycle.NightImage;
+        //if(dayImage && cycle.DayImage)
+        //    dayImage.sprite = cycle.DayImage;
+        //if(nightImage && cycle.NightImage)
+        //    nightImage.sprite = cycle.NightImage;
 
-        if(dayImage) dayImage.gameObject.SetActive(!isNight);
-        if(nightImage) nightImage.gameObject.SetActive(isNight);  
+        //if(dayImage) dayImage.gameObject.SetActive(!isNight);
+        //if(nightImage) nightImage.gameObject.SetActive(isNight);  
 
         wasNight = isNight;
         
