@@ -80,8 +80,12 @@ public class TowerBase : MonoBehaviour, IDamage
         {
             healTime += Time.deltaTime;
 
-            if (healTime > healSpeed)
+            if (healTime >= healSpeed)
+            {
                 Heal();
+                healTime = 0f;
+            }
+                
 
         }
 

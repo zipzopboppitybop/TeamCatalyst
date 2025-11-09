@@ -10,6 +10,8 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Transform headPos;
     [SerializeField] GameObject itemDrop;
     [SerializeField] GameObject targetObj;
+    [SerializeField] float cropSearchInterval; 
+    [SerializeField] float cropDetectionRadius;
 
     [SerializeField] int hp;
     [SerializeField] int faceTargetSpeed;
@@ -29,6 +31,7 @@ public class enemyAI : MonoBehaviour, IDamage
     float roamTimer;
     float angleToTarget;
     float stoppingDistOrg;
+    float cropSearchTimer;
 
     int roamTimeOrig;
 
@@ -53,24 +56,42 @@ public class enemyAI : MonoBehaviour, IDamage
     void Update()
     {
         biteTimer += Time.deltaTime;
+        cropSearchTimer += Time.deltaTime;
 
-        //animator.SetFloat("Speed", agent.velocity.normalized.magnitude);
+        if (agent == null || !agent.isOnNavMesh) return;
 
         if (agent.remainingDistance < 0.01f)
-        {
             roamTimer += Time.deltaTime;
+
+        if (!targetsPlayer)
+        {
+            if (targetObj == null || !targetObj.activeInHierarchy)
+            {
+                if (cropSearchTimer >= cropSearchInterval)
+                {
+                    FindNearestCrop();
+                    cropSearchTimer = 0f;
+                }
+            }
+
+            if (targetObj == null)
+            {
+                CheckRoam();
+                return;
+            }
+
+            CanSeeTarget();
         }
-        if (targetsPlayer)
-        {        
+        else
+        {
             if (playerInRange && !CanSeeTarget())
-            {
                 CheckRoam();
-            }
             else if (!playerInRange)
-            {
                 CheckRoam();
-            }
         }
+
+        if (!targetsPlayer && targetObj == null && agent.remainingDistance < 0.5f)
+            CheckRoam();
     }
 
     public void takeDamage(int amount)
@@ -195,7 +216,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
         if (target == null) return;
 
-        IDamage targetHealth = target.GetComponent<IDamage>();
+        IDamage targetHealth = target.GetComponentInParent<IDamage>();
         if (targetHealth != null)
         {
             Debug.Log("Attack");
@@ -219,5 +240,32 @@ public class enemyAI : MonoBehaviour, IDamage
         roamPauseTime = roamTimeOrig;
         isScared = false;
 
+    }
+
+    void FindNearestCrop()
+    {
+        if (GameManager.instance == null || GameManager.instance.crops.Count == 0)
+            return;
+
+        float closestDist = Mathf.Infinity;
+        GameObject nearestCrop = null;
+
+        foreach (GameObject crop in GameManager.instance.crops)
+        {
+            if (crop == null) continue;
+
+            float dist = Vector3.Distance(transform.position, crop.transform.position);
+            if (dist < closestDist && dist <= cropDetectionRadius)
+            {
+                closestDist = dist;
+                nearestCrop = crop;
+            }
+        }
+
+        if (nearestCrop != null)
+        {
+            targetObj = nearestCrop;
+            agent.SetDestination(targetObj.transform.position);
+        }
     }
 }
