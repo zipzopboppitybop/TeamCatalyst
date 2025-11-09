@@ -51,6 +51,7 @@ namespace Catalyst.Player
   
         private Vector3 playerDir;
         private int _gunListPos;
+        private bool interactPressed = false;
 
         private void Start()
         {
@@ -304,8 +305,10 @@ namespace Catalyst.Player
 
         public void UpdateInteract()
         {
-            if (Input.GetKeyDown(KeyCode.E))
+            if (Input.GetButtonDown("Interact") && !interactPressed)
             {
+
+                interactPressed = true;
                 Vector3 origin = mainCamera.transform.position;
                 Vector3 direction = mainCamera.transform.forward;
 
@@ -329,6 +332,11 @@ namespace Catalyst.Player
                         painter.TryPlaceTile(heldItem.dropPrefab);
                     }
                 }
+            }
+
+            if (Input.GetButtonUp("Interact"))
+            {
+                interactPressed = false;
             }
         }
 
@@ -471,7 +479,8 @@ namespace Catalyst.Player
 
             if (playerData.Health <= 0)
             {
-                Debug.Log("You are dead!");
+                GameManager.instance.YouLose();
+                playerData.Health = playerData.HealthMax;
             }
         }
 

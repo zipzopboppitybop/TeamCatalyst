@@ -64,6 +64,7 @@ public class Spawner : MonoBehaviour
 
 
     private Dictionary<SpawnGroup, float> groupTimers = new();
+    private List<GameObject> spawnedEnemies = new List<GameObject>();
 
     private float autoSpawnTimer;
     private int autoSpawned;
@@ -189,9 +190,10 @@ public class Spawner : MonoBehaviour
         int arrayPos = Random.Range(0, autoSpawnObjects.Length);
         Vector3 randomPos = transform.position + (Random.insideUnitSphere * autoSpawnRadius);
         randomPos.y = transform.position.y; // Keep the same height as the spawner
-        Instantiate(autoSpawnObjects[arrayPos], randomPos, Quaternion.identity);
+        GameObject spawned = Instantiate(autoSpawnObjects[arrayPos], randomPos, Quaternion.identity);
 
         autoSpawned++;
+        spawnedEnemies.Add(spawned);
         //HUDManager.instance.updateGameGoal(1);
 
     }
@@ -201,7 +203,8 @@ public class Spawner : MonoBehaviour
         int arrayPos = Random.Range(0, group.spawnPositions.Length);
         int arrayObjPos = Random.Range(0, group.objects.Length);
 
-        Instantiate(group.objects[arrayObjPos], group.spawnPositions[arrayPos].position, group.spawnPositions[arrayPos].rotation);
+        GameObject spawned = Instantiate(group.objects[arrayObjPos], group.spawnPositions[arrayPos].position, group.spawnPositions[arrayPos].rotation);
+        spawnedEnemies.Add(spawned);
         group.spawnedCount++;
         //HUDManager.instance.updateGameGoal(1);
 
@@ -237,8 +240,8 @@ public class Spawner : MonoBehaviour
             int arrayPos = Random.Range(0, bossSpawnPositions.Length);
             int arrayObjPos = Random.Range(0, bossObjects.Length);
 
-            Instantiate(bossObjects[arrayObjPos], bossSpawnPositions[arrayPos].position, bossSpawnPositions[arrayPos].rotation);
-
+            GameObject spawned = Instantiate(bossObjects[arrayObjPos], bossSpawnPositions[arrayPos].position, bossSpawnPositions[arrayPos].rotation);
+            spawnedEnemies.Add(spawned);
             bossesSpawned++;
             //HUDManager.instance.updateGameGoal(1);
         }
@@ -251,6 +254,29 @@ public class Spawner : MonoBehaviour
         }
 
 
+    }
+
+    public void DespawnAll()
+    {
+        foreach (GameObject go in spawnedEnemies)
+        {
+            if (go != null) Destroy(go);
+        }
+        spawnedEnemies.Clear();
+
+        mainGroup.spawnedCount = 0;
+        secondaryGroup.spawnedCount = 0;
+        tertiaryGroup.spawnedCount = 0;
+        quaternaryGroup.spawnedCount = 0;
+
+        autoSpawned = 0;
+        bossesSpawned = 0;
+        bossSpawned = false;
+    }
+
+    public int GetCurrentEnemyCount()
+    {
+        return spawnedEnemies.Count;
     }
 
     private float GetGroupSpawnProgress(SpawnGroup group)

@@ -42,6 +42,11 @@ public class enemyAI : MonoBehaviour, IDamage
         roamTimeOrig = roamPauseTime;
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
+
+        if (targetsPlayer)
+        {
+            targetObj = GameManager.instance.player;
+        }
     }
 
     // Update is called once per frame
@@ -131,6 +136,7 @@ public class enemyAI : MonoBehaviour, IDamage
             Debug.DrawRay(headPos.position, targetDir, Color.red);
 
             RaycastHit hit;
+            Debug.Log("You made it this far");
             if (Physics.Raycast(headPos.position, targetDir, out hit))
             {
                 Debug.Log(hit.collider.name);
