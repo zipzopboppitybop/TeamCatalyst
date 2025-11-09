@@ -36,10 +36,11 @@ public class GameManager : MonoBehaviour
     {
         instance = this;
         timeScaleOrig = Time.timeScale;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
 
         player = GameObject.FindWithTag("Player");
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
-        DontDestroyOnLoad(gameObject);
     }
 
 

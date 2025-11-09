@@ -5,8 +5,6 @@ namespace WTIM.Audio
 {
     public class SoundManager : MonoBehaviour
     {
-
-
         public static SoundManager instance; // Singleton instance for easy access
 
         public AudioSource soundSource; // Reference to the AudioSource component
