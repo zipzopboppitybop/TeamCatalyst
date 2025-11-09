@@ -5,6 +5,7 @@ using UnityEngine.UIElements;
 public class MainMenuController : MonoBehaviour
 {
     [SerializeField] private UIDocument uiDocument;
+    [SerializeField] Loading load;
 
     private VisualElement root;
     private VisualElement mainMenu;
@@ -66,7 +67,8 @@ public class MainMenuController : MonoBehaviour
     private void OnPlayButtonClicked()
     {
         Hide();
-        SceneManager.LoadScene("ShowcaseLevel");
+        load.LoadScene(1);
+        //SceneManager.LoadScene("ShowcaseLevel");
     }
     private void OnSettingsButtonClicked()
     {
