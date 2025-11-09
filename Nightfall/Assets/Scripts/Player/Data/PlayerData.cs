@@ -49,6 +49,8 @@ namespace Catalyst.Player
         [SerializeField] private float upLookRange = 60f;
         [SerializeField] private float downLookRange = 60f;
 
+        [SerializeField] private float fpsVerticalRange = 60f;
+
 
 
 
@@ -90,6 +92,7 @@ namespace Catalyst.Player
         public float MouseSensitivity => mouseSensitivity;
         public float UpLookRange => upLookRange;
         public float DownLookRange => downLookRange;
+        public float FPSVerticalRange => fpsVerticalRange;
 
         public int keysCollected = 0;
         public int notesCollected = 0;
@@ -135,30 +138,7 @@ namespace Catalyst.Player
             get => currentFarmingState;
             set => currentFarmingState = value;
         }
-        //public void FarmingStateMachine(FarmingState newState)
-        //{
-        //    currentFarmingState = newState;
 
-        //    switch (currentFarmingState)
-        //    {
-        //        case FarmingState.None:
-        //            // Handle None state
-        //            break;
-        //        case FarmingState.Plowing:
-        //            // Handle Plowing state
-        //            break;
-        //        case FarmingState.Watering:
-        //            // Handle Watering state
-        //            break;
-        //        case FarmingState.Planting:
-        //            // Handle Planting state
-        //            break;
-        //        case FarmingState.Harvesting:
-        //            // Handle Harvesting state
-        //            break;
-        //        default:
-        //            break;
-        //    }
-        //}
+
     }
 }
