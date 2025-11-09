@@ -245,7 +245,9 @@ public class enemyAI : MonoBehaviour, IDamage
     void FindNearestCrop()
     {
         if (GameManager.instance == null || GameManager.instance.crops.Count == 0)
+        {
             return;
+        }
 
         float closestDist = Mathf.Infinity;
         GameObject nearestCrop = null;
