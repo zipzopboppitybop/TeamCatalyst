@@ -29,7 +29,6 @@ public class SpawnGroup
     public bool spawnAtNightOnly = false;
     public bool spawnAtDayOnly = false;
     private bool lastNightState;
-    private int currentDay = 1;
 }
 
 
@@ -74,7 +73,6 @@ public class Spawner : MonoBehaviour
     private int bossesSpawned;
 
     private bool bossSpawned;
-    private bool startSpawning;
     private bool lastNightState;
     private int currentDay = 1;
 
@@ -98,7 +96,6 @@ public class Spawner : MonoBehaviour
             bossesSpawned = 0;
         }
 
-        startSpawning = true;
         lastNightState = GameManager.instance.IsNight;
     }
 

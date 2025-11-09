@@ -15,6 +15,7 @@ namespace Catalyst.Player
         public Camera gunCam;
         [SerializeField] private Transform followTarget;
         [SerializeField] GameObject gunModel;
+        [SerializeField] PlayerInventoryUI playerInventoryUI;
         public AudioSource aud;
 
         private float _cinemachineTargetPitch;
@@ -47,6 +48,7 @@ namespace Catalyst.Player
         private float _shootTimer = 0f;
 
         private CharacterController characterController;
+  
         private Vector3 playerDir;
         private int _gunListPos;
 
@@ -317,6 +319,16 @@ namespace Catalyst.Player
                         chest.OpenChest();
                     }
                 }
+
+                TilePainter painter = FindAnyObjectByType<TilePainter>();
+                if (painter != null)
+                {
+                    ItemData heldItem = playerInventoryUI?.GetSelectedItem();
+                    if (heldItem != null && heldItem.dropPrefab != null)
+                    {
+                        painter.TryPlaceTile(heldItem.dropPrefab);
+                    }
+                }
             }
         }
 
@@ -463,6 +475,10 @@ namespace Catalyst.Player
             }
         }
 
+        public PlayerInventoryUI GetHotBar()
+        {
+            return playerInventoryUI;
+        }
     }
 }
 

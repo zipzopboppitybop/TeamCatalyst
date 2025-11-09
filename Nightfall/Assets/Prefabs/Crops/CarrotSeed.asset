@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4fff52d00b5194643aee23e84ee9b49b, type: 3}
-  m_Name: Potato
+  m_Name: CarrotSeed
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  Icon: {fileID: 21300000, guid: e08cd903e3c3038419203cb865b805d8, type: 3}
-  itemType: 3
-  dropPrefab: {fileID: 4354320320779713590, guid: 5cf60363393045b41b421da9e6fc103e, type: 3}
+  Icon: {fileID: 21300000, guid: 202cca839338a4d49aa5db82c2459568, type: 3}
+  itemType: 1
+  dropPrefab: {fileID: 422205719411807115, guid: bf1b8c21173815a42a7c629fe33d02b8, type: 3}
   pickupSound: {fileID: 8300000, guid: 81535e34a5a320e4eba0fc963db81088, type: 3}
-  audVol: 0.1
-  displayName: Potato
-  id: 2
-  sellValue: 0
-  price: 0
-  maxStackSize: 1
+  audVol: 0.098
+  displayName: CarrotSeed
+  id: 32
+  sellValue: 1
+  price: 1
+  maxStackSize: 5
