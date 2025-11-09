@@ -72,6 +72,7 @@ public class enemyAI : MonoBehaviour, IDamage
             }
         }
     }
+
     public void takeDamage(int amount)
     {
         hp -= amount;
