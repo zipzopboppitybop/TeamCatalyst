@@ -13,7 +13,7 @@ public class TilePainter : MonoBehaviour
 
     [SerializeField] int placeDist;
 
-    int tileType = 0;
+    //int tileType = 0;
 
     // 0 = Farmland
     // 1 = Crop
@@ -112,7 +112,7 @@ public class TilePainter : MonoBehaviour
             }
             else if(heldItem.name.Contains("Seed"))
             {
-                if (existingTower.typeTower == TowerBase.TowerType.Farmland && existingTower.isFertilized)
+                if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Farmland && existingTower.isFertilized)
                 {
                     map.SetTile(currentCell, selectedTile[1]);
                     Catalyst.Player.PlayerController player = GameManager.instance.player.GetComponent<Catalyst.Player.PlayerController>();
@@ -124,8 +124,10 @@ public class TilePainter : MonoBehaviour
                         if (slot != null)
                         {
                             slot.RemoveFromStack(1);
+                            GameObject crop = map.GetInstantiatedObject(currentCell);
+                            GameManager.instance.AddCrop(crop);
 
-                            Debug.Log("Made it this far 3!");
+
                             //towerScript = null;
                             //Destroy(tower);
                             //map.SetTile(currentCell, null);
