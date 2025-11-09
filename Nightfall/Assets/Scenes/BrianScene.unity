@@ -668,6 +668,14 @@ PrefabInstance:
       propertyPath: playerInputHandler
       value: 
       objectReference: {fileID: 1547037201}
+    - target: {fileID: 5796168270863737799, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 277042719}
+    - target: {fileID: 5796168270863737799, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: farmerData
+      value: 
+      objectReference: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
     - target: {fileID: 6811085360175029284, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -713,6 +721,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+--- !u!1 &277042713 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 906805268855091345, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+  m_PrefabInstance: {fileID: 277042712}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &277042719 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4961241792348632301, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+  m_PrefabInstance: {fileID: 277042712}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &328202939
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2887,6 +2905,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Wolf
       objectReference: {fileID: 0}
+    - target: {fileID: 8937499038717491098, guid: 3d5d858803e89b94296d5b7bf6690a77, type: 3}
+      propertyPath: itemDrop
+      value: 
+      objectReference: {fileID: 1915537940091514794, guid: 4e85cafb5039f5049bbfe8582346e40f, type: 3}
+    - target: {fileID: 8937499038717491098, guid: 3d5d858803e89b94296d5b7bf6690a77, type: 3}
+      propertyPath: targetObj
+      value: 
+      objectReference: {fileID: 277042713}
+    - target: {fileID: 8937499038717491098, guid: 3d5d858803e89b94296d5b7bf6690a77, type: 3}
+      propertyPath: dropChance
+      value: 50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2920,6 +2950,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8339759917498689376, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 277042713}
     - target: {fileID: 8339759917498689376, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: nightStart
       value: 8
@@ -3012,7 +3046,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8137923126415789940, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
     m_RemovedGameObjects:
     - {fileID: 6383233761706990421, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
     m_AddedGameObjects: []

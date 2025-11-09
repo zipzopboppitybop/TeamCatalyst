@@ -22,7 +22,8 @@ MonoBehaviour:
   staminaMax: 10
   stealth: 5
   interactRange: 2
-  currency: 0
+  currency: 1
+  currentFarmingState: 0
   shootDamage: 5
   shootRate: 1
   shootDist: 20
@@ -38,6 +39,7 @@ MonoBehaviour:
   rotationSpeed: 10
   upLookRange: 89
   downLookRange: 89
+  fpsVerticalRange: 60
   keysCollected: 0
   notesCollected: 0
   roomsClear: 0

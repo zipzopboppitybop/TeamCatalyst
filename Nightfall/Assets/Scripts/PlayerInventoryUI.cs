@@ -363,6 +363,8 @@ public class PlayerInventoryUI : MonoBehaviour
     }
     public void Show(bool show)
     {
+        if (root == null) return;
+
         if (isChestUI)
         {
             if (!show)
