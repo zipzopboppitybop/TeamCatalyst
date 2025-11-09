@@ -126,10 +126,10 @@ public class TilePainter : MonoBehaviour
                             slot.RemoveFromStack(1);
 
                             Debug.Log("Made it this far 3!");
-                            towerScript = null;
-                            Destroy(tower);
-                            map.SetTile(currentCell, null);
-                            map.SetTile(currentCell, selectedTile[tileType]);
+                            //towerScript = null;
+                            //Destroy(tower);
+                            //map.SetTile(currentCell, null);
+                            //map.SetTile(currentCell, selectedTile[tileType]);
                             if (slot.StackSize <= 0)
                             {
                                 slot.UpdateInventorySlot(null, 0);
@@ -142,14 +142,7 @@ public class TilePainter : MonoBehaviour
                     }
                 }
                 else
-                {
-                    if (selectedTower.GetComponent<TowerBase>().typeTower != TowerBase.TowerType.Crop)
-                    {
-
-                        map.SetTile(currentCell, selectedTile[tileType]);
-                        
-                    }
-                        
+                {       
                     Debug.Log("Can't plant seed — need fertilized farmland.");
                 }
             }
