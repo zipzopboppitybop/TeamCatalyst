@@ -23,12 +23,14 @@ public class TowerBase : MonoBehaviour, IDamage
     [SerializeField] GameObject itemDrop;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject shootPos;
+    [SerializeField] Renderer model;
+
+    Color colorOrig;
 
     bool isFullyGrown = false;
     bool EnemyInRange = false;
     public bool isWatered = false;
     public bool isFertilized = false;
-    bool isHealing = false;
 
     int enemiesInRange;
     int dayPlanted;
@@ -36,11 +38,13 @@ public class TowerBase : MonoBehaviour, IDamage
     [SerializeField] List<Transform> enemyPos;
 
     float shootTime;
+    float healTime;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
 
+        colorOrig = model.material.color;
         map = (Tilemap)FindAnyObjectByType(typeof(Tilemap));
 
         if (typeTower == TowerType.Sprinkler)
@@ -72,10 +76,12 @@ public class TowerBase : MonoBehaviour, IDamage
     void Update()
     {
 
-        if (hp < hpMax && !isHealing)
+        if (hp < hpMax)
         {
+            healTime += Time.deltaTime;
 
-            StartCoroutine(Heal());
+            if (healTime > healSpeed)
+                Heal();
 
         }
 
@@ -222,6 +228,8 @@ public class TowerBase : MonoBehaviour, IDamage
     {
 
         hp -= amount;
+        StartCoroutine(flashRed());
+
         if (hp <= 0)
         {
             if (typeTower == TowerType.Crop && isFullyGrown)
@@ -232,15 +240,22 @@ public class TowerBase : MonoBehaviour, IDamage
 
             if (GameManager.instance != null)
                 GameManager.instance.UpdateCropCount(-1);
+            if (itemDrop != null)
+                Instantiate(itemDrop, transform.position, transform.rotation);
+
             Destroy(gameObject);
             
         }
 
     }
 
-    IEnumerator Heal()
+    private void OnDestroy()
     {
-        isHealing = true;
+        StopAllCoroutines();
+    }
+
+    void Heal()
+    {
         if (typeTower == TowerType.Defensive)
             takeDamage(1);
         else
@@ -249,8 +264,12 @@ public class TowerBase : MonoBehaviour, IDamage
         {
             hp = hpMax;
         }
-        yield return new WaitForSeconds(healSpeed);
-        isHealing = false;
+    }
+    IEnumerator flashRed()
+    {
+        model.material.color = Color.red;
+        yield return new WaitForSeconds(0.1f);
+        model.material.color = colorOrig;
     }
 
 }

@@ -23,11 +23,14 @@ public class enemyAI : MonoBehaviour, IDamage
 
     bool playerInRange;
     bool targetsPlayer = true;
+    bool isScared = false;
 
     float biteTimer;
     float roamTimer;
     float angleToTarget;
     float stoppingDistOrg;
+
+    int roamTimeOrig;
 
     Vector3 targetDir;
     Vector3 startingPos;
@@ -36,6 +39,7 @@ public class enemyAI : MonoBehaviour, IDamage
     void Start()
     {
         colorOrig = model.material.color;
+        roamTimeOrig = roamPauseTime;
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
     }
@@ -66,14 +70,29 @@ public class enemyAI : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         hp -= amount;
-        agent.SetDestination(targetObj.transform.position);
+        if (GameManager.instance != null && targetsPlayer)
+        {
+            targetObj = GameManager.instance.player;
+            agent.SetDestination(targetObj.transform.position);
+        }
+            
+
+        else if (!isScared)
+        {
+            StartCoroutine(getScared());
+            agent.stoppingDistance = 0;
+        }
+        
 
         if (hp <= 0)
         {
+
             if (Random.Range(1, 100) <= dropChance && itemDrop != null)
             {
-                Instantiate(itemDrop, headPos);
+                Debug.Log("Spawn!");
+                Instantiate(itemDrop, headPos.position, transform.rotation);
             }
+
             Destroy(gameObject);
         }
         else
@@ -105,31 +124,36 @@ public class enemyAI : MonoBehaviour, IDamage
 
 bool CanSeeTarget()
 {
-    targetDir = targetObj.transform.position - headPos.position;
-    angleToTarget = Vector3.Angle(targetDir, transform.forward);
-    Debug.DrawRay(headPos.position, targetDir, Color.red);
-
-    RaycastHit hit;
-    if (Physics.Raycast(headPos.position, targetDir, out hit))
+    if (!isScared)
     {
-        Debug.Log(hit.collider.name);
+        targetDir = targetObj.transform.position - headPos.position;
+        angleToTarget = Vector3.Angle(targetDir, transform.forward);
+        Debug.DrawRay(headPos.position, targetDir, Color.red);
 
-        if (angleToTarget <= FOV)
+        RaycastHit hit;
+        if (Physics.Raycast(headPos.position, targetDir, out hit))
         {
-            agent.SetDestination(targetObj.transform.position);
+            Debug.Log(hit.collider.name);
 
-            if (biteTimer > biteRate && agent.remainingDistance <= stoppingDistOrg)
+            if (angleToTarget <= FOV)
             {
-                attack(targetObj);
-                biteTimer = 0; 
+                agent.SetDestination(targetObj.transform.position);
+
+                if (biteTimer > biteRate && agent.remainingDistance <= stoppingDistOrg)
+                {
+                    attack(targetObj);
+                    biteTimer = 0;
+                }
+
+                if (agent.remainingDistance <= stoppingDistOrg)
+                    FaceTarget();
+
+                agent.stoppingDistance = stoppingDistOrg;
+                return true;
             }
 
-            if (agent.remainingDistance <= stoppingDistOrg)
-                FaceTarget();
-
-            agent.stoppingDistance = stoppingDistOrg;
-            return true;
         }
+
     }
 
     agent.stoppingDistance = 0;
@@ -163,11 +187,11 @@ bool CanSeeTarget()
 
         if (target == null) return;
 
-        IDamage playerHealth = target.GetComponent<IDamage>();
-        if (playerHealth != null)
+        IDamage targetHealth = target.GetComponent<IDamage>();
+        if (targetHealth != null)
         {
             Debug.Log("Attack");
-            playerHealth.takeDamage(1);
+            targetHealth.takeDamage(1);
         }
     }
 
@@ -176,5 +200,16 @@ bool CanSeeTarget()
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         model.material.color = colorOrig;
+    }
+
+    IEnumerator getScared()
+    {
+
+        isScared = true;
+        roamPauseTime = 1;
+        yield return new WaitForSeconds(5);
+        roamPauseTime = roamTimeOrig;
+        isScared = false;
+
     }
 }

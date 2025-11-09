@@ -125,13 +125,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TowerBase
   typeTower: 1
+  map: {fileID: 0}
   hpMax: 20
   damage: 0
   healAmt: -1
   attSpeed: 0
   healSpeed: 1
-  itemDrop: {fileID: 0}
+  itemDrop: {fileID: 4354320320779713590, guid: 5cf60363393045b41b421da9e6fc103e, type: 3}
   bullet: {fileID: 0}
   shootPos: {fileID: 0}
+  model: {fileID: 4807136534764843316}
+  isWatered: 0
+  isFertilized: 0
   hp: 5
   enemyPos: []
