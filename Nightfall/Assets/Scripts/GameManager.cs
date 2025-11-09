@@ -39,6 +39,7 @@ public class GameManager : MonoBehaviour
 
         player = GameObject.FindWithTag("Player");
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
+        DontDestroyOnLoad(gameObject);
     }
 
 

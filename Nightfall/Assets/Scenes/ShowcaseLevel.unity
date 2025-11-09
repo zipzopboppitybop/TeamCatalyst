@@ -135,6 +135,14 @@ PrefabInstance:
       propertyPath: playerInputHandler
       value: 
       objectReference: {fileID: 1183131383}
+    - target: {fileID: 5796168270863737799, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: animator
+      value: 
+      objectReference: {fileID: 612204931}
+    - target: {fileID: 5796168270863737799, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: farmerData
+      value: 
+      objectReference: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
     - target: {fileID: 6811085360175029284, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.67786
@@ -183,6 +191,11 @@ PrefabInstance:
 --- !u!1 &612204925 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 906805268855091345, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+  m_PrefabInstance: {fileID: 612204924}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &612204931 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4961241792348632301, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
   m_PrefabInstance: {fileID: 612204924}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &682737695
