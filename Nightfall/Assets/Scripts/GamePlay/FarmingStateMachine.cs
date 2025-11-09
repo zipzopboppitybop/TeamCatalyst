@@ -5,8 +5,8 @@ namespace Catalyst.GamePlay.Farming
 {
     public class FarmingStateMachine : MonoBehaviour
     {
-        private PlayerData farmerData;
-        private Animator animator;
+        [SerializeField] private PlayerData farmerData;
+        [SerializeField] private Animator animator;
 
         public enum FarmingState { None, Plowing, Watering, Planting, Harvesting }
 
@@ -20,8 +20,8 @@ namespace Catalyst.GamePlay.Farming
 
         private void Start()
         {
-            farmerData = GetComponent<PlayerData>();
-            animator = GetComponent<Animator>();
+            //farmerData = GetComponent<PlayerData>();
+            //animator = GetComponent<Animator>();
             SetupAnimator();
             if (farmerData != null)
             {
