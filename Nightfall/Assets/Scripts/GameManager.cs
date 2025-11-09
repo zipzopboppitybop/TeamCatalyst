@@ -1,3 +1,5 @@
+using NUnit.Framework;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,11 +28,12 @@ public class GameManager : MonoBehaviour
     float timeScaleOrig;
     float timeOfDay = 7;
     int day = 1;
-    int cropCount = 0;
+    public int cropCount = 0;
 
     public bool isPaused = false;
     bool wasNight;
     public bool IsNight;
+    public List<GameObject> crops = new List<GameObject>();
 
     void Awake()
     {
@@ -86,9 +89,54 @@ public class GameManager : MonoBehaviour
         
 
     }
+
+
     public void YouLose()
     {
-        StatePause();  
+        timeOfDay = nightEnd;    
+        UpdateGameClock();
+
+        day += 1;
+        cycle.DayText = "Day " + day.ToString();
+
+        GameObject spawnerObject = GameObject.FindGameObjectWithTag("Spawner");
+        if (spawnerObject != null)
+        {
+            Spawner spawner = spawnerObject.GetComponent<Spawner>();
+            if (spawner != null)
+            {
+                int totalEnemies = 0;
+                totalEnemies += spawner.GetCurrentEnemyCount();
+                spawner.DespawnAll();
+
+                int cropsToDestroy = Mathf.Min(crops.Count, totalEnemies);
+
+                for (int i = 0; i < cropsToDestroy; i++)
+                {
+                    GameObject crop = crops[crops.Count - 1];
+                    crops.RemoveAt(crops.Count - 1);
+
+                    if (crop != null)
+                    {
+                        Destroy(crop);
+                    }   
+                }
+            }
+        }
+        else
+        {
+            Debug.Log("No Spawner");
+        }
+
+
+        if (player != null && playerSpawnPos != null)
+        {
+            player.transform.position = playerSpawnPos.transform.position;
+            player.transform.rotation = playerSpawnPos.transform.rotation;
+        }
+
+        Debug.Log("Destroying stuff");
+        //StatePause();  
     }
 
     void UpdateGameClock()
@@ -167,5 +215,10 @@ public class GameManager : MonoBehaviour
         {
             return hour >= nightStart24 && hour < nightEnd24;
         }  
+    }
+
+    public void AddCrop(GameObject crop)
+    {
+        crops.Add(crop);
     }
 }
