@@ -1674,11 +1674,11 @@ Transform:
   m_GameObject: {fileID: 832298678}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -6.72085, y: 0.5, z: -6.68049}
+  m_LocalPosition: {x: -7, y: 0.5, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1310078552}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!135 &832298684
 SphereCollider:
@@ -2367,7 +2367,6 @@ Transform:
   - {fileID: 1024249922}
   - {fileID: 1147142018}
   - {fileID: 968401155}
-  - {fileID: 832298683}
   - {fileID: 968554073}
   - {fileID: 579839482}
   - {fileID: 4000008941862605}
@@ -3283,18 +3282,19 @@ SceneRoots:
   m_Roots:
   - {fileID: 1310078552}
   - {fileID: 156762965}
-  - {fileID: 739384764}
   - {fileID: 1969781845}
   - {fileID: 409104472}
   - {fileID: 1198270853}
   - {fileID: 805622093}
-  - {fileID: 825719458}
-  - {fileID: 1114210119}
-  - {fileID: 1973020833}
   - {fileID: 277042712}
   - {fileID: 4055109652303251263}
   - {fileID: 6825398107756066911}
-  - {fileID: 777423806}
   - {fileID: 1130584353}
   - {fileID: 69313006}
   - {fileID: 1694809139}
+  - {fileID: 1973020833}
+  - {fileID: 777423806}
+  - {fileID: 1114210119}
+  - {fileID: 825719458}
+  - {fileID: 739384764}
+  - {fileID: 832298683}

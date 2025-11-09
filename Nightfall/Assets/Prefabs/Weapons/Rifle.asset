@@ -12,67 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8dd587fcbb0e647bf1200fe158c578, type: 3}
   m_Name: Rifle
   m_EditorClassIdentifier: Assembly-CSharp::Catalyst.Player.WeaponData
-  model: {fileID: 0}
-  pickUpSound: {fileID: 0}
-  emptyClipSound: {fileID: 0}
-  reloadSound: {fileID: 0}
-  shootSounds: []
+  model: {fileID: 4903087755506185930, guid: 805df89d25869364384276e1ce62c623, type: 3}
+  pickUpSound: {fileID: 8300000, guid: 26dcc88d2ba71624a94f96d9a22f2824, type: 3}
+  emptyClipSound: {fileID: 8300000, guid: 26dcc88d2ba71624a94f96d9a22f2824, type: 3}
+  reloadSound: {fileID: 8300000, guid: 7bee7c2511200ec4fba66edf0ca51ba3, type: 3}
+  shootSounds:
+  - {fileID: 8300000, guid: f517323cdd11cc949867db191e38786b, type: 3}
   shootVolume: 0.5
-  gunType: 0
-  shootDamage: 0
-  shootDistance: 0
-  shootRate: 0
-  ammoCur: 0
-  ammoMax: 5
+  gunType: 1
+  shootDamage: 10
+  shootDistance: 100
+  shootRate: 1
+  ammoCur: 50
+  ammoMax: 50
   reloadTime: 0
-  hitEffect: {fileID: 0}
-  impactForce: 0
-  muzzleFlash: {fileID: 0}
-  muzzleFlashPosition: {fileID: 0}
-  aimingPosePosition: {x: 0, y: 0, z: 0}
-  aimingPoseRotation: {x: 0, y: 0, z: 0}
-  recoilPlayRate: 0
-  recoilPositionSpeed: 0
-  recoilRotationSpeed: 0
-  recoilXRotationMultiplier: 0
-  recoilYRotationMultiplier: 0
-  recoilZRotationMultiplier: 0
-  recoilXPositionMultiplier: 0
-  recoilYPositionMultiplier: 0
-  recoilZPositionMultiplier: 0
-  recoilXRotationCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  recoilYRotationCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  recoilZRotationCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  recoilXPositionCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  recoilYPositionCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  recoilZPositionCurve:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
+  hitEffect: {fileID: 8567743453655228817, guid: 212ef1a41838ce044a9ac54994866708, type: 3}
+  impactForce: 10
+  muzzleFlash: {fileID: 970440554703164915, guid: 47096eff328e11a418ace7db2d72aa97, type: 3}
+  muzzleFlashPosition: {fileID: 5147750696403194565, guid: 499c3080486d50544bd58f1c92557e23, type: 3}

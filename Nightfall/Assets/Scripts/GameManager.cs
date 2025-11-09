@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
-   
+
     [SerializeField] float dayLengthMinutes;
     [SerializeField] int nightStart;
     [SerializeField] int nightEnd;
@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
             else
             {
                 StateUnpause();
-                if (menuPause !=null) menuPause.Hide();
+                if (menuPause != null) menuPause.Hide();
             }
         }
         UpdateGameClock();
@@ -83,17 +83,17 @@ public class GameManager : MonoBehaviour
     {
         isPaused = false;
         Time.timeScale = timeScaleOrig;
-        
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        
+
 
     }
 
 
     public void YouLose()
     {
-        timeOfDay = nightEnd;    
+        timeOfDay = nightEnd;
         UpdateGameClock();
 
         day += 1;
@@ -119,7 +119,7 @@ public class GameManager : MonoBehaviour
                     if (crop != null)
                     {
                         Destroy(crop);
-                    }   
+                    }
                 }
             }
         }
@@ -136,12 +136,12 @@ public class GameManager : MonoBehaviour
         }
 
         Debug.Log("Destroying stuff");
-        //StatePause();  
+        //StatePause();
     }
 
     void UpdateGameClock()
     {
-        if(!isPaused)
+        if (!isPaused)
         {
             float totalTimePerGameDay = Mathf.Max(60f, dayLengthMinutes * 60f);
             float hoursPerSec = 24f / totalTimePerGameDay;
@@ -149,7 +149,7 @@ public class GameManager : MonoBehaviour
 
         }
 
-        if(timeOfDay >= 24)
+        if (timeOfDay >= 24)
         {
             timeOfDay -= 24;
         }
@@ -164,8 +164,8 @@ public class GameManager : MonoBehaviour
             hourTwelve = 12;
 
         cycle.ClockText = hourTwelve.ToString("00") + ":" + minute.ToString("00") + (isAm ? " AM" : " PM");
-        
-        
+
+
         bool isNight = IsNightHour(hour, nightStart, nightEnd);
         IsNight = isNight;
 
@@ -181,10 +181,10 @@ public class GameManager : MonoBehaviour
         //    nightImage.sprite = cycle.NightImage;
 
         //if(dayImage) dayImage.gameObject.SetActive(!isNight);
-        //if(nightImage) nightImage.gameObject.SetActive(isNight);  
+        //if(nightImage) nightImage.gameObject.SetActive(isNight);
 
         wasNight = isNight;
-        
+
     }
 
     public void UpdateCropCount(int amt)
@@ -203,18 +203,18 @@ public class GameManager : MonoBehaviour
 
     bool IsNightHour(int hour, int startHour, int endHour)
     {
-        int nightStart24 = (startHour < 12) ? startHour + 12 : startHour; 
-        int nightEnd24 = (endHour == 12) ? 0 : endHour;                  
+        int nightStart24 = (startHour < 12) ? startHour + 12 : startHour;
+        int nightEnd24 = (endHour == 12) ? 0 : endHour;
 
         if (nightStart24 > nightEnd24)
         {
             return hour >= nightStart24 || hour < nightEnd24;
         }
-            
+
         else
         {
             return hour >= nightStart24 && hour < nightEnd24;
-        }  
+        }
     }
 
     public void AddCrop(GameObject crop)
