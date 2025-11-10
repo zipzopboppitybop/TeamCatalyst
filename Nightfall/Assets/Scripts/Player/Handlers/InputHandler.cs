@@ -14,6 +14,7 @@ namespace Catalyst.Player
 
         [Header("Action Map Name Reference")]
         [SerializeField] private string actionMapName = "FPS";
+        public InputAction InteractAction => _interactAction;
 
         [Header("Directional Input Actions")]
         [SerializeField] private string movement = "Move";
@@ -54,6 +55,7 @@ namespace Catalyst.Player
         private InputAction _toggleCameraAction;
         private InputAction _toggleInventoryAction;
         private bool _inventoryPressedThisFrame;
+        private bool _interactPressedThisFrame;
 
 
         private PlayerController _playerController;
@@ -145,6 +147,7 @@ namespace Catalyst.Player
             _toggleCameraAction.canceled += inputInfo => ToggleCameraTriggered = false;
 
             _toggleInventoryAction.performed += inputInfo => _inventoryPressedThisFrame = true;
+            _interactAction.performed += inputInfo => _interactPressedThisFrame = true;
 
         }
 
@@ -152,6 +155,7 @@ namespace Catalyst.Player
         {
             playerControls.FindActionMap(actionMapName).Enable();
         }
+
 
         private void OnDisable()
         {
@@ -162,6 +166,8 @@ namespace Catalyst.Player
         {
             ToggleInventoryTriggered = _inventoryPressedThisFrame;
             _inventoryPressedThisFrame = false;
+            InteractTriggered = _interactPressedThisFrame;
+            _interactPressedThisFrame = false;
         }
 
     }

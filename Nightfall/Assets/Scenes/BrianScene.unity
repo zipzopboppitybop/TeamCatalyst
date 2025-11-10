@@ -722,6 +722,10 @@ PrefabInstance:
       value: Final_Player
       objectReference: {fileID: 0}
     - target: {fileID: 2704039868389915847, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: hotbar
+      value: 
+      objectReference: {fileID: 4055109652303251264}
+    - target: {fileID: 2704039868389915847, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: playerInventoryUI
       value: 
       objectReference: {fileID: 4055109652303251264}

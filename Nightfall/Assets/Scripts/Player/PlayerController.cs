@@ -19,6 +19,7 @@ namespace Catalyst.Player
         [SerializeField] private LayerMask gunCamLayers;
         [SerializeField] private LayerMask thirdPersonLayers;
         [SerializeField] private GameObject[] hideInFPS;
+        [SerializeField] public PlayerInventoryUI hotbar;
         public AudioSource aud;
 
         private float _cinemachineTargetPitch;
@@ -282,7 +283,7 @@ namespace Catalyst.Player
 
         public void UpdateInteract()
         {
-            if (Input.GetKeyDown(KeyCode.E) || playerInputHandler.InteractTriggered)
+            if (playerInputHandler.InteractTriggered || Input.GetKeyDown(KeyCode.E))
             {
                 Vector3 origin = FPSCamera.transform.position;
                 Vector3 direction = FPSCamera.transform.forward;
@@ -298,10 +299,23 @@ namespace Catalyst.Player
 
                     target?.Interact();
                 }
+
+                TilePainter painter = FindAnyObjectByType<TilePainter>();
+                if (painter != null)
+                {
+                    ItemData heldItem = hotbar?.GetSelectedItem();
+                    if (heldItem != null && heldItem.dropPrefab != null)
+                    {
+                        painter.TryPlaceTile(heldItem.dropPrefab);
+                    }
+                }
             }
         }
 
-
+        public PlayerInventoryUI GetHotBar()
+        {
+            return hotbar;
+        }
 
         private void ToggleGunCam()
         {
