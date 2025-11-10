@@ -200,5 +200,31 @@ namespace Catalyst.GamePlay
             return player.Guns.Contains(gun);
         }
 
+        public void StartReload()
+        {
+            if (isReloading) return;
+            if (player.Guns.Count == 0) return;
+            if (_gunListPos < 0 || _gunListPos >= player.Guns.Count) return;
+            if (player.Guns[_gunListPos].ammoCur >= player.Guns[_gunListPos].ammoMax) return;
+            isReloading = true;
+            animator.SetTrigger("Reload");
+            Debug.Log("Reloading...");
+        }
+
+        public void FinishReload()
+        {
+            if (player.Guns.Count == 0) return;
+            if (_gunListPos < 0 || _gunListPos >= player.Guns.Count) return;
+            WeaponData gun = player.Guns[_gunListPos];
+            int ammoNeeded = gun.ammoMax - gun.ammoCur;
+            gun.ammoCur += ammoNeeded;
+            if (gun.ammoCur > gun.ammoMax)
+            {
+                gun.ammoCur = gun.ammoMax;
+            }
+            isReloading = false;
+            Debug.Log("Reloaded.");
+        }
+
     }
 }
