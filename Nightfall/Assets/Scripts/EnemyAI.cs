@@ -233,13 +233,11 @@ public class enemyAI : MonoBehaviour, IDamage
 
     IEnumerator getScared()
     {
-
         isScared = true;
         roamPauseTime = 1;
         yield return new WaitForSeconds(10);
         roamPauseTime = roamTimeOrig;
         isScared = false;
-
     }
 
     void FindNearestCrop()
