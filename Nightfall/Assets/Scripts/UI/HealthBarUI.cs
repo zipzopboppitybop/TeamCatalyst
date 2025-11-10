@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -26,8 +27,7 @@ public class HealthBarUI : MonoBehaviour
         if(uIDocument == null)  
             uIDocument = GetComponent<UIDocument>();
 
-        root = uIDocument.rootVisualElement;
-        okButton = root.Q<Button>("OkButton");
+        root = uIDocument.rootVisualElement;;
         HUD = root.Q<VisualElement>("HUDContainer");
         healthBar = root.Q<VisualElement>("HealthBarGREEN");
         staminaBar = root.Q<VisualElement>("StamBarFront");
@@ -39,7 +39,6 @@ public class HealthBarUI : MonoBehaviour
         UpdateHealthBar();
         UpdateStaminaBar();
         UpdateCurrency();
-        InitializedButtonFunctions();
     }
 
     // Update is called once per frame
@@ -87,20 +86,23 @@ public class HealthBarUI : MonoBehaviour
     }
     public void ShowLoseScreen()
     {
-        if (Lose != null)
-        {
-            Lose.style.display = DisplayStyle.Flex;
-            cropsDestroyedText.text = $"Crops Destroyed: {GameManager.instance.cropsDestroyed}" ;
-        }
-    }
-
-    private void InitializedButtonFunctions()
-    {
-        okButton.clicked += OnButtonClicked;
+        StartCoroutine(CloseScreen());
     }
 
     private void OnButtonClicked()
     {
+        Lose.style.display = DisplayStyle.None;
+    }
+
+    private IEnumerator CloseScreen()
+    {
+        if (Lose != null)
+        {
+            Lose.style.display = DisplayStyle.Flex;
+            cropsDestroyedText.text = $"Crops Destroyed: {GameManager.instance.cropsDestroyed}";
+        }
+        yield return new WaitForSeconds(2f);
+
         Lose.style.display = DisplayStyle.None;
     }
 }

@@ -177,8 +177,11 @@ public class enemyAI : MonoBehaviour, IDamage
                         }
                     }
 
-                    if (agent.remainingDistance <= stoppingDistOrg)
-                        FaceTarget();
+                    if (agent != null)
+                    {
+                        if (agent.remainingDistance <= stoppingDistOrg)
+                            FaceTarget();
+                    }
 
                     agent.stoppingDistance = stoppingDistOrg;
                     return true;

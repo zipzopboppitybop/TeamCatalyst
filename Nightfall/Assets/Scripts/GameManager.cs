@@ -2,7 +2,7 @@ using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Catalyst.Player;
 
 
 public class GameManager : MonoBehaviour
@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
     //[SerializeField] Image nightImage;
 
     public GameObject player;
+    public PlayerController playerController;
     public GameObject playerSpawnPos;
 
     float timeScaleOrig;
@@ -145,7 +146,6 @@ public class GameManager : MonoBehaviour
             player.transform.rotation = playerSpawnPos.transform.rotation;
         }
 
-
         HealthBarUI.instance?.ShowLoseScreen();
 
         Debug.Log("Destroying stuff");
@@ -234,4 +234,10 @@ public class GameManager : MonoBehaviour
     {
         crops.Add(crop);
     }
+
+    //public void TogglePlayerController()
+    //{
+
+    //    Catalyst.Player.PlayerController = player.GetComponent<Catalyst.Player.PlayerController>();
+    //}
 }
