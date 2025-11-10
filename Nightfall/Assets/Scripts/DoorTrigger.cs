@@ -8,7 +8,7 @@ public class DoorTrigger : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("LiveStock"))
         {
             if (door != null)
             {
@@ -21,7 +21,7 @@ public class DoorTrigger : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") || other.CompareTag("LiveStock"))
         {
             if (door != null)
             {

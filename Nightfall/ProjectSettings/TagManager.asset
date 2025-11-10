@@ -8,6 +8,8 @@ TagManager:
   - Enemy
   - Spawner
   - Crop
+  - LiveStock
+  - FeedingTrough
   layers:
   - Default
   - TransparentFX

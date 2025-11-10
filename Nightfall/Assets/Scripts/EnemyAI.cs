@@ -233,19 +233,19 @@ public class enemyAI : MonoBehaviour, IDamage
 
     IEnumerator getScared()
     {
-
         isScared = true;
         roamPauseTime = 1;
         yield return new WaitForSeconds(10);
         roamPauseTime = roamTimeOrig;
         isScared = false;
-
     }
 
     void FindNearestCrop()
     {
         if (GameManager.instance == null || GameManager.instance.crops.Count == 0)
+        {
             return;
+        }
 
         float closestDist = Mathf.Infinity;
         GameObject nearestCrop = null;

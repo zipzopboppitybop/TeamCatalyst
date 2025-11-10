@@ -15,12 +15,11 @@ namespace Catalyst.Player
         public CinemachineCamera thirdPersonCamera;
         public Camera gunCam;
         [SerializeField] private Transform followTarget;
-        [SerializeField] GameObject gunModel;
-        [SerializeField] PlayerInventoryUI playerInventoryUI;
         [SerializeField] private LayerMask ignoreLayer;
         [SerializeField] private LayerMask gunCamLayers;
         [SerializeField] private LayerMask thirdPersonLayers;
         [SerializeField] private GameObject[] hideInFPS;
+        [SerializeField] public PlayerInventoryUI hotbar;
         public AudioSource aud;
 
         private float _cinemachineTargetPitch;
@@ -51,10 +50,8 @@ namespace Catalyst.Player
         private int _jumpCount = 0;
 
         private CharacterController characterController;
-
         private Vector3 playerDir;
-        private int _gunListPos;
-        private bool interactPressed = false;
+
 
         private void Start()
         {
@@ -286,10 +283,8 @@ namespace Catalyst.Player
 
         public void UpdateInteract()
         {
-            if (playerInputHandler.InteractTriggered && !interactPressed)
+            if (playerInputHandler.InteractTriggered || Input.GetKeyDown(KeyCode.E))
             {
-
-                interactPressed = true;
                 Vector3 origin = FPSCamera.transform.position;
                 Vector3 direction = FPSCamera.transform.forward;
 
@@ -308,21 +303,19 @@ namespace Catalyst.Player
                 TilePainter painter = FindAnyObjectByType<TilePainter>();
                 if (painter != null)
                 {
-                    ItemData heldItem = playerInventoryUI?.GetSelectedItem();
+                    ItemData heldItem = hotbar?.GetSelectedItem();
                     if (heldItem != null && heldItem.dropPrefab != null)
                     {
                         painter.TryPlaceTile(heldItem.dropPrefab);
                     }
                 }
             }
-
-            if (Input.GetButtonUp("Interact"))
-            {
-                interactPressed = false;
-            }
         }
 
-
+        public PlayerInventoryUI GetHotBar()
+        {
+            return hotbar;
+        }
 
         private void ToggleGunCam()
         {
@@ -338,7 +331,7 @@ namespace Catalyst.Player
             {
                 gunCam.enabled = true;
                 Debug.Log("Gun cam enabled");
-                // enable ignore layers on main camera
+                // enable ignore layers on main camera 
 
             }
             ToggleCullingLayer();
@@ -387,7 +380,7 @@ namespace Catalyst.Player
 
         IEnumerator ToggleCamera(CinemachineCamera cam)
         {
-            // Stop everything a bit to avoid multiple toggles
+            // Stop everything a bit to avoid multiple toggles      
             playerInputHandler.enabled = false;
             cam.gameObject.SetActive(!cam.gameObject.activeSelf);
             ToggleGunCam();
@@ -450,14 +443,38 @@ namespace Catalyst.Player
 
             if (playerData.Health <= 0)
             {
-                GameManager.instance.YouLose();
-                playerData.Health = playerData.HealthMax;
+                Debug.Log("You are dead!");
             }
         }
 
-        public PlayerInventoryUI GetHotBar()
+        public void Heal(int amount)
         {
-            return playerInventoryUI;
+            StartCoroutine(HealPlayer(amount));
+
         }
+
+        IEnumerator HealPlayer(int amount)
+        {
+            // Lerp the health increase over time base off playerdata health regen rate
+            float healAmount = amount;
+            float healRate = playerData.HealthRegen;
+
+            while (healAmount > 0)
+            {
+                playerData.Health += healRate * Time.deltaTime;
+                healAmount -= healRate * Time.deltaTime;
+
+                if (playerData.Health > playerData.HealthMax)
+                {
+                    playerData.Health = playerData.HealthMax;
+                    break;
+                }
+                yield return null;
+            }
+        }
+
     }
 }
+
+
+
