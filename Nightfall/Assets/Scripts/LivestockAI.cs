@@ -8,12 +8,17 @@ public class Livestock : MonoBehaviour, IDamage
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform headPos;
+    [SerializeField] Transform homePosTransform;
     [SerializeField] GameObject itemDrop;
     [SerializeField] GameObject targetObj;
     [SerializeField] float cropSearchInterval;
     [SerializeField] float cropDetectionRadius;
 
+
     [SerializeField] int hp;
+    [SerializeField] int hpMax;
+    [SerializeField] int hunger;
+    [SerializeField] int hungerMax;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int FOV;
     [SerializeField] int roamDist;
@@ -40,6 +45,7 @@ public class Livestock : MonoBehaviour, IDamage
     Vector3 startingPos;
     Vector3 homePos;
 
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -47,6 +53,7 @@ public class Livestock : MonoBehaviour, IDamage
         roamTimeOrig = roamPauseTime;
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
+        homePos = homePosTransform.position;
     }
     void Update()
     {
