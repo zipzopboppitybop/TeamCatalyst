@@ -132,8 +132,6 @@ public class GameManager : MonoBehaviour
                     }   
                 }
             }
-           
-                HealthBarUI.instance.ShowLoseScreen();
         }
         else
         {
@@ -146,6 +144,9 @@ public class GameManager : MonoBehaviour
             player.transform.position = playerSpawnPos.transform.position;
             player.transform.rotation = playerSpawnPos.transform.rotation;
         }
+
+
+        HealthBarUI.instance?.ShowLoseScreen();
 
         Debug.Log("Destroying stuff");
         //StatePause();  

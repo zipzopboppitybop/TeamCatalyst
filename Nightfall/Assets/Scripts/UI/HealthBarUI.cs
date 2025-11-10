@@ -16,15 +16,18 @@ public class HealthBarUI : MonoBehaviour
     private VisualElement Lose;
     private Label currencyLabel;
     private Label cropsDestroyedText;
+    private Button okButton;
     //private Label healthBarLabel;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        instance = this;
         if(uIDocument == null)  
             uIDocument = GetComponent<UIDocument>();
 
         root = uIDocument.rootVisualElement;
+        okButton = root.Q<Button>("OkButton");
         HUD = root.Q<VisualElement>("HUDContainer");
         healthBar = root.Q<VisualElement>("HealthBarGREEN");
         staminaBar = root.Q<VisualElement>("StamBarFront");
@@ -36,6 +39,7 @@ public class HealthBarUI : MonoBehaviour
         UpdateHealthBar();
         UpdateStaminaBar();
         UpdateCurrency();
+        InitializedButtonFunctions();
     }
 
     // Update is called once per frame
@@ -44,7 +48,7 @@ public class HealthBarUI : MonoBehaviour
         UpdateHealthBar();
         UpdateStaminaBar();
         UpdateCurrency();
-        
+
     }
 
     private void UpdateHealthBar()
@@ -83,7 +87,20 @@ public class HealthBarUI : MonoBehaviour
     }
     public void ShowLoseScreen()
     {
+        if (Lose != null)
+        {
             Lose.style.display = DisplayStyle.Flex;
-           cropsDestroyedText.text = "Crops Destroyed: " + GameManager.instance.cropsDestroyed;
+            cropsDestroyedText.text = $"Crops Destroyed: {GameManager.instance.cropsDestroyed}" ;
+        }
+    }
+
+    private void InitializedButtonFunctions()
+    {
+        okButton.clicked += OnButtonClicked;
+    }
+
+    private void OnButtonClicked()
+    {
+        Lose.style.display = DisplayStyle.None;
     }
 }

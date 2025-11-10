@@ -170,8 +170,11 @@ public class enemyAI : MonoBehaviour, IDamage
 
                     if (biteTimer > biteRate && agent.remainingDistance <= stoppingDistOrg)
                     {
-                        attack(targetObj);
-                        biteTimer = 0;
+                        if (targetObj)
+                        {
+                            attack(targetObj);
+                            biteTimer = 0;
+                        }
                     }
 
                     if (agent.remainingDistance <= stoppingDistOrg)

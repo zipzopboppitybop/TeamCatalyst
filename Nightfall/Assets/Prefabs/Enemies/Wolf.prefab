@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 8727547920559199631}
   m_Layer: 0
   m_Name: Wolf
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -111,6 +111,8 @@ MonoBehaviour:
   headPos: {fileID: 8274698252395158720}
   itemDrop: {fileID: 1915537940091514794, guid: 4e85cafb5039f5049bbfe8582346e40f, type: 3}
   targetObj: {fileID: 0}
+  cropSearchInterval: 0
+  cropDetectionRadius: 0
   hp: 10
   faceTargetSpeed: 8
   FOV: 90

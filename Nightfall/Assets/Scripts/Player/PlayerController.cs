@@ -443,7 +443,8 @@ namespace Catalyst.Player
 
             if (playerData.Health <= 0)
             {
-                Debug.Log("You are dead!");
+                GameManager.instance.YouLose();
+                playerData.Health = playerData.HealthMax;  
             }
         }
 

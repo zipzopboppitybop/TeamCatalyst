@@ -836,7 +836,7 @@ GameObject:
   - component: {fileID: 1728941998723204109}
   - component: {fileID: 5378990266918352515}
   - component: {fileID: 7608244932582579623}
-  m_Layer: 10
+  m_Layer: 0
   m_Name: Rabbit
   m_TagString: Enemy
   m_Icon: {fileID: 0}
