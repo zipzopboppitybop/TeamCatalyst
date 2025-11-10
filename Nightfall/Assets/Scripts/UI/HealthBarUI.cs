@@ -50,7 +50,10 @@ public class HealthBarUI : MonoBehaviour
     private void UpdateHealthBar()
     {
         float healthPercent = playerData.Health / playerData.HealthMax;
-        healthBar.style.width = Length.Percent(healthPercent * 100);
+        if (healthBar != null)
+        {
+            healthBar.style.width = Length.Percent(healthPercent * 100);
+        }
     }
 
     private void UpdateStaminaBar()
@@ -58,8 +61,10 @@ public class HealthBarUI : MonoBehaviour
         RegenStamina();
 
         float staminaPercent = (float)playerData.Stamina / playerData.StaminaMax;
-        staminaBar.style.width = Length.Percent(staminaPercent * 100);
-
+        if (staminaBar != null)
+        {
+            staminaBar.style.width = Length.Percent(staminaPercent * 100);
+        }
     }
 
     private void RegenStamina()
@@ -71,7 +76,10 @@ public class HealthBarUI : MonoBehaviour
     }
     private void UpdateCurrency()
     {
-        currencyLabel.text = $"${playerData.Currency}";
+        if (currencyLabel != null)
+        {
+            currencyLabel.text = $"${playerData.Currency}";
+        }
     }
     public void ShowLoseScreen()
     {

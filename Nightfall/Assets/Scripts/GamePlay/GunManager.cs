@@ -47,8 +47,11 @@ namespace Catalyst.GamePlay
         {
             _shootTimer += Time.deltaTime;
 
-
-            SelectWeapon();
+            if (CurrentWeapon != null )
+            {
+                SelectWeapon();
+            }
+            
         }
 
 
@@ -58,7 +61,7 @@ namespace Catalyst.GamePlay
             if (player.Guns.Count == 0) return;
 
             ChangeWeapon();
-            animator.SetBool(_animArmed, true);
+            //animator.SetBool(_animArmed, true);
 
         }
 
@@ -96,7 +99,7 @@ namespace Catalyst.GamePlay
                 }
                 ChangeWeapon();
             }
-            else if (playerInputHandler.PrevTriggered && !playerInputHandler.ToggleInventoryTriggered)
+            else if (playerInputHandler.PrevTriggered)
             {
                 _gunListPos--;
                 if (_gunListPos < 0)
@@ -106,7 +109,6 @@ namespace Catalyst.GamePlay
                 ChangeWeapon();
             }
             HandleAim();
-
         }
         private void SetupCombatAnimator()
         {
