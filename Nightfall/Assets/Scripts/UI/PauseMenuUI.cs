@@ -16,11 +16,6 @@ public class PauseMenuUI : MonoBehaviour
     private Button quitButton;
     private Button backButton;
 
-    private SliderInt masterVolume;
-    private SliderInt musicVolume;
-    private Toggle musicToggle;
-    private Toggle sfxToggle;
-
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
@@ -40,10 +35,6 @@ public class PauseMenuUI : MonoBehaviour
         quitButton = root.Q<Button>("quitButton");
         backButton = root.Q<Button>("backButton");
 
-        masterVolume = root.Q<SliderInt>("MasterVolume");
-        musicVolume = root.Q<SliderInt>("MusicVolume");
-        musicToggle = root.Q <Toggle> ("MusicToggle");
-        sfxToggle = root.Q<Toggle> ("SfxToggle");
         Hide();
 
         if (resumeButton != null)

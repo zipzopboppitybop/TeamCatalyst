@@ -15,6 +15,8 @@ public class Cycles : ScriptableObject
     [SerializeField] private string dayText;
     [SerializeField] private Sprite dayImage;
     [SerializeField] private Sprite nightImage;
+    [System.NonSerialized] public int cropsDestroyed;
+
 
 
     public string ClockText { get => clockText; set => clockText = value;}

@@ -3,14 +3,19 @@ using UnityEngine.UIElements;
 
 public class HealthBarUI : MonoBehaviour
 {
+    public static HealthBarUI instance;
+
     [SerializeField] private UIDocument uIDocument;
     [SerializeField] private Catalyst.Player.PlayerData playerData;
+    [SerializeField] private Cycles cycles;
 
     private VisualElement root;
     private VisualElement HUD;
     private VisualElement healthBar;
     private VisualElement staminaBar;
+    private VisualElement Lose;
     private Label currencyLabel;
+    private Label cropsDestroyedText;
     //private Label healthBarLabel;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -24,6 +29,8 @@ public class HealthBarUI : MonoBehaviour
         healthBar = root.Q<VisualElement>("HealthBarGREEN");
         staminaBar = root.Q<VisualElement>("StamBarFront");
         currencyLabel = root.Q<Label>("moneyText");
+        cropsDestroyedText = root.Q<Label>("CropsDestroyed");
+        Lose = root.Q<VisualElement>("YouLose");
 
         HUD.style.display = DisplayStyle.Flex;
         UpdateHealthBar();
@@ -37,6 +44,7 @@ public class HealthBarUI : MonoBehaviour
         UpdateHealthBar();
         UpdateStaminaBar();
         UpdateCurrency();
+        
     }
 
     private void UpdateHealthBar()
@@ -64,5 +72,10 @@ public class HealthBarUI : MonoBehaviour
     private void UpdateCurrency()
     {
         currencyLabel.text = $"${playerData.Currency}";
+    }
+    public void ShowLoseScreen()
+    {
+            Lose.style.display = DisplayStyle.Flex;
+           cropsDestroyedText.text = "Crops Destroyed: " + GameManager.instance.cropsDestroyed;
     }
 }

@@ -290,8 +290,8 @@ namespace Catalyst.Player
             {
 
                 interactPressed = true;
-                Vector3 origin = mainCamera.transform.position;
-                Vector3 direction = mainCamera.transform.forward;
+                Vector3 origin = FPSCamera.transform.position;
+                Vector3 direction = FPSCamera.transform.forward;
 
                 Debug.DrawRay(origin, direction * playerData.InteractRange, Color.red, 1f);
 
