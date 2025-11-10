@@ -13,12 +13,15 @@ public class Livestock : MonoBehaviour, IDamage
     [SerializeField] GameObject targetObj;
     [SerializeField] float cropSearchInterval;
     [SerializeField] float cropDetectionRadius;
+    [SerializeField] float cropThreshold;
+    [SerializeField] private Chest FeedingTrough;
 
 
     [SerializeField] int hp;
     [SerializeField] int hpMax;
-    [SerializeField] int hunger;
-    [SerializeField] int hungerMax;
+    [SerializeField] float hunger;
+    [SerializeField] float hungerMax;
+    [SerializeField] float hungerRate;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int FOV;
     [SerializeField] int roamDist;
@@ -62,13 +65,25 @@ public class Livestock : MonoBehaviour, IDamage
         if (agent.remainingDistance < 0.01f)
             roamTimer += Time.deltaTime;
 
+
+
         if (!GameManager.instance.IsNight)
         {
             CheckRoam();
+            hunger -= hungerRate;
         }
         else
         {
             HeadHome();
+        }
+
+        if (hunger <= 50)
+        {
+            FindFood();
+        }
+        else if (hunger <=0)
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -117,6 +132,49 @@ public class Livestock : MonoBehaviour, IDamage
     {
         headHome = true;
         agent.SetDestination(homePos);
+    }
+
+    void FindFood()
+    {
+        if (FeedingTrough == null || FeedingTrough.PrimaryInventory == null) return;
+
+        InventorySlot cropSlot = null;
+
+        foreach (var slot in FeedingTrough.PrimaryInventory.InventorySlots)
+        {
+            if (slot.ItemData != null && slot.ItemData.itemType == ItemData.ItemType.Resource && slot.StackSize > 0)
+            {
+                cropSlot = slot;
+                break;
+            }
+        }
+
+        if (cropSlot != null)
+        {
+            agent.SetDestination(FeedingTrough.transform.position);
+
+            float dist = Vector3.Distance(transform.position, FeedingTrough.transform.position);
+            if (dist <= agent.stoppingDistance + 0.5f)
+            {
+                EatCrop(cropSlot);
+            }
+        }
+        else
+        {
+            CheckRoam();
+        }
+    }
+
+    void EatCrop(InventorySlot cropSlot)
+    {
+        cropSlot.RemoveFromStack(1);
+
+        if (cropSlot.StackSize <= 0)
+        {
+            cropSlot.UpdateInventorySlot(null, 0);
+        }
+
+        FeedingTrough.PrimaryInventory.OnInventorySlotChanged?.Invoke(cropSlot);
     }
 
     IEnumerator flashRed()

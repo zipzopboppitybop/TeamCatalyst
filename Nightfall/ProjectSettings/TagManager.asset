@@ -9,6 +9,7 @@ TagManager:
   - Spawner
   - Crop
   - LiveStock
+  - FeedingTrough
   layers:
   - Default
   - TransparentFX
