@@ -4,11 +4,17 @@ using UnityEngine;
 
 
 
-namespace Catalyst.Player.Inventory
+namespace Catalyst.Player.Pickups
 {
-    public class GunPickUp : MonoBehaviour, IInteractable
+    public class UpgradePickup : MonoBehaviour, IInteractable
     {
-        public WeaponData gunData;
+        enum pickupType { health, key, stealth, gun }
+
+
+        [SerializeField] pickupType type;
+        [SerializeField] int healAmount;
+
+        [SerializeField] WeaponData gunData;
         //[SerializeField] inventoryItem gun;
 
         public float rotateSpeed = 50f; // Speed at which the pickup rotates for visibility
@@ -24,7 +30,7 @@ namespace Catalyst.Player.Inventory
 
         private PlayerController _player;
         private GunManager _gunManager;
-        private PlayerData playerData;
+
 
         private void Start()
         {
@@ -50,21 +56,41 @@ namespace Catalyst.Player.Inventory
 
         public void Interact()
         {
-            //if (GameManager.instance.playerScript.HasItem(gun))
-            //    return; // Player already has this gun, do not pick up again
 
-            if (_gunManager.HasGun(gunData))
+
+
+            switch (type)
             {
-                Debug.Log("Player already has " + gunData.name);
-                return;
+                case pickupType.health:
+                    _player.Heal(healAmount);
+                    Destroy(gameObject);
+                    break;
+                case pickupType.key:
+                    //_player.AddKey();
+                    Destroy(gameObject);
+                    break;
+                case pickupType.stealth:
+                    //_player.ActivateStealth(10.0f);
+                    Destroy(gameObject);
+                    break;
+                case pickupType.gun:
+                    if (_gunManager.HasGun(gunData))
+                    {
+                        Debug.Log("Player already has " + gunData.name);
+                        return;
+                    }
+
+                    Debug.Log("Should be picking up");
+
+                    _gunManager.GetWeaponData(gunData);
+
+                    Destroy(gameObject);
+                    Debug.Log("Object destroyed after pickup");
+                    break;
+                default:
+                    Debug.LogWarning("Unknown pickup type");
+                    break;
             }
-
-            Debug.Log("Should be picking up");
-
-            _gunManager.GetWeaponData(gunData);
-
-            Destroy(gameObject);
-            Debug.Log("Object destroyed after pickup");
         }
 
         private void OnTriggerEnter(Collider other)

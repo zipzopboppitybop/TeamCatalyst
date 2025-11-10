@@ -433,6 +433,32 @@ namespace Catalyst.Player
             }
         }
 
+        public void Heal(int amount)
+        {
+            StartCoroutine(HealPlayer(amount));
+
+        }
+
+        IEnumerator HealPlayer(int amount)
+        {
+            // Lerp the health increase over time base off playerdata health regen rate
+            float healAmount = amount;
+            float healRate = playerData.HealthRegen;
+
+            while (healAmount > 0)
+            {
+                playerData.Health += healRate * Time.deltaTime;
+                healAmount -= healRate * Time.deltaTime;
+
+                if (playerData.Health > playerData.HealthMax)
+                {
+                    playerData.Health = playerData.HealthMax;
+                    break;
+                }
+                yield return null;
+            }
+        }
+
     }
 }
 

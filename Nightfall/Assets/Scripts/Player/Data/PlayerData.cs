@@ -17,6 +17,7 @@ namespace Catalyst.Player
         [SerializeField] private int score = 0;
         [SerializeField, Range(0, 100f)] private float health = 100;
         [SerializeField] private int healthMax = 100;
+        [SerializeField] private int healthRegen = 1;
         [SerializeField, Range(0, 100)] private int stamina = 10;
         [SerializeField, Range(0, 10)] private int staminaRegen = 10;
         [SerializeField] private int staminaMax = 10;
@@ -61,6 +62,7 @@ namespace Catalyst.Player
         public int Score => score;
         public float Health { get => health; set => health = value; }
         public int HealthMax { get => healthMax; set => healthMax = value; }
+        public int HealthRegen { get => healthRegen; set => healthRegen = value; }
 
 
         public int Stamina { get => stamina; set => stamina = value; }
@@ -113,14 +115,9 @@ namespace Catalyst.Player
             set => currentGun = value;
         }
 
-        // public List<WeaponData> Guns;pu
-
-
-
         void OnEnable()
         {
             InitializePlayer();
-
         }
 
         public void InitializePlayer()
@@ -162,6 +159,5 @@ namespace Catalyst.Player
             InitializePlayer();
         }
 
-       
     }
 }

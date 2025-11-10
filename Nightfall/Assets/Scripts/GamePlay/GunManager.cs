@@ -1,5 +1,4 @@
 ﻿
-using Catalyst.Audio;
 using Catalyst.Player;
 using UnityEngine;
 
