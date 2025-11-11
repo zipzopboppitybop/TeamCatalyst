@@ -149,15 +149,16 @@ MonoBehaviour:
   followTarget: {fileID: 5629587793951799693}
   ignoreLayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 136
   gunCamLayers:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 1048576
   thirdPersonLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 3145728
   hideInFPS:
   - {fileID: 6061531207049578280}
+  hotbar: {fileID: 0}
   aud: {fileID: 853817436050279361}
   playerInputHandler: {fileID: 0}
   playerData: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
@@ -206,6 +207,7 @@ MonoBehaviour:
   secondaryInventorySize: 27
   secondaryInventory:
     inventorySlots: []
+  hotbarUI: {fileID: 0}
 --- !u!114 &5796168270863737799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -508,7 +510,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 1536
+    m_Bits: 3146752
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -1400,7 +1402,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8980997368862267880}
   - component: {fileID: 2158749584407487741}
-  m_Layer: 9
+  m_Layer: 20
   m_Name: Peasant_Nolant
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2386,7 +2388,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3514062106589274110, guid: 108b226abdb13a84bbdf37bccba4f096, type: 3}
       propertyPath: m_Layer
-      value: 10
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 5384368134431231073, guid: 108b226abdb13a84bbdf37bccba4f096, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
