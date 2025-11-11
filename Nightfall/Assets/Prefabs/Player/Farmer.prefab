@@ -158,6 +158,7 @@ MonoBehaviour:
     m_Bits: 512
   hideInFPS:
   - {fileID: 6061531207049578280}
+  hotbar: {fileID: 0}
   aud: {fileID: 853817436050279361}
   playerInputHandler: {fileID: 0}
   playerData: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
@@ -206,6 +207,7 @@ MonoBehaviour:
   secondaryInventorySize: 27
   secondaryInventory:
     inventorySlots: []
+  hotbarUI: {fileID: 0}
 --- !u!114 &5796168270863737799
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -229,7 +231,7 @@ AudioSource:
   m_GameObject: {fileID: 906805268855091345}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 8329519579811139567, guid: 7dd4277552737ee4b947714ea1fd19be, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -336,7 +338,7 @@ MonoBehaviour:
   animator: {fileID: 4961241792348632301}
   aud: {fileID: 853817436050279361}
   playerInputHandler: {fileID: 0}
-  playerController: {fileID: 0}
+  playerController: {fileID: 2704039868389915847}
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 0
