@@ -47,11 +47,11 @@ namespace Catalyst.GamePlay
         {
             _shootTimer += Time.deltaTime;
 
-            if (CurrentWeapon != null )
+            if (CurrentWeapon != null)
             {
                 SelectWeapon();
             }
-            
+
         }
 
 
@@ -71,6 +71,18 @@ namespace Catalyst.GamePlay
             _gunListPos = player.Guns.IndexOf(weaponData);
             ChangeWeapon();
         }
+
+        public WeaponData ExistingWeaponData(WeaponData weaponData)
+        {
+            foreach (WeaponData gun in player.Guns)
+            {
+                if (gun == weaponData)
+                {
+                    return gun;
+                }
+            }
+            return null;
+        }
         private void ChangeWeapon()
         {
             _currentWeapon = player.Guns[_gunListPos];
@@ -79,7 +91,8 @@ namespace Catalyst.GamePlay
             gunModel.GetComponent<MeshFilter>().sharedMesh = player.Guns[_gunListPos].model.GetComponent<MeshFilter>().sharedMesh;
             gunModel.GetComponent<MeshRenderer>().sharedMaterial = player.Guns[_gunListPos].model.GetComponent<MeshRenderer>().sharedMaterial;
 
-            aud.PlayOneShot(player.Guns[_gunListPos].pickUpSound, 0.5f);
+            if (_currentWeapon.ammoCur > 0)
+                aud.PlayOneShot(player.Guns[_gunListPos].pickUpSound, 0.5f);
 
             player.ShootDamage = player.Guns[_gunListPos].shootDamage;
             player.ShootDist = player.Guns[_gunListPos].shootDistance;
@@ -226,6 +239,25 @@ namespace Catalyst.GamePlay
             }
             isReloading = false;
             Debug.Log("Reloaded.");
+        }
+
+        public bool ReloadWeapon(WeaponData weaponData)
+        {
+            WeaponData gun = player.Guns[player.Guns.IndexOf(weaponData)];
+
+            if (gun.ammoCur == gun.ammoMax) return false;
+
+            else
+            {
+                int ammoNeeded = gun.ammoMax - gun.ammoCur;
+                gun.ammoCur += ammoNeeded;
+                if (gun.ammoCur > gun.ammoMax)
+                {
+                    gun.ammoCur = gun.ammoMax;
+                }
+                return true;
+            }
+
         }
 
     }
