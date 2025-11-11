@@ -203,7 +203,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1827939816159163505, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: near clip plane
-      value: 0.01
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1827939816159163505, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 2098176
       objectReference: {fileID: 0}
     - target: {fileID: 2426824615145339528, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: playerInputHandler
