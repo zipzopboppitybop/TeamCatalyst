@@ -2,29 +2,29 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class enemyAI : MonoBehaviour, IDamage
+public class AILogic : MonoBehaviour, IDamage
 {
     // need boolean to check if this attacks plants or not
-    [SerializeField] Renderer model;
-    [SerializeField] NavMeshAgent agent;
-    [SerializeField] Transform headPos;
-    [SerializeField] GameObject itemDrop;
-    [SerializeField] GameObject targetObj;
-    [SerializeField] float cropSearchInterval; 
-    [SerializeField] float cropDetectionRadius;
+    [SerializeField] protected Renderer model;
+    [SerializeField] protected NavMeshAgent agent;
+    [SerializeField] protected Transform headPos;
+    [SerializeField] protected GameObject itemDrop;
+    [SerializeField] protected GameObject targetObj;
+    [SerializeField] protected float cropSearchInterval; 
+    [SerializeField] protected float cropDetectionRadius;
 
-    [SerializeField] int hp;
-    [SerializeField] int faceTargetSpeed;
-    [SerializeField] int FOV;
-    [SerializeField] int roamDist;
-    [SerializeField] int roamPauseTime;
+    [SerializeField] protected int hp;
+    [SerializeField] protected int faceTargetSpeed;
+    [SerializeField] protected int FOV;
+    [SerializeField] protected int roamDist;
+    [SerializeField] protected int roamPauseTime;
     [Range(0, 100)][SerializeField] int dropChance;
-    [SerializeField] float biteRate;
+    [SerializeField] protected float biteRate;
 
     Color colorOrig;
 
     bool playerInRange;
-    [SerializeField] bool targetsPlayer = true;
+    [SerializeField] protected bool targetsPlayer = true;
     bool isScared = false;
 
     float biteTimer;
@@ -32,6 +32,8 @@ public class enemyAI : MonoBehaviour, IDamage
     float angleToTarget;
     float stoppingDistOrg;
     float cropSearchTimer;
+    protected int hpOrig;
+    protected int healRate;
 
     int roamTimeOrig;
 
@@ -39,12 +41,13 @@ public class enemyAI : MonoBehaviour, IDamage
     Vector3 startingPos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    protected virtual void Start()
     {
         colorOrig = model.material.color;
         roamTimeOrig = roamPauseTime;
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
+        hpOrig = hp;
 
         if (targetsPlayer)
         {
@@ -53,7 +56,7 @@ public class enemyAI : MonoBehaviour, IDamage
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         biteTimer += Time.deltaTime;
         cropSearchTimer += Time.deltaTime;
@@ -61,40 +64,44 @@ public class enemyAI : MonoBehaviour, IDamage
         if (agent == null || !agent.isOnNavMesh) return;
 
         if (agent.remainingDistance < 0.01f)
+        {
             roamTimer += Time.deltaTime;
-
-        if (!targetsPlayer)
-        {
-            if (targetObj == null || !targetObj.activeInHierarchy)
-            {
-                if (cropSearchTimer >= cropSearchInterval)
-                {
-                    FindNearestCrop();
-                    cropSearchTimer = 0f;
-                }
-            }
-
-            if (targetObj == null)
-            {
-                CheckRoam();
-                return;
-            }
-
-            CanSeeTarget();
-        }
-        else
-        {
-            if (playerInRange && !CanSeeTarget())
-                CheckRoam();
-            else if (!playerInRange)
-                CheckRoam();
         }
 
-        if (!targetsPlayer && targetObj == null && agent.remainingDistance < 0.5f)
-            CheckRoam();
+        CheckRoam();
+
+        //if (!targetsPlayer)
+        //{
+        //    if (targetObj == null || !targetObj.activeInHierarchy)
+        //    {
+        //        if (cropSearchTimer >= cropSearchInterval)
+        //        {
+        //            FindNearestCrop();
+        //            cropSearchTimer = 0f;
+        //        }
+        //    }
+
+        //    if (targetObj == null)
+        //    {
+        //        CheckRoam();
+        //        return;
+        //    }
+
+        //    CanSeeTarget();
+        //}
+        //else
+        //{
+        //    if (playerInRange && !CanSeeTarget())
+        //        CheckRoam();
+        //    else if (!playerInRange)
+        //        CheckRoam();
+        //}
+
+        //if (!targetsPlayer && targetObj == null && agent.remainingDistance < 0.5f)
+        //    CheckRoam();
     }
 
-    public void takeDamage(int amount)
+    public virtual void takeDamage(int amount)
     {
         hp -= amount;
         if (GameManager.instance != null && targetsPlayer)
@@ -128,7 +135,7 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
-    void CheckRoam()
+    protected virtual void CheckRoam()
     {
         if (roamTimer >= roamPauseTime && agent.remainingDistance < 0.01f)
         {
@@ -136,7 +143,7 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
-    void Roam()
+    protected virtual void Roam()
     {
         roamTimer = 0;
         agent.stoppingDistance = 0;
@@ -149,7 +156,7 @@ public class enemyAI : MonoBehaviour, IDamage
         agent.SetDestination(hit.position);
     }
 
-    bool CanSeeTarget()
+    protected virtual bool CanSeeTarget()
     {
         if (!isScared)
         {
@@ -192,15 +199,15 @@ public class enemyAI : MonoBehaviour, IDamage
 
         agent.stoppingDistance = 0;
         return false;
-
     }
-    void FaceTarget()
+
+    protected virtual void FaceTarget()
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(targetDir.x, 0, targetDir.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
     }
 
-    private void OnTriggerEnter(Collider other)
+    protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") || other.GetComponent<TowerBase>() && other.GetComponent<TowerBase>().typeTower == TowerBase.TowerType.Crop)
         {
@@ -208,7 +215,7 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
-    private void OnTriggerExit(Collider other)
+    protected virtual void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Player") || other.GetComponent<TowerBase>() && other.GetComponent<TowerBase>().typeTower == TowerBase.TowerType.Crop)
         {
@@ -217,7 +224,7 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
-    void attack(GameObject target)
+    protected virtual void attack(GameObject target)
     {
 
         if (target == null) return;
@@ -230,7 +237,7 @@ public class enemyAI : MonoBehaviour, IDamage
         }
     }
 
-    IEnumerator flashRed()
+    protected IEnumerator flashRed()
     {
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
