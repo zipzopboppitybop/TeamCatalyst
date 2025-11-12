@@ -1,18 +1,22 @@
 using System.Collections;
+using System.Collections.Generic;
 using Unity.Transforms;
 using UnityEngine;
 
 public class GuardDogAI : AILogic
 {
-    bool targetInRange;
     [SerializeField] Transform homePosTransform;
     protected Vector3 homePos;
+    bool targetInRange;
+
+    private List<GameObject> enemiesInRange = new List<GameObject>();
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
     {
         base.Start();
         homePos = homePosTransform.position;
+        targetObj = null;
     }
 
     // Update is called once per frame
@@ -29,15 +33,44 @@ public class GuardDogAI : AILogic
             return;
         }
 
-        if (targetObj == null && !targetInRange)
+        enemiesInRange.RemoveAll(e => e == null);
+
+        UpdateTarget();
+
+        if (targetObj != null)
         {
-            targetInRange = false;
-            targetObj = null;
+            CanSeeTarget();
+        }
+        else
+        {
             CheckRoam();
+        }
+    }
+
+
+    private void UpdateTarget()
+    {
+        if (enemiesInRange.Count == 0)
+        {
+            targetObj = null;
             return;
         }
 
-        CanSeeTarget();
+        GameObject closest = null;
+        float minDist = Mathf.Infinity;
+        foreach (GameObject enemy in enemiesInRange)
+        {
+            if (enemy == null) continue;
+            float dist = Vector3.Distance(transform.position, enemy.transform.position);
+            if (dist < minDist)
+            {
+                minDist = dist;
+                closest = enemy;
+            }
+        }
+
+        targetObj = closest;
+        targetInRange = targetObj != null;
     }
 
     public override void takeDamage(int amount)
@@ -51,10 +84,6 @@ public class GuardDogAI : AILogic
 
         if (hp > 0)
         {
-            if (targetObj != null)
-            {
-                agent.SetDestination(targetObj.transform.position);
-            }
             StartCoroutine(flashRed());
             return;
         }
@@ -71,10 +100,9 @@ public class GuardDogAI : AILogic
 
     protected override void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy") && !enemiesInRange.Contains(other.gameObject))
         {
-            targetInRange = true;
-            targetObj = other.gameObject;
+            enemiesInRange.Add(other.gameObject);
         }
 
         if (other.CompareTag("HomePos"))
@@ -82,48 +110,32 @@ public class GuardDogAI : AILogic
             StartCoroutine(Heal());
         }
     }
-
     protected override void OnTriggerExit(Collider other)
     {
         if (other.CompareTag("Enemy"))
         {
-            StartCoroutine(LoseTargetDelay(other.gameObject));
+            enemiesInRange.Remove(other.gameObject);
         }
     }
 
     protected override bool CanSeeTarget()
     {
-        if (isHealing)
+        if (targetObj == null || agent == null || !agent.isOnNavMesh || hp <= 0)
         {
             return false;
         }
-
-        if (targetObj == null)
-        {
-            targetInRange = false;
-            agent.stoppingDistance = 0;
-            CheckRoam();
-            return false;
-        }
-
-        agent.stoppingDistance = stoppingDistOrg;
 
         agent.SetDestination(targetObj.transform.position);
 
-        if (biteTimer > biteRate && agent.remainingDistance <= stoppingDistOrg)
+        if (Vector3.Distance(transform.position, targetObj.transform.position) <= stoppingDistOrg) 
         {
-            attack(targetObj);
-            biteTimer = 0;
+            FaceTarget();
+            if (biteTimer > biteRate)
+            {
+                attack(targetObj);
+                biteTimer = 0;
+            }
         }
-
-        Vector3 dir = targetObj.transform.position - transform.position;
-        dir.y = 0;
-        if (dir.sqrMagnitude > 0.01f)
-        {
-            Quaternion rot = Quaternion.LookRotation(dir);
-            transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
-        }
-
         return true;
     }
 
@@ -166,18 +178,5 @@ public class GuardDogAI : AILogic
         agent.isStopped = false;
 
         CheckRoam();
-    }
-
-    private IEnumerator LoseTargetDelay(GameObject enemy)
-    {
-        yield return new WaitForSeconds(2f);
-        if (targetObj == enemy &&
-            Vector3.Distance(transform.position, enemy.transform.position) > 25f)
-        {
-            targetInRange = false;
-            targetObj = null;
-            agent.stoppingDistance = 0;
-            CheckRoam();
-        }
     }
 }

@@ -7,6 +7,7 @@ public class AILogic : MonoBehaviour, IDamage
     // need boolean to check if this attacks plants or not
     [SerializeField] protected Renderer model;
     [SerializeField] protected NavMeshAgent agent;
+    [SerializeField] protected Animator animator;
     [SerializeField] protected Transform headPos;
     [SerializeField] protected GameObject itemDrop;
     [SerializeField] protected GameObject targetObj;
@@ -66,15 +67,10 @@ public class AILogic : MonoBehaviour, IDamage
 
         if (agent == null || !agent.isOnNavMesh) return;
 
-        if (agent.remainingDistance <= 0.01f || agent.velocity.sqrMagnitude <= 0.01f)
+        if (agent.remainingDistance <= 0.01f)
         {
             roamTimer += Time.deltaTime;
         }
-        else
-        {
-            roamTimer = 0;
-        }
-
         //if (!targetsPlayer)
         //{
         //    if (targetObj == null || !targetObj.activeInHierarchy)
@@ -142,8 +138,6 @@ public class AILogic : MonoBehaviour, IDamage
 
     protected virtual void CheckRoam()
     {
-        if (targetObj != null) return;
-
         if (roamTimer >= roamPauseTime && agent.remainingDistance < 0.01f)
         {
             Roam();
@@ -208,7 +202,7 @@ public class AILogic : MonoBehaviour, IDamage
         return false;
     }
 
-    protected virtual void FaceTarget()
+    protected void FaceTarget()
     {
         Quaternion rot = Quaternion.LookRotation(new Vector3(targetDir.x, 0, targetDir.z));
         transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
@@ -239,8 +233,8 @@ public class AILogic : MonoBehaviour, IDamage
         IDamage targetHealth = target.GetComponentInParent<IDamage>();
         if (targetHealth != null)
         {
-            Debug.Log("Attack");
             targetHealth.takeDamage(1);
+            biteTimer = 0;
         }
     }
 
