@@ -283,7 +283,7 @@ namespace Catalyst.Player
 
         public void UpdateInteract()
         {
-            if (playerInputHandler.InteractTriggered || Input.GetKeyDown(KeyCode.E))
+            if (playerInputHandler.InteractTriggered)
             {
                 Vector3 origin = FPSCamera.transform.position;
                 Vector3 direction = FPSCamera.transform.forward;

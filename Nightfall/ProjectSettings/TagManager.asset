@@ -10,6 +10,7 @@ TagManager:
   - Crop
   - LiveStock
   - FeedingTrough
+  - HomePos
   layers:
   - Default
   - TransparentFX

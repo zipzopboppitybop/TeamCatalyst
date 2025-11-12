@@ -13,7 +13,7 @@ public class AILogic : MonoBehaviour, IDamage
     [SerializeField] protected float cropSearchInterval; 
     [SerializeField] protected float cropDetectionRadius;
 
-    [SerializeField] protected int hp;
+    [SerializeField] protected float hp;
     [SerializeField] protected int faceTargetSpeed;
     [SerializeField] protected int FOV;
     [SerializeField] protected int roamDist;
@@ -26,14 +26,15 @@ public class AILogic : MonoBehaviour, IDamage
     protected bool playerInRange;
     [SerializeField] protected bool targetsPlayer = true;
     protected bool isScared = false;
+    protected bool isHealing;
 
     protected float biteTimer;
     protected float roamTimer;
     protected float angleToTarget;
     protected float stoppingDistOrg;
     protected float cropSearchTimer;
-    protected int hpOrig;
-    protected int healRate;
+    protected float hpOrig;
+    protected float healRate;
 
     protected int roamTimeOrig;
 
@@ -49,6 +50,7 @@ public class AILogic : MonoBehaviour, IDamage
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
         hpOrig = hp;
+        healRate = 1;
 
         if (targetsPlayer)
         {

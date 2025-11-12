@@ -18,7 +18,16 @@ public class GuardDogAI : AILogic
     // Update is called once per frame
     protected override void Update()
     {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            takeDamage(1);
+        }
         base.Update();
+
+        if (isHealing)
+        {
+            return;
+        }
 
         if (targetObj == null && !targetInRange)
         {
@@ -33,19 +42,31 @@ public class GuardDogAI : AILogic
 
     public override void takeDamage(int amount)
     {
-        hp -= amount;
-
-        agent.SetDestination(targetObj.transform.position);
-
-
         if (hp <= 0)
         {
-            GoHome();
+            return;
         }
-        else
+
+        hp -= amount;
+
+        if (hp > 0)
         {
+            if (targetObj != null)
+            {
+                agent.SetDestination(targetObj.transform.position);
+            }
             StartCoroutine(flashRed());
+            return;
         }
+
+        hp = 0;
+
+        targetObj = null;
+        targetInRange = false;
+
+        gameObject.tag = "Untagged";
+
+        GoHome();
     }
 
     protected override void OnTriggerEnter(Collider other)
@@ -72,6 +93,11 @@ public class GuardDogAI : AILogic
 
     protected override bool CanSeeTarget()
     {
+        if (isHealing)
+        {
+            return false;
+        }
+
         if (targetObj == null)
         {
             targetInRange = false;
@@ -109,11 +135,35 @@ public class GuardDogAI : AILogic
 
     IEnumerator Heal()
     {
-        while (hp < hpOrig)
+        while (Vector3.Distance(transform.position, homePos) > 0.5f) 
         {
-            hp += healRate;
+            agent.SetDestination(homePos);
             yield return null;
         }
+
+        isHealing = true; 
+        agent.isStopped = true;
+
+        while (hp < hpOrig)
+        {
+            hp += healRate * Time.deltaTime;
+
+            if (hp >= hpOrig)
+            {
+                hp = hpOrig;
+                break;
+            }
+
+            yield return null;
+        }
+
+        targetObj = null;
+        targetInRange = false;
+
+        gameObject.tag = "LiveStock";
+
+        isHealing = false;
+        agent.isStopped = false;
 
         CheckRoam();
     }
