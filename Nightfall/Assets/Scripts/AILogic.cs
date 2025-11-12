@@ -23,22 +23,23 @@ public class AILogic : MonoBehaviour, IDamage
 
     Color colorOrig;
 
-    bool playerInRange;
+    protected bool playerInRange;
     [SerializeField] protected bool targetsPlayer = true;
-    bool isScared = false;
+    protected bool isScared = false;
 
-    float biteTimer;
-    float roamTimer;
-    float angleToTarget;
-    float stoppingDistOrg;
-    float cropSearchTimer;
+    protected float biteTimer;
+    protected float roamTimer;
+    protected float angleToTarget;
+    protected float stoppingDistOrg;
+    protected float cropSearchTimer;
     protected int hpOrig;
     protected int healRate;
 
-    int roamTimeOrig;
+    protected int roamTimeOrig;
 
-    Vector3 targetDir;
-    Vector3 startingPos;
+    protected Vector3 targetDir;
+    protected Vector3 startingPos;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Start()
@@ -63,12 +64,14 @@ public class AILogic : MonoBehaviour, IDamage
 
         if (agent == null || !agent.isOnNavMesh) return;
 
-        if (agent.remainingDistance < 0.01f)
+        if (agent.remainingDistance <= 0.01f || agent.velocity.sqrMagnitude <= 0.01f)
         {
             roamTimer += Time.deltaTime;
         }
-
-        CheckRoam();
+        else
+        {
+            roamTimer += Time.deltaTime;
+        }
 
         //if (!targetsPlayer)
         //{

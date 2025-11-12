@@ -5,23 +5,36 @@ using UnityEngine;
 public class GuardDogAI : AILogic
 {
     bool targetInRange;
-
-    Vector3 homePos;
+    [SerializeField] Transform homePosTransform;
+    protected Vector3 homePos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
     {
         base.Start();
+        homePos = homePosTransform.position;
     }
 
     // Update is called once per frame
     protected override void Update()
     {
         base.Update();
-        if (targetObj == null)
+
+        if (targetInRange && (targetObj == null || !targetObj.activeInHierarchy ||
+            Vector3.Distance(transform.position, targetObj.transform.position) > 20f))
+        {
+            targetInRange = false;
+            targetObj = null;
+            agent.stoppingDistance = 0;
+        }
+
+        if (!targetInRange)
         {
             CheckRoam();
-            return;
+        }
+        else
+        {
+            CanSeeTarget();
         }
     }
 
@@ -47,12 +60,47 @@ public class GuardDogAI : AILogic
         if (other.CompareTag("Enemy"))
         {
             targetInRange = true;
+            targetObj = other.gameObject;
         }
 
-        if (other.CompareTag("HomePosition"))
+        if (other.CompareTag("HomePos"))
         {
-            Heal();
+            StartCoroutine(Heal());
         }
+    }
+
+    protected override void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Enemy"))
+        {
+            targetInRange = false;
+            agent.stoppingDistance = 0;
+        }
+    }
+
+    protected override bool CanSeeTarget()
+    {
+        if (targetObj == null) return false;
+
+        agent.stoppingDistance = stoppingDistOrg;
+
+        agent.SetDestination(targetObj.transform.position);
+
+        if (biteTimer > biteRate && agent.remainingDistance <= stoppingDistOrg)
+        {
+            attack(targetObj);
+            biteTimer = 0;
+        }
+
+        Vector3 dir = targetObj.transform.position - transform.position;
+        dir.y = 0;
+        if (dir.sqrMagnitude > 0.01f)
+        {
+            Quaternion rot = Quaternion.LookRotation(dir);
+            transform.rotation = Quaternion.Lerp(transform.rotation, rot, Time.deltaTime * faceTargetSpeed);
+        }
+
+        return true;
     }
 
     private void GoHome()
@@ -67,5 +115,7 @@ public class GuardDogAI : AILogic
             hp += healRate;
             yield return null;
         }
+
+        CheckRoam();
     }
 }
