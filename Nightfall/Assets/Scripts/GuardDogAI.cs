@@ -276,5 +276,4 @@ public class GuardDogAI : AILogic
 
         base.HandleIdleSound();
     }
-
 }
