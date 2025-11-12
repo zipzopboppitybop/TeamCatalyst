@@ -14,7 +14,7 @@ public class HealthBarUI : MonoBehaviour
     private VisualElement HUD;
     private VisualElement healthBar;
     private VisualElement staminaBar;
-    private VisualElement Lose;
+    private VisualElement LoseNote;
     private Label currencyLabel;
     private Label cropsDestroyedText;
     private Button okButton;
@@ -33,7 +33,7 @@ public class HealthBarUI : MonoBehaviour
         staminaBar = root.Q<VisualElement>("StamBarFront");
         currencyLabel = root.Q<Label>("moneyText");
         cropsDestroyedText = root.Q<Label>("CropsDestroyed");
-        Lose = root.Q<VisualElement>("YouLose");
+        LoseNote = root.Q<VisualElement>("YouLose");
 
         HUD.style.display = DisplayStyle.Flex;
         UpdateHealthBar();
@@ -91,18 +91,18 @@ public class HealthBarUI : MonoBehaviour
 
     private void OnButtonClicked()
     {
-        Lose.style.display = DisplayStyle.None;
+        LoseNote.style.display = DisplayStyle.None;
     }
 
     private IEnumerator CloseScreen()
     {
-        if (Lose != null)
+        if (LoseNote != null)
         {
-            Lose.style.display = DisplayStyle.Flex;
+            LoseNote.style.display = DisplayStyle.Flex;
             cropsDestroyedText.text = $"Crops Destroyed: {GameManager.instance.cropsDestroyed}";
         }
         yield return new WaitForSeconds(2f);
 
-        Lose.style.display = DisplayStyle.None;
+        LoseNote.style.display = DisplayStyle.None;
     }
 }
