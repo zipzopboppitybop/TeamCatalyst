@@ -15,22 +15,22 @@ MonoBehaviour:
   playerPrefab: {fileID: 906805268855091345, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
   nameTag: Mr. Farmer
   score: 0
-  health: 35.19536
-  healthMax: 100
+  health: 2
+  healthMax: 2
   healthRegen: 20
   stamina: 10
   staminaRegen: 10
   staminaMax: 10
   stealth: 5
   interactRange: 2
-  currency: 0
+  currency: 10
   currentFarmingState: 0
   shootDamage: 10
   shootRate: 1
   shootDist: 100
-  ammoCount: 44
+  ammoCount: 42
   ammoMax: 50
-  walkingSpeed: 1
+  walkingSpeed: 2
   sprintSpeed: 5
   dashSpeed: 3
   jumpForce: 5

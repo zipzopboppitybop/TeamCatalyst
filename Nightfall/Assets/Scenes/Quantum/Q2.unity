@@ -197,10 +197,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Farmer
       objectReference: {fileID: 0}
-    - target: {fileID: 1827939816159163505, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
-      propertyPath: near clip plane
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 2426824615145339528, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: playerInputHandler
       value: 
@@ -209,10 +205,6 @@ PrefabInstance:
       propertyPath: sceneCam
       value: 
       objectReference: {fileID: 1660808162}
-    - target: {fileID: 2704039868389915847, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
-      propertyPath: ignoreLayer.m_Bits
-      value: 136
-      objectReference: {fileID: 0}
     - target: {fileID: 2704039868389915847, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: playerInputHandler
       value: 
@@ -513,25 +505,9 @@ PrefabInstance:
       propertyPath: 'm_Cameras.Array.data[0]'
       value: 
       objectReference: {fileID: 230388194}
-    - target: {fileID: 1395955742324642863, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -960.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1395955742324642863, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -538.51
-      objectReference: {fileID: 0}
-    - target: {fileID: 1395955742324642863, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -2
-      objectReference: {fileID: 0}
     - target: {fileID: 1770251509508178895, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: m_Name
       value: UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 6822405650549685224, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 1023
       objectReference: {fileID: 0}
     - target: {fileID: 8686796277236601598, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: m_Pivot.x
@@ -665,6 +641,10 @@ PrefabInstance:
     - target: {fileID: 992534475290324128, guid: 4297d5c16dea04741ab2853e3bd05ae5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7225028261994739919, guid: 4297d5c16dea04741ab2853e3bd05ae5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7240414844227688231, guid: 4297d5c16dea04741ab2853e3bd05ae5, type: 3}
       propertyPath: m_Name

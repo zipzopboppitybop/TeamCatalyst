@@ -5,6 +5,9 @@ using UnityEngine.UIElements;
 public class MainMenuController : MonoBehaviour
 {
     [SerializeField] private UIDocument uiDocument;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip clickSound;
+    [SerializeField] AudioClip PageChange;
     [SerializeField] Loading load;
 
     private VisualElement root;
@@ -47,28 +50,32 @@ public class MainMenuController : MonoBehaviour
 
         Show();
 
-        if(playButton  != null)
-            playButton.clicked += OnPlayButtonClicked;
+        if (playButton != null)
+            playButton.clicked += () => { OnClickSound(); OnPlayButtonClicked(); };
 
-        if(settingsButton != null)
-            settingsButton.clicked += OnSettingsButtonClicked;
+        if (settingsButton != null)
+            settingsButton.clicked += () => { OnClickSound(); OnSettingsButtonClicked(); };
 
         if(creditsButton != null)
-            creditsButton.clicked += OnCreditsButtonClicked;
+            creditsButton.clicked += () => { OnClickSound(); OnCreditsButtonClicked(); };
 
         if (quitButton != null)
-            quitButton.clicked += OnQuitButtonClicked;
+            quitButton.clicked += () => { OnClickSound(); OnQuitButtonClicked();};
 
         if(backButton != null)
-            backButton.clicked += OnBackSettingsButtonClicked;
+            backButton.clicked += () => { OnClickSound(); OnBackSettingsButtonClicked();};
         if (creditBackButton != null)
-            creditBackButton.clicked += OnCreditsBackButtonClicked;
+            creditBackButton.clicked += () => { OnClickSound(); OnCreditsBackButtonClicked();};
+    }
+    private void OnClickSound()
+    {
+        if (audioSource != null && clickSound != null)
+            audioSource.PlayOneShot(clickSound);
     }
     private void OnPlayButtonClicked()
     {
         Hide();
         load.LoadScene(1);
-        //SceneManager.LoadScene("ShowcaseLevel");
     }
     private void OnSettingsButtonClicked()
     {

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -13,24 +14,29 @@ public class HealthBarUI : MonoBehaviour
     private VisualElement HUD;
     private VisualElement healthBar;
     private VisualElement staminaBar;
-    private VisualElement Lose;
+    private VisualElement LoseNote;
+    private VisualElement _weaponContainer;
     private Label currencyLabel;
     private Label cropsDestroyedText;
+    private Button okButton;
     //private Label healthBarLabel;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(uIDocument == null)  
+        instance = this;
+        if (uIDocument == null)
             uIDocument = GetComponent<UIDocument>();
 
-        root = uIDocument.rootVisualElement;
+        root = uIDocument.rootVisualElement; ;
         HUD = root.Q<VisualElement>("HUDContainer");
         healthBar = root.Q<VisualElement>("HealthBarGREEN");
         staminaBar = root.Q<VisualElement>("StamBarFront");
         currencyLabel = root.Q<Label>("moneyText");
         cropsDestroyedText = root.Q<Label>("CropsDestroyed");
-        Lose = root.Q<VisualElement>("YouLose");
+        LoseNote = root.Q<VisualElement>("YouLose");
+
+        _weaponContainer = root.Q<VisualElement>("WeaponContainer");
 
         HUD.style.display = DisplayStyle.Flex;
         UpdateHealthBar();
@@ -44,7 +50,7 @@ public class HealthBarUI : MonoBehaviour
         UpdateHealthBar();
         UpdateStaminaBar();
         UpdateCurrency();
-        
+
     }
 
     private void UpdateHealthBar()
@@ -67,9 +73,27 @@ public class HealthBarUI : MonoBehaviour
         }
     }
 
+    public void ShowWeaponUI()
+    {
+
+        if (_weaponContainer != null)
+        {
+            _weaponContainer.style.display = DisplayStyle.Flex;
+        }
+
+    }
+    public void HideWeaponUI()
+    {
+        if (_weaponContainer != null)
+        {
+            _weaponContainer.style.display = DisplayStyle.None;
+        }
+
+    }
+
     private void RegenStamina()
     {
-        if(playerData.Stamina < playerData.StaminaMax)
+        if (playerData.Stamina < playerData.StaminaMax)
         {
             playerData.Stamina += (int)(playerData.StaminaRegen * Time.deltaTime);
         }
@@ -83,7 +107,23 @@ public class HealthBarUI : MonoBehaviour
     }
     public void ShowLoseScreen()
     {
-            Lose.style.display = DisplayStyle.Flex;
-           cropsDestroyedText.text = "Crops Destroyed: " + GameManager.instance.cropsDestroyed;
+        StartCoroutine(CloseScreen());
+    }
+
+    private void OnButtonClicked()
+    {
+        LoseNote.style.display = DisplayStyle.None;
+    }
+
+    private IEnumerator CloseScreen()
+    {
+        if (LoseNote != null)
+        {
+            LoseNote.style.display = DisplayStyle.Flex;
+            cropsDestroyedText.text = $"Crops Destroyed: {GameManager.instance.cropsDestroyed}";
+        }
+        yield return new WaitForSeconds(2f);
+
+        LoseNote.style.display = DisplayStyle.None;
     }
 }

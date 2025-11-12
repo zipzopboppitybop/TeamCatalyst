@@ -283,7 +283,7 @@ namespace Catalyst.Player
 
         public void UpdateInteract()
         {
-            if (playerInputHandler.InteractTriggered || Input.GetKeyDown(KeyCode.E))
+            if (playerInputHandler.InteractTriggered)
             {
                 Vector3 origin = FPSCamera.transform.position;
                 Vector3 direction = FPSCamera.transform.forward;
@@ -443,7 +443,8 @@ namespace Catalyst.Player
 
             if (playerData.Health <= 0)
             {
-                Debug.Log("You are dead!");
+                GameManager.instance.YouLose();
+                playerData.Health = playerData.HealthMax;  
             }
         }
 

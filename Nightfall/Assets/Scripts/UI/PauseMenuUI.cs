@@ -5,6 +5,8 @@ using UnityEngine.UIElements;
 public class PauseMenuUI : MonoBehaviour
 {
     [SerializeField] private UIDocument uIDocument;
+    [SerializeField] private AudioClip clickSound;
+    [SerializeField]private AudioSource audioSource;
 
     private VisualElement root;
     private VisualElement pauseMenu;
@@ -20,39 +22,44 @@ public class PauseMenuUI : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
-        if (uIDocument == null) 
+        if (uIDocument == null)
             uIDocument = GetComponent<UIDocument>();
 
         root = uIDocument.rootVisualElement;
 
-
         pauseMenu = root.Q<VisualElement>("PauseMenu");
         settingsMenu = root.Q<VisualElement>("SettingsMenu");
-        
+
         resumeButton = root.Q<Button>("resumeButton");
         settingsButton = root.Q<Button>("settingsButton");
         restartButton = root.Q<Button>("restartButton");
         quitButton = root.Q<Button>("quitButton");
         backButton = root.Q<Button>("backButton");
 
+
         Hide();
 
         if (resumeButton != null)
-            resumeButton.clicked += OnResumeButtonClicked;
+            resumeButton.clicked += () => { OnClickSound(); OnResumeButtonClicked(); };
 
         if (settingsButton != null)
-            settingsButton.clicked += OnSettingsButtonClicked;
+            settingsButton.clicked += () => { OnClickSound(); OnSettingsButtonClicked(); };
 
-        if(restartButton != null)
-            restartButton.clicked += OnRestartButtonClicked;
+        if (restartButton != null)
+            restartButton.clicked += () => { OnClickSound(); OnRestartButtonClicked(); };
 
-        if(quitButton != null)
-            quitButton.clicked += OnQuitButtonClicked;
+        if (quitButton != null)
+            quitButton.clicked += () => { OnClickSound(); OnQuitButtonClicked(); };
 
         if (backButton != null)
-            backButton.clicked += OnBackButtonClicked;
+            backButton.clicked += () => { OnClickSound(); OnBackButtonClicked(); };
 
         
+    }
+    private void OnClickSound()
+    {
+        if(audioSource != null && clickSound != null)
+            audioSource.PlayOneShot(clickSound);
     }
     private void OnResumeButtonClicked()
     {
@@ -66,7 +73,7 @@ public class PauseMenuUI : MonoBehaviour
     }
     private void OnRestartButtonClicked()
     {
-        SceneManager.LoadScene("ShaylaSandbox"); // Will Change to MainScene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         Hide();
     }
     private void OnBackButtonClicked()

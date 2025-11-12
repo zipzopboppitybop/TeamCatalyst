@@ -6,7 +6,7 @@ namespace Catalyst.Player
 
     public class WeaponData : ScriptableObject
     {
-        //public GameObject gunModel;
+        public string gunName;
         public GameObject model;
         public enum GunType { Handgun, Shotgun, AutoRifle, Submachinegun, SniperRifle }
 

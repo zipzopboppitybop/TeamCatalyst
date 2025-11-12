@@ -56,9 +56,6 @@ namespace Catalyst.Player.Pickups
 
         public void Interact()
         {
-
-
-
             switch (type)
             {
                 case pickupType.health:
@@ -67,8 +64,7 @@ namespace Catalyst.Player.Pickups
                     break;
                 case pickupType.ammo:
 
-                    _gunManager.StartReload();
-                    _gunManager.FinishReload();
+
 
                     Destroy(gameObject);
                     break;
@@ -79,17 +75,25 @@ namespace Catalyst.Player.Pickups
                 case pickupType.gun:
                     if (_gunManager.HasGun(gunData))
                     {
-                        Debug.Log("Player already has " + gunData.name);
+                        if (_gunManager.ReloadWeapon(gunData))
+                        {
+                            Debug.Log("Reloaded existing weapon");
+                            Destroy(gameObject);
+                        }
+                        else
+                        {
+                            Debug.Log("Already have this weapon with max ammo, cannot pick up another");
+                        }
+
                         return;
                     }
 
-                    Debug.Log("Should be picking up");
-
                     _gunManager.GetWeaponData(gunData);
-
+                    Debug.Log("Picked Up " + gunData.name);
                     Destroy(gameObject);
                     Debug.Log("Object destroyed after pickup");
                     break;
+
                 default:
                     Debug.LogWarning("Unknown pickup type");
                     break;
