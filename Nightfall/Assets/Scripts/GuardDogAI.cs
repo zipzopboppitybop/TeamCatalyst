@@ -11,12 +11,16 @@ public class GuardDogAI : AILogic
 
     private List<GameObject> enemiesInRange = new List<GameObject>();
 
+    [SerializeField] private string verticalParam = "Vert";
+    [SerializeField] private string stateParam = "State";
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
     {
         base.Start();
         homePos = homePosTransform.position;
         targetObj = null;
+        agent.updateRotation = false;
     }
 
     // Update is called once per frame
@@ -39,14 +43,40 @@ public class GuardDogAI : AILogic
 
         if (targetObj != null)
         {
-            CanSeeTarget();
+            ChaseTarget();
         }
         else
         {
+            AnimateMovement();
+            RotateWhileMoving();
             CheckRoam();
         }
     }
 
+    private void RotateWhileMoving()
+    {
+        Vector3 velocity = agent.velocity;
+        velocity.y = 0f; 
+        if (velocity.sqrMagnitude > 0.01f)
+        {
+            Quaternion targetRot = Quaternion.LookRotation(velocity);
+            transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, Time.deltaTime * faceTargetSpeed);
+        }
+    }
+
+    private void ChaseTarget()
+    {
+        targetDir = targetObj.transform.position - transform.position;
+        agent.SetDestination(targetObj.transform.position);
+        FaceTarget();
+        AnimateMovement();
+        float distance = targetDir.magnitude;
+        if (distance <= stoppingDistOrg && biteTimer > biteRate)
+        {
+            attack(targetObj);
+            biteTimer = 0;
+        }
+    }
 
     private void UpdateTarget()
     {
@@ -58,6 +88,7 @@ public class GuardDogAI : AILogic
 
         GameObject closest = null;
         float minDist = Mathf.Infinity;
+
         foreach (GameObject enemy in enemiesInRange)
         {
             if (enemy == null) continue;
@@ -118,27 +149,6 @@ public class GuardDogAI : AILogic
         }
     }
 
-    protected override bool CanSeeTarget()
-    {
-        if (targetObj == null || agent == null || !agent.isOnNavMesh || hp <= 0)
-        {
-            return false;
-        }
-
-        agent.SetDestination(targetObj.transform.position);
-
-        if (Vector3.Distance(transform.position, targetObj.transform.position) <= stoppingDistOrg) 
-        {
-            FaceTarget();
-            if (biteTimer > biteRate)
-            {
-                attack(targetObj);
-                biteTimer = 0;
-            }
-        }
-        return true;
-    }
-
     private void GoHome()
     {
         agent.SetDestination(homePos);
@@ -179,4 +189,23 @@ public class GuardDogAI : AILogic
 
         CheckRoam();
     }
+    private void AnimateMovement()
+    {
+        if (agent == null || animator == null)
+        {
+            return;
+        }
+
+        Vector3 localVelocity = transform.InverseTransformDirection(agent.velocity);
+        Vector2 axis = new Vector2(localVelocity.x, localVelocity.z);
+
+        float speed = axis.magnitude; 
+        animator.SetFloat(verticalParam, speed);
+
+        float state = 0f;
+        if (speed > 0.01f && speed <= 0.5f) state = 0.5f;
+        else if (speed > 0.5f) state = 1f; 
+        animator.SetFloat(stateParam, state);
+    }
+
 }

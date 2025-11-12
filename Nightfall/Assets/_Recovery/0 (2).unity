@@ -1176,8 +1176,6 @@ MonoBehaviour:
   biteRate: 1
   targetsPlayer: 0
   homePosTransform: {fileID: 1764659877}
-  verticalParam: Vert
-  stateParam: State
 --- !u!65 &462325011
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3041,7 +3039,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 10
+  m_Speed: 6
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -3074,16 +3072,14 @@ MonoBehaviour:
   cropSearchInterval: 0
   cropDetectionRadius: 0
   hp: 10
-  faceTargetSpeed: 40
-  FOV: 90
+  faceTargetSpeed: 5
+  FOV: 360
   roamDist: 10
   roamPauseTime: 3
   dropChance: 0
   biteRate: 1
   targetsPlayer: 0
   homePosTransform: {fileID: 1764659877}
-  verticalParam: Vert
-  stateParam: State
 --- !u!135 &1442520982
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4173,15 +4169,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1395955742324642863, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -960.9165
+      value: -960.9183
       objectReference: {fileID: 0}
     - target: {fileID: 1395955742324642863, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -778.5578
+      value: -779.12885
       objectReference: {fileID: 0}
     - target: {fileID: 1395955742324642863, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.6658711
+      value: -3.672884
       objectReference: {fileID: 0}
     - target: {fileID: 1770251509508178895, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: m_Name
