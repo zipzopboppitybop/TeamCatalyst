@@ -28,6 +28,7 @@ public class AILogic : MonoBehaviour, IDamage
     [SerializeField] protected bool targetsPlayer = true;
     protected bool isScared = false;
     protected bool isHealing;
+    protected bool isPlayingSteps;
 
     protected float biteTimer;
     protected float roamTimer;
@@ -41,6 +42,17 @@ public class AILogic : MonoBehaviour, IDamage
 
     protected Vector3 targetDir;
     protected Vector3 startingPos;
+
+    [SerializeField] protected AudioSource aud;
+    [SerializeField] protected AudioClip[] audSteps;
+    [SerializeField] protected AudioClip[] audBites;
+    [SerializeField] protected AudioClip[] audIdles;
+    [SerializeField] protected AudioClip[] audHurt;
+    [SerializeField] protected AudioClip[] audNotice;
+    [SerializeField] protected float idleSoundMinDelay;
+    [SerializeField] protected float idleSoundMaxDelay;
+    protected float idleSoundTimer = 0f;
+    protected float nextIdleSoundTime = 0f;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -57,6 +69,8 @@ public class AILogic : MonoBehaviour, IDamage
         {
             targetObj = GameManager.instance.player;
         }
+
+        nextIdleSoundTime = Random.Range(idleSoundMinDelay, idleSoundMaxDelay);
     }
 
     // Update is called once per frame
@@ -71,6 +85,8 @@ public class AILogic : MonoBehaviour, IDamage
         {
             roamTimer += Time.deltaTime;
         }
+
+        HandleIdleSound();
         //if (!targetsPlayer)
         //{
         //    if (targetObj == null || !targetObj.activeInHierarchy)
@@ -233,6 +249,7 @@ public class AILogic : MonoBehaviour, IDamage
         IDamage targetHealth = target.GetComponentInParent<IDamage>();
         if (targetHealth != null)
         {
+            aud.PlayOneShot(audBites[Random.Range(0, audBites.Length)]);
             targetHealth.takeDamage(1);
             biteTimer = 0;
         }
@@ -254,6 +271,13 @@ public class AILogic : MonoBehaviour, IDamage
         isScared = false;
     }
 
+    protected IEnumerator PlayStep()
+    {
+        isPlayingSteps = true;
+        aud.PlayOneShot(audSteps[Random.Range(0, audSteps.Length)]);
+        yield return new WaitForSeconds(.3f);
+        isPlayingSteps = false;
+    }
     void FindNearestCrop()
     {
         if (GameManager.instance == null || GameManager.instance.crops.Count == 0)
@@ -280,6 +304,18 @@ public class AILogic : MonoBehaviour, IDamage
         {
             targetObj = nearestCrop;
             agent.SetDestination(targetObj.transform.position);
+        }
+    }
+
+    protected virtual void HandleIdleSound()
+    {
+        idleSoundTimer += Time.deltaTime;
+
+        if (idleSoundTimer >= nextIdleSoundTime)
+        {
+            aud.PlayOneShot(audIdles[0]);
+            idleSoundTimer = 0f;
+            nextIdleSoundTime = Random.Range(idleSoundMinDelay, idleSoundMaxDelay);
         }
     }
 }

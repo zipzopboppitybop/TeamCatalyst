@@ -32,7 +32,7 @@ public class GuardDogAI : AILogic
         }
         base.Update();
 
-        if (isHealing)
+        if (isHealing || hp <= 0)
         {
             return;
         }
@@ -47,10 +47,11 @@ public class GuardDogAI : AILogic
         }
         else
         {
-            AnimateMovement();
             RotateWhileMoving();
             CheckRoam();
         }
+
+        AnimateMovement();
     }
 
     private void RotateWhileMoving()
@@ -66,10 +67,14 @@ public class GuardDogAI : AILogic
 
     private void ChaseTarget()
     {
+        if (targetObj == null)
+        {
+            return; 
+        }
+
         targetDir = targetObj.transform.position - transform.position;
         agent.SetDestination(targetObj.transform.position);
         FaceTarget();
-        AnimateMovement();
         float distance = targetDir.magnitude;
         if (distance <= stoppingDistOrg && biteTimer > biteRate)
         {
@@ -83,6 +88,7 @@ public class GuardDogAI : AILogic
         if (enemiesInRange.Count == 0)
         {
             targetObj = null;
+            targetInRange = false;
             return;
         }
 
@@ -100,6 +106,7 @@ public class GuardDogAI : AILogic
             }
         }
 
+
         targetObj = closest;
         targetInRange = targetObj != null;
     }
@@ -111,6 +118,9 @@ public class GuardDogAI : AILogic
             return;
         }
 
+        aud.Stop();
+        aud.clip = audHurt[Random.Range(0, audHurt.Length)];
+        aud.Play();
         hp -= amount;
 
         if (hp > 0)
@@ -124,6 +134,15 @@ public class GuardDogAI : AILogic
         targetObj = null;
         targetInRange = false;
 
+        isHealing = false;
+
+        if (agent != null)
+        {
+            agent.isStopped = false;
+            agent.updateRotation = false;
+            agent.stoppingDistance = 0;
+        }
+
         gameObject.tag = "Untagged";
 
         GoHome();
@@ -133,6 +152,7 @@ public class GuardDogAI : AILogic
     {
         if (other.CompareTag("Enemy") && !enemiesInRange.Contains(other.gameObject))
         {
+            aud.PlayOneShot(audNotice[Random.Range(0, audNotice.Length)]);
             enemiesInRange.Add(other.gameObject);
         }
 
@@ -151,8 +171,39 @@ public class GuardDogAI : AILogic
 
     private void GoHome()
     {
-        agent.SetDestination(homePos);
+        if (agent == null)
+        {
+            return;
+        }
+
+        agent.isStopped = false;
+        agent.updateRotation = false;
         agent.stoppingDistance = 0;
+        agent.SetDestination(homePos);
+
+        StartCoroutine(FaceHomeWhileReturning());
+    }
+
+    private IEnumerator FaceHomeWhileReturning()
+    {
+        while (hp <= 0 && Vector3.Distance(transform.position, homePos) > 0.5f)
+        {
+            Vector3 toHome = agent.steeringTarget - transform.position;
+            toHome.y = 0f;
+
+            if (toHome.sqrMagnitude > 0.01f)
+            {
+                Quaternion targetRot = Quaternion.LookRotation(toHome);
+                transform.rotation = Quaternion.Lerp(transform.rotation, targetRot, Time.deltaTime * faceTargetSpeed);
+            }
+
+            AnimateMovement();
+            yield return null;
+        }
+
+        agent.isStopped = true;
+        agent.velocity = Vector3.zero;
+        AnimateMovement(); 
     }
 
     IEnumerator Heal()
@@ -165,6 +216,8 @@ public class GuardDogAI : AILogic
 
         isHealing = true; 
         agent.isStopped = true;
+        agent.velocity = Vector3.zero; 
+        AnimateMovement();
 
         while (hp < hpOrig)
         {
@@ -186,7 +239,7 @@ public class GuardDogAI : AILogic
 
         isHealing = false;
         agent.isStopped = false;
-
+        AnimateMovement();
         CheckRoam();
     }
     private void AnimateMovement()
@@ -203,9 +256,25 @@ public class GuardDogAI : AILogic
         animator.SetFloat(verticalParam, speed);
 
         float state = 0f;
-        if (speed > 0.01f && speed <= 0.5f) state = 0.5f;
-        else if (speed > 0.5f) state = 1f; 
+        if (speed > 0.01f && speed <= 0.5f)
+        {
+            state = 0.5f;
+        }
+        else if (speed > 0.5f)
+        {
+            state = 1f;
+        }
         animator.SetFloat(stateParam, state);
+    }
+
+    protected override void HandleIdleSound()
+    {
+        if (hp <= 0 || isHealing || targetObj != null)
+        {
+            return;
+        }
+
+        base.HandleIdleSound();
     }
 
 }
