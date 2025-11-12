@@ -15,6 +15,7 @@ public class HealthBarUI : MonoBehaviour
     private VisualElement healthBar;
     private VisualElement staminaBar;
     private VisualElement LoseNote;
+    private VisualElement _weaponContainer;
     private Label currencyLabel;
     private Label cropsDestroyedText;
     private Button okButton;
@@ -24,16 +25,18 @@ public class HealthBarUI : MonoBehaviour
     void Start()
     {
         instance = this;
-        if(uIDocument == null)  
+        if (uIDocument == null)
             uIDocument = GetComponent<UIDocument>();
 
-        root = uIDocument.rootVisualElement;;
+        root = uIDocument.rootVisualElement; ;
         HUD = root.Q<VisualElement>("HUDContainer");
         healthBar = root.Q<VisualElement>("HealthBarGREEN");
         staminaBar = root.Q<VisualElement>("StamBarFront");
         currencyLabel = root.Q<Label>("moneyText");
         cropsDestroyedText = root.Q<Label>("CropsDestroyed");
         LoseNote = root.Q<VisualElement>("YouLose");
+
+        _weaponContainer = root.Q<VisualElement>("WeaponContainer");
 
         HUD.style.display = DisplayStyle.Flex;
         UpdateHealthBar();
@@ -70,9 +73,27 @@ public class HealthBarUI : MonoBehaviour
         }
     }
 
+    public void ShowWeaponUI()
+    {
+
+        if (_weaponContainer != null)
+        {
+            _weaponContainer.style.display = DisplayStyle.Flex;
+        }
+
+    }
+    public void HideWeaponUI()
+    {
+        if (_weaponContainer != null)
+        {
+            _weaponContainer.style.display = DisplayStyle.None;
+        }
+
+    }
+
     private void RegenStamina()
     {
-        if(playerData.Stamina < playerData.StaminaMax)
+        if (playerData.Stamina < playerData.StaminaMax)
         {
             playerData.Stamina += (int)(playerData.StaminaRegen * Time.deltaTime);
         }

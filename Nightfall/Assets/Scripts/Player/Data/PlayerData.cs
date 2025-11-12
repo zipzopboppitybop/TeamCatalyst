@@ -107,7 +107,7 @@ namespace Catalyst.Player
 
         [SerializeField] List<WeaponData> guns;
         public List<WeaponData> Guns => guns;
-        private WeaponData currentGun;
+        [SerializeField] private WeaponData currentGun;
 
         public WeaponData CurrentGun
         {
