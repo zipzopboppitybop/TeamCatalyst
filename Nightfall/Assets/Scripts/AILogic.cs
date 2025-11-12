@@ -70,7 +70,7 @@ public class AILogic : MonoBehaviour, IDamage
         }
         else
         {
-            roamTimer += Time.deltaTime;
+            roamTimer = 0;
         }
 
         //if (!targetsPlayer)
@@ -140,6 +140,8 @@ public class AILogic : MonoBehaviour, IDamage
 
     protected virtual void CheckRoam()
     {
+        if (targetObj != null) return;
+
         if (roamTimer >= roamPauseTime && agent.remainingDistance < 0.01f)
         {
             Roam();

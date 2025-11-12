@@ -468,43 +468,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &187672893 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8910860331919874503, guid: 3d5d858803e89b94296d5b7bf6690a77, type: 3}
-  m_PrefabInstance: {fileID: 2116855668}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &187672894 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7914858055271673620, guid: 3d5d858803e89b94296d5b7bf6690a77, type: 3}
   m_PrefabInstance: {fileID: 2116855668}
   m_PrefabAsset: {fileID: 0}
---- !u!54 &187672901
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 187672893}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 1
-  m_Constraints: 0
-  m_CollisionDetection: 1
 --- !u!1 &203844586
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,7 +1177,7 @@ MonoBehaviour:
   roamPauseTime: 3
   dropChance: 0
   biteRate: 1
-  targetsPlayer: 1
+  targetsPlayer: 0
   homePosTransform: {fileID: 1764659877}
 --- !u!65 &462325011
 BoxCollider:
@@ -1571,6 +1539,17 @@ Transform:
   - {fileID: 1721923362}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &696570081 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2704039868389915847, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+  m_PrefabInstance: {fileID: 2132725092}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2602afaa71c0374a8ac4e4c23eaf689, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Player.Controller.PlayerController
 --- !u!4 &718473127 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3596297814687503121, guid: 5cf60363393045b41b421da9e6fc103e, type: 3}
@@ -3581,10 +3560,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8910860331919874503, guid: 3d5d858803e89b94296d5b7bf6690a77, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 187672901}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3d5d858803e89b94296d5b7bf6690a77, type: 3}
 --- !u!1001 &2125997296
 PrefabInstance:
@@ -3668,9 +3644,13 @@ PrefabInstance:
       value: 2098176
       objectReference: {fileID: 0}
     - target: {fileID: 2426824615145339528, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: playerController
+      value: 
+      objectReference: {fileID: 696570081}
+    - target: {fileID: 2426824615145339528, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: playerInputHandler
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1547037201}
     - target: {fileID: 2704039868389915847, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: hotbar
       value: 

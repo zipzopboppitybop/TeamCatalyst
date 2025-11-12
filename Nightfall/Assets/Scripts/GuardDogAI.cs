@@ -20,22 +20,15 @@ public class GuardDogAI : AILogic
     {
         base.Update();
 
-        if (targetInRange && (targetObj == null || !targetObj.activeInHierarchy ||
-            Vector3.Distance(transform.position, targetObj.transform.position) > 20f))
+        if (targetObj == null && !targetInRange)
         {
             targetInRange = false;
             targetObj = null;
-            agent.stoppingDistance = 0;
+            CheckRoam();
+            return;
         }
 
-        if (!targetInRange)
-        {
-            CheckRoam();
-        }
-        else
-        {
-            CanSeeTarget();
-        }
+        CanSeeTarget();
     }
 
     public override void takeDamage(int amount)
@@ -73,14 +66,19 @@ public class GuardDogAI : AILogic
     {
         if (other.CompareTag("Enemy"))
         {
-            targetInRange = false;
-            agent.stoppingDistance = 0;
+            StartCoroutine(LoseTargetDelay(other.gameObject));
         }
     }
 
     protected override bool CanSeeTarget()
     {
-        if (targetObj == null) return false;
+        if (targetObj == null)
+        {
+            targetInRange = false;
+            agent.stoppingDistance = 0;
+            CheckRoam();
+            return false;
+        }
 
         agent.stoppingDistance = stoppingDistOrg;
 
@@ -106,6 +104,7 @@ public class GuardDogAI : AILogic
     private void GoHome()
     {
         agent.SetDestination(homePos);
+        agent.stoppingDistance = 0;
     }
 
     IEnumerator Heal()
@@ -117,5 +116,18 @@ public class GuardDogAI : AILogic
         }
 
         CheckRoam();
+    }
+
+    private IEnumerator LoseTargetDelay(GameObject enemy)
+    {
+        yield return new WaitForSeconds(2f);
+        if (targetObj == enemy &&
+            Vector3.Distance(transform.position, enemy.transform.position) > 25f)
+        {
+            targetInRange = false;
+            targetObj = null;
+            agent.stoppingDistance = 0;
+            CheckRoam();
+        }
     }
 }
