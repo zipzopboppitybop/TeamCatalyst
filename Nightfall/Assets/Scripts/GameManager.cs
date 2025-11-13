@@ -101,6 +101,8 @@ public class GameManager : MonoBehaviour
 
     public void YouLose()
     {
+        //StatePause();
+
         timeOfDay = nightEnd;
         UpdateGameClock();
 
