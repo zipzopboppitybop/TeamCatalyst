@@ -87,35 +87,42 @@ public class AILogic : MonoBehaviour, IDamage
         }
 
         HandleIdleSound();
-        //if (!targetsPlayer)
-        //{
-        //    if (targetObj == null || !targetObj.activeInHierarchy)
-        //    {
-        //        if (cropSearchTimer >= cropSearchInterval)
-        //        {
-        //            FindNearestCrop();
-        //            cropSearchTimer = 0f;
-        //        }
-        //    }
 
-        //    if (targetObj == null)
-        //    {
-        //        CheckRoam();
-        //        return;
-        //    }
+    }
 
-        //    CanSeeTarget();
-        //}
-        //else
-        //{
-        //    if (playerInRange && !CanSeeTarget())
-        //        CheckRoam();
-        //    else if (!playerInRange)
-        //        CheckRoam();
-        //}
+    protected virtual void LookForTarget()
+    {
 
-        //if (!targetsPlayer && targetObj == null && agent.remainingDistance < 0.5f)
-        //    CheckRoam();
+        if (!targetsPlayer)
+        {
+            if (targetObj == null || !targetObj.activeInHierarchy)
+            {
+                if (cropSearchTimer >= cropSearchInterval)
+                {
+                    FindNearestCrop();
+                    cropSearchTimer = 0f;
+                }
+            }
+
+            if (targetObj == null)
+            {
+                CheckRoam();
+                return;
+            }
+
+            CanSeeTarget();
+        }
+        else
+        {
+            if (playerInRange && !CanSeeTarget())
+                CheckRoam();
+            else if (!playerInRange)
+                CheckRoam();
+        }
+
+        if (!targetsPlayer && targetObj == null && agent.remainingDistance < 0.5f)
+            CheckRoam();
+
     }
 
     public virtual void takeDamage(int amount)
@@ -278,7 +285,7 @@ public class AILogic : MonoBehaviour, IDamage
         yield return new WaitForSeconds(.3f);
         isPlayingSteps = false;
     }
-    void FindNearestCrop()
+    protected void FindNearestCrop()
     {
         if (GameManager.instance == null || GameManager.instance.crops.Count == 0)
         {
