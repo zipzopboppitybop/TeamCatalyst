@@ -125,8 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a570e8fcd2366d145ac7d2c05f48cdb0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Catalyst.Player.Inventory.UpgradePickup
-  type: 0
-  healAmount: 25
+  type: 1
+  value: 0
   gunData: {fileID: 0}
   rotateSpeed: 50
   pulseSpeed: 2

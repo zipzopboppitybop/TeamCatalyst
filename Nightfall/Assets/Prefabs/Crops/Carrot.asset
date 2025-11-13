@@ -19,6 +19,6 @@ MonoBehaviour:
   audVol: 0.1
   displayName: Carrot
   id: 1
-  sellValue: 0
+  sellValue: 1
   price: 1
   maxStackSize: 5

@@ -63,8 +63,7 @@ namespace Catalyst.Player.Pickups
                     Destroy(gameObject);
                     break;
                 case pickupType.ammo:
-
-
+                    _gunManager.AddMagazine(value);
 
                     Destroy(gameObject);
                     break;
@@ -82,7 +81,9 @@ namespace Catalyst.Player.Pickups
                         }
                         else
                         {
-                            Debug.Log("Already have this weapon with max ammo, cannot pick up another");
+                            _gunManager.AddMagazine(1);
+                            Debug.Log("Already have this weapon with max ammo, Adding to your magazine stack");
+                            Destroy(gameObject);
                         }
 
                         return;

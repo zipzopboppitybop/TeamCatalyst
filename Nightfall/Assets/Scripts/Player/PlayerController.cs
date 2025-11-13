@@ -1,4 +1,6 @@
 using System.Collections;
+using System.IO;
+using Catalyst.CameraController;
 using Catalyst.GamePlay;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -10,33 +12,23 @@ namespace Catalyst.Player
         [Header("References")]
 
         [SerializeField] private Animator animator;
-        public Camera sceneCam;
-        public CinemachineCamera FPSCamera;
-        public CinemachineCamera thirdPersonCamera;
-        public Camera gunCam;
-        [SerializeField] private Transform followTarget;
-        [SerializeField] private LayerMask ignoreLayer;
-        [SerializeField] private LayerMask gunCamLayers;
-        [SerializeField] private LayerMask thirdPersonLayers;
-        [SerializeField] private GameObject[] hideInFPS;
+        [SerializeField] CamController camController;
+
         [SerializeField] public PlayerInventoryUI hotbar;
         public AudioSource aud;
 
-        private float _cinemachineTargetPitch;
-        private float _cinemachineTargetYaw;
+
 
         public InputHandler playerInputHandler;
         [SerializeField] private PlayerData playerData;
+        [SerializeField] private LayerMask ignoreLayer;
 
         private Vector3 _currentMovement;
-        private float _verticalRotation;
-        public bool isInverted;
+
+
         public bool isInventoryOpen;
 
-        private float _mouseXRotation;
-        private float _mouseYRotation;
-        private float _velocityX;
-        private float _velocityZ;
+
 
         [Header("Animation")]
         private int _animJump;
@@ -44,6 +36,8 @@ namespace Catalyst.Player
         private int _animAttack;
         private int _animDash;
 
+        private float _velocityX;
+        private float _velocityZ;
         private int _animVelocityX;
         private int _animVelocityZ;
 
@@ -55,36 +49,30 @@ namespace Catalyst.Player
 
         private void Start()
         {
+
             characterController = GetComponent<CharacterController>();
+
             SetupAnimator();
-            thirdPersonCamera.gameObject.SetActive(false);
-            ToggleCullingLayer();
-
-
-        }
-
-        private void LateUpdate()
-        {
-            //if (ThirdPersonActive())
-            ApplyThirdPersonRotation(_mouseYRotation, _mouseXRotation);
 
 
 
         }
 
-        private float CurrentSpeed => playerData.Speed * (playerInputHandler.SprintTriggered ? playerData.SprintSpeed : 1);
+
+        private float CurrentSpeed => playerData.Speed * (playerInputHandler.SprintHeld ? playerData.SprintSpeed : 1);
 
 
         void Update()
         {
 
             HandleMovement();
-            HandleRotation();
+
 
             HandleAttack();
             HandleDash();
             UpdateInteract();
-            ThirdPersonActive();
+            //camController.FollowMousePosition(transform);
+
 
         }
 
@@ -173,15 +161,7 @@ namespace Catalyst.Player
                 PlayerDash();
             }
         }
-        private bool ThirdPersonActive()
-        {
 
-            if (playerInputHandler.ToggleCameraTriggered)
-            {
-                StartCoroutine(ToggleCamera(thirdPersonCamera));
-            }
-            return thirdPersonCamera.gameObject.activeSelf;
-        }
 
         private void HandleMovement()
         {
@@ -193,100 +173,44 @@ namespace Catalyst.Player
 
             playerDir = CalculateMoveDirection();
 
-            _currentMovement.x = playerDir.x * CurrentSpeed;
+            if (playerInputHandler.AimHeld)
+                _currentMovement.x = playerDir.x * (CurrentSpeed * 0.5f);
+
+            else
+                _currentMovement.x = playerDir.x * CurrentSpeed;
+
+
             _currentMovement.z = playerDir.z * CurrentSpeed;
             HandleJumping();
 
             characterController.Move(_currentMovement * Time.deltaTime);
 
+            if (playerInputHandler.AimHeld)
+                animator.SetFloat(_animVelocityX, playerInputHandler.MoveInput.x * 0.1f);
 
-            animator.SetFloat(_animVelocityX, Mathf.SmoothDamp(animator.GetFloat(_animVelocityX), playerInputHandler.MoveInput.x * _currentMovement.magnitude, ref _velocityX, 0.1f));
+            else
+                animator.SetFloat(_animVelocityX, Mathf.SmoothDamp(animator.GetFloat(_animVelocityX), playerInputHandler.MoveInput.x * _currentMovement.magnitude, ref _velocityX, 0.1f));
+
             animator.SetFloat(_animVelocityZ, Mathf.SmoothDamp(animator.GetFloat(_animVelocityZ), playerInputHandler.MoveInput.y * _currentMovement.magnitude, ref _velocityZ, 0.1f));
         }
 
-        private void ApplyHorizontalRotation(float rotationAmount)
-        {
-            if (ThirdPersonActive() && playerInputHandler.MoveInput.magnitude < 0.1)
-            {
-                return;
-            }
-            else if (ThirdPersonActive() && playerInputHandler.MoveInput.magnitude >= 0.1)
-            {
-                transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, followTarget.eulerAngles.y, 0), Time.deltaTime * playerData.CameraRotationSpeed * playerData.RotationSpeed);
-
-            }
-
-            else
-                transform.Rotate(0, rotationAmount, 0);
-        }
-
-
-        private void ApplyVerticalRotation(float rotationAmount)
-        {
-
-
-            if (isInverted)
-            {
-                _verticalRotation = Mathf.Clamp(_verticalRotation + rotationAmount, -playerData.FPSVerticalRange, playerData.FPSVerticalRange);
-            }
-            else if (!isInverted)
-            {
-                _verticalRotation = Mathf.Clamp(_verticalRotation - rotationAmount, -playerData.FPSVerticalRange, playerData.FPSVerticalRange);
-            }
-
-            FPSCamera.transform.localRotation = Quaternion.Euler(_verticalRotation, 0, 0);
-        }
 
 
 
-        private void HandleRotation()
-        {
-            if (isInventoryOpen)
-            {
-                return;
-            }
 
-            _mouseXRotation = playerInputHandler.RotationInput.x * playerData.MouseSensitivity * playerData.CameraRotationSpeed;
-            _mouseYRotation = playerInputHandler.RotationInput.y * playerData.MouseSensitivity;
 
-            ApplyHorizontalRotation(_mouseXRotation);
-            ApplyVerticalRotation(_mouseYRotation);
-        }
 
-        private void ApplyThirdPersonRotation(float pitch, float yaw)
 
-        {
 
-            if (isInverted)
-            {
-                //Debug.Log("Applying INVERTED third person rotation");
-                _cinemachineTargetPitch = UpdateRotation(_cinemachineTargetPitch, -pitch, -playerData.DownLookRange, playerData.UpLookRange, true);
 
-            }
-            else if (!isInverted)
-            {
 
-                //Debug.Log("Applying third person rotation");
-                _cinemachineTargetPitch = UpdateRotation(_cinemachineTargetPitch, pitch, -playerData.DownLookRange, playerData.UpLookRange, true);
-            }
-
-            _cinemachineTargetYaw = UpdateRotation(_cinemachineTargetYaw, yaw, float.MinValue, float.MaxValue, false);
-            followTarget.rotation = Quaternion.Euler(_cinemachineTargetPitch, _cinemachineTargetYaw, followTarget.eulerAngles.z);
-
-        }
-
-        private float UpdateRotation(float currentRotation, float input, float min, float max, bool isXAxis)
-        {
-            currentRotation += isXAxis ? -input : input;
-            return Mathf.Clamp(currentRotation, min, max);
-        }
 
         public void UpdateInteract()
         {
             if (playerInputHandler.InteractTriggered)
             {
-                Vector3 origin = FPSCamera.transform.position;
-                Vector3 direction = FPSCamera.transform.forward;
+                Vector3 origin = camController.FPSCamera.transform.position;
+                Vector3 direction = camController.FPSCamera.transform.forward;
 
                 Debug.DrawRay(origin, direction * playerData.InteractRange, Color.red, 1f);
 
@@ -317,60 +241,9 @@ namespace Catalyst.Player
             return hotbar;
         }
 
-        private void ToggleGunCam()
-        {
-            if (gunCam == null)
-                return;
-            if (thirdPersonCamera.gameObject.activeSelf)
-            {
-                gunCam.enabled = false;
-
-            }
-
-            else
-            {
-                gunCam.enabled = true;
-                Debug.Log("Gun cam enabled");
-                // enable ignore layers on main camera 
-
-            }
-            ToggleCullingLayer();
-        }
-
-        private void ToggleCullingLayer()
-        {
-            if (FPSCamera == null)
-                return;
-            if (thirdPersonCamera.gameObject.activeSelf)
-            {
-
-                Debug.Log("Adding culling layers to main camera");
-                sceneCam.cullingMask |= thirdPersonLayers;
 
 
-                foreach (GameObject go in hideInFPS)
-                {
-                    go.SetActive(true);
-                }
 
-                if (playerData.AmmoCount > 0)
-                {
-                    sceneCam.cullingMask |= ~gunCamLayers;
-                }
-
-
-            }
-            else
-            {
-                //   Debug.Log("Removing culling layers from main camera");
-                sceneCam.cullingMask &= ~thirdPersonLayers;
-                sceneCam.cullingMask &= ~gunCamLayers;
-                foreach (GameObject go in hideInFPS)
-                {
-                    go.SetActive(false);
-                }
-            }
-        }
         IEnumerator FlashDamageScreen()
         {
             //HUDManager.instance.playerDamageScreen.SetActive(true);
@@ -378,15 +251,7 @@ namespace Catalyst.Player
             //HUDManager.instance.playerDamageScreen.SetActive(false);
         }
 
-        IEnumerator ToggleCamera(CinemachineCamera cam)
-        {
-            // Stop everything a bit to avoid multiple toggles      
-            playerInputHandler.enabled = false;
-            cam.gameObject.SetActive(!cam.gameObject.activeSelf);
-            ToggleGunCam();
-            yield return new WaitForSeconds(1.0f);
-            playerInputHandler.enabled = true;
-        }
+
 
 
         IEnumerator Attack()
@@ -444,7 +309,7 @@ namespace Catalyst.Player
             if (playerData.Health <= 0)
             {
                 GameManager.instance.YouLose();
-                playerData.Health = playerData.HealthMax;  
+                playerData.Health = playerData.HealthMax;
             }
         }
 
@@ -473,6 +338,7 @@ namespace Catalyst.Player
                 yield return null;
             }
         }
+
 
     }
 }

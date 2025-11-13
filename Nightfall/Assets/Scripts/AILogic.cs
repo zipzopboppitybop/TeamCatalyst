@@ -320,7 +320,7 @@ public class AILogic : MonoBehaviour, IDamage
 
         if (idleSoundTimer >= nextIdleSoundTime)
         {
-            aud.PlayOneShot(audIdles[0]);
+            aud.PlayOneShot(audIdles[Random.Range(0, audIdles.Length)]);
             idleSoundTimer = 0f;
             nextIdleSoundTime = Random.Range(idleSoundMinDelay, idleSoundMaxDelay);
         }

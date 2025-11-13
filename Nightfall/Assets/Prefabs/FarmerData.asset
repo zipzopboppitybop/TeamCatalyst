@@ -23,13 +23,14 @@ MonoBehaviour:
   staminaMax: 10
   stealth: 5
   interactRange: 2
-  currency: 10
+  currency: 20
   currentFarmingState: 0
   shootDamage: 10
   shootRate: 1
   shootDist: 100
-  ammoCount: 42
+  ammoCount: 50
   ammoMax: 50
+  magazineSize: 3
   walkingSpeed: 2
   sprintSpeed: 5
   dashSpeed: 3
@@ -47,3 +48,4 @@ MonoBehaviour:
   roomsClear: 0
   guns:
   - {fileID: 11400000, guid: 5e17b70c5f1b7444a830bd25d57ae966, type: 2}
+  currentGun: {fileID: 11400000, guid: 5e17b70c5f1b7444a830bd25d57ae966, type: 2}

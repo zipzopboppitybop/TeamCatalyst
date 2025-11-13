@@ -12,7 +12,6 @@ public class Livestock : MonoBehaviour, IDamage
     [SerializeField] float cropSearchInterval;
     [SerializeField] float cropDetectionRadius;
     [SerializeField] float cropThreshold;
-    [SerializeField] private Chest FeedingTrough;
 
     [SerializeField] int hp;
     [SerializeField] int hpMax;
@@ -25,8 +24,8 @@ public class Livestock : MonoBehaviour, IDamage
     [SerializeField] int roamPauseTime;
     [Range(0, 100)][SerializeField] int dropChance;
     [SerializeField] float biteRate;
-    [SerializeField] Transform homePosTransform;
-    protected Vector3 homePos;
+    public Vector3 homePos;
+    public Chest FeedingTrough;
 
     Color colorOrig;
 
@@ -43,7 +42,6 @@ public class Livestock : MonoBehaviour, IDamage
         roamTimeOrig = roamPauseTime;
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
-        homePos = homePosTransform.position;
     }
 
     void Update()

@@ -1,20 +1,30 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Collections.Generic;
 
 public class ShopUI : MonoBehaviour
 {
+    public static ShopUI instance;
     [SerializeField] private UIDocument uiDocument;
     [SerializeField] private ItemData[] itemsForSale;
     [SerializeField] private Chest chest;
     [SerializeField] private PlayerInventoryUI playerInventory;
     [SerializeField] private Catalyst.Player.PlayerData playerData;
+    [SerializeField] private GameObject chickenCoop;
+    [SerializeField] private GameObject doghouse;
+    [SerializeField] private GameObject barn;
+    [SerializeField] private GameObject[] livestock;
 
     private VisualElement root;
+    private Queue<ItemData> deliveries = new Queue<ItemData>();
     private ScrollView itemsContainer;
     public bool shopOpen = false;
 
+    private int boughtChickens = 0;
+
     private void Start()
     {
+        instance = this;
         root = uiDocument.rootVisualElement.Q<VisualElement>("Root");
         itemsContainer = root.Q<ScrollView>("ItemsContainer");
 
@@ -25,7 +35,6 @@ public class ShopUI : MonoBehaviour
 
     private void Update()
     {
-        // Press J to toggle shop
         if (Input.GetKeyDown(KeyCode.J))
         {
             if (playerInventory.toggleInventory)
@@ -87,13 +96,33 @@ public class ShopUI : MonoBehaviour
 
     private void BuyItem(ItemData item)
     {
-        if (playerData.Currency < item.price)
+        if (playerData.Currency < item.price || GameManager.instance.IsNight)
         {
             return;
         }
 
+        if (item.itemType == ItemData.ItemType.Livestock)
+        {
+            if (item.name.Contains("Chicken") && boughtChickens < 5)
+            {
+                if (!chickenCoop.activeSelf)
+                {
+                    chickenCoop.SetActive(true);
+                }
+
+                deliveries.Enqueue(item);
+                Debug.Log("Chickens will be delivered tomorrow");
+                boughtChickens++;
+            }
+        }
+        else
+        {
+            deliveries.Enqueue(item);
+            Debug.Log($"{item.displayName} will be delivered tomorrow");
+
+        }
+
         playerData.Currency -= item.price;
-        AddItemToInventory(chest.PrimaryInventory, item, 1);
     }
 
     private void AddItemToInventory(Inventory inventory, ItemData item, int amount)
@@ -119,5 +148,49 @@ public class ShopUI : MonoBehaviour
         }
 
         Debug.Log("Inventory full!");
+    }
+
+    public void DeliverItems()
+    {
+        while (deliveries.Count > 0)
+        {
+            ItemData item = deliveries.Dequeue();
+
+            if (item.itemType == ItemData.ItemType.Livestock)
+            {
+                GameObject feedingTrough = GameObject.FindWithTag("FeedingTrough");
+                if (item.name.Contains("Chicken"))
+                {
+                    Vector3 homePoint = chickenCoop.transform.Find("ChickenCoopHome").position;
+                    GameObject chicken = Instantiate(livestock[0], homePoint, Quaternion.identity);
+                    Livestock livestockComponent = chicken.GetComponent<Livestock>();
+                    livestockComponent.homePos = homePoint;
+                    livestockComponent.FeedingTrough = feedingTrough.GetComponent<Chest>();
+                }
+
+            }
+            else
+            {
+                AddItemToInventory(chest.PrimaryInventory, item, 1);
+            }
+        }
+    }
+
+    public void SellItems()
+    {
+        foreach (InventorySlot slot in chest.PrimaryInventory.InventorySlots)
+        {
+            if (slot.ItemData != null)
+            {
+                int amount = slot.StackSize;
+                playerData.Currency += slot.ItemData.sellValue * amount;
+
+                slot.ClearSlot();
+            }
+
+            chest.PrimaryInventory.NotifySlotChanged(slot);
+        }
+
+        ShopUI.instance.DeliverItems();
     }
 }

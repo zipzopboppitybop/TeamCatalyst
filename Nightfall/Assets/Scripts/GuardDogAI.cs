@@ -1,13 +1,17 @@
+using Catalyst.GamePlay;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Transforms;
 using UnityEngine;
+using static UnityEngine.GridBrushBase;
 
-public class GuardDogAI : AILogic
+public class GuardDogAI : AILogic, IInteractable
 {
     [SerializeField] Transform homePosTransform;
-    protected Vector3 homePos;
-    bool targetInRange;
+    [SerializeField] private AudioClip[] audHappy;
+    private Transform playerPos;
+    private Vector3 homePos;
+    private bool targetInRange;
 
     private List<GameObject> enemiesInRange = new List<GameObject>();
 
@@ -21,15 +25,12 @@ public class GuardDogAI : AILogic
         homePos = homePosTransform.position;
         targetObj = null;
         agent.updateRotation = false;
+        playerPos = GameManager.instance.player.transform;
     }
 
     // Update is called once per frame
     protected override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            takeDamage(1);
-        }
         base.Update();
 
         if (isHealing || hp <= 0)
@@ -38,17 +39,30 @@ public class GuardDogAI : AILogic
         }
 
         enemiesInRange.RemoveAll(e => e == null);
-
         UpdateTarget();
+
+        if (enemiesInRange.Count == 0)
+        {
+            roamTimer = roamPauseTime;
+        }
+
 
         if (targetObj != null)
         {
             ChaseTarget();
         }
-        else
+        else if (enemiesInRange.Count == 0)
         {
-            RotateWhileMoving();
-            CheckRoam();
+            if (playerInRange)
+            {
+                FollowPlayer();
+                RotateWhileMoving();
+            }
+            else
+            {
+                RotateWhileMoving();
+                CheckRoam();
+            }
         }
 
         AnimateMovement();
@@ -156,7 +170,12 @@ public class GuardDogAI : AILogic
             enemiesInRange.Add(other.gameObject);
         }
 
-        if (other.CompareTag("HomePos"))
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = true;
+        }
+
+        if (other.CompareTag("HomePos") && hp < hpOrig)
         {
             StartCoroutine(Heal());
         }
@@ -166,6 +185,11 @@ public class GuardDogAI : AILogic
         if (other.CompareTag("Enemy"))
         {
             enemiesInRange.Remove(other.gameObject);
+        }
+
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
         }
     }
 
@@ -277,4 +301,60 @@ public class GuardDogAI : AILogic
         base.HandleIdleSound();
     }
 
+    public void Interact()
+    {
+        aud.PlayOneShot(audHappy[Random.Range(0, audHappy.Length)]);
+        StartCoroutine(DoBackflip());
+    }
+    private IEnumerator DoBackflip()
+    {
+        if (agent != null)
+        {
+            agent.enabled = false;
+        }
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;
+
+        float duration = 0.5f; 
+        float elapsed = 0f;
+        float jumpHeight = 1.0f;
+        Quaternion startRot = transform.rotation;
+        Quaternion endRot = transform.rotation * Quaternion.Euler(360f, 0f, 0f);
+        Vector3 startPos = transform.position;
+
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration;
+            float heightOffset = Mathf.Sin(Mathf.PI * t) * jumpHeight;
+            transform.position = startPos + Vector3.up * heightOffset;
+            transform.rotation = Quaternion.Slerp(startRot, endRot, t);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = startPos;
+        transform.rotation = startRot;
+
+        agent.enabled = true;
+    }
+
+    private void FollowPlayer()
+    {
+        if (playerPos == null || agent == null) return;
+
+        float distance = Vector3.Distance(transform.position, playerPos.position);
+
+        if (distance > 2f)
+        {
+            agent.SetDestination(playerPos.position);
+        }
+        else
+        {
+            if (agent.enabled)
+            {
+                agent.ResetPath();
+            }
+        }
+    }
 }
