@@ -74,6 +74,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6811085360175029284}
   - component: {fileID: 4961241792348632301}
+  - component: {fileID: 8520908250337453854}
   - component: {fileID: 2704039868389915847}
   - component: {fileID: 1149818978128675595}
   - component: {fileID: 3158196094379276507}
@@ -133,6 +134,36 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8520908250337453854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906805268855091345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e89276c66830e9458031a39f7762ba4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Catalyst.CameraController.CamController
+  sceneCam: {fileID: 0}
+  gunCam: {fileID: 1827939816159163505}
+  FPSCamera: {fileID: 3444322935365968269}
+  thirdPersonCamera: {fileID: 8277316637815074276}
+  AimCamera: {fileID: 6290561366353044341}
+  followTarget: {fileID: 5629587793951799693}
+  gunCamLayers:
+    serializedVersion: 2
+    m_Bits: 1048576
+  thirdPersonLayers:
+    serializedVersion: 2
+    m_Bits: 3145728
+  hideInFPS:
+  - {fileID: 6061531207049578280}
+  playerInputHandler: {fileID: 0}
+  playerData: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
+  playerController: {fileID: 2704039868389915847}
+  isInverted: 0
 --- !u!114 &2704039868389915847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,28 +177,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.Controller.PlayerController
   animator: {fileID: 4961241792348632301}
-  sceneCam: {fileID: 0}
-  FPSCamera: {fileID: 3444322935365968269}
-  thirdPersonCamera: {fileID: 8277316637815074276}
-  AimCamera: {fileID: 6290561366353044341}
-  gunCam: {fileID: 1827939816159163505}
-  followTarget: {fileID: 5629587793951799693}
-  ignoreLayer:
-    serializedVersion: 2
-    m_Bits: 3145864
-  gunCamLayers:
-    serializedVersion: 2
-    m_Bits: 1048576
-  thirdPersonLayers:
-    serializedVersion: 2
-    m_Bits: 3145728
-  hideInFPS:
-  - {fileID: 6061531207049578280}
+  camController: {fileID: 8520908250337453854}
   hotbar: {fileID: 0}
   aud: {fileID: 853817436050279361}
   playerInputHandler: {fileID: 0}
   playerData: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
-  isInverted: 0
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 3145864
   isInventoryOpen: 0
 --- !u!143 &1149818978128675595
 CharacterController:
