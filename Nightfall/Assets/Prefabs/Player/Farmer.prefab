@@ -231,7 +231,7 @@ AudioSource:
   m_GameObject: {fileID: 906805268855091345}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 8329519579811139567, guid: 7dd4277552737ee4b947714ea1fd19be, type: 2}
+  OutputAudioMixerGroup: {fileID: 9222721461801436035, guid: 7dd4277552737ee4b947714ea1fd19be, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -503,7 +503,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.01
-  far clip plane: 20
+  far clip plane: 50
   field of view: 28
   orthographic: 0
   orthographic size: 5
