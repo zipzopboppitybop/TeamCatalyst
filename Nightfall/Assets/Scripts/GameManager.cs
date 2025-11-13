@@ -189,7 +189,7 @@ public class GameManager : MonoBehaviour
         if (wasNight && !isNight)
         {
             day += 1;
-            ShopUI.instance.DeliverItems();
+            ShopUI.instance.SellItems();
         }
         cycle.DayText = "Day " + day.ToString();
 

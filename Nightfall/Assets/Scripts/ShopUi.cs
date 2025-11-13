@@ -175,4 +175,22 @@ public class ShopUI : MonoBehaviour
             }
         }
     }
+
+    public void SellItems()
+    {
+        foreach (InventorySlot slot in chest.PrimaryInventory.InventorySlots)
+        {
+            if (slot.ItemData != null)
+            {
+                int amount = slot.StackSize;
+                playerData.Currency += slot.ItemData.sellValue * amount;
+
+                slot.ClearSlot();
+            }
+
+            chest.PrimaryInventory.NotifySlotChanged(slot);
+        }
+
+        ShopUI.instance.DeliverItems();
+    }
 }

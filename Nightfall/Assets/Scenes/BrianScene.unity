@@ -2342,41 +2342,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4e85cafb5039f5049bbfe8582346e40f, type: 3}
---- !u!1 &1002331262 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 9048460485104223763, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
-  m_PrefabInstance: {fileID: 6825398107756066911}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1002331268 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8199428265652622423, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
-  m_PrefabInstance: {fileID: 6825398107756066911}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1002331262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
---- !u!114 &1002331269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1002331262}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8d5be07c4c084a409a8fa42c321aca3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventoryUI
-  isHotbar: 0
-  hotbarUI: {fileID: 0}
-  document: {fileID: 1002331268}
-  inventory:
-    inventorySlots: []
-  toggleInventory: 0
-  isChestUI: 0
 --- !u!4 &1024249922 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3596297814687503121, guid: 5cf60363393045b41b421da9e6fc103e, type: 3}
@@ -3644,6 +3609,14 @@ PrefabInstance:
       propertyPath: homePosTransform
       value: 
       objectReference: {fileID: 1086944349}
+    - target: {fileID: 2293938198664856694, guid: 34052a25c83a55841ac10cd3362ef328, type: 3}
+      propertyPath: audHappy.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2293938198664856694, guid: 34052a25c83a55841ac10cd3362ef328, type: 3}
+      propertyPath: 'audHappy.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 2a6979ffe6559ce488d9dcde3eca6baf, type: 3}
     - target: {fileID: 4237150109387150613, guid: 34052a25c83a55841ac10cd3362ef328, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.72
@@ -3882,10 +3855,7 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 6383233761706990421, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 9048460485104223763, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1002331269}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
 --- !u!20 &6825398107756066912 stripped
 Camera:
