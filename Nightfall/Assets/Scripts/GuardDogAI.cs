@@ -1,13 +1,14 @@
+using Catalyst.GamePlay;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Transforms;
 using UnityEngine;
 
-public class GuardDogAI : AILogic
+public class GuardDogAI : AILogic, IInteractable
 {
     [SerializeField] Transform homePosTransform;
     protected Vector3 homePos;
-    bool targetInRange;
+    private bool targetInRange;
 
     private List<GameObject> enemiesInRange = new List<GameObject>();
 
@@ -26,10 +27,6 @@ public class GuardDogAI : AILogic
     // Update is called once per frame
     protected override void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            takeDamage(1);
-        }
         base.Update();
 
         if (isHealing || hp <= 0)
@@ -38,7 +35,6 @@ public class GuardDogAI : AILogic
         }
 
         enemiesInRange.RemoveAll(e => e == null);
-
         UpdateTarget();
 
         if (targetObj != null)
@@ -156,7 +152,7 @@ public class GuardDogAI : AILogic
             enemiesInRange.Add(other.gameObject);
         }
 
-        if (other.CompareTag("HomePos"))
+        if (other.CompareTag("HomePos") && hp < hpOrig)
         {
             StartCoroutine(Heal());
         }
@@ -275,5 +271,10 @@ public class GuardDogAI : AILogic
         }
 
         base.HandleIdleSound();
+    }
+
+    public void Interact()
+    {
+        
     }
 }

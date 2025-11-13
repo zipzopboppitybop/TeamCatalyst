@@ -8,10 +8,16 @@ public class ShopUI : MonoBehaviour
     [SerializeField] private Chest chest;
     [SerializeField] private PlayerInventoryUI playerInventory;
     [SerializeField] private Catalyst.Player.PlayerData playerData;
+    [SerializeField] private GameObject chickenCoop;
+    [SerializeField] private GameObject doghouse;
+    [SerializeField] private GameObject barn;
+    [SerializeField] private GameObject[] livestock;
 
     private VisualElement root;
     private ScrollView itemsContainer;
     public bool shopOpen = false;
+
+    private int boughtChickens = 0;
 
     private void Start()
     {
@@ -92,8 +98,33 @@ public class ShopUI : MonoBehaviour
             return;
         }
 
+        if (item.itemType == ItemData.ItemType.Livestock)
+        {
+            GameObject feedingTrough = GameObject.FindWithTag("FeedingTrough");
+
+            if (item.name.Contains("Chicken") && boughtChickens < 5)
+            {
+                if (!chickenCoop.activeSelf)
+                {
+                    chickenCoop.SetActive(true);
+                }
+
+                Vector3 homePoint = chickenCoop.transform.Find("ChickenCoopHome").position;
+
+                GameObject chicken = Instantiate(livestock[0], homePoint, Quaternion.identity);
+                Livestock livestockComponent = chicken.GetComponent<Livestock>();
+                livestockComponent.homePos = homePoint;
+                livestockComponent.FeedingTrough = feedingTrough.GetComponent<Chest>();
+
+                boughtChickens++;
+            }
+        }
+        else
+        {
+            AddItemToInventory(chest.PrimaryInventory, item, 1);
+        }
+
         playerData.Currency -= item.price;
-        AddItemToInventory(chest.PrimaryInventory, item, 1);
     }
 
     private void AddItemToInventory(Inventory inventory, ItemData item, int amount)
