@@ -7,7 +7,7 @@ namespace Catalyst.GamePlay
 {
     public class GunManager : MonoBehaviour
     {
-        [SerializeField] private Renderer gunModel;
+        [SerializeField] private GameObject gunModel;
         [SerializeField] private Transform gunPos;
         [SerializeField] private PlayerData player;
         [SerializeField] private Transform gunHolder;
@@ -117,8 +117,9 @@ namespace Catalyst.GamePlay
             player.CurrentGun = player.Guns[_gunListPos];
             shootSound = player.CurrentGun.shootSounds;
             Debug.Log("Equipped " + _currentWeapon.name);
-            gunModel.GetComponent<MeshFilter>().sharedMesh = player.CurrentGun.model.GetComponent<MeshFilter>().sharedMesh;
-            gunModel.GetComponent<MeshRenderer>().sharedMaterial = player.CurrentGun.model.GetComponent<MeshRenderer>().sharedMaterial;
+            gunModel = Instantiate(player.CurrentGun.model, gunPos.position, gunPos.rotation, gunPos);
+            //gunModel.GetComponent<MeshFilter>().sharedMesh = player.CurrentGun.model.GetComponent<MeshFilter>().sharedMesh;
+            //gunModel.GetComponent<MeshRenderer>().sharedMaterial = player.CurrentGun.model.GetComponent<MeshRenderer>().sharedMaterial;
 
             if (_currentWeapon.ammoCur > 0)
                 aud.PlayOneShot(player.CurrentGun.pickUpSound, 0.5f);
