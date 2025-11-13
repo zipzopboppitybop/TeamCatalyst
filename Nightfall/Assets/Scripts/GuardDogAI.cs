@@ -9,7 +9,8 @@ public class GuardDogAI : AILogic, IInteractable
 {
     [SerializeField] Transform homePosTransform;
     [SerializeField] private AudioClip[] audHappy;
-    protected Vector3 homePos;
+    private Transform playerPos;
+    private Vector3 homePos;
     private bool targetInRange;
 
     private List<GameObject> enemiesInRange = new List<GameObject>();
@@ -24,6 +25,7 @@ public class GuardDogAI : AILogic, IInteractable
         homePos = homePosTransform.position;
         targetObj = null;
         agent.updateRotation = false;
+        playerPos = GameManager.instance.player.transform;
     }
 
     // Update is called once per frame
@@ -39,14 +41,28 @@ public class GuardDogAI : AILogic, IInteractable
         enemiesInRange.RemoveAll(e => e == null);
         UpdateTarget();
 
+        if (enemiesInRange.Count == 0)
+        {
+            roamTimer = roamPauseTime;
+        }
+
+
         if (targetObj != null)
         {
             ChaseTarget();
         }
-        else
+        else if (enemiesInRange.Count == 0)
         {
-            RotateWhileMoving();
-            CheckRoam();
+            if (playerInRange)
+            {
+                FollowPlayer();
+                RotateWhileMoving();
+            }
+            else
+            {
+                RotateWhileMoving();
+                CheckRoam();
+            }
         }
 
         AnimateMovement();
@@ -154,6 +170,11 @@ public class GuardDogAI : AILogic, IInteractable
             enemiesInRange.Add(other.gameObject);
         }
 
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = true;
+        }
+
         if (other.CompareTag("HomePos") && hp < hpOrig)
         {
             StartCoroutine(Heal());
@@ -164,6 +185,11 @@ public class GuardDogAI : AILogic, IInteractable
         if (other.CompareTag("Enemy"))
         {
             enemiesInRange.Remove(other.gameObject);
+        }
+
+        if (other.CompareTag("Player"))
+        {
+            playerInRange = false;
         }
     }
 
@@ -311,5 +337,24 @@ public class GuardDogAI : AILogic, IInteractable
         transform.rotation = startRot;
 
         agent.enabled = true;
+    }
+
+    private void FollowPlayer()
+    {
+        if (playerPos == null || agent == null) return;
+
+        float distance = Vector3.Distance(transform.position, playerPos.position);
+
+        if (distance > 2f)
+        {
+            agent.SetDestination(playerPos.position);
+        }
+        else
+        {
+            if (agent.enabled)
+            {
+                agent.ResetPath();
+            }
+        }
     }
 }

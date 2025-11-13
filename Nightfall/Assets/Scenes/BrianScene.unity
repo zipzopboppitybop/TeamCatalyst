@@ -1184,6 +1184,7 @@ MonoBehaviour:
   idleSoundMinDelay: 0
   idleSoundMaxDelay: 0
   homePosTransform: {fileID: 0}
+  audHappy: []
   verticalParam: Vert
   stateParam: State
 --- !u!65 &462325011
@@ -3108,7 +3109,7 @@ AudioSource:
   m_GameObject: {fileID: 1969781843}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 4295536949422076383, guid: 7dd4277552737ee4b947714ea1fd19be, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: b48eee9d7068dde41a54c272162be052, type: 3}
   m_PlayOnAwake: 1
