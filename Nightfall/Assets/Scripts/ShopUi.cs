@@ -1,8 +1,10 @@
 using UnityEngine;
 using UnityEngine.UIElements;
+using System.Collections.Generic;
 
 public class ShopUI : MonoBehaviour
 {
+    public static ShopUI instance;
     [SerializeField] private UIDocument uiDocument;
     [SerializeField] private ItemData[] itemsForSale;
     [SerializeField] private Chest chest;
@@ -14,6 +16,7 @@ public class ShopUI : MonoBehaviour
     [SerializeField] private GameObject[] livestock;
 
     private VisualElement root;
+    private Queue<ItemData> deliveries = new Queue<ItemData>();
     private ScrollView itemsContainer;
     public bool shopOpen = false;
 
@@ -21,6 +24,7 @@ public class ShopUI : MonoBehaviour
 
     private void Start()
     {
+        instance = this;
         root = uiDocument.rootVisualElement.Q<VisualElement>("Root");
         itemsContainer = root.Q<ScrollView>("ItemsContainer");
 
@@ -31,7 +35,6 @@ public class ShopUI : MonoBehaviour
 
     private void Update()
     {
-        // Press J to toggle shop
         if (Input.GetKeyDown(KeyCode.J))
         {
             if (playerInventory.toggleInventory)
@@ -93,15 +96,13 @@ public class ShopUI : MonoBehaviour
 
     private void BuyItem(ItemData item)
     {
-        if (playerData.Currency < item.price)
+        if (playerData.Currency < item.price || GameManager.instance.IsNight)
         {
             return;
         }
 
         if (item.itemType == ItemData.ItemType.Livestock)
         {
-            GameObject feedingTrough = GameObject.FindWithTag("FeedingTrough");
-
             if (item.name.Contains("Chicken") && boughtChickens < 5)
             {
                 if (!chickenCoop.activeSelf)
@@ -109,19 +110,16 @@ public class ShopUI : MonoBehaviour
                     chickenCoop.SetActive(true);
                 }
 
-                Vector3 homePoint = chickenCoop.transform.Find("ChickenCoopHome").position;
-
-                GameObject chicken = Instantiate(livestock[0], homePoint, Quaternion.identity);
-                Livestock livestockComponent = chicken.GetComponent<Livestock>();
-                livestockComponent.homePos = homePoint;
-                livestockComponent.FeedingTrough = feedingTrough.GetComponent<Chest>();
-
+                deliveries.Enqueue(item);
+                Debug.Log("Chickens will be delivered tomorrow");
                 boughtChickens++;
             }
         }
         else
         {
-            AddItemToInventory(chest.PrimaryInventory, item, 1);
+            deliveries.Enqueue(item);
+            Debug.Log($"{item.displayName} will be delivered tomorrow");
+
         }
 
         playerData.Currency -= item.price;
@@ -150,5 +148,31 @@ public class ShopUI : MonoBehaviour
         }
 
         Debug.Log("Inventory full!");
+    }
+
+    public void DeliverItems()
+    {
+        while (deliveries.Count > 0)
+        {
+            ItemData item = deliveries.Dequeue();
+
+            if (item.itemType == ItemData.ItemType.Livestock)
+            {
+                GameObject feedingTrough = GameObject.FindWithTag("FeedingTrough");
+                if (item.name.Contains("Chicken"))
+                {
+                    Vector3 homePoint = chickenCoop.transform.Find("ChickenCoopHome").position;
+                    GameObject chicken = Instantiate(livestock[0], homePoint, Quaternion.identity);
+                    Livestock livestockComponent = chicken.GetComponent<Livestock>();
+                    livestockComponent.homePos = homePoint;
+                    livestockComponent.FeedingTrough = feedingTrough.GetComponent<Chest>();
+                }
+
+            }
+            else
+            {
+                AddItemToInventory(chest.PrimaryInventory, item, 1);
+            }
+        }
     }
 }

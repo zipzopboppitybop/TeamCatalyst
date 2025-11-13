@@ -127,10 +127,10 @@ public class PlayerInventoryUI : MonoBehaviour
             InventoryDragManager.draggedIcon.pickingMode = PickingMode.Ignore;
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            DropSelectedItem();
-        }
+        //if (Input.GetKeyDown(KeyCode.R))
+        //{
+        //    DropSelectedItem();
+        //}
     }
 
     private void HandleHotBarInput()
