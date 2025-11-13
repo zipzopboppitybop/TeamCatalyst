@@ -10,18 +10,24 @@ public class MasterMixer : MonoBehaviour
     [SerializeField] string MasterVol = "MasterVolume";
     [SerializeField] string MusicVol = "MusicVolume";
     [SerializeField] string SfxVol = "SFXVolume";
+    [SerializeField] string PlayerVol = "PlayerVolume";
 
     private SliderInt masterVolume;
     private SliderInt musicVolume;
     private SliderInt sfxVolume;
+    private SliderInt playerVolume;
 
     private Toggle muteToggle;
     private Toggle musicToggle;
     private Toggle sfxToggle;
+    private Toggle playerToggle;
 
     private int savedMaster = 80;
     private int savedMusic = 80;
     private int savedSfx = 80;
+    private int savedPlayer = 80;
+
+
     private void Awake()
     {
         var root = uiDocument.rootVisualElement;
@@ -29,50 +35,61 @@ public class MasterMixer : MonoBehaviour
         masterVolume = root.Q<SliderInt>("MasterVolume");
         musicVolume = root.Q<SliderInt>("MusicVolume");
         sfxVolume = root.Q<SliderInt>("SFXVolume");
+        playerVolume = root.Q<SliderInt>("PlayerVolume");
 
         muteToggle = root.Q<Toggle>("Mute");
         musicToggle = root.Q<Toggle>("Music");
         sfxToggle = root.Q<Toggle>("SFX");
+        playerToggle = root.Q<Toggle>("Player");
 
 
         InitChannel(masterVolume, muteToggle, MasterVol);
         InitChannel(musicVolume, musicToggle, MusicVol);
         InitChannel(sfxVolume, sfxToggle, SfxVol);
-      
-        if (masterVolume != null)
-            masterVolume.RegisterValueChangedCallback(value =>
-            {
-                SetValue(MasterVol, value.newValue);
-                if (value.newValue > 0 && muteToggle != null) muteToggle.SetValueWithoutNotify(false);
-                savedMaster = value.newValue > 0 ? value.newValue : savedMaster;
-            });
+        InitChannel(playerVolume, playerToggle, PlayerVol);
 
-        if (musicVolume != null)
-            musicVolume.RegisterValueChangedCallback(value =>
-            {
-                SetValue(MusicVol, value.newValue);
 
-                if (value.newValue > 0 && musicToggle != null) musicToggle.SetValueWithoutNotify(false);
-                savedMusic = value.newValue > 0 ? value.newValue : savedMusic;
-            });
+        masterVolume?.RegisterValueChangedCallback(value =>
+        {
+            SetValue(MasterVol, value.newValue);
+            if (value.newValue > 0 && muteToggle != null) muteToggle.SetValueWithoutNotify(false);
+            savedMaster = value.newValue > 0 ? value.newValue : savedMaster;
+        });
 
-        if (sfxVolume != null)
-            sfxVolume.RegisterValueChangedCallback(value =>
-            {
-                SetValue(SfxVol, value.newValue);
-                if (value.newValue > 0 && sfxToggle != null) sfxToggle.SetValueWithoutNotify(false);
-                savedSfx = value.newValue > 0 ? value.newValue : savedSfx;
-            });
+        musicVolume?.RegisterValueChangedCallback(value =>
+        {
+            SetValue(MusicVol, value.newValue);
 
-       
-        if (muteToggle != null)
-            muteToggle.RegisterValueChangedCallback(value => ToggleMute(value.newValue, masterVolume, MasterVol, ref savedMaster));
+            if (value.newValue > 0 && musicToggle != null) musicToggle.SetValueWithoutNotify(false);
+            savedMusic = value.newValue > 0 ? value.newValue : savedMusic;
+        });
 
-        if (musicToggle != null)
-            musicToggle.RegisterValueChangedCallback(value => ToggleMute(value.newValue, musicVolume, MusicVol, ref savedMusic));
+        sfxVolume?.RegisterValueChangedCallback(value =>
+        {
+            SetValue(SfxVol, value.newValue);
+            if (value.newValue > 0 && sfxToggle != null) sfxToggle.SetValueWithoutNotify(false);
+            savedSfx = value.newValue > 0 ? value.newValue : savedSfx;
+        });
 
-        if (sfxToggle != null)
-            sfxToggle.RegisterValueChangedCallback(value => ToggleMute(value.newValue, sfxVolume, SfxVol, ref savedSfx));
+
+        playerVolume?.RegisterValueChangedCallback(value =>
+        {
+            SetValue(PlayerVol, value.newValue);
+            if (value.newValue > 0 && playerToggle != null) playerToggle.SetValueWithoutNotify(false);
+            savedPlayer = value.newValue > 0 ? value.newValue : savedPlayer;
+
+        });
+
+
+
+        muteToggle?.RegisterValueChangedCallback(value => ToggleMute(value.newValue, masterVolume, MasterVol, ref savedMaster));
+
+
+        musicToggle?.RegisterValueChangedCallback(value => ToggleMute(value.newValue, musicVolume, MusicVol, ref savedMusic));
+
+        sfxToggle?.RegisterValueChangedCallback(value => ToggleMute(value.newValue, sfxVolume, SfxVol, ref savedSfx));
+
+        playerToggle?.RegisterValueChangedCallback(value => ToggleMute(value.newValue, playerVolume, PlayerVol, ref savedPlayer));
     }
 
     // Set slider from current mixer value, set toggle if effectively muted
