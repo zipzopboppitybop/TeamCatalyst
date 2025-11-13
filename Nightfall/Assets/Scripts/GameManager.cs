@@ -1,7 +1,5 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Catalyst.Player;
 
 
@@ -11,17 +9,11 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     [SerializeField] Cycles cycle;
-    [SerializeField] private PauseMenuUI menuPause;
-
-    [SerializeField] GameObject menuActive;
-    [SerializeField] GameObject menuWin;
-    [SerializeField] GameObject menuLose;
-   
+    [SerializeField] PlayerData playerData;
+    
     [SerializeField] float dayLengthMinutes;
     [SerializeField] int nightStart;
     [SerializeField] int nightEnd;
-    //[SerializeField] Image dayImage;
-    //[SerializeField] Image nightImage;
 
     public GameObject player;
     public PlayerController playerController;
@@ -30,18 +22,25 @@ public class GameManager : MonoBehaviour
     float timeScaleOrig;
     float timeOfDay = 7;
     int day = 1;
+
     public int cropCount = 0;
-    public int cropsDestroyed = 0;
+    private int moneyOnStart = 0;
+    private int cropsDestroyed = 0;
 
     public bool isPaused = false;
-    bool wasNight;
+    private bool Won = false;
+    private bool Lost = false;
+    private bool endByLose = false;
+    public bool wasNight;
     public bool IsNight;
+
     public List<GameObject> crops = new List<GameObject>();
 
     void Awake()
     {
         instance = this;
         timeScaleOrig = Time.timeScale;
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -53,7 +52,8 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //Debug.Log("Starting GameManager");
+        cropCount = crops.Count;
+        moneyOnStart = playerData.Currency;
     }
 
     // Update is called once per frame
@@ -61,15 +61,18 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Cancel"))
         {
-            if (menuActive == null && !isPaused)
+            if (PauseMenuUI.instance != null && PauseMenuUI.instance.IsScreenOpen)
+                return;
+
+            if(!isPaused)
             {
                 StatePause();
-                if (menuPause != null) menuPause.Show();
+                if (PauseMenuUI.instance != null) PauseMenuUI.instance.Show();
             }
             else
             {
                 StateUnpause();
-                if (menuPause !=null) menuPause.Hide();
+                if (PauseMenuUI.instance !=null) PauseMenuUI.instance.Hide();
             }
         }
         UpdateGameClock();
@@ -86,24 +89,43 @@ public class GameManager : MonoBehaviour
     {
         isPaused = false;
         Time.timeScale = timeScaleOrig;
-        
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        
+    }
+    public void LoseStateReset()
+    {
+        Lost = false;
+        Won = false;
 
+        cropsDestroyed = 0;
+        moneyOnStart = playerData.Currency;
     }
     public void YouWin()
     {
+        if (Lost || Won)
+            return;
 
+        if(day >= 2 && timeOfDay == nightEnd && PauseMenuUI.instance != null && !PauseMenuUI.instance.IsScreenOpen)
+        {
+            Won = true;
+            StatePause();
+            PauseMenuUI.instance.ShowWinScreen();
+        }
     }
 
     public void YouLose()
     {
-        timeOfDay = nightEnd;    
-        UpdateGameClock();
+        if (Won || Lost)
+            return;
+        Lost = true;
+        endByLose = true;
 
+        StatePause();
+        timeOfDay = nightEnd;
         day += 1;
-        cycle.DayText = "Day " + day.ToString();
+        UpdateGameClock();
+        
+        
 
         GameObject spawnerObject = GameObject.FindGameObjectWithTag("Spawner");
         if (spawnerObject != null)
@@ -117,10 +139,7 @@ public class GameManager : MonoBehaviour
 
                 int cropsToDestroy = Mathf.Min(crops.Count, totalEnemies);
 
-
-                cycle.cropsDestroyed = cropsToDestroy;
-
-
+                cropsDestroyed = cropsToDestroy;
 
                 for (int i = 0; i < cropsToDestroy; i++)
                 {
@@ -138,18 +157,13 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("No Spawner");
         }
-
-
+        PauseMenuUI.instance.ShowLoseScreen();
         if (player != null && playerSpawnPos != null)
         {
             player.transform.position = playerSpawnPos.transform.position;
             player.transform.rotation = playerSpawnPos.transform.rotation;
         }
-
-        HealthBarUI.instance?.ShowLoseScreen();
-
         Debug.Log("Destroying stuff");
-        //StatePause();  
     }
 
     void UpdateGameClock()
@@ -185,34 +199,46 @@ public class GameManager : MonoBehaviour
         if (wasNight && !isNight)
         {
             day += 1;
+            moneyOnStart = playerData.Currency;
         }
+
         cycle.DayText = "Day " + day.ToString();
 
-        //if(dayImage && cycle.DayImage)
-        //    dayImage.sprite = cycle.DayImage;
-        //if(nightImage && cycle.NightImage)
-        //    nightImage.sprite = cycle.NightImage;
-
-        //if(dayImage) dayImage.gameObject.SetActive(!isNight);
-        //if(nightImage) nightImage.gameObject.SetActive(isNight);  
-
+        if(!Lost && !Won && !endByLose)
+        {
+            YouWin();
+        }
         wasNight = isNight;
         
     }
 
     public void UpdateCropCount(int amt)
     {
-
         cropCount += amt;
-
     }
-
     public int GetDay()
     {
 
         return day;
 
     }
+    
+    public int UpdateMoneyEarned()
+    {
+        return playerData.Currency - moneyOnStart;
+    }
+
+    public int UpdateCropCount()
+    {
+        return cropCount;
+    }
+
+    public int UpdateCropsDestroyed()
+    {
+        return cropsDestroyed;
+    }
+
+
 
     bool IsNightHour(int hour, int startHour, int endHour)
     {
@@ -235,9 +261,12 @@ public class GameManager : MonoBehaviour
         crops.Add(crop);
     }
 
+    
+
     //public void TogglePlayerController()
     //{
 
     //    Catalyst.Player.PlayerController = player.GetComponent<Catalyst.Player.PlayerController>();
     //}
+
 }

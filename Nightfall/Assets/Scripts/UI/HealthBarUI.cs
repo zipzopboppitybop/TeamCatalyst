@@ -8,17 +8,17 @@ public class HealthBarUI : MonoBehaviour
 
     [SerializeField] private UIDocument uIDocument;
     [SerializeField] private Catalyst.Player.PlayerData playerData;
-    [SerializeField] private Cycles cycles;
 
     private VisualElement root;
     private VisualElement HUD;
     private VisualElement healthBar;
     private VisualElement staminaBar;
-    private VisualElement LoseNote;
+    private VisualElement takingDamage;
+    private VisualElement lowHealth;
+   
     private Label currencyLabel;
-    private Label cropsDestroyedText;
-    private Button okButton;
-    //private Label healthBarLabel;
+
+    private float prevHealth;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,18 +27,22 @@ public class HealthBarUI : MonoBehaviour
         if(uIDocument == null)  
             uIDocument = GetComponent<UIDocument>();
 
+        prevHealth = playerData.Health;
+
         root = uIDocument.rootVisualElement;;
         HUD = root.Q<VisualElement>("HUDContainer");
         healthBar = root.Q<VisualElement>("HealthBarGREEN");
         staminaBar = root.Q<VisualElement>("StamBarFront");
         currencyLabel = root.Q<Label>("moneyText");
-        cropsDestroyedText = root.Q<Label>("CropsDestroyed");
-        LoseNote = root.Q<VisualElement>("YouLose");
 
+        takingDamage = root.Q<VisualElement>("TakingDamage");
+        lowHealth = root.Q<VisualElement>("LowHealth");
+        
         HUD.style.display = DisplayStyle.Flex;
         UpdateHealthBar();
         UpdateStaminaBar();
         UpdateCurrency();
+
     }
 
     // Update is called once per frame
@@ -47,6 +51,8 @@ public class HealthBarUI : MonoBehaviour
         UpdateHealthBar();
         UpdateStaminaBar();
         UpdateCurrency();
+        UpdateDamageTaken();
+        UpdateLowHealthAlert();
 
     }
 
@@ -84,25 +90,27 @@ public class HealthBarUI : MonoBehaviour
             currencyLabel.text = $"${playerData.Currency}";
         }
     }
-    public void ShowLoseScreen()
-    {
-        StartCoroutine(CloseScreen());
-    }
-
-    private void OnButtonClicked()
-    {
-        LoseNote.style.display = DisplayStyle.None;
-    }
-
-    private IEnumerator CloseScreen()
-    {
-        if (LoseNote != null)
+    private void UpdateDamageTaken()
+    {   
+        if (playerData.Health < prevHealth)
         {
-            LoseNote.style.display = DisplayStyle.Flex;
-            cropsDestroyedText.text = $"Crops Destroyed: {GameManager.instance.cropsDestroyed}";
+            takingDamage.style.display = DisplayStyle.Flex;
         }
-        yield return new WaitForSeconds(2f);
+        else
+        {
+            takingDamage.style.display= DisplayStyle.None;
+        }
 
-        LoseNote.style.display = DisplayStyle.None;
+        prevHealth = playerData.Health;
+
+    }
+    private void UpdateLowHealthAlert()
+    {
+        float healthPercent = ((float)playerData.Health / (float)playerData.HealthMax) * 100;
+
+        if (healthPercent <= 20)
+            lowHealth.style.display = DisplayStyle.Flex;
+        else
+            lowHealth.style.display = DisplayStyle.None;
     }
 }
