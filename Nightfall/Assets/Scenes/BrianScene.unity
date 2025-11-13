@@ -3522,6 +3522,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8520908250337453854, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: sceneCam
+      value: 
+      objectReference: {fileID: 6825398107756066912}
+    - target: {fileID: 8520908250337453854, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: playerInputHandler
+      value: 
+      objectReference: {fileID: 1547037201}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3601,6 +3609,14 @@ PrefabInstance:
       propertyPath: homePosTransform
       value: 
       objectReference: {fileID: 1086944349}
+    - target: {fileID: 2293938198664856694, guid: 34052a25c83a55841ac10cd3362ef328, type: 3}
+      propertyPath: audHappy.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2293938198664856694, guid: 34052a25c83a55841ac10cd3362ef328, type: 3}
+      propertyPath: 'audHappy.Array.data[0]'
+      value: 
+      objectReference: {fileID: 8300000, guid: 2a6979ffe6559ce488d9dcde3eca6baf, type: 3}
     - target: {fileID: 4237150109387150613, guid: 34052a25c83a55841ac10cd3362ef328, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.72
@@ -3665,6 +3681,10 @@ PrefabInstance:
     - target: {fileID: 229045996838109253, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: m_Cameras.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 277644111885530291, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1181018415414552405, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: document
