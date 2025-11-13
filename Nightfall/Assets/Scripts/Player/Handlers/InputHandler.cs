@@ -43,6 +43,8 @@ namespace Catalyst.Player
         [SerializeField] private string next = "Next";
         [SerializeField] private string aim = "Aim";
         [SerializeField] private string fire = "Fire";
+        [SerializeField] private string reload = "Reload";
+
         [SerializeField] private string pause = "Pause";
         [SerializeField] private string toggleCamera = "ToggleCamera";
         [SerializeField] private string toggleInventory = "Inventory";
@@ -52,6 +54,7 @@ namespace Catalyst.Player
         private InputAction _nextAction;
         private InputAction _aimAction;
         private InputAction _fireAction;
+        private InputAction _reloadAction;
         private InputAction _toggleCameraAction;
         private InputAction _toggleInventoryAction;
         private bool _inventoryPressedThisFrame;
@@ -75,6 +78,7 @@ namespace Catalyst.Player
         public bool NextTriggered { get; set; }
         public bool AimTriggered { get; set; }
         public bool FireTriggered { get; set; }
+        public bool ReloadTriggered { get; set; }
         public bool PauseTriggered { get; set; }
         public bool ToggleCameraTriggered { get; set; }
         public bool ToggleInventoryTriggered { get; set; }
@@ -102,6 +106,7 @@ namespace Catalyst.Player
             _nextAction = mapReference.FindAction(next);
             _aimAction = mapReference.FindAction(aim);
             _fireAction = mapReference.FindAction(fire);
+            _reloadAction = mapReference.FindAction(reload);
             _pauseAction = mapReference.FindAction(pause);
             _toggleCameraAction = mapReference.FindAction(toggleCamera);
             _toggleInventoryAction = mapReference.FindAction(toggleInventory);
@@ -139,6 +144,9 @@ namespace Catalyst.Player
             _aimAction.canceled += inputInfo => AimTriggered = false;
             _fireAction.performed += inputInfo => FireTriggered = true;
             _fireAction.canceled += inputInfo => FireTriggered = false;
+
+            _reloadAction.performed += inputInfo => ReloadTriggered = true;
+            _reloadAction.canceled += inputInfo => ReloadTriggered = false;
 
             _pauseAction.performed += inputInfo => PauseTriggered = true;
             _pauseAction.canceled += inputInfo => PauseTriggered = false;

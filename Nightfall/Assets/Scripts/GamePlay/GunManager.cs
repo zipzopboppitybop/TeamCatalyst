@@ -27,7 +27,7 @@ namespace Catalyst.GamePlay
 
         private int _animAim;
         private int _animShoot;
-        //private int _animReload;
+        private int _animReload;
         private int _animArmed;
 
         private float _shootTimer = 0f;
@@ -148,12 +148,13 @@ namespace Catalyst.GamePlay
             //    ChangeWeapon();
             //}
             HandleAim();
+            HandleReload();
         }
         private void SetupCombatAnimator()
         {
             _animAim = Animator.StringToHash("Aiming");
             _animShoot = Animator.StringToHash("Shoot");
-            //_animReload = Animator.StringToHash("isReloading");
+            _animReload = Animator.StringToHash("isReloading");
             _animArmed = Animator.StringToHash("isArmed");
         }
 
@@ -193,6 +194,13 @@ namespace Catalyst.GamePlay
 
             }
 
+        }
+        private void HandleReload()
+        {
+            if (playerInputHandler.ReloadTriggered)
+            {
+                StartReload();
+            }
         }
 
         private void HandleShoot()
@@ -250,8 +258,9 @@ namespace Catalyst.GamePlay
             if (_gunListPos < 0 || _gunListPos >= player.Guns.Count) return;
             if (player.Guns[_gunListPos].ammoCur >= player.Guns[_gunListPos].ammoMax) return;
             isReloading = true;
-            animator.SetTrigger("Reload");
+            animator.SetTrigger(_animReload);
             Debug.Log("Reloading...");
+            FinishReload();
         }
 
         public void FinishReload()
@@ -261,6 +270,7 @@ namespace Catalyst.GamePlay
             WeaponData gun = player.Guns[_gunListPos];
             int ammoNeeded = gun.ammoMax - gun.ammoCur;
             gun.ammoCur += ammoNeeded;
+            aud.PlayOneShot(gun.reloadSound, gun.shootVolume);
             if (gun.ammoCur > gun.ammoMax)
             {
                 gun.ammoCur = gun.ammoMax;
