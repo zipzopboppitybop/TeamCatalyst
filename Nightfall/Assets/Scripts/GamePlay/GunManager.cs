@@ -256,7 +256,7 @@ namespace Catalyst.GamePlay
             if (isReloading) return;
             if (player.Guns.Count == 0) return;
             if (_gunListPos < 0 || _gunListPos >= player.Guns.Count) return;
-            if (player.Guns[_gunListPos].ammoCur >= player.Guns[_gunListPos].ammoMax) return;
+            if (player.CurrentGun.ammoCur >= player.CurrentGun.ammoMax) return;
             isReloading = true;
             animator.SetTrigger(_animReload);
             Debug.Log("Reloading...");

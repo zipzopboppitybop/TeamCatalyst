@@ -1,4 +1,5 @@
 using System.Collections;
+using System.IO;
 using Catalyst.GamePlay;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -13,6 +14,8 @@ namespace Catalyst.Player
         public Camera sceneCam;
         public CinemachineCamera FPSCamera;
         public CinemachineCamera thirdPersonCamera;
+        public CinemachineCamera AimCamera;
+
         public Camera gunCam;
         [SerializeField] private Transform followTarget;
         [SerializeField] private LayerMask ignoreLayer;
@@ -55,10 +58,13 @@ namespace Catalyst.Player
 
         private void Start()
         {
+
             characterController = GetComponent<CharacterController>();
+
             SetupAnimator();
             thirdPersonCamera.gameObject.SetActive(false);
-            ToggleCullingLayer();
+            AimCamera.gameObject.SetActive(false);
+            StartCoroutine(ToggleCullingLayer(0.5f));
 
 
         }
@@ -67,6 +73,7 @@ namespace Catalyst.Player
         {
             //if (ThirdPersonActive())
             ApplyThirdPersonRotation(_mouseYRotation, _mouseXRotation);
+            ToggleAimCamera(playerInputHandler.AimTriggered);
 
 
 
@@ -334,19 +341,19 @@ namespace Catalyst.Player
                 // enable ignore layers on main camera 
 
             }
-            ToggleCullingLayer();
+            StartCoroutine(ToggleCullingLayer(1f));
         }
 
-        private void ToggleCullingLayer()
+        IEnumerator ToggleCullingLayer(float time)
         {
             if (FPSCamera == null)
-                return;
+                yield break;
+
             if (thirdPersonCamera.gameObject.activeSelf)
             {
-
-                Debug.Log("Adding culling layers to main camera");
+                yield return new WaitForEndOfFrame();
                 sceneCam.cullingMask |= thirdPersonLayers;
-
+                Debug.Log("Adding culling layers to main camera");
 
                 foreach (GameObject go in hideInFPS)
                 {
@@ -357,20 +364,24 @@ namespace Catalyst.Player
                 {
                     sceneCam.cullingMask |= ~gunCamLayers;
                 }
-
-
             }
-            else
+            else if (gunCam.enabled)
             {
-                //   Debug.Log("Removing culling layers from main camera");
+                // Wait until camera blend is done for sure
+                yield return new WaitForSeconds(time);
+
                 sceneCam.cullingMask &= ~thirdPersonLayers;
                 sceneCam.cullingMask &= ~gunCamLayers;
+
                 foreach (GameObject go in hideInFPS)
                 {
                     go.SetActive(false);
                 }
+
             }
         }
+
+
         IEnumerator FlashDamageScreen()
         {
             //HUDManager.instance.playerDamageScreen.SetActive(true);
@@ -444,7 +455,7 @@ namespace Catalyst.Player
             if (playerData.Health <= 0)
             {
                 GameManager.instance.YouLose();
-                playerData.Health = playerData.HealthMax;  
+                playerData.Health = playerData.HealthMax;
             }
         }
 
@@ -472,6 +483,13 @@ namespace Catalyst.Player
                 }
                 yield return null;
             }
+        }
+        public void ToggleAimCamera(bool isAiming)
+        {
+            if (AimCamera == null)
+                return;
+            if (ThirdPersonActive())
+                AimCamera.gameObject.SetActive(isAiming);
         }
 
     }
