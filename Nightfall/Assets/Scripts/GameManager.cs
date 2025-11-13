@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
     {
         isPaused = true;
         Time.timeScale = 0;
-        player.SetActive(false);
+
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
     {
         isPaused = false;
         Time.timeScale = timeScaleOrig;
-        player.SetActive(true);
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
