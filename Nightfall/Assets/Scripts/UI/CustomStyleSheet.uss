@@ -1,4 +1,6 @@
 :root {
+    align-content: auto;
+    justify-content: center;
 }
 
 .button {

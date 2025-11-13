@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac8dd587fcbb0e647bf1200fe158c578, type: 3}
   m_Name: Rifle
   m_EditorClassIdentifier: Assembly-CSharp::Catalyst.Player.WeaponData
+  gunName: The Rifle
   model: {fileID: 4903087755506185930, guid: 805df89d25869364384276e1ce62c623, type: 3}
   pickUpSound: {fileID: 8300000, guid: 26dcc88d2ba71624a94f96d9a22f2824, type: 3}
   emptyClipSound: {fileID: 8300000, guid: 26dcc88d2ba71624a94f96d9a22f2824, type: 3}
@@ -23,7 +24,7 @@ MonoBehaviour:
   shootDamage: 10
   shootDistance: 100
   shootRate: 1
-  ammoCur: 50
+  ammoCur: 1
   ammoMax: 50
   reloadTime: 0
   hitEffect: {fileID: 8567743453655228817, guid: 212ef1a41838ce044a9ac54994866708, type: 3}

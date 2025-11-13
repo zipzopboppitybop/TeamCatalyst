@@ -32,6 +32,7 @@ namespace Catalyst.Player
         [SerializeField] private int shootDist;
         [SerializeField] private int ammoCount;
         [SerializeField] private int ammoMax;
+        [SerializeField] private int magazineSize;
 
 
 
@@ -80,6 +81,7 @@ namespace Catalyst.Player
 
         public int AmmoCount { get => ammoCount; set => ammoCount = value; }
         public int AmmoMax { get => ammoMax; set => ammoMax = value; }
+        public int MagazineSize { get => magazineSize; set => magazineSize = value; }
 
 
         public float Speed => walkingSpeed;
@@ -107,7 +109,7 @@ namespace Catalyst.Player
 
         [SerializeField] List<WeaponData> guns;
         public List<WeaponData> Guns => guns;
-        private WeaponData currentGun;
+        [SerializeField] private WeaponData currentGun;
 
         public WeaponData CurrentGun
         {

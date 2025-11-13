@@ -43,6 +43,8 @@ namespace Catalyst.Player
         [SerializeField] private string next = "Next";
         [SerializeField] private string aim = "Aim";
         [SerializeField] private string fire = "Fire";
+        [SerializeField] private string reload = "Reload";
+
         [SerializeField] private string pause = "Pause";
         [SerializeField] private string toggleCamera = "ToggleCamera";
         [SerializeField] private string toggleInventory = "Inventory";
@@ -52,6 +54,7 @@ namespace Catalyst.Player
         private InputAction _nextAction;
         private InputAction _aimAction;
         private InputAction _fireAction;
+        private InputAction _reloadAction;
         private InputAction _toggleCameraAction;
         private InputAction _toggleInventoryAction;
         private bool _inventoryPressedThisFrame;
@@ -62,7 +65,7 @@ namespace Catalyst.Player
 
         public Vector2 MoveInput { get; private set; }
         public Vector2 RotationInput { get; private set; }
-        public bool SprintTriggered { get; set; }
+        public bool SprintHeld { get; set; }
 
 
         public bool AttackTriggered { get; set; }
@@ -73,8 +76,9 @@ namespace Catalyst.Player
         public bool JumpTriggered { get; set; }
         public bool PrevTriggered { get; set; }
         public bool NextTriggered { get; set; }
-        public bool AimTriggered { get; set; }
-        public bool FireTriggered { get; set; }
+        public bool AimHeld { get; set; }
+        public bool FireHeld { get; set; }
+        public bool ReloadTriggered { get; set; }
         public bool PauseTriggered { get; set; }
         public bool ToggleCameraTriggered { get; set; }
         public bool ToggleInventoryTriggered { get; set; }
@@ -102,6 +106,7 @@ namespace Catalyst.Player
             _nextAction = mapReference.FindAction(next);
             _aimAction = mapReference.FindAction(aim);
             _fireAction = mapReference.FindAction(fire);
+            _reloadAction = mapReference.FindAction(reload);
             _pauseAction = mapReference.FindAction(pause);
             _toggleCameraAction = mapReference.FindAction(toggleCamera);
             _toggleInventoryAction = mapReference.FindAction(toggleInventory);
@@ -118,8 +123,8 @@ namespace Catalyst.Player
 
             _jumpAction.performed += inputInfo => JumpTriggered = true;
             _jumpAction.canceled += inputInfo => JumpTriggered = false;
-            _sprintAction.performed += inputInfo => SprintTriggered = true;
-            _sprintAction.canceled += inputInfo => SprintTriggered = false;
+            _sprintAction.performed += inputInfo => SprintHeld = true;
+            _sprintAction.canceled += inputInfo => SprintHeld = false;
 
             _attackAction.performed += inputInfo => AttackTriggered = true;
             _attackAction.canceled += inputInfo => AttackTriggered = false;
@@ -135,10 +140,13 @@ namespace Catalyst.Player
             _nextAction.performed += inputInfo => NextTriggered = true;
             _nextAction.canceled += inputInfo => NextTriggered = false;
 
-            _aimAction.performed += inputInfo => AimTriggered = true;
-            _aimAction.canceled += inputInfo => AimTriggered = false;
-            _fireAction.performed += inputInfo => FireTriggered = true;
-            _fireAction.canceled += inputInfo => FireTriggered = false;
+            _aimAction.performed += inputInfo => AimHeld = true;
+            _aimAction.canceled += inputInfo => AimHeld = false;
+            _fireAction.performed += inputInfo => FireHeld = true;
+            _fireAction.canceled += inputInfo => FireHeld = false;
+
+            _reloadAction.performed += inputInfo => ReloadTriggered = true;
+            _reloadAction.canceled += inputInfo => ReloadTriggered = false;
 
             _pauseAction.performed += inputInfo => PauseTriggered = true;
             _pauseAction.canceled += inputInfo => PauseTriggered = false;
