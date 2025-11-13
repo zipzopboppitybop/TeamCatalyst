@@ -15,7 +15,7 @@ namespace Catalyst.CameraController
         public CinemachineCamera AimCamera;
         [SerializeField] private Transform followTarget;
         [SerializeField] private Transform aimTarget;
-
+        [SerializeField, Range(1, 20)] private int aimFollowSpeed;
         [SerializeField] private LayerMask gunCamLayers;
         [SerializeField] private LayerMask thirdPersonLayers;
         [SerializeField] private LayerMask ignoreLayer;
@@ -46,7 +46,7 @@ namespace Catalyst.CameraController
         {
             ThirdPersonActive();
             HandleRotation();
-            FollowMousePosition();
+
         }
         private void LateUpdate()
         {
@@ -202,7 +202,12 @@ namespace Catalyst.CameraController
             if (AimCamera == null)
                 return;
             if (ThirdPersonActive())
+            {
                 AimCamera.gameObject.SetActive(isAiming);
+                if (isAiming)
+                    FollowMousePosition();
+
+            }
         }
 
         IEnumerator ToggleCamera(CinemachineCamera cam)
@@ -229,8 +234,15 @@ namespace Catalyst.CameraController
         }
         public void FollowMousePosition()
         {
-            Vector3 mouseWorldPos = GetMouseWorldPosition();
-            aimTarget.position = mouseWorldPos;
+            Vector3 worldAimTarget
+                = GetMouseWorldPosition();
+
+            worldAimTarget.y = transform.position.y;
+
+            Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
+            transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * aimFollowSpeed);
+
+            aimTarget.position = worldAimTarget;
         }
     }
 }

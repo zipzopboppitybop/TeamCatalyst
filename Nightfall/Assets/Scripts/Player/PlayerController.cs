@@ -173,14 +173,24 @@ namespace Catalyst.Player
 
             playerDir = CalculateMoveDirection();
 
-            _currentMovement.x = playerDir.x * CurrentSpeed;
+            if (playerInputHandler.AimHeld)
+                _currentMovement.x = playerDir.x * (CurrentSpeed * 0.5f);
+
+            else
+                _currentMovement.x = playerDir.x * CurrentSpeed;
+
+
             _currentMovement.z = playerDir.z * CurrentSpeed;
             HandleJumping();
 
             characterController.Move(_currentMovement * Time.deltaTime);
 
+            if (playerInputHandler.AimHeld)
+                animator.SetFloat(_animVelocityX, playerInputHandler.MoveInput.x * 0.1f);
 
-            animator.SetFloat(_animVelocityX, Mathf.SmoothDamp(animator.GetFloat(_animVelocityX), playerInputHandler.MoveInput.x * _currentMovement.magnitude, ref _velocityX, 0.1f));
+            else
+                animator.SetFloat(_animVelocityX, Mathf.SmoothDamp(animator.GetFloat(_animVelocityX), playerInputHandler.MoveInput.x * _currentMovement.magnitude, ref _velocityX, 0.1f));
+
             animator.SetFloat(_animVelocityZ, Mathf.SmoothDamp(animator.GetFloat(_animVelocityZ), playerInputHandler.MoveInput.y * _currentMovement.magnitude, ref _velocityZ, 0.1f));
         }
 
