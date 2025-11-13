@@ -14,9 +14,11 @@ namespace Catalyst.CameraController
         public CinemachineCamera thirdPersonCamera;
         public CinemachineCamera AimCamera;
         [SerializeField] private Transform followTarget;
+        [SerializeField] private Transform aimTarget;
 
         [SerializeField] private LayerMask gunCamLayers;
         [SerializeField] private LayerMask thirdPersonLayers;
+        [SerializeField] private LayerMask ignoreLayer;
         [SerializeField] private GameObject[] hideInFPS;
         [SerializeField] private InputHandler playerInputHandler;
         [SerializeField] private PlayerData playerData;
@@ -44,6 +46,7 @@ namespace Catalyst.CameraController
         {
             ThirdPersonActive();
             HandleRotation();
+            FollowMousePosition();
         }
         private void LateUpdate()
         {
@@ -210,6 +213,24 @@ namespace Catalyst.CameraController
             ToggleGunCam();
             yield return new WaitForSeconds(1.0f);
             playerInputHandler.enabled = true;
+        }
+
+        public Vector3 GetMouseWorldPosition()
+        {
+
+            Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+            Ray ray = sceneCam.ScreenPointToRay(screenCenterPoint);
+            if (Physics.Raycast(ray, out RaycastHit hit, sceneCam.farClipPlane, ~ignoreLayer, QueryTriggerInteraction.Ignore))
+            {
+                return hit.point;
+            }
+            return Vector3.zero; // Return a default value if no hit
+
+        }
+        public void FollowMousePosition()
+        {
+            Vector3 mouseWorldPos = GetMouseWorldPosition();
+            aimTarget.position = mouseWorldPos;
         }
     }
 }

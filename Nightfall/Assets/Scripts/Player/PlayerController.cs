@@ -71,6 +71,7 @@ namespace Catalyst.Player
             HandleAttack();
             HandleDash();
             UpdateInteract();
+            //camController.FollowMousePosition(transform);
 
 
         }
