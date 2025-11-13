@@ -16,6 +16,7 @@ public class HealthBarUI : MonoBehaviour
     private VisualElement staminaBar;
     private VisualElement LoseNote;
     private VisualElement _weaponContainer;
+    private VisualElement _reticleContainer;
     private Label currencyLabel;
     private Label cropsDestroyedText;
     private Button okButton;
@@ -37,6 +38,7 @@ public class HealthBarUI : MonoBehaviour
         LoseNote = root.Q<VisualElement>("YouLose");
 
         _weaponContainer = root.Q<VisualElement>("WeaponContainer");
+        _reticleContainer = root.Q<VisualElement>("ReticleContainer");
 
         HUD.style.display = DisplayStyle.Flex;
         UpdateHealthBar();
@@ -72,22 +74,28 @@ public class HealthBarUI : MonoBehaviour
             staminaBar.style.width = Length.Percent(staminaPercent * 100);
         }
     }
-
     public void ShowWeaponUI()
     {
-
-        if (_weaponContainer != null)
-        {
-            _weaponContainer.style.display = DisplayStyle.Flex;
-        }
-
+        StartCoroutine(ShowWeaponCoroutine());
     }
     public void HideWeaponUI()
     {
-        if (_weaponContainer != null)
-        {
-            _weaponContainer.style.display = DisplayStyle.None;
-        }
+        StartCoroutine(HideWeaponCoroutine());
+    }
+    private IEnumerator ShowWeaponCoroutine()
+    {
+
+        _weaponContainer.style.display = DisplayStyle.Flex;
+        _reticleContainer.style.display = DisplayStyle.Flex;
+        yield return null;
+    }
+    private IEnumerator HideWeaponCoroutine()
+    {
+
+        _weaponContainer.style.display = DisplayStyle.None;
+        _reticleContainer.style.display = DisplayStyle.None;
+        yield return null;
+
 
     }
 

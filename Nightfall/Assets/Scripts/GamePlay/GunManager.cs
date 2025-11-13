@@ -34,8 +34,6 @@ namespace Catalyst.GamePlay
 
         private bool isReloading = false;
 
-        public WeaponData CurrentWeapon => _currentWeapon;
-
         private void Awake()
         {
             if (playerInputHandler == null)
@@ -59,15 +57,22 @@ namespace Catalyst.GamePlay
             EquipGun();
 
 
+
         }
 
         private void Update()
         {
             _shootTimer += Time.deltaTime;
 
-            if (CurrentWeapon != null)
+            if (player.CurrentGun != null)
             {
                 SelectWeapon();
+            }
+
+            if (player.Guns.Count == 0 || player.CurrentGun == null)
+            {
+                HealthBarUI.instance.HideWeaponUI();
+                return;
             }
 
         }
@@ -76,11 +81,7 @@ namespace Catalyst.GamePlay
 
         private void EquipGun()
         {
-            if (player.Guns.Count == 0)
-            {
-                HealthBarUI.instance.HideWeaponUI();
-                return;
-            }
+
 
             ChangeWeapon();
             //animator.SetBool(_animArmed, true);
@@ -108,21 +109,20 @@ namespace Catalyst.GamePlay
         }
         private void ChangeWeapon()
         {
-            _currentWeapon = player.Guns[_gunListPos];
-            player.CurrentGun = _currentWeapon;
-            shootSound = player.Guns[_gunListPos].shootSounds;
+            player.CurrentGun = player.Guns[_gunListPos];
+            shootSound = player.CurrentGun.shootSounds;
             Debug.Log("Equipped " + _currentWeapon.name);
-            gunModel.GetComponent<MeshFilter>().sharedMesh = player.Guns[_gunListPos].model.GetComponent<MeshFilter>().sharedMesh;
-            gunModel.GetComponent<MeshRenderer>().sharedMaterial = player.Guns[_gunListPos].model.GetComponent<MeshRenderer>().sharedMaterial;
+            gunModel.GetComponent<MeshFilter>().sharedMesh = player.CurrentGun.model.GetComponent<MeshFilter>().sharedMesh;
+            gunModel.GetComponent<MeshRenderer>().sharedMaterial = player.CurrentGun.model.GetComponent<MeshRenderer>().sharedMaterial;
 
             if (_currentWeapon.ammoCur > 0)
-                aud.PlayOneShot(player.Guns[_gunListPos].pickUpSound, 0.5f);
+                aud.PlayOneShot(player.CurrentGun.pickUpSound, 0.5f);
 
-            player.ShootDamage = player.Guns[_gunListPos].shootDamage;
-            player.ShootDist = player.Guns[_gunListPos].shootDistance;
-            player.ShootRate = player.Guns[_gunListPos].shootRate;
-            player.AmmoCount = player.Guns[_gunListPos].ammoCur;
-            player.AmmoMax = player.Guns[_gunListPos].ammoMax;
+            player.ShootDamage = player.CurrentGun.shootDamage;
+            player.ShootDist = player.CurrentGun.shootDistance;
+            player.ShootRate = player.CurrentGun.shootRate;
+            player.AmmoCount = player.CurrentGun.ammoCur;
+            player.AmmoMax = player.CurrentGun.ammoMax;
 
             HealthBarUI.instance.ShowWeaponUI();
 
@@ -167,7 +167,7 @@ namespace Catalyst.GamePlay
                 return false;
             }
             if (_gunListPos < 0 || _gunListPos >= player.Guns.Count) return false;
-            if (player.Guns[_gunListPos].ammoCur <= 0) return false;
+            if (player.CurrentGun.ammoCur <= 0) return false;
             if (isReloading) return false;
             return true;
         }
@@ -181,7 +181,7 @@ namespace Catalyst.GamePlay
                 animator.SetBool(_animArmed, false);
                 return;
             }
-            if (playerInputHandler.AimTriggered)
+            if (playerInputHandler.AimHeld)
             {
                 animator.SetBool(_animAim, true);
                 Debug.Log("Aiming");
@@ -205,7 +205,7 @@ namespace Catalyst.GamePlay
 
         private void HandleShoot()
         {
-            if (playerInputHandler.FireTriggered && _shootTimer > player.ShootRate && PlayerCanShoot())
+            if (playerInputHandler.FireHeld && _shootTimer > player.ShootRate && PlayerCanShoot())
             {
                 _shootTimer = 0f;
 
@@ -220,14 +220,13 @@ namespace Catalyst.GamePlay
 
         public void Shoot()
         {
-            player.Guns[_gunListPos].ammoCur--;
-            aud.PlayOneShot(player.Guns[_gunListPos].shootSounds[Random.Range(0, player.Guns[_gunListPos].shootSounds.Length)], player.Guns[_gunListPos].shootVolume);
-            //updatePlayerUI();
+            player.CurrentGun.ammoCur--;
+            aud.PlayOneShot(player.CurrentGun.shootSounds[Random.Range(0, player.Guns[_gunListPos].shootSounds.Length)], player.CurrentGun.shootVolume);
 
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, player.ShootDist, ~ignoreLayer))
             {
-                Instantiate(player.Guns[_gunListPos].hitEffect, hit.point, Quaternion.identity);
+                Instantiate(player.CurrentGun.hitEffect, hit.point, Quaternion.identity);
 
                 Debug.Log(hit.collider.name);
 
@@ -240,7 +239,7 @@ namespace Catalyst.GamePlay
                 }
                 if (hit.rigidbody != null)
                 {
-                    hit.rigidbody.AddForce(-hit.normal * CurrentWeapon.impactForce);
+                    hit.rigidbody.AddForce(-hit.normal * player.CurrentGun.impactForce);
                 }
 
             }
@@ -267,7 +266,7 @@ namespace Catalyst.GamePlay
         {
             if (player.Guns.Count == 0) return;
             if (_gunListPos < 0 || _gunListPos >= player.Guns.Count) return;
-            WeaponData gun = player.Guns[_gunListPos];
+            WeaponData gun = player.CurrentGun;
             int ammoNeeded = gun.ammoMax - gun.ammoCur;
             gun.ammoCur += ammoNeeded;
             aud.PlayOneShot(gun.reloadSound, gun.shootVolume);

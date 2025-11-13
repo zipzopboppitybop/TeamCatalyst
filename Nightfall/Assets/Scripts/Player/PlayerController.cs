@@ -73,13 +73,13 @@ namespace Catalyst.Player
         {
             //if (ThirdPersonActive())
             ApplyThirdPersonRotation(_mouseYRotation, _mouseXRotation);
-            ToggleAimCamera(playerInputHandler.AimTriggered);
+            ToggleAimCamera(playerInputHandler.AimHeld);
 
 
 
         }
 
-        private float CurrentSpeed => playerData.Speed * (playerInputHandler.SprintTriggered ? playerData.SprintSpeed : 1);
+        private float CurrentSpeed => playerData.Speed * (playerInputHandler.SprintHeld ? playerData.SprintSpeed : 1);
 
 
         void Update()
