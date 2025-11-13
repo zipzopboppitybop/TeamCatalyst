@@ -30,7 +30,13 @@
                     <ui:DataBinding property="text" data-source-path="currentGun.gunName" binding-mode="ToTarget" />
                 </Bindings>
             </ui:Label>
-            <ui:VisualElement style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Materials/Sprites/Ammo.png?fileID=21300000&amp;guid=109b7c24ba6b4904dab027a6c0047a9a&amp;type=3#Ammo&quot;); -unity-text-align: upper-center; width: 40px; height: 40px;" />
+            <ui:VisualElement name="AmmoSprite" style="flex-grow: 1; background-image: url(&quot;project://database/Assets/Materials/Sprites/Ammo.png?fileID=21300000&amp;guid=109b7c24ba6b4904dab027a6c0047a9a&amp;type=3#Ammo&quot;); -unity-text-align: upper-center; width: 40px; height: 40px;">
+                <ui:Label name="Stack" style="-unity-font-definition: url(&quot;project://database/Assets/Unity%20Store%20DL/Farm%20Game%20UI%20-%20Simple%202D%20UI/Font/LilitaOne-Regular.ttf?fileID=12800000&amp;guid=b0b25c7081699704f917d02e28f31692&amp;type=3#LilitaOne-Regular&quot;); font-size: 18px; -unity-text-align: lower-right; color: rgb(255, 255, 255); position: absolute; top: 17px; left: 20px;">
+                    <Bindings>
+                        <ui:DataBinding property="text" data-source-path="magazineSize" binding-mode="ToTarget" />
+                    </Bindings>
+                </ui:Label>
+            </ui:VisualElement>
             <ui:Label name="AmmoCount" style="-unity-font-definition: url(&quot;project://database/Assets/Unity%20Store%20DL/Farm%20Game%20UI%20-%20Simple%202D%20UI/Font/LilitaOne-Regular.ttf?fileID=12800000&amp;guid=b0b25c7081699704f917d02e28f31692&amp;type=3#LilitaOne-Regular&quot;); font-size: 30px; -unity-text-align: upper-center; color: rgb(255, 255, 255);">
                 <Bindings>
                     <ui:DataBinding property="text" data-source-path="currentGun.ammoCur" binding-mode="ToTarget" />

@@ -30,6 +30,7 @@ MonoBehaviour:
   shootDist: 100
   ammoCount: 50
   ammoMax: 50
+  magazineSize: 3
   walkingSpeed: 2
   sprintSpeed: 5
   dashSpeed: 3

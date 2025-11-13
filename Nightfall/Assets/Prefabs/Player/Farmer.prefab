@@ -154,7 +154,7 @@ MonoBehaviour:
   AimCamera: {fileID: 6290561366353044341}
   followTarget: {fileID: 5629587793951799693}
   aimTarget: {fileID: 2400763769896934826}
-  aimFollowSpeed: 10
+  aimFollowSpeed: 20
   gunCamLayers:
     serializedVersion: 2
     m_Bits: 1048576
@@ -367,6 +367,7 @@ MonoBehaviour:
   aud: {fileID: 853817436050279361}
   playerInputHandler: {fileID: 0}
   playerController: {fileID: 2704039868389915847}
+  magPickupSound: {fileID: 8300000, guid: 57e1f2f1d21957d4b9c43052a5ae927f, type: 3}
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 0
