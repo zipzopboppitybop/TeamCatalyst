@@ -36,10 +36,28 @@ namespace Catalyst.GamePlay
 
         public WeaponData CurrentWeapon => _currentWeapon;
 
+        private void Awake()
+        {
+            if (playerInputHandler == null)
+            {
+                playerInputHandler = GetComponent<InputHandler>();
+            }
+            if (animator == null)
+            {
+                animator = gunHolder.GetComponent<Animator>();
+            }
+            if (aud == null)
+            {
+                aud = GetComponent<AudioSource>();
+
+            }
+            SetupCombatAnimator();
+        }
         private void Start()
         {
+
             EquipGun();
-            SetupCombatAnimator();
+
 
         }
 
@@ -265,6 +283,7 @@ namespace Catalyst.GamePlay
                 {
                     gun.ammoCur = gun.ammoMax;
                 }
+                aud.PlayOneShot(gun.reloadSound, gun.shootVolume);
                 return true;
             }
 
