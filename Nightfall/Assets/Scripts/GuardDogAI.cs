@@ -3,10 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Transforms;
 using UnityEngine;
+using static UnityEngine.GridBrushBase;
 
 public class GuardDogAI : AILogic, IInteractable
 {
     [SerializeField] Transform homePosTransform;
+    [SerializeField] private AudioClip[] audHappy;
     protected Vector3 homePos;
     private bool targetInRange;
 
@@ -275,6 +277,39 @@ public class GuardDogAI : AILogic, IInteractable
 
     public void Interact()
     {
-        
+        aud.PlayOneShot(audHappy[Random.Range(0, audHappy.Length)]);
+        StartCoroutine(DoBackflip());
+    }
+    private IEnumerator DoBackflip()
+    {
+        if (agent != null)
+        {
+            agent.enabled = false;
+        }
+
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;
+
+        float duration = 0.5f; 
+        float elapsed = 0f;
+        float jumpHeight = 1.0f;
+        Quaternion startRot = transform.rotation;
+        Quaternion endRot = transform.rotation * Quaternion.Euler(360f, 0f, 0f);
+        Vector3 startPos = transform.position;
+
+        while (elapsed < duration)
+        {
+            float t = elapsed / duration;
+            float heightOffset = Mathf.Sin(Mathf.PI * t) * jumpHeight;
+            transform.position = startPos + Vector3.up * heightOffset;
+            transform.rotation = Quaternion.Slerp(startRot, endRot, t);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = startPos;
+        transform.rotation = startRot;
+
+        agent.enabled = true;
     }
 }
