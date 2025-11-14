@@ -126,7 +126,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Catalyst.Player.Inventory.UpgradePickup
   type: 1
-  value: 0
+  value: 1
   gunData: {fileID: 0}
   rotateSpeed: 50
   pulseSpeed: 2

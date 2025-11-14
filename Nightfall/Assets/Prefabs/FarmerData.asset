@@ -47,5 +47,5 @@ MonoBehaviour:
   notesCollected: 0
   roomsClear: 0
   guns:
-  - {fileID: 11400000, guid: 5e17b70c5f1b7444a830bd25d57ae966, type: 2}
-  currentGun: {fileID: 11400000, guid: 5e17b70c5f1b7444a830bd25d57ae966, type: 2}
+  - {fileID: 11400000, guid: 3a6e640c33d1c3c4ca60828f6a4cb69b, type: 2}
+  currentGun: {fileID: 11400000, guid: 3a6e640c33d1c3c4ca60828f6a4cb69b, type: 2}

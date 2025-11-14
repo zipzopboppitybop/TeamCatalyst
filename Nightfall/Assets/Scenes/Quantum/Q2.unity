@@ -880,15 +880,15 @@ PrefabInstance:
       objectReference: {fileID: 230388194}
     - target: {fileID: 1395955742324642863, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -961
+      value: -960
       objectReference: {fileID: 0}
     - target: {fileID: 1395955742324642863, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -538.72
+      value: -538.563
       objectReference: {fileID: 0}
     - target: {fileID: 1395955742324642863, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2
+      value: 0.242
       objectReference: {fileID: 0}
     - target: {fileID: 1770251509508178895, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: m_Name
@@ -900,7 +900,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6822405650549685224, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: near clip plane
-      value: 0.3
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 8686796277236601598, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: m_Pivot.x
