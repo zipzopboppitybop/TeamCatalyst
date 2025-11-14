@@ -3931,6 +3931,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChickenCoop
       objectReference: {fileID: 0}
+    - target: {fileID: 4824343773323084103, guid: e3249ac7036e0df4e83049cd667ed280, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5312087799115684861, guid: e3249ac7036e0df4e83049cd667ed280, type: 3}
       propertyPath: m_LocalPosition.x
       value: -16.952475
