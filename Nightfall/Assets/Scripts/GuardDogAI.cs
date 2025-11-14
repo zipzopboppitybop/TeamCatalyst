@@ -352,7 +352,10 @@ public class GuardDogAI : AILogic, IInteractable
 
         if (distance > 2f)
         {
-            agent.SetDestination(playerPos.position);
+            if (agent.enabled)
+            {
+                agent.SetDestination(playerPos.position);
+            }
         }
         else
         {

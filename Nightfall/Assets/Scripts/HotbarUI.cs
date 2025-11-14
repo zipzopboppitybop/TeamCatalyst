@@ -3,6 +3,8 @@ using UnityEngine.UIElements;
 
 public class HotbarUI : MonoBehaviour
 {
+    HealthBarUI instance;
+
     private int slotCount;
     private int selectedSlot;
     private VisualElement[] slots;

@@ -1,8 +1,9 @@
+using Catalyst.GamePlay;
 using UnityEngine;
 
-public class Chest : InventoryHolder
+public class Chest : InventoryHolder, IInteractable
 {
-    public void OpenChest()
+    public void Interact()
     {
         OnDynamicInventoryDisplayRequested?.Invoke(primaryInventory);
     }

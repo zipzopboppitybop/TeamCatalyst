@@ -232,7 +232,7 @@ MonoBehaviour:
   primaryInventorySize: 8
   primaryInventory:
     inventorySlots: []
-  secondaryInventorySize: 24
+  secondaryInventorySize: 15
   secondaryInventory:
     inventorySlots: []
   hotbarUI: {fileID: 0}

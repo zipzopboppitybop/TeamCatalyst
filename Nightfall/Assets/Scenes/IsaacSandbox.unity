@@ -176,6 +176,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf1b8c21173815a42a7c629fe33d02b8, type: 3}
+--- !u!114 &184210584 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1252265930087341137, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
+  m_PrefabInstance: {fileID: 1610509403}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8d5be07c4c084a409a8fa42c321aca3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventoryUI
 --- !u!1 &228485253
 GameObject:
   m_ObjectHideFlags: 0
@@ -1079,7 +1090,7 @@ PrefabInstance:
     - target: {fileID: 2704039868389915847, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: playerInventory
       value: 
-      objectReference: {fileID: 790618346}
+      objectReference: {fileID: 184210584}
     - target: {fileID: 2704039868389915847, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: playerInputHandler
       value: 
@@ -1351,6 +1362,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4615074129772477254, guid: 59f4905e1f1955642b6c61f28622f736, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
     - target: {fileID: 7802366829314756072, guid: 59f4905e1f1955642b6c61f28622f736, type: 3}
       propertyPath: m_Name
       value: WaterDropBullet

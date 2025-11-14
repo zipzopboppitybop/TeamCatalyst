@@ -16,7 +16,6 @@ public class HealthBarUI : MonoBehaviour
     private VisualElement takingDamage;
     private VisualElement lowHealth;
    
-    private VisualElement LoseNote;
     private VisualElement _weaponContainer;
     private VisualElement _reticleContainer;
     private Label currencyLabel;
@@ -118,7 +117,7 @@ public class HealthBarUI : MonoBehaviour
     {
         if (currencyLabel != null)
         {
-            currencyLabel.text = $"${playerData.Currency}";
+            currencyLabel.text = $"${(float)playerData.Currency}";
         }
     }
     private void UpdateDamageTaken()
@@ -131,9 +130,7 @@ public class HealthBarUI : MonoBehaviour
         {
             takingDamage.style.display= DisplayStyle.None;
         }
-
         prevHealth = playerData.Health;
-
     }
     private void UpdateLowHealthAlert()
     {
