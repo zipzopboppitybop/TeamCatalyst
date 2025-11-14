@@ -12,9 +12,14 @@ public class PlayerInventoryUI : MonoBehaviour
     [SerializeField] private UIDocument document;
 
     public Inventory inventory;
+    public Inventory hotBarInventory;
+    private VisualElement hotBar;
     private VisualElement root;
+    private VisualElement playerInventory;
+    private VisualElement[] hotBarSlots;
     private VisualElement[] slots;
     private int slotCount;
+    private int hotBarSlotCount;
     private int selectedSlot;
     private InventorySlot selectedInventorySlot;
 
@@ -34,73 +39,90 @@ public class PlayerInventoryUI : MonoBehaviour
         player = GameManager.instance.player;
         playerController = player.GetComponent<Catalyst.Player.PlayerController>();
         inputHandler = playerController.playerInputHandler;
+        hotBarInventory = playerController.GetComponent<PlayerInventoryHolder>().PrimaryInventory;
         if (document == null)
         {
             document = GetComponent<UIDocument>();
         }
 
-
         root = document.rootVisualElement;
+        hotBar = root.Q<VisualElement>("HotBar");
+        playerInventory = root.Q<VisualElement>("InventorySlots");
 
-        root.pickingMode = PickingMode.Ignore;
+        hotBar.style.display = DisplayStyle.Flex;
 
-        if (!isChestUI)
+        hotBarSlotCount = hotBarInventory.InventorySize;
+        hotBarSlots = new VisualElement[hotBarSlotCount];
+
+        for (int i = 0; i < hotBarSlots.Length; i++)
         {
-            inventory = isHotbar ? GameManager.instance.player.GetComponent<PlayerInventoryHolder>().PrimaryInventory : GameManager.instance.player.GetComponent<PlayerInventoryHolder>().SecondaryInventory;
+            hotBarSlots[i] = hotBar.Q<VisualElement>($"HotBarSlot-{i}");
+            RegisterHotBarSlotCallbacks(i);
         }
 
-        if (!isHotbar)
-        {
-            root.style.display = DisplayStyle.None;
-        }
+        hotBarInventory.OnInventorySlotChanged += RefreshHotBar;
+        RefreshHotBar();
 
-        VisualElement slotsContainer = root.Q<VisualElement>("Slots");
-        slots = null;
+        SelectSlot(0);
 
-        if (inventory == null)
-        {
-            return;
-        }
 
-        slotCount = inventory.InventorySize;
-        slots = new VisualElement[slotCount];
+        //root.pickingMode = PickingMode.Ignore;
 
-        if (isHotbar)
-        {
-            for (int i = 0; i < slots.Length; i++)
-            {
-                slots[i] = slotsContainer.Q<VisualElement>($"Slot-{i}");
-                RegisterSlotCallbacks(i);
-            }
-        }
-        else
-        {
-            List<VisualElement> rows = slotsContainer.Query<VisualElement>(className: "row").ToList();
-            int index = 0;
-            foreach (VisualElement row in rows)
-            {
-                foreach (VisualElement slot in row.Children())
-                {
-                    if (!slot.ClassListContains("slot")) continue;
-                    if (index >= slotCount) break;
+        //if (!isChestUI)
+        //{
+        //    inventory = isHotbar ? GameManager.instance.player.GetComponent<PlayerInventoryHolder>().PrimaryInventory : GameManager.instance.player.GetComponent<PlayerInventoryHolder>().SecondaryInventory;
+        //}
 
-                    slots[index] = slot;
-                    int currentIndex = index;
-                    RegisterSlotCallbacks(currentIndex);
-                    index++;
-                }
-            }
+        //if (!isHotbar)
+        //{
+        //    root.style.display = DisplayStyle.None;
+        //}
 
-            root.style.display = DisplayStyle.None;
-        }
+        //VisualElement slotsContainer = root.Q<VisualElement>("Slots");
+        //slots = null;
 
-        inventory.OnInventorySlotChanged += RefreshInventory;
-        RefreshInventory();
+        //if (inventory == null)
+        //{
+        //    return;
+        //}
 
-        if (isHotbar)
-        {
-            SelectSlot(0);
-        }
+
+        //if (isHotbar)
+        //{
+        //    for (int i = 0; i < slots.Length; i++)
+        //    {
+        //        slots[i] = slotsContainer.Q<VisualElement>($"Slot-{i}");
+        //        RegisterSlotCallbacks(i);
+        //    }
+        //}
+        //else
+        //{
+        //    List<VisualElement> rows = slotsContainer.Query<VisualElement>(className: "row").ToList();
+        //    int index = 0;
+        //    foreach (VisualElement row in rows)
+        //    {
+        //        foreach (VisualElement slot in row.Children())
+        //        {
+        //            if (!slot.ClassListContains("slot")) continue;
+        //            if (index >= slotCount) break;
+
+        //            slots[index] = slot;
+        //            int currentIndex = index;
+        //            RegisterSlotCallbacks(currentIndex);
+        //            index++;
+        //        }
+        //    }
+
+        //    root.style.display = DisplayStyle.None;
+        //}
+
+        //inventory.OnInventorySlotChanged += RefreshInventory;
+        //RefreshInventory();
+
+        //if (isHotbar)
+        //{
+        //    SelectSlot(0);
+        //}
     }
 
     void Update()
@@ -184,17 +206,17 @@ public class PlayerInventoryUI : MonoBehaviour
     private void SelectSlot(int index)
     {
         selectedSlot = index;
-        selectedInventorySlot = inventory.InventorySlots[index];
+        selectedInventorySlot = hotBarInventory.InventorySlots[index];
         UpdateSelection();
     }
 
     private void UpdateSelection()
     {
-        for (int i = 0; i < slotCount; i++)
+        for (int i = 0; i < hotBarSlotCount; i++)
         {
-            if (slots[i] != null)
+            if (hotBarSlots[i] != null)
             {
-                slots[i].EnableInClassList("selected", i == selectedSlot);
+                hotBarSlots[i].EnableInClassList("selected", i == selectedSlot);
             }
         }
     }
@@ -203,6 +225,37 @@ public class PlayerInventoryUI : MonoBehaviour
     {
         slots[index].RegisterCallback<PointerDownEvent>(e => OnSlotPointerDown(index));
         slots[index].RegisterCallback<PointerUpEvent>(e => OnSlotPointerUp(index));
+    }
+
+    private void RegisterHotBarSlotCallbacks(int index)
+    {
+        hotBarSlots[index].RegisterCallback<PointerDownEvent>(e => OnSlotPointerDown(index));
+        hotBarSlots[index].RegisterCallback<PointerUpEvent>(e => OnSlotPointerUp(index));
+    }
+
+    public void RefreshHotBar(InventorySlot _ = null)
+    {
+        for (int i = 0; i < hotBarSlotCount; i++)
+        {
+            Debug.Log(hotBarInventory.InventorySlots[i].StackSize);
+            VisualElement slotElement = hotBarSlots[i];
+            InventorySlot slotData = hotBarInventory.InventorySlots[i];
+
+            Label countLabel = slotElement.Q<Label>("Count");
+            countLabel.text = slotData.StackSize > 1 ? slotData.StackSize.ToString() : "";
+
+            VisualElement icon = slotElement.Q<VisualElement>("Icon");
+            if (slotData.ItemData != null)
+            {
+                icon.style.backgroundImage = new StyleBackground(slotData.ItemData.Icon);
+                icon.style.opacity = 1f;
+            }
+            else
+            {
+                icon.style.backgroundImage = null;
+                icon.style.opacity = 0f;
+            }
+        }
     }
 
     public void RefreshInventory(InventorySlot _ = null)
