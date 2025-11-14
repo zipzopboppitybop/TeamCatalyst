@@ -9,6 +9,7 @@ public class TilePainter : MonoBehaviour
 
     [SerializeField] RuleTile[] selectedTile;
     [SerializeField] Tilemap map;
+    [SerializeField] PlayerInventoryUI inv;
 
     [SerializeField] GhostItem ghostPlacer;
 
@@ -168,6 +169,7 @@ public class TilePainter : MonoBehaviour
                         }
                     }
                 }
+                else if (heldItem.name.Contains("Watering"))
                 else
                 {       
                     Debug.Log("Can't plant seed — need fertilized farmland.");
