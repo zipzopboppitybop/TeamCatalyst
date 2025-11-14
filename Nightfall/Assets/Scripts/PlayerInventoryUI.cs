@@ -15,6 +15,7 @@ public class PlayerInventoryUI : MonoBehaviour
     private VisualElement hotBarUI;
     private VisualElement root;
     private VisualElement playerInventoryUI;
+    private VisualElement playerInventoryMenu;
     private VisualElement chestInventoryUI;
     private VisualElement chestInventoryMenu;
     private VisualElement menuSystemUI;
@@ -27,7 +28,6 @@ public class PlayerInventoryUI : MonoBehaviour
     private int selectedSlot;
     private InventorySlot selectedInventorySlot;
     public bool isChestOpen;
-
     private InventorySlot draggingSlotOriginal;
     private int draggingSlotIndex;
     private Inventory draggingFromInventory;
@@ -54,6 +54,7 @@ public class PlayerInventoryUI : MonoBehaviour
         root = document.rootVisualElement;
         hotBarUI = root.Q<VisualElement>("HotBar");
         playerInventoryUI = root.Q<VisualElement>("InventorySlots");
+        playerInventoryMenu = root.Q<VisualElement>("InventoryMenu");
         chestInventoryUI = root.Q<VisualElement>("ChestInventorySlots");
         chestInventoryMenu = root.Q<VisualElement>("ChestInventoryMenu");
         menuSystemUI = root.Q<VisualElement>("MenuSystem");
@@ -384,6 +385,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
         menuSystemUI.style.display = DisplayStyle.Flex;
         chestInventoryMenu.style.display = DisplayStyle.Flex;
+        playerInventoryMenu.style.left = new Length(10, LengthUnit.Percent);
 
         UnityEngine.Cursor.lockState = CursorLockMode.None;
         UnityEngine.Cursor.visible = true;
@@ -411,7 +413,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
         toggleInventory = false; 
         playerController.isInventoryOpen = false;
-
+        playerInventoryMenu.style.left = new Length(30, LengthUnit.Percent);
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         UnityEngine.Cursor.visible = false;
 
