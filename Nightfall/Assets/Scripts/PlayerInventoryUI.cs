@@ -7,11 +7,8 @@ using Catalyst.Player;
 
 public class PlayerInventoryUI : MonoBehaviour
 {
-    [SerializeField] private bool isHotbar;
-    [SerializeField] private PlayerInventoryUI hotbarUI;
     [SerializeField] private UIDocument document;
 
-    public Inventory inventory;
     public Inventory hotBarInventory;
     public Inventory playerInventory;
     private VisualElement hotBarUI;
@@ -30,7 +27,6 @@ public class PlayerInventoryUI : MonoBehaviour
     private Inventory draggingFromInventory;
     private InputHandler inputHandler;
     public bool toggleInventory;
-    public bool isChestUI;
 
     private Catalyst.Player.PlayerController playerController;
     private GameObject player;
@@ -244,7 +240,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
         draggingSlotOriginal = slot;
         draggingSlotIndex = index;
-        draggingFromInventory = inventory;
+        draggingFromInventory = inventoryRef;
 
         VisualElement icon = new VisualElement
         {
@@ -258,7 +254,7 @@ public class PlayerInventoryUI : MonoBehaviour
             }
         };
 
-        InventoryDragManager.BeginDrag(slot, icon, inventory, root);
+        InventoryDragManager.BeginDrag(slot, icon, inventoryRef, root);
     }
 
     private void OnSlotPointerUp(int index, Inventory inventoryRef)
@@ -371,24 +367,24 @@ public class PlayerInventoryUI : MonoBehaviour
     }
     public void Show(bool show)
     {
-        if (root == null) return;
+        //if (root == null) return;
 
-        if (isChestUI)
-        {
-            if (!show)
-            {
-                root.style.display = DisplayStyle.None;
-                return;
-            }
+        //if (isChestUI)
+        //{
+        //    if (!show)
+        //    {
+        //        root.style.display = DisplayStyle.None;
+        //        return;
+        //    }
 
-            if (inventory == null)
-            {
-                root.style.display = DisplayStyle.None;
-                return;
-            }
-        }
+        //    if (inventory == null)
+        //    {
+        //        root.style.display = DisplayStyle.None;
+        //        return;
+        //    }
+        //}
 
-        root.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+        //root.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
     }
 
     public bool IsVisible()
@@ -409,26 +405,26 @@ public class PlayerInventoryUI : MonoBehaviour
 
     public void DropSelectedItem()
     {
-        if (selectedInventorySlot == null || selectedInventorySlot.ItemData == null)
-        {
-            return;
-        }
+        //if (selectedInventorySlot == null || selectedInventorySlot.ItemData == null)
+        //{
+        //    return;
+        //}
 
-        GameObject dropPrefab = selectedInventorySlot.ItemData.dropPrefab;
-        if (dropPrefab != null)
-        {
-            Vector3 dropPosition = player.transform.position + player.transform.forward * 1.5f;
-            GameObject.Instantiate(dropPrefab, dropPosition, Quaternion.identity);
-        }
+        //GameObject dropPrefab = selectedInventorySlot.ItemData.dropPrefab;
+        //if (dropPrefab != null)
+        //{
+        //    Vector3 dropPosition = player.transform.position + player.transform.forward * 1.5f;
+        //    GameObject.Instantiate(dropPrefab, dropPosition, Quaternion.identity);
+        //}
 
-        selectedInventorySlot.RemoveFromStack(1);
+        //selectedInventorySlot.RemoveFromStack(1);
 
-        if (selectedInventorySlot.StackSize <= 0)
-        {
-            selectedInventorySlot.UpdateInventorySlot(null, 0);
-        }
+        //if (selectedInventorySlot.StackSize <= 0)
+        //{
+        //    selectedInventorySlot.UpdateInventorySlot(null, 0);
+        //}
 
-        inventory.OnInventorySlotChanged?.Invoke(selectedInventorySlot);
-        RefreshInventory();
+        //inventory.OnInventorySlotChanged?.Invoke(selectedInventorySlot);
+        //RefreshInventory();
     }
 }

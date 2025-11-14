@@ -119,8 +119,8 @@ public class TilePainter : MonoBehaviour
 
                     if (player != null)
                     {
-                        PlayerInventoryUI hotbar = player.GetHotBar();
-                        InventorySlot slot = hotbar.GetSelectedSlot();
+                        PlayerInventoryUI playerInventory = player.GetHotBar();
+                        InventorySlot slot = playerInventory.GetSelectedSlot();
                         if (slot != null)
                         {
                             slot.RemoveFromStack(1);
@@ -137,9 +137,9 @@ public class TilePainter : MonoBehaviour
                                 slot.UpdateInventorySlot(null, 0);
                             }
 
-                            hotbar.inventory.OnInventorySlotChanged?.Invoke(slot);
+                            playerInventory.hotBarInventory.OnInventorySlotChanged?.Invoke(slot);
 
-                            hotbar.RefreshInventory();
+                            playerInventory.RefreshInventory();
                         }
                     }
                 }

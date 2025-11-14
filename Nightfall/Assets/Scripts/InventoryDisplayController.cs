@@ -65,7 +65,7 @@ public class InventoryDisplayController : MonoBehaviour
         lastChestOpenTime = Time.time;
         currentChestInventory = chestInventory;
 
-        chestInventoryUI.isChestUI = true;
+       // chestInventoryUI.isChestUI = true;
         chestInventoryUI.SetInventory(chestInventory);
         chestInventoryUI.Show(true);
         playerInventoryUI.Show(true);
@@ -81,7 +81,7 @@ public class InventoryDisplayController : MonoBehaviour
 
         chestInventoryUI.Show(false);
         chestInventoryUI.SetInventory(null);
-        chestInventoryUI.isChestUI = true;
+        //chestInventoryUI.isChestUI = true;
 
         chestOpen = false;
         lastChestOpenTime = Time.time;
