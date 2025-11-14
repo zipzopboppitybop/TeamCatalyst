@@ -206,6 +206,7 @@ namespace Catalyst.Player
                     {
                         painter.TryPlaceTile(heldItem.dropPrefab);
                     }
+                    painter.TryHarvestCrop();
                 }
             }
         }

@@ -97,6 +97,7 @@ public class TilePainter : MonoBehaviour
         if (item)
         {
             currentItemName = item.name;
+            ghostPlacer.canShowObj = true;
 
             if (currentItemName.Contains("Rake"))
             {
@@ -113,6 +114,7 @@ public class TilePainter : MonoBehaviour
         }
         else
         {
+            ghostPlacer.canShowObj = false;
             ghostPlacer.HideGhost();
         }
 
@@ -126,18 +128,11 @@ public class TilePainter : MonoBehaviour
 
     }
 
-    public void TryPlaceTile(GameObject heldItem)
+    public void TryHarvestCrop()
     {
-        if (heldItem == null)
-        {
-
-            return;
-
-        }
-
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, placeDist, ~ignoreLayer))
         {
-            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * placeDist, Color.blue);
+            //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * placeDist, Color.blue);
 
             currentCell = map.WorldToCell(hit.point);
 
@@ -158,6 +153,26 @@ public class TilePainter : MonoBehaviour
                 Debug.Log("Replaced Farmland!");
 
             }
+        }
+    }
+
+    public void TryPlaceTile(GameObject heldItem)
+    {
+        if (heldItem == null)
+        {
+
+            return;
+
+        }
+
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, placeDist, ~ignoreLayer))
+        {
+            //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * placeDist, Color.blue);
+
+            currentCell = map.WorldToCell(hit.point);
+
+            GameObject existing = map.GetInstantiatedObject(currentCell);
+            TowerBase existingTower = existing ? existing.GetComponent<TowerBase>() : null;
 
             if (heldItem.name.Contains("Rake"))
             {
