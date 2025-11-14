@@ -44,14 +44,21 @@ namespace Catalyst.CameraController
 
         private void Update()
         {
-            ThirdPersonActive();
-            HandleRotation();
+            if (!GameManager.instance.isPaused)
+            {
+                ThirdPersonActive();
+                HandleRotation();
+            }
 
         }
         private void LateUpdate()
         {
-            ApplyThirdPersonRotation(_mouseYRotation, _mouseXRotation);
-            ToggleAimCamera(playerInputHandler.AimHeld);
+            if (!GameManager.instance.isPaused)
+
+            {
+                ApplyThirdPersonRotation(_mouseYRotation, _mouseXRotation);
+                ToggleAimCamera(playerInputHandler.AimHeld);
+            }
 
         }
 

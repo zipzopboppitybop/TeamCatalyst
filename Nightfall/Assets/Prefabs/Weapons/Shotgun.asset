@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac8dd587fcbb0e647bf1200fe158c578, type: 3}
+  m_Name: Shotgun
+  m_EditorClassIdentifier: Assembly-CSharp::Catalyst.Player.WeaponData
+  gunName: Shotty
+  model: {fileID: 3045520908855843483, guid: dc93c2af46dbf244188ff82574539f09, type: 3}
+  pickUpSound: {fileID: 8300000, guid: 7bee7c2511200ec4fba66edf0ca51ba3, type: 3}
+  emptyClipSound: {fileID: 8300000, guid: 26dcc88d2ba71624a94f96d9a22f2824, type: 3}
+  reloadSound: {fileID: 8300000, guid: 7bee7c2511200ec4fba66edf0ca51ba3, type: 3}
+  shootSounds:
+  - {fileID: 8300000, guid: 904e5767e7b1a0849a28505ff0194f51, type: 3}
+  shootVolume: 0.5
+  gunType: 1
+  shootDamage: 15
+  shootDistance: 10
+  shootRate: 1.5
+  ammoCur: 5
+  ammoMax: 5
+  reloadTime: 0
+  hitEffect: {fileID: 970440554703164915, guid: 47096eff328e11a418ace7db2d72aa97, type: 3}
+  impactForce: 10

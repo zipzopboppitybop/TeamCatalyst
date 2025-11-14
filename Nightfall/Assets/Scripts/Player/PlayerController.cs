@@ -64,13 +64,16 @@ namespace Catalyst.Player
 
         void Update()
         {
+            if (!GameManager.instance.isPaused)
+            {
 
-            HandleMovement();
+                HandleMovement();
 
 
-            HandleAttack();
-            HandleDash();
-            UpdateInteract();
+                HandleAttack();
+                HandleDash();
+                UpdateInteract();
+            }
             //camController.FollowMousePosition(transform);
 
 

@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] Cycles cycle;
     [SerializeField] PlayerData playerData;
-    
+
     [SerializeField] private PauseMenuUI menuPause;
 
     [SerializeField] GameObject menuActive;
@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour
     {
         isPaused = true;
         Time.timeScale = 0;
-        player.SetActive(false);
+
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
@@ -143,8 +143,8 @@ public class GameManager : MonoBehaviour
         timeOfDay = nightEnd;
         day += 1;
         UpdateGameClock();
-        
-        
+
+
 
         GameObject spawnerObject = GameObject.FindGameObjectWithTag("Spawner");
         if (spawnerObject != null)
@@ -242,7 +242,7 @@ public class GameManager : MonoBehaviour
         return day;
 
     }
-    
+
     public float UpdateMoneyEarned()
     {
         return playerData.Currency - moneyOnStart;
@@ -281,7 +281,7 @@ public class GameManager : MonoBehaviour
         crops.Add(crop);
     }
 
-    
+
 
     //public void TogglePlayerController()
     //{
