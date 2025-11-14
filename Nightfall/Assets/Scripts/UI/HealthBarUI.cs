@@ -118,7 +118,7 @@ public class HealthBarUI : MonoBehaviour
     {
         if (currencyLabel != null)
         {
-            currencyLabel.text = $"${playerData.Currency}";
+            currencyLabel.text = $"${(float)playerData.Currency}";
         }
     }
     private void UpdateDamageTaken()
