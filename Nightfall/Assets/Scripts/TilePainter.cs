@@ -9,7 +9,9 @@ public class TilePainter : MonoBehaviour
 
     [SerializeField] RuleTile[] selectedTile;
     [SerializeField] Tilemap map;
-    [SerializeField] GameObject ghost;
+    [SerializeField] PlayerInventoryUI inv;
+
+    [SerializeField] GhostItem ghostPlacer;
 
     [SerializeField] int placeDist;
 
@@ -19,7 +21,7 @@ public class TilePainter : MonoBehaviour
     // 1 = Crop
 
     Vector3Int currentCell;
-
+    string currentItemName;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -27,12 +29,15 @@ public class TilePainter : MonoBehaviour
     {
 
         map = (Tilemap)FindAnyObjectByType(typeof(Tilemap));
+        inv.OnSelectedItemChanged += SelectedItemChanged;
 
     }
 
     // Update is called once per frame
     void Update()
     {
+
+
 
         //if (Input.GetButtonDown("Interact"))
         //{
@@ -86,6 +91,35 @@ public class TilePainter : MonoBehaviour
         //}
     }
 
+    public void UpdateCurrentItem(GameObject item = null)
+    {
+
+        if (item)
+        {
+            currentItemName = item.name;
+            switch (currentItemName)
+            {
+
+                case "Rake":
+                    ghostPlacer.ShowGhost(selectedTile[0]);
+                    break;
+                default:
+                    ghostPlacer.HideGhost();
+                    break;
+
+            }
+        }
+
+
+    }
+
+    private void SelectedItemChanged(ItemData newItem)
+    {
+        GameObject itemPrefab = newItem?.dropPrefab;
+        UpdateCurrentItem(itemPrefab);
+
+    }
+
     public void TryPlaceTile(GameObject heldItem)
     {
         if (heldItem == null)
@@ -119,8 +153,8 @@ public class TilePainter : MonoBehaviour
 
                     if (player != null)
                     {
-                        PlayerInventoryUI hotbar = player.GetHotBar();
-                        InventorySlot slot = hotbar.GetSelectedSlot();
+                        PlayerInventoryUI playerInventory = player.GetHotBar();
+                        InventorySlot slot = playerInventory.GetSelectedSlot();
                         if (slot != null)
                         {
                             slot.RemoveFromStack(1);
@@ -137,11 +171,15 @@ public class TilePainter : MonoBehaviour
                                 slot.UpdateInventorySlot(null, 0);
                             }
 
-                            hotbar.inventory.OnInventorySlotChanged?.Invoke(slot);
+                            playerInventory.hotBarInventory.OnInventorySlotChanged?.Invoke(slot);
 
-                            hotbar.RefreshInventory();
+                            playerInventory.RefreshInventory();
                         }
                     }
+                }
+                else if (heldItem.name.Contains("Watering"))
+                {
+
                 }
                 else
                 {       

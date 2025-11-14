@@ -14,7 +14,7 @@ namespace Catalyst.Player
         [SerializeField] private Animator animator;
         [SerializeField] CamController camController;
 
-        [SerializeField] public PlayerInventoryUI hotbar;
+        [SerializeField] public PlayerInventoryUI playerInventory;
         public AudioSource aud;
 
         public InputHandler playerInputHandler;
@@ -201,7 +201,7 @@ namespace Catalyst.Player
                 TilePainter painter = FindAnyObjectByType<TilePainter>();
                 if (painter != null)
                 {
-                    ItemData heldItem = hotbar?.GetSelectedItem();
+                    ItemData heldItem = playerInventory?.GetSelectedItem();
                     if (heldItem != null && heldItem.dropPrefab != null)
                     {
                         painter.TryPlaceTile(heldItem.dropPrefab);
@@ -212,7 +212,7 @@ namespace Catalyst.Player
 
         public PlayerInventoryUI GetHotBar()
         {
-            return hotbar;
+            return playerInventory;
         }
 
         IEnumerator FlashDamageScreen()

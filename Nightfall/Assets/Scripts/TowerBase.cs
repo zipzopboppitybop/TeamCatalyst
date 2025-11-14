@@ -16,6 +16,7 @@ public class TowerBase : MonoBehaviour, IDamage
     [SerializeField] int hpMax;
     [SerializeField] int damage;
     [SerializeField] int healAmt;
+    [SerializeField] int phases;
 
     [SerializeField] float attSpeed;
     [SerializeField] float healSpeed;
@@ -32,6 +33,7 @@ public class TowerBase : MonoBehaviour, IDamage
     public bool isWatered = false;
     public bool isFertilized = false;
 
+    int towerPhase = 0;
     int enemiesInRange;
     int dayPlanted;
     public int hp = 5;
@@ -107,7 +109,11 @@ public class TowerBase : MonoBehaviour, IDamage
         if (typeTower == TowerType.Crop)
         {
             if (GameManager.instance != null && dayPlanted < GameManager.instance.GetDay() && !isFullyGrown)
+            {
                 Grow();
+                dayPlanted++;
+            }
+                
         }
 
     }
@@ -115,8 +121,12 @@ public class TowerBase : MonoBehaviour, IDamage
     public void Grow()
     {
 
-        if (isWatered) 
-            isFullyGrown = true;
+        if (isWatered && !isFullyGrown)
+        {
+            towerPhase++;
+            if (towerPhase >= phases)
+                isFullyGrown = true;
+        }
 
     }
 
@@ -194,7 +204,7 @@ public class TowerBase : MonoBehaviour, IDamage
         {
 
             TowerBase towerScript = other.GetComponent<TowerBase>();
-            towerScript.WaterCrop();
+            //towerScript.WaterCrop();
 
         }
 

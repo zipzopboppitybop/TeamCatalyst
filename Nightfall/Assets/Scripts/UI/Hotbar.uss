@@ -17,11 +17,19 @@
 .slot {
     width: 96px;
     height: 96px;
-    border-width: 2px;
-    border-color: rgb(136, 136, 136);
-    border-radius: 6px;
-    border-style: solid;
-    background-color: rgba(50, 50, 50, 0.8);
+    border-top-width: 5px; 
+    border-right-width: 5px; 
+    border-bottom-width: 5px; 
+    border-left-width: 5px; 
+    border-left-color: rgba(19, 16, 8, 0.63); 
+    border-right-color: rgba(19, 16, 8, 0.63); 
+    border-top-color: rgba(19, 16, 8, 0.63); 
+    border-bottom-color: rgba(19, 16, 8, 0.63); 
+    border-top-left-radius: 6px; 
+    border-top-right-radius: 6px; 
+    border-bottom-right-radius: 6px; 
+    border-bottom-left-radius: 6px; 
+    background-color: rgba(81, 81, 81, 0.4);
 }
 
 .slot.selected {
