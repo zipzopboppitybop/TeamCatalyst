@@ -31,6 +31,10 @@ public class GuardDogAI : AILogic, IInteractable
     // Update is called once per frame
     protected override void Update()
     {
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            takeDamage(1);
+        }
         base.Update();
 
         if (isHealing || hp <= 0)
@@ -175,9 +179,12 @@ public class GuardDogAI : AILogic, IInteractable
             playerInRange = true;
         }
 
-        if (other.CompareTag("HomePos") && hp < hpOrig)
+        if (other.CompareTag("HomePos"))
         {
-            StartCoroutine(Heal());
+            if (!isHealing && hp < hpOrig)
+            {
+                StartCoroutine(Heal());
+            }
         }
     }
     protected override void OnTriggerExit(Collider other)
@@ -232,12 +239,10 @@ public class GuardDogAI : AILogic, IInteractable
 
     IEnumerator Heal()
     {
-        while (Vector3.Distance(transform.position, homePos) > 0.5f) 
+        while (agent.pathPending || agent.remainingDistance > 0.1f)
         {
-            agent.SetDestination(homePos);
             yield return null;
         }
-
         isHealing = true; 
         agent.isStopped = true;
         agent.velocity = Vector3.zero; 
