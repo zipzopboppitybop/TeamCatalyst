@@ -109,6 +109,10 @@ public class TilePainter : MonoBehaviour
 
             }
         }
+        else
+        {
+            ghostPlacer.HideGhost();
+        }
 
 
     }
