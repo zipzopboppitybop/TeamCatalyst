@@ -127,10 +127,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
     void Update()
     {
-        if (isHotbar)
-        {
-            HandleHotBarInput();
-        }
+        HandleHotBarInput();
 
         if (!isHotbar && !isChestUI)
         {
@@ -157,7 +154,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
     private void HandleHotBarInput()
     {
-        for (int i = 0; i < slotCount; i++)
+        for (int i = 0; i < hotBarSlotCount; i++)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1 + i))
             {
@@ -169,11 +166,11 @@ public class PlayerInventoryUI : MonoBehaviour
         float scroll = Input.mouseScrollDelta.y;
         if (scroll > 0)
         {
-            SelectSlot((selectedSlot - 1 + slotCount) % slotCount);
+            SelectSlot((selectedSlot - 1 + hotBarSlotCount) % hotBarSlotCount);
         }
         else if (scroll < 0)
         {
-            SelectSlot((selectedSlot + 1) % slotCount);
+            SelectSlot((selectedSlot + 1) % hotBarSlotCount);
         }
     }
 

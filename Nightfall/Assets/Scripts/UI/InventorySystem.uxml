@@ -74,37 +74,37 @@
                 <ui:Label text="ACHIEVEMENTS" name="InventoryTitle" style="position: absolute; top: 32px; left: 72px; font-size: 50px; -unity-font-definition: url(&quot;project://database/Assets/Unity%20Store%20DL/Farm%20Game%20UI%20-%20Simple%202D%20UI/Font/LilitaOne-Regular.ttf?fileID=12800000&amp;guid=b0b25c7081699704f917d02e28f31692&amp;type=3#LilitaOne-Regular&quot;); -unity-text-outline-width: 3px;" />
             </ui:ScrollView>
             <ui:VisualElement name="HotBar" style="flex-grow: 1; position: absolute; width: 1230px; height: 200px; top: 842px; left: 341px;">
-                <ui:VisualElement name="HotBarSlot-0" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 80px; top: 60px; border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; border-left-color: rgba(19, 16, 8, 0.63); border-right-color: rgba(19, 16, 8, 0.63); border-top-color: rgba(19, 16, 8, 0.63); border-bottom-color: rgba(19, 16, 8, 0.63); border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; background-color: rgba(81, 81, 81, 0.4);">
-                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
-                    <ui:Label text="Label" name="Count" class="count" />
+                <ui:VisualElement name="HotBarSlot-0" class="slot" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 80px; top: 60px;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1; width: 101px;" />
+                    <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px;" />
                 </ui:VisualElement>
-                <ui:VisualElement name="HotBarSlot-1" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 220px; top: 60px; border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; border-left-color: rgba(19, 16, 8, 0.63); border-right-color: rgba(19, 16, 8, 0.63); border-top-color: rgba(19, 16, 8, 0.63); border-bottom-color: rgba(19, 16, 8, 0.63); border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; background-color: rgba(81, 81, 81, 0.4);">
-                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
-                    <ui:Label text="Label" name="Count" class="count" />
+                <ui:VisualElement name="HotBarSlot-1" class="slot" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 220px; top: 60px;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1; width: 101px;" />
+                    <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px;" />
                 </ui:VisualElement>
-                <ui:VisualElement name="HotBarSlot-2" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 360px; top: 60px; border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; border-left-color: rgba(19, 16, 8, 0.63); border-right-color: rgba(19, 16, 8, 0.63); border-top-color: rgba(19, 16, 8, 0.63); border-bottom-color: rgba(19, 16, 8, 0.63); border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; background-color: rgba(81, 81, 81, 0.4);">
-                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
-                    <ui:Label text="Label" name="Count" class="count" />
+                <ui:VisualElement name="HotBarSlot-2" class="slot" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 360px; top: 60px;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1; width: 101px;" />
+                    <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px;" />
                 </ui:VisualElement>
-                <ui:VisualElement name="HotBarSlot-3" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 500px; top: 60px; border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; border-left-color: rgba(19, 16, 8, 0.63); border-right-color: rgba(19, 16, 8, 0.63); border-top-color: rgba(19, 16, 8, 0.63); border-bottom-color: rgba(19, 16, 8, 0.63); border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; background-color: rgba(81, 81, 81, 0.4);">
-                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
-                    <ui:Label text="Label" name="Count" class="count" />
+                <ui:VisualElement name="HotBarSlot-3" class="slot" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 500px; top: 60px;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1; width: 101px;" />
+                    <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px;" />
                 </ui:VisualElement>
-                <ui:VisualElement name="HotBarSlot-4" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 640px; top: 60px; border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; border-left-color: rgba(19, 16, 8, 0.63); border-right-color: rgba(19, 16, 8, 0.63); border-top-color: rgba(19, 16, 8, 0.63); border-bottom-color: rgba(19, 16, 8, 0.63); border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; background-color: rgba(81, 81, 81, 0.4);">
-                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
-                    <ui:Label text="Label" name="Count" class="count" />
+                <ui:VisualElement name="HotBarSlot-4" class="slot" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 640px; top: 60px;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1; width: 101px;" />
+                    <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px;" />
                 </ui:VisualElement>
-                <ui:VisualElement name="HotBarSlot-5" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 780px; top: 60px; border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; border-left-color: rgba(19, 16, 8, 0.63); border-right-color: rgba(19, 16, 8, 0.63); border-top-color: rgba(19, 16, 8, 0.63); border-bottom-color: rgba(19, 16, 8, 0.63); border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; background-color: rgba(81, 81, 81, 0.4);">
-                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
-                    <ui:Label text="Label" name="Count" class="count" />
+                <ui:VisualElement name="HotBarSlot-5" class="slot" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 780px; top: 60px;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1; width: 101px;" />
+                    <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px;" />
                 </ui:VisualElement>
-                <ui:VisualElement name="HotBarSlot-6" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 920px; top: 60px; border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; border-left-color: rgba(19, 16, 8, 0.63); border-right-color: rgba(19, 16, 8, 0.63); border-top-color: rgba(19, 16, 8, 0.63); border-bottom-color: rgba(19, 16, 8, 0.63); border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; background-color: rgba(81, 81, 81, 0.4);">
-                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
-                    <ui:Label text="Label" name="Count" class="count" />
+                <ui:VisualElement name="HotBarSlot-6" class="slot" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 920px; top: 60px;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1; width: 101px;" />
+                    <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px;" />
                 </ui:VisualElement>
-                <ui:VisualElement name="HotBarSlot-7" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 1060px; top: 60px; border-top-width: 5px; border-right-width: 5px; border-bottom-width: 5px; border-left-width: 5px; border-left-color: rgba(19, 16, 8, 0.63); border-right-color: rgba(19, 16, 8, 0.63); border-top-color: rgba(19, 16, 8, 0.63); border-bottom-color: rgba(19, 16, 8, 0.63); border-top-left-radius: 6px; border-top-right-radius: 6px; border-bottom-right-radius: 6px; border-bottom-left-radius: 6px; background-color: rgba(81, 81, 81, 0.4);">
-                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1;" />
-                    <ui:Label text="Label" name="Count" class="count" />
+                <ui:VisualElement name="HotBarSlot-7" class="slot" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 1060px; top: 60px;">
+                    <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1; width: 101px;" />
+                    <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px;" />
                 </ui:VisualElement>
             </ui:VisualElement>
         </ui:VisualElement>
