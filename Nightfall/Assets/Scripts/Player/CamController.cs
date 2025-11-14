@@ -20,9 +20,9 @@ namespace Catalyst.CameraController
         [SerializeField] private LayerMask thirdPersonLayers;
         [SerializeField] private LayerMask ignoreLayer;
         [SerializeField] private GameObject[] hideInFPS;
-        [SerializeField] private InputHandler playerInputHandler;
+        private InputHandler playerInputHandler;
         [SerializeField] private PlayerData playerData;
-        [SerializeField] private PlayerController playerController;
+        private PlayerController playerController;
 
         public bool isInverted;
 
@@ -34,6 +34,13 @@ namespace Catalyst.CameraController
 
 
         private float _verticalRotation;
+
+        private void Awake()
+        {
+            playerInputHandler = GetComponentInParent<InputHandler>();
+
+            playerController = GetComponentInParent<PlayerController>();
+        }
 
         private void Start()
         {
