@@ -93,7 +93,6 @@ public class GameManager : MonoBehaviour
     {
         isPaused = false;
         Time.timeScale = timeScaleOrig;
-        playerController.EnablePlayerInput(true);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
