@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fff52d00b5194643aee23e84ee9b49b, type: 3}
   m_Name: Fertilizer
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300000, guid: 5d9423aa043d52545974fb6a201dec86, type: 3}
   itemType: 3
-  dropPrefab: {fileID: 0}
+  dropPrefab: {fileID: 6977562127469438968, guid: befd4f9e43f862c41b6f3ac17b3fe269, type: 3}
   pickupSound: {fileID: 0}
   audVol: 0
   displayName: 
