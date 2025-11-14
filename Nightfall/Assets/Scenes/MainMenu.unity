@@ -624,6 +624,7 @@ MonoBehaviour:
   MasterVol: MasterVolume
   MusicVol: MusicVolume
   SfxVol: SFXVolume
+  PlayerVol: PlayerVolume
 --- !u!82 &952153296
 AudioSource:
   m_ObjectHideFlags: 0

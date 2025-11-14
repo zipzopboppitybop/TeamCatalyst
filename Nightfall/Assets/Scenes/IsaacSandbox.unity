@@ -792,6 +792,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4615074129772477254, guid: 59f4905e1f1955642b6c61f28622f736, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
     - target: {fileID: 7802366829314756072, guid: 59f4905e1f1955642b6c61f28622f736, type: 3}
       propertyPath: m_Name
       value: WaterDropBullet
