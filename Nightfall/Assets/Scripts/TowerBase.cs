@@ -204,7 +204,7 @@ public class TowerBase : MonoBehaviour, IDamage
         {
 
             TowerBase towerScript = other.GetComponent<TowerBase>();
-            towerScript.WaterCrop();
+            //towerScript.WaterCrop();
 
         }
 
