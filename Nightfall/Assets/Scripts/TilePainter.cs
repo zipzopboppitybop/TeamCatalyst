@@ -25,7 +25,7 @@ public class TilePainter : MonoBehaviour
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    void Start()
     {
 
         map = (Tilemap)FindAnyObjectByType(typeof(Tilemap));
@@ -97,16 +97,18 @@ public class TilePainter : MonoBehaviour
         if (item)
         {
             currentItemName = item.name;
-            switch (currentItemName)
+
+            if (currentItemName.Contains("Rake"))
             {
-
-                case "Rake":
-                    ghostPlacer.ShowGhost(selectedTile[0]);
-                    break;
-                default:
-                    ghostPlacer.HideGhost();
-                    break;
-
+                ghostPlacer.ShowGhost(selectedTile[0]);
+            }
+            else if (currentItemName.Contains("Seed"))
+            {
+                ghostPlacer.ShowGhost(selectedTile[1]);
+            }
+            else
+            {
+                ghostPlacer.HideGhost();
             }
         }
         else

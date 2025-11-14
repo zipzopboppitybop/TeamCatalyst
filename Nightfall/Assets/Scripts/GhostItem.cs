@@ -38,6 +38,10 @@ public class GhostItem : MonoBehaviour
             }
 
         }
+        else
+        {
+            HideGhost();
+        }
 
     }
 
