@@ -169,7 +169,7 @@ public class PauseMenuUI : MonoBehaviour
     {
         int day = GameManager.instance.GetDay();
         int cropCount = GameManager.instance.UpdateCropCount();
-        int moneyEarned = GameManager.instance.UpdateMoneyEarned();
+        float moneyEarned = GameManager.instance.UpdateMoneyEarned();
         int cropsDestroyed = GameManager.instance.UpdateCropsDestroyed();
 
         winDayLabel.text = $"Day Cycle: {day}";

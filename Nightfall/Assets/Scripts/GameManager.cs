@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using Catalyst.Player;
 using NUnit.Framework;
 using UnityEngine;
-using Catalyst.Player;
 using UnityEngine.UI;
 
 
@@ -33,7 +32,7 @@ public class GameManager : MonoBehaviour
     int day = 1;
 
     public int cropCount = 0;
-    private int moneyOnStart = 0;
+    private float moneyOnStart = 0;
     private int cropsDestroyed = 0;
 
     public bool isPaused = false;
@@ -244,7 +243,7 @@ public class GameManager : MonoBehaviour
 
     }
     
-    public int UpdateMoneyEarned()
+    public float UpdateMoneyEarned()
     {
         return playerData.Currency - moneyOnStart;
     }
