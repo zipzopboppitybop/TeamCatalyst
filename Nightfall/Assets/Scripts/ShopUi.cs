@@ -57,7 +57,6 @@ public class ShopUI : MonoBehaviour
             if (playerInventory.toggleInventory)
             {
                 playerInventory.toggleInventory = false;
-                playerInventory.Show(false);
             }
 
             root.BringToFront();

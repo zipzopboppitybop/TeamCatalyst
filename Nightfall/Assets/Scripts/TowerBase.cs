@@ -21,14 +21,14 @@ public class TowerBase : MonoBehaviour, IDamage
     [SerializeField] float attSpeed;
     [SerializeField] float healSpeed;
 
-    [SerializeField] GameObject itemDrop;
+    [SerializeField] ItemData itemDrop;
     [SerializeField] GameObject bullet;
     [SerializeField] GameObject shootPos;
     [SerializeField] Renderer model;
 
     Color colorOrig;
 
-    bool isFullyGrown = false;
+    public bool isFullyGrown = false;
     bool EnemyInRange = false;
     public bool isWatered = false;
     public bool isFertilized = false;
@@ -115,6 +115,40 @@ public class TowerBase : MonoBehaviour, IDamage
             }
                 
         }
+
+    }
+
+    private void AddItemToInventory(Inventory inventory, ItemData item, int amount)
+    {
+        foreach (InventorySlot slot in inventory.InventorySlots)
+        {
+            if (slot.ItemData == item && slot.RoomLeftInStack(amount))
+            {
+                slot.AddToStack(amount);
+                inventory.NotifySlotChanged(slot);
+                return;
+            }
+        }
+
+        foreach (InventorySlot slot in inventory.InventorySlots)
+        {
+            if (slot.ItemData == null)
+            {
+                slot.UpdateInventorySlot(item, amount);
+                inventory.NotifySlotChanged(slot);
+                return;
+            }
+        }
+
+        Debug.Log("Inventory full!");
+    }
+
+    public void HarvestCrop(Inventory invent)
+    {
+
+        AddItemToInventory(invent, itemDrop, 1);
+
+        Destroy(gameObject);
 
     }
 
@@ -254,8 +288,6 @@ public class TowerBase : MonoBehaviour, IDamage
 
             if (GameManager.instance != null)
                 GameManager.instance.UpdateCropCount(-1);
-            if (itemDrop != null)
-                Instantiate(itemDrop, transform.position, transform.rotation);
 
             Destroy(gameObject);
             

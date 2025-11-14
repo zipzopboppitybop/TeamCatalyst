@@ -181,6 +181,11 @@ namespace Catalyst.Player
 
         public void UpdateInteract()
         {
+            if (isInventoryOpen || (playerInventory != null && playerInventory.isChestOpen))
+            {
+                return;
+            }
+
             if (playerInputHandler.InteractTriggered)
             {
                 Vector3 origin = camController.FPSCamera.transform.position;
@@ -190,12 +195,10 @@ namespace Catalyst.Player
 
                 if (Physics.Raycast(origin, direction, out RaycastHit hit, playerData.InteractRange, ~ignoreLayer))
                 {
-                    Chest chest = hit.collider.GetComponent<Chest>();
-                    chest?.OpenChest();
-
                     IInteractable target = hit.collider.GetComponent<IInteractable>();
 
                     target?.Interact();
+                    return;
                 }
 
                 TilePainter painter = FindAnyObjectByType<TilePainter>();
@@ -206,6 +209,7 @@ namespace Catalyst.Player
                     {
                         painter.TryPlaceTile(heldItem.dropPrefab);
                     }
+                    painter.TryHarvestCrop();
                 }
             }
         }
