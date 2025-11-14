@@ -13,12 +13,14 @@ public class PlayerInventoryUI : MonoBehaviour
 
     public Inventory inventory;
     public Inventory hotBarInventory;
-    private VisualElement hotBar;
+    public Inventory playerInventory;
+    private VisualElement hotBarUI;
     private VisualElement root;
-    private VisualElement playerInventory;
+    private VisualElement playerInventoryUI;
+    private VisualElement menuSystemUI;
     private VisualElement[] hotBarSlots;
-    private VisualElement[] slots;
-    private int slotCount;
+    private VisualElement[] playerInventorySlots;
+    private int playerInventorySlotCount;
     private int hotBarSlotCount;
     private int selectedSlot;
     private InventorySlot selectedInventorySlot;
@@ -40,28 +42,42 @@ public class PlayerInventoryUI : MonoBehaviour
         playerController = player.GetComponent<Catalyst.Player.PlayerController>();
         inputHandler = playerController.playerInputHandler;
         hotBarInventory = playerController.GetComponent<PlayerInventoryHolder>().PrimaryInventory;
+        playerInventory = playerController.GetComponent <PlayerInventoryHolder>().SecondaryInventory;
         if (document == null)
         {
             document = GetComponent<UIDocument>();
         }
 
         root = document.rootVisualElement;
-        hotBar = root.Q<VisualElement>("HotBar");
-        playerInventory = root.Q<VisualElement>("InventorySlots");
+        hotBarUI = root.Q<VisualElement>("HotBar");
+        playerInventoryUI = root.Q<VisualElement>("InventorySlots");
+        menuSystemUI = root.Q<VisualElement>("MenuSystem");
 
-        hotBar.style.display = DisplayStyle.Flex;
+
+        hotBarUI.style.display = DisplayStyle.Flex;
+        menuSystemUI.style.display = DisplayStyle.None;
 
         hotBarSlotCount = hotBarInventory.InventorySize;
         hotBarSlots = new VisualElement[hotBarSlotCount];
+        playerInventorySlotCount = playerInventory.InventorySize;
+        playerInventorySlots = new VisualElement[playerInventorySlotCount];
 
-        for (int i = 0; i < hotBarSlots.Length; i++)
+        for (int i = 0; i < hotBarSlotCount; i++)
         {
-            hotBarSlots[i] = hotBar.Q<VisualElement>($"HotBarSlot-{i}");
+            hotBarSlots[i] = hotBarUI.Q<VisualElement>($"HotBarSlot-{i}");
             RegisterHotBarSlotCallbacks(i);
+        }
+
+        for (int i = 0; i < playerInventorySlotCount; i++)
+        {
+            playerInventorySlots[i] = playerInventoryUI.Q<VisualElement>($"InventoryItems-{i}");
+            RegisterInventorySlotCallbacks(i);
         }
 
         hotBarInventory.OnInventorySlotChanged += RefreshHotBar;
         RefreshHotBar();
+        playerInventory.OnInventorySlotChanged += RefreshInventory;
+        RefreshInventory();
 
         SelectSlot(0);
 
@@ -128,11 +144,7 @@ public class PlayerInventoryUI : MonoBehaviour
     void Update()
     {
         HandleHotBarInput();
-
-        if (!isHotbar && !isChestUI)
-        {
-            HandleInventoryInput();
-        }
+        HandleInventoryInput();
 
         if (InventoryDragManager.draggedIcon != null)
         {
@@ -185,7 +197,8 @@ public class PlayerInventoryUI : MonoBehaviour
         {
             toggleInventory = !toggleInventory;
             playerController.isInventoryOpen = toggleInventory;
-            root.style.display = toggleInventory ? DisplayStyle.Flex : DisplayStyle.None;
+
+            menuSystemUI.style.display = toggleInventory ? DisplayStyle.Flex : DisplayStyle.None;
 
             if (toggleInventory)
             {
@@ -218,10 +231,10 @@ public class PlayerInventoryUI : MonoBehaviour
         }
     }
 
-    private void RegisterSlotCallbacks(int index)
+    private void RegisterInventorySlotCallbacks(int index)
     {
-        slots[index].RegisterCallback<PointerDownEvent>(e => OnSlotPointerDown(index));
-        slots[index].RegisterCallback<PointerUpEvent>(e => OnSlotPointerUp(index));
+        playerInventorySlots[index].RegisterCallback<PointerDownEvent>(e => OnSlotPointerDown(index));
+        playerInventorySlots[index].RegisterCallback<PointerUpEvent>(e => OnSlotPointerUp(index));
     }
 
     private void RegisterHotBarSlotCallbacks(int index)
@@ -234,7 +247,6 @@ public class PlayerInventoryUI : MonoBehaviour
     {
         for (int i = 0; i < hotBarSlotCount; i++)
         {
-            Debug.Log(hotBarInventory.InventorySlots[i].StackSize);
             VisualElement slotElement = hotBarSlots[i];
             InventorySlot slotData = hotBarInventory.InventorySlots[i];
 
@@ -257,10 +269,10 @@ public class PlayerInventoryUI : MonoBehaviour
 
     public void RefreshInventory(InventorySlot _ = null)
     {
-        for (int i = 0; i < slotCount; i++)
+        for (int i = 0; i < playerInventorySlotCount; i++)
         {
-            VisualElement slotElement = slots[i];
-            InventorySlot slotData = inventory.InventorySlots[i];
+            VisualElement slotElement = playerInventorySlots[i];
+            InventorySlot slotData = playerInventory.InventorySlots[i];
 
             Label countLabel = slotElement.Q<Label>("Count");
             countLabel.text = slotData.StackSize > 1 ? slotData.StackSize.ToString() : "";
@@ -281,7 +293,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
     private void OnSlotPointerDown(int index)
     {
-        InventorySlot slot = inventory.InventorySlots[index];
+        InventorySlot slot = playerInventory.InventorySlots[index];
         if (slot.ItemData == null || InventoryDragManager.IsDragging)
         {
             return;
@@ -364,52 +376,52 @@ public class PlayerInventoryUI : MonoBehaviour
 
     public void SetInventory(Inventory newInventory)
     {
-        if (inventory != null)
-        {
-            inventory.OnInventorySlotChanged -= RefreshInventory;
-        }
+        //if (inventory != null)
+        //{
+        //    inventory.OnInventorySlotChanged -= RefreshInventory;
+        //}
 
-        inventory = newInventory;
+        //inventory = newInventory;
 
-        if (inventory != null)
-        {
-            inventory.OnInventorySlotChanged += RefreshInventory;
-            BuildChestSlots();
-            RefreshInventory();
-        }
-        else
-        {
-            root.style.display = DisplayStyle.None;
-            isVisible = false;
-        }
+        //if (inventory != null)
+        //{
+        //    inventory.OnInventorySlotChanged += RefreshInventory;
+        //    BuildChestSlots();
+        //    RefreshInventory();
+        //}
+        //else
+        //{
+        //    root.style.display = DisplayStyle.None;
+        //    isVisible = false;
+        //}
     }
 
     private void BuildChestSlots()
     {
-        VisualElement slotsContainer = root.Q<VisualElement>("Slots");
-        if (slotsContainer == null)
-        {
-            return;
-        }
+        //VisualElement slotsContainer = root.Q<VisualElement>("Slots");
+        //if (slotsContainer == null)
+        //{
+        //    return;
+        //}
 
-        slotCount = inventory.InventorySize;
-        slots = new VisualElement[slotCount];
+        //slotCount = inventory.InventorySize;
+        //slots = new VisualElement[slotCount];
 
-        List<VisualElement> rows = slotsContainer.Query<VisualElement>(className: "row").ToList();
-        int index = 0;
-        foreach (VisualElement row in rows)
-        {
-            foreach (VisualElement slot in row.Children())
-            {
-                if (!slot.ClassListContains("slot")) continue;
-                if (index >= slotCount) break;
+        //List<VisualElement> rows = slotsContainer.Query<VisualElement>(className: "row").ToList();
+        //int index = 0;
+        //foreach (VisualElement row in rows)
+        //{
+        //    foreach (VisualElement slot in row.Children())
+        //    {
+        //        if (!slot.ClassListContains("slot")) continue;
+        //        if (index >= slotCount) break;
 
-                slots[index] = slot;
-                int currentIndex = index;
-                RegisterSlotCallbacks(currentIndex);
-                index++;
-            }
-        }
+        //        slots[index] = slot;
+        //        int currentIndex = index;
+        //        RegisterInventorySlotCallbacks(currentIndex);
+        //        index++;
+        //    }
+        //}
     }
     public void Show(bool show)
     {
