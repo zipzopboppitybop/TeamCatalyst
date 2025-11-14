@@ -9,16 +9,13 @@ namespace Catalyst.GamePlay
     {
         [SerializeField] private GameObject gunModel;
         [SerializeField] private Transform gunPos;
-
         [SerializeField] private PlayerData player;
-        [SerializeField] private Transform gunHolder;
         [SerializeField] private Animator animator;
         [SerializeField] private AudioSource aud;
         [SerializeField] private InputHandler playerInputHandler;
         [SerializeField] private PlayerController playerController;
         [SerializeField] private AudioClip magPickupSound;
 
-        private AudioClip[] shootSound;
 
         [SerializeField] private LayerMask ignoreLayer;
 
@@ -28,7 +25,7 @@ namespace Catalyst.GamePlay
         private int _animShoot;
         private int _animReload;
         private int _animArmed;
-
+        private AudioClip[] shootSound;
 
         private float _shootTimer = 0f;
 
@@ -40,15 +37,15 @@ namespace Catalyst.GamePlay
         {
             if (playerInputHandler == null)
             {
-                playerInputHandler = GetComponent<InputHandler>();
+                playerInputHandler = transform.GetComponent<InputHandler>();
             }
             if (animator == null)
             {
-                animator = gunHolder.GetComponent<Animator>();
+                animator = transform.GetComponent<Animator>();
             }
             if (aud == null)
             {
-                aud = GetComponent<AudioSource>();
+                aud = transform.GetComponent<AudioSource>();
 
             }
             SetupCombatAnimator();

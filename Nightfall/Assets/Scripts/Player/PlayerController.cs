@@ -17,8 +17,6 @@ namespace Catalyst.Player
         [SerializeField] public PlayerInventoryUI hotbar;
         public AudioSource aud;
 
-
-
         public InputHandler playerInputHandler;
         [SerializeField] private PlayerData playerData;
         [SerializeField] private LayerMask ignoreLayer;
@@ -46,18 +44,11 @@ namespace Catalyst.Player
         private CharacterController characterController;
         private Vector3 playerDir;
 
-
         private void Start()
         {
-
             characterController = GetComponent<CharacterController>();
-
             SetupAnimator();
-
-
-
         }
-
 
         private float CurrentSpeed => playerData.Speed * (playerInputHandler.SprintHeld ? playerData.SprintSpeed : 1);
 
@@ -68,30 +59,20 @@ namespace Catalyst.Player
             {
 
                 HandleMovement();
-
-
                 HandleAttack();
                 HandleDash();
                 UpdateInteract();
             }
-            //camController.FollowMousePosition(transform);
-
-
         }
 
         private void SetupAnimator()
         {
-
             _animJump = Animator.StringToHash("Jump");
             _animGrounded = Animator.StringToHash("Grounded");
             _animAttack = Animator.StringToHash("Attack");
             _animDash = Animator.StringToHash("Dash");
             _animVelocityX = Animator.StringToHash("Velocity X");
             _animVelocityZ = Animator.StringToHash("Velocity Z");
-
-
-
-
         }
 
         public void EnablePlayerInput(bool enabled)
@@ -197,17 +178,6 @@ namespace Catalyst.Player
             animator.SetFloat(_animVelocityZ, Mathf.SmoothDamp(animator.GetFloat(_animVelocityZ), playerInputHandler.MoveInput.y * _currentMovement.magnitude, ref _velocityZ, 0.1f));
         }
 
-
-
-
-
-
-
-
-
-
-
-
         public void UpdateInteract()
         {
             if (playerInputHandler.InteractTriggered)
@@ -244,18 +214,12 @@ namespace Catalyst.Player
             return hotbar;
         }
 
-
-
-
         IEnumerator FlashDamageScreen()
         {
             //HUDManager.instance.playerDamageScreen.SetActive(true);
             yield return new WaitForSeconds(0.1f);
             //HUDManager.instance.playerDamageScreen.SetActive(false);
         }
-
-
-
 
         IEnumerator Attack()
         {
@@ -274,7 +238,6 @@ namespace Catalyst.Player
                 dodgeDirection = -transform.forward;
             }
             characterController.Move(dodgeDirection.normalized * playerData.DashSpeed * Time.deltaTime);
-
         }
 
         IEnumerator Dash()
