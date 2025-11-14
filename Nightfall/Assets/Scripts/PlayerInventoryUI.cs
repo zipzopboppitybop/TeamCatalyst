@@ -80,65 +80,6 @@ public class PlayerInventoryUI : MonoBehaviour
         RefreshInventory();
 
         SelectSlot(0);
-
-
-        //root.pickingMode = PickingMode.Ignore;
-
-        //if (!isChestUI)
-        //{
-        //    inventory = isHotbar ? GameManager.instance.player.GetComponent<PlayerInventoryHolder>().PrimaryInventory : GameManager.instance.player.GetComponent<PlayerInventoryHolder>().SecondaryInventory;
-        //}
-
-        //if (!isHotbar)
-        //{
-        //    root.style.display = DisplayStyle.None;
-        //}
-
-        //VisualElement slotsContainer = root.Q<VisualElement>("Slots");
-        //slots = null;
-
-        //if (inventory == null)
-        //{
-        //    return;
-        //}
-
-
-        //if (isHotbar)
-        //{
-        //    for (int i = 0; i < slots.Length; i++)
-        //    {
-        //        slots[i] = slotsContainer.Q<VisualElement>($"Slot-{i}");
-        //        RegisterSlotCallbacks(i);
-        //    }
-        //}
-        //else
-        //{
-        //    List<VisualElement> rows = slotsContainer.Query<VisualElement>(className: "row").ToList();
-        //    int index = 0;
-        //    foreach (VisualElement row in rows)
-        //    {
-        //        foreach (VisualElement slot in row.Children())
-        //        {
-        //            if (!slot.ClassListContains("slot")) continue;
-        //            if (index >= slotCount) break;
-
-        //            slots[index] = slot;
-        //            int currentIndex = index;
-        //            RegisterSlotCallbacks(currentIndex);
-        //            index++;
-        //        }
-        //    }
-
-        //    root.style.display = DisplayStyle.None;
-        //}
-
-        //inventory.OnInventorySlotChanged += RefreshInventory;
-        //RefreshInventory();
-
-        //if (isHotbar)
-        //{
-        //    SelectSlot(0);
-        //}
     }
 
     void Update()
@@ -233,14 +174,16 @@ public class PlayerInventoryUI : MonoBehaviour
 
     private void RegisterInventorySlotCallbacks(int index)
     {
-        playerInventorySlots[index].RegisterCallback<PointerDownEvent>(e => OnSlotPointerDown(index));
-        playerInventorySlots[index].RegisterCallback<PointerUpEvent>(e => OnSlotPointerUp(index));
+        Inventory inventoryRef = playerInventory;
+        playerInventorySlots[index].RegisterCallback<PointerDownEvent>(e => OnSlotPointerDown(index, inventoryRef));
+        playerInventorySlots[index].RegisterCallback<PointerUpEvent>(e => OnSlotPointerUp(index, inventoryRef));
     }
 
     private void RegisterHotBarSlotCallbacks(int index)
     {
-        hotBarSlots[index].RegisterCallback<PointerDownEvent>(e => OnSlotPointerDown(index));
-        hotBarSlots[index].RegisterCallback<PointerUpEvent>(e => OnSlotPointerUp(index));
+        Inventory inventoryRef = hotBarInventory;
+        hotBarSlots[index].RegisterCallback<PointerDownEvent>(e => OnSlotPointerDown(index, inventoryRef));
+        hotBarSlots[index].RegisterCallback<PointerUpEvent>(e => OnSlotPointerUp(index, inventoryRef));
     }
 
     public void RefreshHotBar(InventorySlot _ = null)
@@ -291,9 +234,9 @@ public class PlayerInventoryUI : MonoBehaviour
         }
     }
 
-    private void OnSlotPointerDown(int index)
+    private void OnSlotPointerDown(int index, Inventory inventoryRef)
     {
-        InventorySlot slot = playerInventory.InventorySlots[index];
+        InventorySlot slot = inventoryRef.InventorySlots[index];
         if (slot.ItemData == null || InventoryDragManager.IsDragging)
         {
             return;
@@ -318,15 +261,15 @@ public class PlayerInventoryUI : MonoBehaviour
         InventoryDragManager.BeginDrag(slot, icon, inventory, root);
     }
 
-    private void OnSlotPointerUp(int index)
+    private void OnSlotPointerUp(int index, Inventory inventoryRef)
     {
         if (!InventoryDragManager.IsDragging) return;
 
         InventorySlot sourceSlot = InventoryDragManager.draggedSlot;
         Inventory sourceInventory = InventoryDragManager.draggedFromInventory;
 
-        InventorySlot targetSlot = inventory.InventorySlots[index];
-        Inventory targetInventory = inventory;
+        InventorySlot targetSlot = inventoryRef.InventorySlots[index];
+        Inventory targetInventory = inventoryRef;
 
         if (sourceInventory == targetInventory && sourceSlot == targetSlot)
         {
@@ -372,6 +315,9 @@ public class PlayerInventoryUI : MonoBehaviour
         draggingSlotOriginal = null;
         draggingSlotIndex = -1;
         draggingFromInventory = null;
+
+        RefreshHotBar();
+        RefreshInventory();
     }
 
     public void SetInventory(Inventory newInventory)
