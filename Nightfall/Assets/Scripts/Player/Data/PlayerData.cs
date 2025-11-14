@@ -23,7 +23,7 @@ namespace Catalyst.Player
         [SerializeField] private int staminaMax;
         [SerializeField, Range(0, 30)] private int stealth;
         [SerializeField, Range(0, 5)] private int interactRange;
-        [SerializeField] private int currency;
+        [SerializeField] private float currency;
         [SerializeField] private FarmingStateMachine.FarmingState currentFarmingState = FarmingStateMachine.FarmingState.None;
 
         [Header("Weapon Data")]
@@ -71,7 +71,7 @@ namespace Catalyst.Player
         public int StaminaMax { get => staminaMax; set => staminaMax = value; }
         public int Stealth { get => stealth; set => stealth = value; }
         public int InteractRange { get => interactRange; set => interactRange = value; }
-        public int Currency { get => currency; set => currency = value; }
+        public float Currency { get => currency; set => currency = value; }
 
 
         public int ShootDamage { get => shootDamage; set => shootDamage = value; }

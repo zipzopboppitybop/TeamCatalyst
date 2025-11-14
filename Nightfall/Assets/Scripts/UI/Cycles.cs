@@ -15,15 +15,12 @@ public class Cycles : ScriptableObject
     [SerializeField] private string dayText;
     [SerializeField] private Sprite dayImage;
     [SerializeField] private Sprite nightImage;
-    [SerializeField] public int cropsDestroyed;
-
-
 
     public string ClockText { get => clockText; set => clockText = value;}
     public string DayText { get => dayText; set => dayText = value; }
 
+
     public Sprite DayImage { get => dayImage; set => dayImage = value; }
 
     public Sprite NightImage { get => nightImage; set => nightImage = value; }  
-
   }

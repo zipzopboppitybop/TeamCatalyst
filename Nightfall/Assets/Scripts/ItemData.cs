@@ -15,7 +15,6 @@ public class ItemData : ScriptableObject
     [Range(0, 1)] public float audVol;
     public string displayName;
     public int id;
-    public int sellValue;
-    public int price;
+    public float price;
     public int maxStackSize;
 }

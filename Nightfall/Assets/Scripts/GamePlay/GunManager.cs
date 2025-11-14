@@ -7,20 +7,14 @@ namespace Catalyst.GamePlay
 {
     public class GunManager : MonoBehaviour
     {
-        [SerializeField] private Renderer gunModel;
+        [SerializeField] private GameObject gunModel;
         [SerializeField] private Transform gunPos;
         [SerializeField] private PlayerData player;
-        [SerializeField] private Transform gunHolder;
         [SerializeField] private Animator animator;
         [SerializeField] private AudioSource aud;
         [SerializeField] private InputHandler playerInputHandler;
         [SerializeField] private PlayerController playerController;
         [SerializeField] private AudioClip magPickupSound;
-
-        private WeaponData _currentWeapon;
-
-        private AudioClip[] shootSound;
-
 
 
         [SerializeField] private LayerMask ignoreLayer;
@@ -31,7 +25,7 @@ namespace Catalyst.GamePlay
         private int _animShoot;
         private int _animReload;
         private int _animArmed;
-
+        private AudioClip[] shootSound;
 
         private float _shootTimer = 0f;
 
@@ -43,22 +37,22 @@ namespace Catalyst.GamePlay
         {
             if (playerInputHandler == null)
             {
-                playerInputHandler = GetComponent<InputHandler>();
+                playerInputHandler = transform.GetComponent<InputHandler>();
             }
             if (animator == null)
             {
-                animator = gunHolder.GetComponent<Animator>();
+                animator = transform.GetComponent<Animator>();
             }
             if (aud == null)
             {
-                aud = GetComponent<AudioSource>();
+                aud = transform.GetComponent<AudioSource>();
 
             }
             SetupCombatAnimator();
         }
         private void Start()
         {
-
+            ClearCurrentGun();
             EquipGun();
 
 
@@ -69,29 +63,31 @@ namespace Catalyst.GamePlay
         {
             _shootTimer += Time.deltaTime;
 
-            if (player.CurrentGun != null)
-            {
-                SelectWeapon();
-            }
+
 
             if (player.Guns.Count == 0 || player.CurrentGun == null)
             {
                 HealthBarUI.instance.HideWeaponUI();
+                gunModel.SetActive(false);
                 return;
+            }
+            else
+            {
+                SelectWeapon();
             }
 
         }
 
-
-
         private void EquipGun()
         {
-
-
+            if (player.Guns.Count == 0) return;
             ChangeWeapon();
-            //animator.SetBool(_animArmed, true);
-
         }
+        private void ClearCurrentGun()
+        {
+            player.CurrentGun = null;
+        }
+
 
         public void GetWeaponData(WeaponData weaponData)
         {
@@ -116,11 +112,17 @@ namespace Catalyst.GamePlay
         {
             player.CurrentGun = player.Guns[_gunListPos];
             shootSound = player.CurrentGun.shootSounds;
-            Debug.Log("Equipped " + _currentWeapon.name);
-            gunModel.GetComponent<MeshFilter>().sharedMesh = player.CurrentGun.model.GetComponent<MeshFilter>().sharedMesh;
-            gunModel.GetComponent<MeshRenderer>().sharedMaterial = player.CurrentGun.model.GetComponent<MeshRenderer>().sharedMaterial;
+            Debug.Log("Equipped " + player.CurrentGun.name);
 
-            if (_currentWeapon.ammoCur > 0)
+
+
+
+
+            //gunModel = Instantiate(player.CurrentGun.model, gunPos.position, gunPos.rotation, gunPos);
+            //gunModel.GetComponent<MeshFilter>().sharedMesh = player.CurrentGun.model.GetComponent<MeshFilter>().sharedMesh;
+            //gunModel.GetComponent<MeshRenderer>().sharedMaterial = player.CurrentGun.model.GetComponent<MeshRenderer>().sharedMaterial;
+
+            if (player.CurrentGun.ammoCur > 0)
                 aud.PlayOneShot(player.CurrentGun.pickUpSound, 0.5f);
 
             player.ShootDamage = player.CurrentGun.shootDamage;
@@ -128,6 +130,9 @@ namespace Catalyst.GamePlay
             player.ShootRate = player.CurrentGun.shootRate;
             player.AmmoCount = player.CurrentGun.ammoCur;
             player.AmmoMax = player.CurrentGun.ammoMax;
+
+            if (player.CurrentGun.gunType == WeaponData.GunType.Shotgun)
+                gunModel.SetActive(true);
 
             HealthBarUI.instance.ShowWeaponUI();
 
@@ -154,6 +159,7 @@ namespace Catalyst.GamePlay
             //}
             HandleAim();
             HandleReload();
+
         }
         private void SetupCombatAnimator()
         {

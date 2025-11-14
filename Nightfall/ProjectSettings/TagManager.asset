@@ -12,6 +12,7 @@ TagManager:
   - FeedingTrough
   - HomePos
   - lb_bird
+  - Shotgun
   layers:
   - Default
   - TransparentFX

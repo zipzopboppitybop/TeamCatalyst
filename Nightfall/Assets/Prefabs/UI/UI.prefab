@@ -122,6 +122,10 @@ PrefabInstance:
       propertyPath: menuPause
       value: 
       objectReference: {fileID: 1874219313281714847}
+    - target: {fileID: 9096262249942515563, guid: e3df1092a5edb2f439c2455d31c957a9, type: 3}
+      propertyPath: playerData
+      value: 
+      objectReference: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
     - target: {fileID: 9108278128045636048, guid: e3df1092a5edb2f439c2455d31c957a9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -287,20 +291,24 @@ PrefabInstance:
     m_TransformParent: {fileID: 8686796277236601598}
     m_Modifications:
     - target: {fileID: 816676368903131111, guid: 990ab44353ac7944f9caf6396c8b0a4e, type: 3}
+      propertyPath: near clip plane
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 816676368903131111, guid: 990ab44353ac7944f9caf6396c8b0a4e, type: 3}
       propertyPath: m_CullingMask.m_Bits
       value: 1049599
       objectReference: {fileID: 0}
     - target: {fileID: 5090203682555928608, guid: 990ab44353ac7944f9caf6396c8b0a4e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -961
+      value: -960
       objectReference: {fileID: 0}
     - target: {fileID: 5090203682555928608, guid: 990ab44353ac7944f9caf6396c8b0a4e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -538.72
+      value: -538.563
       objectReference: {fileID: 0}
     - target: {fileID: 5090203682555928608, guid: 990ab44353ac7944f9caf6396c8b0a4e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2
+      value: 0.242
       objectReference: {fileID: 0}
     - target: {fileID: 5090203682555928608, guid: 990ab44353ac7944f9caf6396c8b0a4e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -535,6 +543,7 @@ MonoBehaviour:
   MasterVol: MasterVolume
   MusicVol: MusicVolume
   SfxVol: SFXVolume
+  PlayerVol: PlayerVolume
 --- !u!82 &3510002469387347283
 AudioSource:
   m_ObjectHideFlags: 0

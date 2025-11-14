@@ -1,6 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" editor-extension-mode="False">
-    <Style src="project://database/Assets/Shop.uss?fileID=7433441132597879392&amp;guid=8bcbabb7afe579a40b5d4830ffe0e8df&amp;type=3#Shop" />
-    <ui:VisualElement name="Root" style="flex-direction: column; padding: 10px; gap: 5px; width: 1000px; height: 1000px; top: 45px; left: 25%;">
+    <Style src="project://database/Assets/Scripts/UI/Shop.uss?fileID=7433441132597879392&amp;guid=8bcbabb7afe579a40b5d4830ffe0e8df&amp;type=3#Shop" />
+    <ui:VisualElement name="Root" style="flex-direction: column; padding: 10px; gap: 5px; width: 1000px; height: 1000px; top: 45px; left: 25%; display: none;">
         <ui:Label text="Shop" name="ShopTitle" />
         <ui:ScrollView name="ItemsContainer" style="height: 300px; width: 200px;" />
     </ui:VisualElement>
