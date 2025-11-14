@@ -9,7 +9,8 @@ public class TilePainter : MonoBehaviour
 
     [SerializeField] RuleTile[] selectedTile;
     [SerializeField] Tilemap map;
-    [SerializeField] GameObject ghost;
+
+    [SerializeField] GhostItem ghostPlacer;
 
     [SerializeField] int placeDist;
 
@@ -19,7 +20,7 @@ public class TilePainter : MonoBehaviour
     // 1 = Crop
 
     Vector3Int currentCell;
-
+    string currentItemName;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -33,6 +34,8 @@ public class TilePainter : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
 
         //if (Input.GetButtonDown("Interact"))
         //{
@@ -84,6 +87,28 @@ public class TilePainter : MonoBehaviour
 
         //    }
         //}
+    }
+
+    public void UpdateCurrentItem(GameObject item = null)
+    {
+
+        if (item)
+        {
+            currentItemName = item.name;
+            switch (currentItemName)
+            {
+
+                case "Rake":
+                    ghostPlacer.ShowGhost(selectedTile[0]);
+                    break;
+                default:
+                    ghostPlacer.HideGhost();
+                    break;
+
+            }
+        }
+
+
     }
 
     public void TryPlaceTile(GameObject heldItem)
