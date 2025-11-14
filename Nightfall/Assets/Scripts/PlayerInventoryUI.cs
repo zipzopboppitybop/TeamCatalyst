@@ -7,14 +7,18 @@ using Catalyst.Player;
 
 public class PlayerInventoryUI : MonoBehaviour
 {
-    [SerializeField] private bool isHotbar;
-    [SerializeField] private PlayerInventoryUI hotbarUI;
     [SerializeField] private UIDocument document;
 
-    public Inventory inventory;
+    public Inventory hotBarInventory;
+    public Inventory playerInventory;
+    private VisualElement hotBarUI;
     private VisualElement root;
-    private VisualElement[] slots;
-    private int slotCount;
+    private VisualElement playerInventoryUI;
+    private VisualElement menuSystemUI;
+    private VisualElement[] hotBarSlots;
+    private VisualElement[] playerInventorySlots;
+    private int playerInventorySlotCount;
+    private int hotBarSlotCount;
     private int selectedSlot;
     private InventorySlot selectedInventorySlot;
 
@@ -23,97 +27,63 @@ public class PlayerInventoryUI : MonoBehaviour
     private Inventory draggingFromInventory;
     private InputHandler inputHandler;
     public bool toggleInventory;
-    public bool isChestUI;
 
     private Catalyst.Player.PlayerController playerController;
     private GameObject player;
     private bool isVisible = false;
+
+    public event System.Action<ItemData> OnSelectedItemChanged;
 
     void Start()
     {
         player = GameManager.instance.player;
         playerController = player.GetComponent<Catalyst.Player.PlayerController>();
         inputHandler = playerController.playerInputHandler;
+        hotBarInventory = playerController.GetComponent<PlayerInventoryHolder>().PrimaryInventory;
+        playerInventory = playerController.GetComponent <PlayerInventoryHolder>().SecondaryInventory;
         if (document == null)
         {
             document = GetComponent<UIDocument>();
         }
 
-
         root = document.rootVisualElement;
+        hotBarUI = root.Q<VisualElement>("HotBar");
+        playerInventoryUI = root.Q<VisualElement>("InventorySlots");
+        menuSystemUI = root.Q<VisualElement>("MenuSystem");
 
-        root.pickingMode = PickingMode.Ignore;
 
-        if (!isChestUI)
+        hotBarUI.style.display = DisplayStyle.Flex;
+        menuSystemUI.style.display = DisplayStyle.None;
+
+        hotBarSlotCount = hotBarInventory.InventorySize;
+        hotBarSlots = new VisualElement[hotBarSlotCount];
+        playerInventorySlotCount = playerInventory.InventorySize;
+        playerInventorySlots = new VisualElement[playerInventorySlotCount];
+
+        for (int i = 0; i < hotBarSlotCount; i++)
         {
-            inventory = isHotbar ? GameManager.instance.player.GetComponent<PlayerInventoryHolder>().PrimaryInventory : GameManager.instance.player.GetComponent<PlayerInventoryHolder>().SecondaryInventory;
+            hotBarSlots[i] = hotBarUI.Q<VisualElement>($"HotBarSlot-{i}");
+            RegisterHotBarSlotCallbacks(i);
         }
 
-        if (!isHotbar)
+        for (int i = 0; i < playerInventorySlotCount; i++)
         {
-            root.style.display = DisplayStyle.None;
+            playerInventorySlots[i] = playerInventoryUI.Q<VisualElement>($"InventoryItems-{i}");
+            RegisterInventorySlotCallbacks(i);
         }
 
-        VisualElement slotsContainer = root.Q<VisualElement>("Slots");
-        slots = null;
-
-        if (inventory == null)
-        {
-            return;
-        }
-
-        slotCount = inventory.InventorySize;
-        slots = new VisualElement[slotCount];
-
-        if (isHotbar)
-        {
-            for (int i = 0; i < slots.Length; i++)
-            {
-                slots[i] = slotsContainer.Q<VisualElement>($"Slot-{i}");
-                RegisterSlotCallbacks(i);
-            }
-        }
-        else
-        {
-            List<VisualElement> rows = slotsContainer.Query<VisualElement>(className: "row").ToList();
-            int index = 0;
-            foreach (VisualElement row in rows)
-            {
-                foreach (VisualElement slot in row.Children())
-                {
-                    if (!slot.ClassListContains("slot")) continue;
-                    if (index >= slotCount) break;
-
-                    slots[index] = slot;
-                    int currentIndex = index;
-                    RegisterSlotCallbacks(currentIndex);
-                    index++;
-                }
-            }
-
-            root.style.display = DisplayStyle.None;
-        }
-
-        inventory.OnInventorySlotChanged += RefreshInventory;
+        hotBarInventory.OnInventorySlotChanged += RefreshHotBar;
+        RefreshHotBar();
+        playerInventory.OnInventorySlotChanged += RefreshInventory;
         RefreshInventory();
 
-        if (isHotbar)
-        {
-            SelectSlot(0);
-        }
+        SelectSlot(0);
     }
 
     void Update()
     {
-        if (isHotbar)
-        {
-            HandleHotBarInput();
-        }
-
-        if (!isHotbar && !isChestUI)
-        {
-            HandleInventoryInput();
-        }
+        HandleHotBarInput();
+        HandleInventoryInput();
 
         if (InventoryDragManager.draggedIcon != null)
         {
@@ -135,7 +105,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
     private void HandleHotBarInput()
     {
-        for (int i = 0; i < slotCount; i++)
+        for (int i = 0; i < hotBarSlotCount; i++)
         {
             if (Input.GetKeyDown(KeyCode.Alpha1 + i))
             {
@@ -147,11 +117,11 @@ public class PlayerInventoryUI : MonoBehaviour
         float scroll = Input.mouseScrollDelta.y;
         if (scroll > 0)
         {
-            SelectSlot((selectedSlot - 1 + slotCount) % slotCount);
+            SelectSlot((selectedSlot - 1 + hotBarSlotCount) % hotBarSlotCount);
         }
         else if (scroll < 0)
         {
-            SelectSlot((selectedSlot + 1) % slotCount);
+            SelectSlot((selectedSlot + 1) % hotBarSlotCount);
         }
     }
 
@@ -166,7 +136,8 @@ public class PlayerInventoryUI : MonoBehaviour
         {
             toggleInventory = !toggleInventory;
             playerController.isInventoryOpen = toggleInventory;
-            root.style.display = toggleInventory ? DisplayStyle.Flex : DisplayStyle.None;
+
+            menuSystemUI.style.display = toggleInventory ? DisplayStyle.Flex : DisplayStyle.None;
 
             if (toggleInventory)
             {
@@ -184,33 +155,43 @@ public class PlayerInventoryUI : MonoBehaviour
     private void SelectSlot(int index)
     {
         selectedSlot = index;
-        selectedInventorySlot = inventory.InventorySlots[index];
+        selectedInventorySlot = hotBarInventory.InventorySlots[index];
         UpdateSelection();
+
+        OnSelectedItemChanged?.Invoke(selectedInventorySlot?.ItemData);
     }
 
     private void UpdateSelection()
     {
-        for (int i = 0; i < slotCount; i++)
+        for (int i = 0; i < hotBarSlotCount; i++)
         {
-            if (slots[i] != null)
+            if (hotBarSlots[i] != null)
             {
-                slots[i].EnableInClassList("selected", i == selectedSlot);
+                hotBarSlots[i].EnableInClassList("selected", i == selectedSlot);
             }
         }
     }
 
-    private void RegisterSlotCallbacks(int index)
+    private void RegisterInventorySlotCallbacks(int index)
     {
-        slots[index].RegisterCallback<PointerDownEvent>(e => OnSlotPointerDown(index));
-        slots[index].RegisterCallback<PointerUpEvent>(e => OnSlotPointerUp(index));
+        Inventory inventoryRef = playerInventory;
+        playerInventorySlots[index].RegisterCallback<PointerDownEvent>(e => OnSlotPointerDown(index, inventoryRef));
+        playerInventorySlots[index].RegisterCallback<PointerUpEvent>(e => OnSlotPointerUp(index, inventoryRef));
     }
 
-    public void RefreshInventory(InventorySlot _ = null)
+    private void RegisterHotBarSlotCallbacks(int index)
     {
-        for (int i = 0; i < slotCount; i++)
+        Inventory inventoryRef = hotBarInventory;
+        hotBarSlots[index].RegisterCallback<PointerDownEvent>(e => OnSlotPointerDown(index, inventoryRef));
+        hotBarSlots[index].RegisterCallback<PointerUpEvent>(e => OnSlotPointerUp(index, inventoryRef));
+    }
+
+    public void RefreshHotBar(InventorySlot _ = null)
+    {
+        for (int i = 0; i < hotBarSlotCount; i++)
         {
-            VisualElement slotElement = slots[i];
-            InventorySlot slotData = inventory.InventorySlots[i];
+            VisualElement slotElement = hotBarSlots[i];
+            InventorySlot slotData = hotBarInventory.InventorySlots[i];
 
             Label countLabel = slotElement.Q<Label>("Count");
             countLabel.text = slotData.StackSize > 1 ? slotData.StackSize.ToString() : "";
@@ -229,9 +210,33 @@ public class PlayerInventoryUI : MonoBehaviour
         }
     }
 
-    private void OnSlotPointerDown(int index)
+    public void RefreshInventory(InventorySlot _ = null)
     {
-        InventorySlot slot = inventory.InventorySlots[index];
+        for (int i = 0; i < playerInventorySlotCount; i++)
+        {
+            VisualElement slotElement = playerInventorySlots[i];
+            InventorySlot slotData = playerInventory.InventorySlots[i];
+
+            Label countLabel = slotElement.Q<Label>("Count");
+            countLabel.text = slotData.StackSize > 1 ? slotData.StackSize.ToString() : "";
+
+            VisualElement icon = slotElement.Q<VisualElement>("Icon");
+            if (slotData.ItemData != null)
+            {
+                icon.style.backgroundImage = new StyleBackground(slotData.ItemData.Icon);
+                icon.style.opacity = 1f;
+            }
+            else
+            {
+                icon.style.backgroundImage = null;
+                icon.style.opacity = 0f;
+            }
+        }
+    }
+
+    private void OnSlotPointerDown(int index, Inventory inventoryRef)
+    {
+        InventorySlot slot = inventoryRef.InventorySlots[index];
         if (slot.ItemData == null || InventoryDragManager.IsDragging)
         {
             return;
@@ -239,7 +244,7 @@ public class PlayerInventoryUI : MonoBehaviour
 
         draggingSlotOriginal = slot;
         draggingSlotIndex = index;
-        draggingFromInventory = inventory;
+        draggingFromInventory = inventoryRef;
 
         VisualElement icon = new VisualElement
         {
@@ -253,18 +258,18 @@ public class PlayerInventoryUI : MonoBehaviour
             }
         };
 
-        InventoryDragManager.BeginDrag(slot, icon, inventory, root);
+        InventoryDragManager.BeginDrag(slot, icon, inventoryRef, root);
     }
 
-    private void OnSlotPointerUp(int index)
+    private void OnSlotPointerUp(int index, Inventory inventoryRef)
     {
         if (!InventoryDragManager.IsDragging) return;
 
         InventorySlot sourceSlot = InventoryDragManager.draggedSlot;
         Inventory sourceInventory = InventoryDragManager.draggedFromInventory;
 
-        InventorySlot targetSlot = inventory.InventorySlots[index];
-        Inventory targetInventory = inventory;
+        InventorySlot targetSlot = inventoryRef.InventorySlots[index];
+        Inventory targetInventory = inventoryRef;
 
         if (sourceInventory == targetInventory && sourceSlot == targetSlot)
         {
@@ -310,77 +315,80 @@ public class PlayerInventoryUI : MonoBehaviour
         draggingSlotOriginal = null;
         draggingSlotIndex = -1;
         draggingFromInventory = null;
+
+        RefreshHotBar();
+        RefreshInventory();
     }
 
     public void SetInventory(Inventory newInventory)
     {
-        if (inventory != null)
-        {
-            inventory.OnInventorySlotChanged -= RefreshInventory;
-        }
+        //if (inventory != null)
+        //{
+        //    inventory.OnInventorySlotChanged -= RefreshInventory;
+        //}
 
-        inventory = newInventory;
+        //inventory = newInventory;
 
-        if (inventory != null)
-        {
-            inventory.OnInventorySlotChanged += RefreshInventory;
-            BuildChestSlots();
-            RefreshInventory();
-        }
-        else
-        {
-            root.style.display = DisplayStyle.None;
-            isVisible = false;
-        }
+        //if (inventory != null)
+        //{
+        //    inventory.OnInventorySlotChanged += RefreshInventory;
+        //    BuildChestSlots();
+        //    RefreshInventory();
+        //}
+        //else
+        //{
+        //    root.style.display = DisplayStyle.None;
+        //    isVisible = false;
+        //}
     }
 
     private void BuildChestSlots()
     {
-        VisualElement slotsContainer = root.Q<VisualElement>("Slots");
-        if (slotsContainer == null)
-        {
-            return;
-        }
+        //VisualElement slotsContainer = root.Q<VisualElement>("Slots");
+        //if (slotsContainer == null)
+        //{
+        //    return;
+        //}
 
-        slotCount = inventory.InventorySize;
-        slots = new VisualElement[slotCount];
+        //slotCount = inventory.InventorySize;
+        //slots = new VisualElement[slotCount];
 
-        List<VisualElement> rows = slotsContainer.Query<VisualElement>(className: "row").ToList();
-        int index = 0;
-        foreach (VisualElement row in rows)
-        {
-            foreach (VisualElement slot in row.Children())
-            {
-                if (!slot.ClassListContains("slot")) continue;
-                if (index >= slotCount) break;
+        //List<VisualElement> rows = slotsContainer.Query<VisualElement>(className: "row").ToList();
+        //int index = 0;
+        //foreach (VisualElement row in rows)
+        //{
+        //    foreach (VisualElement slot in row.Children())
+        //    {
+        //        if (!slot.ClassListContains("slot")) continue;
+        //        if (index >= slotCount) break;
 
-                slots[index] = slot;
-                int currentIndex = index;
-                RegisterSlotCallbacks(currentIndex);
-                index++;
-            }
-        }
+        //        slots[index] = slot;
+        //        int currentIndex = index;
+        //        RegisterInventorySlotCallbacks(currentIndex);
+        //        index++;
+        //    }
+        //}
     }
     public void Show(bool show)
     {
-        if (root == null) return;
+        //if (root == null) return;
 
-        if (isChestUI)
-        {
-            if (!show)
-            {
-                root.style.display = DisplayStyle.None;
-                return;
-            }
+        //if (isChestUI)
+        //{
+        //    if (!show)
+        //    {
+        //        root.style.display = DisplayStyle.None;
+        //        return;
+        //    }
 
-            if (inventory == null)
-            {
-                root.style.display = DisplayStyle.None;
-                return;
-            }
-        }
+        //    if (inventory == null)
+        //    {
+        //        root.style.display = DisplayStyle.None;
+        //        return;
+        //    }
+        //}
 
-        root.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
+        //root.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
     }
 
     public bool IsVisible()
@@ -401,26 +409,26 @@ public class PlayerInventoryUI : MonoBehaviour
 
     public void DropSelectedItem()
     {
-        if (selectedInventorySlot == null || selectedInventorySlot.ItemData == null)
-        {
-            return;
-        }
+        //if (selectedInventorySlot == null || selectedInventorySlot.ItemData == null)
+        //{
+        //    return;
+        //}
 
-        GameObject dropPrefab = selectedInventorySlot.ItemData.dropPrefab;
-        if (dropPrefab != null)
-        {
-            Vector3 dropPosition = player.transform.position + player.transform.forward * 1.5f;
-            GameObject.Instantiate(dropPrefab, dropPosition, Quaternion.identity);
-        }
+        //GameObject dropPrefab = selectedInventorySlot.ItemData.dropPrefab;
+        //if (dropPrefab != null)
+        //{
+        //    Vector3 dropPosition = player.transform.position + player.transform.forward * 1.5f;
+        //    GameObject.Instantiate(dropPrefab, dropPosition, Quaternion.identity);
+        //}
 
-        selectedInventorySlot.RemoveFromStack(1);
+        //selectedInventorySlot.RemoveFromStack(1);
 
-        if (selectedInventorySlot.StackSize <= 0)
-        {
-            selectedInventorySlot.UpdateInventorySlot(null, 0);
-        }
+        //if (selectedInventorySlot.StackSize <= 0)
+        //{
+        //    selectedInventorySlot.UpdateInventorySlot(null, 0);
+        //}
 
-        inventory.OnInventorySlotChanged?.Invoke(selectedInventorySlot);
-        RefreshInventory();
+        //inventory.OnInventorySlotChanged?.Invoke(selectedInventorySlot);
+        //RefreshInventory();
     }
 }
