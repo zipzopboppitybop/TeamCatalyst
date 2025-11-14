@@ -1,10 +1,6 @@
 using System.Collections.Generic;
 using Catalyst.Player;
-using NUnit.Framework;
 using UnityEngine;
-using Catalyst.Player;
-using UnityEngine.UI;
-
 
 public class GameManager : MonoBehaviour
 {
@@ -15,10 +11,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] PlayerData playerData;
     
     [SerializeField] private PauseMenuUI menuPause;
-
-    [SerializeField] GameObject menuActive;
-    [SerializeField] GameObject menuWin;
-    [SerializeField] GameObject menuLose;
 
     [SerializeField] float dayLengthMinutes;
     [SerializeField] int nightStart;
@@ -33,7 +25,7 @@ public class GameManager : MonoBehaviour
     int day = 1;
 
     public int cropCount = 0;
-    private int moneyOnStart = 0;
+    private float moneyOnStart = 0;
     private int cropsDestroyed = 0;
 
     public bool isPaused = false;
@@ -54,6 +46,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         player = GameObject.FindWithTag("Player");
+        playerController = player.GetComponent<PlayerController>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
     }
 
@@ -61,6 +54,7 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        
         cropCount = crops.Count;
         moneyOnStart = playerData.Currency;
     }
@@ -92,7 +86,7 @@ public class GameManager : MonoBehaviour
     {
         isPaused = true;
         Time.timeScale = 0;
-        player.SetActive(false);
+        playerController.EnablePlayerInput(false);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
@@ -100,6 +94,7 @@ public class GameManager : MonoBehaviour
     {
         isPaused = false;
         Time.timeScale = timeScaleOrig;
+        playerController.EnablePlayerInput(true);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -110,8 +105,6 @@ public class GameManager : MonoBehaviour
         player.SetActive(true);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-
-
 
         cropsDestroyed = 0;
         moneyOnStart = playerData.Currency;
@@ -244,7 +237,7 @@ public class GameManager : MonoBehaviour
 
     }
     
-    public int UpdateMoneyEarned()
+    public float UpdateMoneyEarned()
     {
         return playerData.Currency - moneyOnStart;
     }

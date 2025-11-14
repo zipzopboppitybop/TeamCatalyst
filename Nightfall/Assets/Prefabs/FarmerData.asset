@@ -30,6 +30,7 @@ MonoBehaviour:
   shootDist: 100
   ammoCount: 50
   ammoMax: 50
+  magazineSize: 0
   walkingSpeed: 2
   sprintSpeed: 5
   dashSpeed: 3
@@ -47,3 +48,4 @@ MonoBehaviour:
   roomsClear: 0
   guns:
   - {fileID: 11400000, guid: 5e17b70c5f1b7444a830bd25d57ae966, type: 2}
+  currentGun: {fileID: 11400000, guid: 5e17b70c5f1b7444a830bd25d57ae966, type: 2}
