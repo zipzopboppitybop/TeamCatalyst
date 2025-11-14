@@ -1,0 +1,10 @@
+VisualElement {
+}
+
+.unity-tab {
+    font-size: 45px;
+    -unity-font-definition: url("project://database/Assets/Unity%20Store%20DL/Farm%20Game%20UI%20-%20Simple%202D%20UI/Font/LilitaOne-Regular.ttf?fileID=12800000&guid=b0b25c7081699704f917d02e28f31692&type=3#LilitaOne-Regular");
+}
+
+.Tab-Button {
+}

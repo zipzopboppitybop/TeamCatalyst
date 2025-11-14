@@ -17,8 +17,6 @@ namespace Catalyst.Player
         [SerializeField] public PlayerInventoryUI hotbar;
         public AudioSource aud;
 
-
-
         public InputHandler playerInputHandler;
         [SerializeField] private PlayerData playerData;
         [SerializeField] private LayerMask ignoreLayer;
@@ -46,48 +44,36 @@ namespace Catalyst.Player
         private CharacterController characterController;
         private Vector3 playerDir;
 
-
         private void Start()
         {
-
             characterController = GetComponent<CharacterController>();
-
             SetupAnimator();
-
-
-
         }
-
 
         private float CurrentSpeed => playerData.Speed * (playerInputHandler.SprintHeld ? playerData.SprintSpeed : 1);
 
 
         void Update()
         {
+            if (!GameManager.instance.isPaused)
+            {
 
-            HandleMovement();
-
-
-            HandleAttack();
-            HandleDash();
-            UpdateInteract();
-
-
+                HandleMovement();
+                HandleAttack();
+                HandleDash();
+                UpdateInteract();
+                UpdateAnimator();
+            }
         }
 
         private void SetupAnimator()
         {
-
             _animJump = Animator.StringToHash("Jump");
             _animGrounded = Animator.StringToHash("Grounded");
             _animAttack = Animator.StringToHash("Attack");
             _animDash = Animator.StringToHash("Dash");
             _animVelocityX = Animator.StringToHash("Velocity X");
             _animVelocityZ = Animator.StringToHash("Velocity Z");
-
-
-
-
         }
 
         public void EnablePlayerInput(bool enabled)
@@ -172,27 +158,26 @@ namespace Catalyst.Player
 
             playerDir = CalculateMoveDirection();
 
-            _currentMovement.x = playerDir.x * CurrentSpeed;
+            if (playerInputHandler.AimHeld)
+                _currentMovement.x = playerDir.x * (CurrentSpeed * 0.5f);
+
+            else
+                _currentMovement.x = playerDir.x * CurrentSpeed;
+
+
             _currentMovement.z = playerDir.z * CurrentSpeed;
             HandleJumping();
 
             characterController.Move(_currentMovement * Time.deltaTime);
 
+            if (playerInputHandler.AimHeld)
+                animator.SetFloat(_animVelocityX, playerInputHandler.MoveInput.x * 0.1f);
 
-            animator.SetFloat(_animVelocityX, Mathf.SmoothDamp(animator.GetFloat(_animVelocityX), playerInputHandler.MoveInput.x * _currentMovement.magnitude, ref _velocityX, 0.1f));
+            else
+                animator.SetFloat(_animVelocityX, Mathf.SmoothDamp(animator.GetFloat(_animVelocityX), playerInputHandler.MoveInput.x * _currentMovement.magnitude, ref _velocityX, 0.1f));
+
             animator.SetFloat(_animVelocityZ, Mathf.SmoothDamp(animator.GetFloat(_animVelocityZ), playerInputHandler.MoveInput.y * _currentMovement.magnitude, ref _velocityZ, 0.1f));
         }
-
-
-
-
-
-
-
-
-
-
-
 
         public void UpdateInteract()
         {
@@ -230,18 +215,12 @@ namespace Catalyst.Player
             return hotbar;
         }
 
-
-
-
         IEnumerator FlashDamageScreen()
         {
             //HUDManager.instance.playerDamageScreen.SetActive(true);
             yield return new WaitForSeconds(0.1f);
             //HUDManager.instance.playerDamageScreen.SetActive(false);
         }
-
-
-
 
         IEnumerator Attack()
         {
@@ -260,7 +239,6 @@ namespace Catalyst.Player
                 dodgeDirection = -transform.forward;
             }
             characterController.Move(dodgeDirection.normalized * playerData.DashSpeed * Time.deltaTime);
-
         }
 
         IEnumerator Dash()
@@ -326,6 +304,12 @@ namespace Catalyst.Player
                 }
                 yield return null;
             }
+        }
+
+        private void UpdateAnimator()
+        {
+            animator.SetLayerWeight(1, 1 - (playerData.Health / playerData.HealthMax));
+
         }
 
 

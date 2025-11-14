@@ -14,9 +14,11 @@ namespace Catalyst.CameraController
         public CinemachineCamera thirdPersonCamera;
         public CinemachineCamera AimCamera;
         [SerializeField] private Transform followTarget;
-
+        [SerializeField] private Transform aimTarget;
+        [SerializeField, Range(1, 20)] private int aimFollowSpeed;
         [SerializeField] private LayerMask gunCamLayers;
         [SerializeField] private LayerMask thirdPersonLayers;
+        [SerializeField] private LayerMask ignoreLayer;
         [SerializeField] private GameObject[] hideInFPS;
         [SerializeField] private InputHandler playerInputHandler;
         [SerializeField] private PlayerData playerData;
@@ -42,13 +44,21 @@ namespace Catalyst.CameraController
 
         private void Update()
         {
-            ThirdPersonActive();
-            HandleRotation();
+            if (!GameManager.instance.isPaused)
+            {
+                ThirdPersonActive();
+                HandleRotation();
+            }
+
         }
         private void LateUpdate()
         {
-            ApplyThirdPersonRotation(_mouseYRotation, _mouseXRotation);
-            ToggleAimCamera(playerInputHandler.AimHeld);
+            if (!GameManager.instance.isPaused)
+
+            {
+                ApplyThirdPersonRotation(_mouseYRotation, _mouseXRotation);
+                ToggleAimCamera(playerInputHandler.AimHeld);
+            }
 
         }
 
@@ -199,7 +209,12 @@ namespace Catalyst.CameraController
             if (AimCamera == null)
                 return;
             if (ThirdPersonActive())
+            {
                 AimCamera.gameObject.SetActive(isAiming);
+                if (isAiming)
+                    FollowMousePosition();
+
+            }
         }
 
         IEnumerator ToggleCamera(CinemachineCamera cam)
@@ -210,6 +225,31 @@ namespace Catalyst.CameraController
             ToggleGunCam();
             yield return new WaitForSeconds(1.0f);
             playerInputHandler.enabled = true;
+        }
+
+        public Vector3 GetMouseWorldPosition()
+        {
+
+            Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
+            Ray ray = sceneCam.ScreenPointToRay(screenCenterPoint);
+            if (Physics.Raycast(ray, out RaycastHit hit, sceneCam.farClipPlane, ~ignoreLayer, QueryTriggerInteraction.Ignore))
+            {
+                return hit.point;
+            }
+            return Vector3.zero; // Return a default value if no hit
+
+        }
+        public void FollowMousePosition()
+        {
+            Vector3 worldAimTarget
+                = GetMouseWorldPosition();
+
+            worldAimTarget.y = transform.position.y;
+
+            Vector3 aimDirection = (worldAimTarget - transform.position).normalized;
+            transform.forward = Vector3.Lerp(transform.forward, aimDirection, Time.deltaTime * aimFollowSpeed);
+
+            aimTarget.position = worldAimTarget;
         }
     }
 }

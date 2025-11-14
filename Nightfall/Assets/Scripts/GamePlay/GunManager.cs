@@ -7,18 +7,14 @@ namespace Catalyst.GamePlay
 {
     public class GunManager : MonoBehaviour
     {
-        [SerializeField] private Renderer gunModel;
+        [SerializeField] private GameObject gunModel;
         [SerializeField] private Transform gunPos;
         [SerializeField] private PlayerData player;
-        [SerializeField] private Transform gunHolder;
         [SerializeField] private Animator animator;
         [SerializeField] private AudioSource aud;
         [SerializeField] private InputHandler playerInputHandler;
         [SerializeField] private PlayerController playerController;
-
-        private WeaponData _currentWeapon;
-
-        private AudioClip[] shootSound;
+        [SerializeField] private AudioClip magPickupSound;
 
 
         [SerializeField] private LayerMask ignoreLayer;
@@ -29,31 +25,34 @@ namespace Catalyst.GamePlay
         private int _animShoot;
         private int _animReload;
         private int _animArmed;
+        private AudioClip[] shootSound;
 
         private float _shootTimer = 0f;
 
         private bool isReloading = false;
 
+
+
         private void Awake()
         {
             if (playerInputHandler == null)
             {
-                playerInputHandler = GetComponent<InputHandler>();
+                playerInputHandler = transform.GetComponent<InputHandler>();
             }
             if (animator == null)
             {
-                animator = gunHolder.GetComponent<Animator>();
+                animator = transform.GetComponent<Animator>();
             }
             if (aud == null)
             {
-                aud = GetComponent<AudioSource>();
+                aud = transform.GetComponent<AudioSource>();
 
             }
             SetupCombatAnimator();
         }
         private void Start()
         {
-
+            ClearCurrentGun();
             EquipGun();
 
 
@@ -64,29 +63,31 @@ namespace Catalyst.GamePlay
         {
             _shootTimer += Time.deltaTime;
 
-            if (player.CurrentGun != null)
-            {
-                SelectWeapon();
-            }
+
 
             if (player.Guns.Count == 0 || player.CurrentGun == null)
             {
                 HealthBarUI.instance.HideWeaponUI();
+                gunModel.SetActive(false);
                 return;
+            }
+            else
+            {
+                SelectWeapon();
             }
 
         }
 
-
-
         private void EquipGun()
         {
-
-
+            if (player.Guns.Count == 0) return;
             ChangeWeapon();
-            //animator.SetBool(_animArmed, true);
-
         }
+        private void ClearCurrentGun()
+        {
+            player.CurrentGun = null;
+        }
+
 
         public void GetWeaponData(WeaponData weaponData)
         {
@@ -111,11 +112,17 @@ namespace Catalyst.GamePlay
         {
             player.CurrentGun = player.Guns[_gunListPos];
             shootSound = player.CurrentGun.shootSounds;
-            Debug.Log("Equipped " + _currentWeapon.name);
-            gunModel.GetComponent<MeshFilter>().sharedMesh = player.CurrentGun.model.GetComponent<MeshFilter>().sharedMesh;
-            gunModel.GetComponent<MeshRenderer>().sharedMaterial = player.CurrentGun.model.GetComponent<MeshRenderer>().sharedMaterial;
+            Debug.Log("Equipped " + player.CurrentGun.name);
 
-            if (_currentWeapon.ammoCur > 0)
+
+
+
+
+            //gunModel = Instantiate(player.CurrentGun.model, gunPos.position, gunPos.rotation, gunPos);
+            //gunModel.GetComponent<MeshFilter>().sharedMesh = player.CurrentGun.model.GetComponent<MeshFilter>().sharedMesh;
+            //gunModel.GetComponent<MeshRenderer>().sharedMaterial = player.CurrentGun.model.GetComponent<MeshRenderer>().sharedMaterial;
+
+            if (player.CurrentGun.ammoCur > 0)
                 aud.PlayOneShot(player.CurrentGun.pickUpSound, 0.5f);
 
             player.ShootDamage = player.CurrentGun.shootDamage;
@@ -123,6 +130,9 @@ namespace Catalyst.GamePlay
             player.ShootRate = player.CurrentGun.shootRate;
             player.AmmoCount = player.CurrentGun.ammoCur;
             player.AmmoMax = player.CurrentGun.ammoMax;
+
+            if (player.CurrentGun.gunType == WeaponData.GunType.Shotgun)
+                gunModel.SetActive(true);
 
             HealthBarUI.instance.ShowWeaponUI();
 
@@ -149,6 +159,7 @@ namespace Catalyst.GamePlay
             //}
             HandleAim();
             HandleReload();
+
         }
         private void SetupCombatAnimator()
         {
@@ -167,7 +178,6 @@ namespace Catalyst.GamePlay
                 return false;
             }
             if (_gunListPos < 0 || _gunListPos >= player.Guns.Count) return false;
-            if (player.CurrentGun.ammoCur <= 0) return false;
             if (isReloading) return false;
             return true;
         }
@@ -209,7 +219,14 @@ namespace Catalyst.GamePlay
             {
                 _shootTimer = 0f;
 
-                animator.SetTrigger(_animShoot);
+                if (player.CurrentGun.ammoCur <= 0)
+                {
+                    Debug.Log("Out of Ammo!");
+                    aud.PlayOneShot(player.CurrentGun.emptyClipSound, player.CurrentGun.shootVolume);
+                    return;
+                }
+                else
+                    animator.SetTrigger(_animShoot);
 
                 Debug.Log("Shooting");
 
@@ -256,42 +273,45 @@ namespace Catalyst.GamePlay
             if (player.Guns.Count == 0) return;
             if (_gunListPos < 0 || _gunListPos >= player.Guns.Count) return;
             if (player.CurrentGun.ammoCur >= player.CurrentGun.ammoMax) return;
-            isReloading = true;
-            animator.SetTrigger(_animReload);
-            Debug.Log("Reloading...");
-            FinishReload();
+
+            if (player.MagazineSize > 0)
+            {
+                player.MagazineSize--;
+                isReloading = true;
+                animator.SetTrigger(_animReload);
+                Debug.Log("Reloading...");
+                FinishReload();
+            }
+
         }
 
         public void FinishReload()
         {
-            if (player.Guns.Count == 0) return;
-            if (_gunListPos < 0 || _gunListPos >= player.Guns.Count) return;
-            WeaponData gun = player.CurrentGun;
-            int ammoNeeded = gun.ammoMax - gun.ammoCur;
-            gun.ammoCur += ammoNeeded;
-            aud.PlayOneShot(gun.reloadSound, gun.shootVolume);
-            if (gun.ammoCur > gun.ammoMax)
-            {
-                gun.ammoCur = gun.ammoMax;
-            }
+
+            ReloadWeapon(player.CurrentGun);
             isReloading = false;
-            Debug.Log("Reloaded.");
         }
+
+        public void AddMagazine(int amount)
+        {
+            player.MagazineSize += amount;
+            aud.PlayOneShot(magPickupSound, player.CurrentGun.shootVolume);
+
+        }
+
 
         public bool ReloadWeapon(WeaponData weaponData)
         {
             WeaponData gun = player.Guns[player.Guns.IndexOf(weaponData)];
 
-            if (gun.ammoCur == gun.ammoMax) return false;
+            if (gun.ammoCur == gun.ammoMax)
+            {
+                return false;
+            }
 
             else
             {
-                int ammoNeeded = gun.ammoMax - gun.ammoCur;
-                gun.ammoCur += ammoNeeded;
-                if (gun.ammoCur > gun.ammoMax)
-                {
-                    gun.ammoCur = gun.ammoMax;
-                }
+                gun.ammoCur = gun.ammoMax;
                 aud.PlayOneShot(gun.reloadSound, gun.shootVolume);
                 return true;
             }
