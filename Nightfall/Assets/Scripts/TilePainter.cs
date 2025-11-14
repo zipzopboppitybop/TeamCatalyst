@@ -170,6 +170,9 @@ public class TilePainter : MonoBehaviour
                     }
                 }
                 else if (heldItem.name.Contains("Watering"))
+                {
+
+                }
                 else
                 {       
                     Debug.Log("Can't plant seed — need fertilized farmland.");
