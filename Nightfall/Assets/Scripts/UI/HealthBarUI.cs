@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 public class HealthBarUI : MonoBehaviour
 {
-    public static HealthBarUI instance;
+    //public static HealthBarUI instance;
 
     [SerializeField] private UIDocument uIDocument;
     [SerializeField] private Catalyst.Player.PlayerData playerData;
@@ -16,7 +16,6 @@ public class HealthBarUI : MonoBehaviour
     private VisualElement takingDamage;
     private VisualElement lowHealth;
    
-    private VisualElement LoseNote;
     private VisualElement _weaponContainer;
     private VisualElement _reticleContainer;
     private Label currencyLabel;
@@ -26,7 +25,7 @@ public class HealthBarUI : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        instance = this;
+        //instance = this;
         if (uIDocument == null)
             uIDocument = GetComponent<UIDocument>();
 
@@ -131,9 +130,7 @@ public class HealthBarUI : MonoBehaviour
         {
             takingDamage.style.display= DisplayStyle.None;
         }
-
         prevHealth = playerData.Health;
-
     }
     private void UpdateLowHealthAlert()
     {
