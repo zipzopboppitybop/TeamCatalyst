@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] Cycles cycle;
     [SerializeField] PlayerData playerData;
-    
+
     [SerializeField] private PauseMenuUI menuPause;
 
     [SerializeField] float dayLengthMinutes;
@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+
         cropCount = crops.Count;
         moneyOnStart = playerData.Currency;
     }
@@ -86,7 +86,6 @@ public class GameManager : MonoBehaviour
     {
         isPaused = true;
         Time.timeScale = 0;
-        playerController.EnablePlayerInput(false);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
     }
@@ -94,7 +93,6 @@ public class GameManager : MonoBehaviour
     {
         isPaused = false;
         Time.timeScale = timeScaleOrig;
-        playerController.EnablePlayerInput(true);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -137,8 +135,8 @@ public class GameManager : MonoBehaviour
         timeOfDay = nightEnd;
         day += 1;
         UpdateGameClock();
-        
-        
+
+
 
         GameObject spawnerObject = GameObject.FindGameObjectWithTag("Spawner");
         if (spawnerObject != null)
@@ -236,7 +234,7 @@ public class GameManager : MonoBehaviour
         return day;
 
     }
-    
+
     public float UpdateMoneyEarned()
     {
         return playerData.Currency - moneyOnStart;
@@ -275,7 +273,7 @@ public class GameManager : MonoBehaviour
         crops.Add(crop);
     }
 
-    
+
 
     //public void TogglePlayerController()
     //{
