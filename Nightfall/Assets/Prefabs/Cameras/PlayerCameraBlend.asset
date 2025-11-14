@@ -13,8 +13,19 @@ MonoBehaviour:
   m_Name: PlayerCameraBlend
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineBlenderSettings
   CustomBlends:
-  - From: Third Person Aim Camera
+  - From: FollowCamera
     To: FPSCam
+    Blend:
+      Style: 4
+      Time: 0.5
+      CustomCurve:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 0
+        m_PostInfinity: 0
+        m_RotationOrder: 0
+  - From: FPSCam
+    To: FollowCamera
     Blend:
       Style: 6
       Time: 1
@@ -24,11 +35,11 @@ MonoBehaviour:
         m_PreInfinity: 0
         m_PostInfinity: 0
         m_RotationOrder: 0
-  - From: FPSCam
-    To: Third Person Aim Camera
+  - From: FollowCamera
+    To: AimCamera
     Blend:
       Style: 6
-      Time: 1
+      Time: 0.1
       CustomCurve:
         serializedVersion: 2
         m_Curve: []

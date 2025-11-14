@@ -16,6 +16,9 @@ public class HealthBarUI : MonoBehaviour
     private VisualElement takingDamage;
     private VisualElement lowHealth;
    
+    private VisualElement LoseNote;
+    private VisualElement _weaponContainer;
+    private VisualElement _reticleContainer;
     private Label currencyLabel;
 
     private float prevHealth;
@@ -24,12 +27,13 @@ public class HealthBarUI : MonoBehaviour
     void Start()
     {
         instance = this;
-        if(uIDocument == null)  
+        if (uIDocument == null)
             uIDocument = GetComponent<UIDocument>();
 
         prevHealth = playerData.Health;
 
         root = uIDocument.rootVisualElement;;
+        root = uIDocument.rootVisualElement; ;
         HUD = root.Q<VisualElement>("HUDContainer");
         healthBar = root.Q<VisualElement>("HealthBarGREEN");
         staminaBar = root.Q<VisualElement>("StamBarFront");
@@ -38,6 +42,9 @@ public class HealthBarUI : MonoBehaviour
         takingDamage = root.Q<VisualElement>("TakingDamage");
         lowHealth = root.Q<VisualElement>("LowHealth");
         
+        _weaponContainer = root.Q<VisualElement>("WeaponContainer");
+        _reticleContainer = root.Q<VisualElement>("ReticleContainer");
+
         HUD.style.display = DisplayStyle.Flex;
         UpdateHealthBar();
         UpdateStaminaBar();
@@ -75,10 +82,34 @@ public class HealthBarUI : MonoBehaviour
             staminaBar.style.width = Length.Percent(staminaPercent * 100);
         }
     }
+    public void ShowWeaponUI()
+    {
+        StartCoroutine(ShowWeaponCoroutine());
+    }
+    public void HideWeaponUI()
+    {
+        StartCoroutine(HideWeaponCoroutine());
+    }
+    private IEnumerator ShowWeaponCoroutine()
+    {
+
+        _weaponContainer.style.display = DisplayStyle.Flex;
+        _reticleContainer.style.display = DisplayStyle.Flex;
+        yield return null;
+    }
+    private IEnumerator HideWeaponCoroutine()
+    {
+
+        _weaponContainer.style.display = DisplayStyle.None;
+        _reticleContainer.style.display = DisplayStyle.None;
+        yield return null;
+
+
+    }
 
     private void RegenStamina()
     {
-        if(playerData.Stamina < playerData.StaminaMax)
+        if (playerData.Stamina < playerData.StaminaMax)
         {
             playerData.Stamina += (int)(playerData.StaminaRegen * Time.deltaTime);
         }

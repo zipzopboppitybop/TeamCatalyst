@@ -56,16 +56,16 @@ public class MainMenuController : MonoBehaviour
         if (settingsButton != null)
             settingsButton.clicked += () => { OnClickSound(); OnSettingsButtonClicked(); };
 
-        if(creditsButton != null)
+        if (creditsButton != null)
             creditsButton.clicked += () => { OnClickSound(); OnCreditsButtonClicked(); };
 
         if (quitButton != null)
-            quitButton.clicked += () => { OnClickSound(); OnQuitButtonClicked();};
+            quitButton.clicked += () => { OnClickSound(); OnQuitButtonClicked(); };
 
-        if(backButton != null)
-            backButton.clicked += () => { OnClickSound(); OnBackSettingsButtonClicked();};
+        if (backButton != null)
+            backButton.clicked += () => { OnClickSound(); OnBackSettingsButtonClicked(); };
         if (creditBackButton != null)
-            creditBackButton.clicked += () => { OnClickSound(); OnCreditsBackButtonClicked();};
+            creditBackButton.clicked += () => { OnClickSound(); OnCreditsBackButtonClicked(); };
     }
     private void OnClickSound()
     {
@@ -112,7 +112,7 @@ public class MainMenuController : MonoBehaviour
     }
     public void Hide()
     {
-        if (mainMenu != null)
+        if (mainMenu != null || Input.GetButtonDown("Pause"))
             mainMenu.style.display = DisplayStyle.None;
     }
 }

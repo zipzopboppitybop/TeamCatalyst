@@ -7,13 +7,11 @@ public class Livestock : MonoBehaviour, IDamage
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform headPos;
-    [SerializeField] Transform homePosTransform;
     [SerializeField] GameObject itemDrop;
     [SerializeField] GameObject targetObj;
     [SerializeField] float cropSearchInterval;
     [SerializeField] float cropDetectionRadius;
     [SerializeField] float cropThreshold;
-    [SerializeField] private Chest FeedingTrough;
 
     [SerializeField] int hp;
     [SerializeField] int hpMax;
@@ -26,6 +24,8 @@ public class Livestock : MonoBehaviour, IDamage
     [SerializeField] int roamPauseTime;
     [Range(0, 100)][SerializeField] int dropChance;
     [SerializeField] float biteRate;
+    public Vector3 homePos;
+    public Chest FeedingTrough;
 
     Color colorOrig;
 
@@ -35,7 +35,6 @@ public class Livestock : MonoBehaviour, IDamage
     int roamTimeOrig;
 
     Vector3 startingPos;
-    Vector3 homePos;
 
     void Start()
     {
@@ -43,7 +42,6 @@ public class Livestock : MonoBehaviour, IDamage
         roamTimeOrig = roamPauseTime;
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
-        homePos = homePosTransform.position;
     }
 
     void Update()
