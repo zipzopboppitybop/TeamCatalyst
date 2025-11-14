@@ -1,6 +1,10 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
+using Catalyst.Player;
+
+
+
 
 public class ShopUI : MonoBehaviour
 {
@@ -16,11 +20,24 @@ public class ShopUI : MonoBehaviour
     [SerializeField] private GameObject[] livestock;
 
     private VisualElement root;
-    private Queue<ItemData> deliveries = new Queue<ItemData>();
+    private List<Delivery> deliveries = new List<Delivery>();
     private ScrollView itemsContainer;
     public bool shopOpen = false;
 
     private int boughtChickens = 0;
+
+    [System.Serializable]
+    private class Delivery
+    {
+        public ItemData item;
+        public int daysRemaining;
+
+        public Delivery(ItemData item, int daysRemaining)
+        {
+            this.item = item;
+            this.daysRemaining = daysRemaining;
+        }
+    }
 
     private void Start()
     {
@@ -101,26 +118,17 @@ public class ShopUI : MonoBehaviour
             return;
         }
 
-        if (item.itemType == ItemData.ItemType.Livestock)
-        {
-            if (item.name.Contains("Chicken") && boughtChickens < 5)
-            {
-                if (!chickenCoop.activeSelf)
-                {
-                    chickenCoop.SetActive(true);
-                }
+        bool express = false;
 
-                deliveries.Enqueue(item);
-                Debug.Log("Chickens will be delivered tomorrow");
-                boughtChickens++;
-            }
-        }
-        else
+        var gm = GameManager.instance;
+        if (gm != null && gm.playerController != null && gm.playerController.playerInputHandler != null)
         {
-            deliveries.Enqueue(item);
-            Debug.Log($"{item.displayName} will be delivered tomorrow");
-
+            express = gm.playerController.playerInputHandler.SprintHeld;
         }
+        float finalPrice = express ? item.price * 1.5f : item.price;
+        int days = express ? 0 : 1;
+
+        deliveries.Add(new Delivery(item, days));
 
         playerData.Currency -= item.price;
     }
@@ -152,22 +160,37 @@ public class ShopUI : MonoBehaviour
 
     public void DeliverItems()
     {
-        while (deliveries.Count > 0)
+        List<Delivery> deliveriesDone = new List<Delivery>();
+
+        foreach (Delivery delivery in deliveries)
         {
-            ItemData item = deliveries.Dequeue();
+            delivery.daysRemaining--;
+
+            if (delivery.daysRemaining <= 0)
+            {
+                deliveriesDone.Add(delivery);
+            }
+        }
+
+        foreach (Delivery delivery in deliveriesDone)
+        {
+            deliveries.Remove(delivery);
+
+            ItemData item = delivery.item;
+
 
             if (item.itemType == ItemData.ItemType.Livestock)
             {
                 GameObject feedingTrough = GameObject.FindWithTag("FeedingTrough");
-                if (item.name.Contains("Chicken"))
+                if (item.name.Contains("Chicken") && boughtChickens < 5)
                 {
                     Vector3 homePoint = chickenCoop.transform.Find("ChickenCoopHome").position;
                     GameObject chicken = Instantiate(livestock[0], homePoint, Quaternion.identity);
                     Livestock livestockComponent = chicken.GetComponent<Livestock>();
                     livestockComponent.homePos = homePoint;
                     livestockComponent.FeedingTrough = feedingTrough.GetComponent<Chest>();
+                    boughtChickens++;
                 }
-
             }
             else
             {
@@ -182,8 +205,8 @@ public class ShopUI : MonoBehaviour
         {
             if (slot.ItemData != null)
             {
-                int amount = slot.StackSize;
-                playerData.Currency += slot.ItemData.sellValue * amount;
+                float amount = slot.StackSize;
+                playerData.Currency += slot.ItemData.price / 2 * amount;
 
                 slot.ClearSlot();
             }

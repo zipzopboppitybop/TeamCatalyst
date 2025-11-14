@@ -62,6 +62,7 @@ namespace Catalyst.Player
                 HandleAttack();
                 HandleDash();
                 UpdateInteract();
+                UpdateAnimator();
             }
         }
 
@@ -303,6 +304,12 @@ namespace Catalyst.Player
                 }
                 yield return null;
             }
+        }
+
+        private void UpdateAnimator()
+        {
+            animator.SetLayerWeight(1, 1 - (playerData.Health / playerData.HealthMax));
+
         }
 
 
