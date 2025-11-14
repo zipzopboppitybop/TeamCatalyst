@@ -32,6 +32,8 @@ public class PlayerInventoryUI : MonoBehaviour
     private GameObject player;
     private bool isVisible = false;
 
+    public event System.Action<ItemData> OnSelectedItemChanged;
+
     void Start()
     {
         player = GameManager.instance.player;
@@ -155,6 +157,8 @@ public class PlayerInventoryUI : MonoBehaviour
         selectedSlot = index;
         selectedInventorySlot = hotBarInventory.InventorySlots[index];
         UpdateSelection();
+
+        OnSelectedItemChanged?.Invoke(selectedInventorySlot?.ItemData);
     }
 
     private void UpdateSelection()

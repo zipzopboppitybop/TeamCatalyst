@@ -29,6 +29,7 @@ public class TilePainter : MonoBehaviour
     {
 
         map = (Tilemap)FindAnyObjectByType(typeof(Tilemap));
+        inv.OnSelectedItemChanged += SelectedItemChanged;
 
     }
 
@@ -109,6 +110,13 @@ public class TilePainter : MonoBehaviour
             }
         }
 
+
+    }
+
+    private void SelectedItemChanged(ItemData newItem)
+    {
+        GameObject itemPrefab = newItem?.dropPrefab;
+        UpdateCurrentItem(itemPrefab);
 
     }
 
