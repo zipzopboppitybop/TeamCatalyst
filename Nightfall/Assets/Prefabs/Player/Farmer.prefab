@@ -363,7 +363,6 @@ MonoBehaviour:
   gunModel: {fileID: 2145181983208484462}
   gunPos: {fileID: 2787198989341151857}
   player: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
-  gunHolder: {fileID: 2787198989341151857}
   animator: {fileID: 4961241792348632301}
   aud: {fileID: 853817436050279361}
   playerInputHandler: {fileID: 0}
@@ -571,13 +570,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1530143051171900557}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.035442743, y: -0.29819074, z: -0.054668467, w: 0.95228016}
-  m_LocalPosition: {x: 0.35, y: 1.27, z: -0.33}
+  m_LocalRotation: {x: 0.04910597, y: -0.31498587, z: -0.047904234, w: 0.9466138}
+  m_LocalPosition: {x: -0.04, y: 1.28, z: 0.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6811085360175029284}
-  m_LocalEulerAnglesHint: {x: 2, y: -34.9, z: -7.2}
+  m_LocalEulerAnglesHint: {x: 3.6, y: -37.03, z: -7}
 --- !u!20 &1827939816159163505
 Camera:
   m_ObjectHideFlags: 0
@@ -609,15 +608,15 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.01
+  near clip plane: 0.11
   far clip plane: 50
-  field of view: 23
+  field of view: 40
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 2097152
+    m_Bits: 3145728
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
