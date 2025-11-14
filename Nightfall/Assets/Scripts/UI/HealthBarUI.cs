@@ -4,7 +4,7 @@ using UnityEngine.UIElements;
 
 public class HealthBarUI : MonoBehaviour
 {
-    //public static HealthBarUI instance;
+    public static HealthBarUI instance;
 
     [SerializeField] private UIDocument uIDocument;
     [SerializeField] private Catalyst.Player.PlayerData playerData;
@@ -25,7 +25,7 @@ public class HealthBarUI : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //instance = this;
+        instance = this;
         if (uIDocument == null)
             uIDocument = GetComponent<UIDocument>();
 

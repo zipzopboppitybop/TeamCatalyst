@@ -11,16 +11,22 @@ public class PlayerInventoryUI : MonoBehaviour
 
     public Inventory hotBarInventory;
     public Inventory playerInventory;
+    public Inventory chestInventory;
     private VisualElement hotBarUI;
     private VisualElement root;
     private VisualElement playerInventoryUI;
+    private VisualElement chestInventoryUI;
+    private VisualElement chestInventoryMenu;
     private VisualElement menuSystemUI;
     private VisualElement[] hotBarSlots;
     private VisualElement[] playerInventorySlots;
+    private VisualElement[] chestSlots;
     private int playerInventorySlotCount;
+    private int chestSlotCount;
     private int hotBarSlotCount;
     private int selectedSlot;
     private InventorySlot selectedInventorySlot;
+    public bool isChestOpen;
 
     private InventorySlot draggingSlotOriginal;
     private int draggingSlotIndex;
@@ -30,7 +36,6 @@ public class PlayerInventoryUI : MonoBehaviour
 
     private Catalyst.Player.PlayerController playerController;
     private GameObject player;
-    private bool isVisible = false;
 
     public event System.Action<ItemData> OnSelectedItemChanged;
 
@@ -49,8 +54,11 @@ public class PlayerInventoryUI : MonoBehaviour
         root = document.rootVisualElement;
         hotBarUI = root.Q<VisualElement>("HotBar");
         playerInventoryUI = root.Q<VisualElement>("InventorySlots");
+        chestInventoryUI = root.Q<VisualElement>("ChestInventorySlots");
+        chestInventoryMenu = root.Q<VisualElement>("ChestInventoryMenu");
         menuSystemUI = root.Q<VisualElement>("MenuSystem");
 
+        InventoryHolder.OnDynamicInventoryDisplayRequested += OpenChest;
 
         hotBarUI.style.display = DisplayStyle.Flex;
         menuSystemUI.style.display = DisplayStyle.None;
@@ -131,7 +139,7 @@ public class PlayerInventoryUI : MonoBehaviour
         {
             return;
         }
-
+          
         if (inputHandler.ToggleInventoryTriggered)
         {
             toggleInventory = !toggleInventory;
@@ -148,7 +156,21 @@ public class PlayerInventoryUI : MonoBehaviour
             {
                 UnityEngine.Cursor.lockState = CursorLockMode.Locked;
                 UnityEngine.Cursor.visible = false;
+
+                if (isChestOpen)
+                {
+                    CloseChest();
+                    inputHandler.InteractTriggered = false; 
+                }
             }
+
+            inputHandler.ToggleInventoryTriggered = false;
+        }
+
+        if (isChestOpen && inputHandler.InteractTriggered)
+        {
+            CloseChest();
+            inputHandler.InteractTriggered = false; 
         }
     }
 
@@ -186,6 +208,13 @@ public class PlayerInventoryUI : MonoBehaviour
         hotBarSlots[index].RegisterCallback<PointerUpEvent>(e => OnSlotPointerUp(index, inventoryRef));
     }
 
+    private void RegisterChestSlotCallbacks(int index)
+    {
+        Inventory inventoryRef = chestInventory;
+        chestSlots[index].RegisterCallback<PointerDownEvent>(e => OnSlotPointerDown(index, inventoryRef));
+        chestSlots[index].RegisterCallback<PointerUpEvent>(e => OnSlotPointerUp(index, inventoryRef));
+    }
+
     public void RefreshHotBar(InventorySlot _ = null)
     {
         for (int i = 0; i < hotBarSlotCount; i++)
@@ -216,6 +245,30 @@ public class PlayerInventoryUI : MonoBehaviour
         {
             VisualElement slotElement = playerInventorySlots[i];
             InventorySlot slotData = playerInventory.InventorySlots[i];
+
+            Label countLabel = slotElement.Q<Label>("Count");
+            countLabel.text = slotData.StackSize > 1 ? slotData.StackSize.ToString() : "";
+
+            VisualElement icon = slotElement.Q<VisualElement>("Icon");
+            if (slotData.ItemData != null)
+            {
+                icon.style.backgroundImage = new StyleBackground(slotData.ItemData.Icon);
+                icon.style.opacity = 1f;
+            }
+            else
+            {
+                icon.style.backgroundImage = null;
+                icon.style.opacity = 0f;
+            }
+        }
+    }
+
+    public void RefreshChest(InventorySlot _ = null)
+    {
+        for (int i = 0; i < chestSlotCount; i++)
+        {
+            VisualElement slotElement = chestSlots[i];
+            InventorySlot slotData = chestInventory.InventorySlots[i];
 
             Label countLabel = slotElement.Q<Label>("Count");
             countLabel.text = slotData.StackSize > 1 ? slotData.StackSize.ToString() : "";
@@ -320,80 +373,50 @@ public class PlayerInventoryUI : MonoBehaviour
         RefreshInventory();
     }
 
-    public void SetInventory(Inventory newInventory)
+    private void OpenChest(Inventory chest)
     {
-        //if (inventory != null)
-        //{
-        //    inventory.OnInventorySlotChanged -= RefreshInventory;
-        //}
+        Debug.Log("Opening CHests");
+        chestInventory = chest;
+        isChestOpen = true;
 
-        //inventory = newInventory;
+        toggleInventory = true; 
+        playerController.isInventoryOpen = true;
 
-        //if (inventory != null)
-        //{
-        //    inventory.OnInventorySlotChanged += RefreshInventory;
-        //    BuildChestSlots();
-        //    RefreshInventory();
-        //}
-        //else
-        //{
-        //    root.style.display = DisplayStyle.None;
-        //    isVisible = false;
-        //}
+        menuSystemUI.style.display = DisplayStyle.Flex;
+        chestInventoryMenu.style.display = DisplayStyle.Flex;
+
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.visible = true;
+
+        chestSlotCount = chestInventory.InventorySize;
+        chestSlots = new VisualElement[chestSlotCount];
+
+        for (int i = 0; i < chestSlotCount; i++)
+        {
+            chestSlots[i] = chestInventoryUI.Q<VisualElement>($"ChestItems-{i}");
+            RegisterChestSlotCallbacks(i);
+        }
+
+        chestInventory.OnInventorySlotChanged += RefreshChest;
+        RefreshChest();
     }
 
-    private void BuildChestSlots()
+    public void CloseChest()
     {
-        //VisualElement slotsContainer = root.Q<VisualElement>("Slots");
-        //if (slotsContainer == null)
-        //{
-        //    return;
-        //}
+        if (!isChestOpen) return;
+        Debug.Log("Closing CHests");
+        chestInventory.OnInventorySlotChanged -= RefreshChest;
+        chestInventory = null;
+        isChestOpen = false;
 
-        //slotCount = inventory.InventorySize;
-        //slots = new VisualElement[slotCount];
+        toggleInventory = false; 
+        playerController.isInventoryOpen = false;
 
-        //List<VisualElement> rows = slotsContainer.Query<VisualElement>(className: "row").ToList();
-        //int index = 0;
-        //foreach (VisualElement row in rows)
-        //{
-        //    foreach (VisualElement slot in row.Children())
-        //    {
-        //        if (!slot.ClassListContains("slot")) continue;
-        //        if (index >= slotCount) break;
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        UnityEngine.Cursor.visible = false;
 
-        //        slots[index] = slot;
-        //        int currentIndex = index;
-        //        RegisterInventorySlotCallbacks(currentIndex);
-        //        index++;
-        //    }
-        //}
-    }
-    public void Show(bool show)
-    {
-        //if (root == null) return;
-
-        //if (isChestUI)
-        //{
-        //    if (!show)
-        //    {
-        //        root.style.display = DisplayStyle.None;
-        //        return;
-        //    }
-
-        //    if (inventory == null)
-        //    {
-        //        root.style.display = DisplayStyle.None;
-        //        return;
-        //    }
-        //}
-
-        //root.style.display = show ? DisplayStyle.Flex : DisplayStyle.None;
-    }
-
-    public bool IsVisible()
-    {
-        return isVisible && root.style.display == DisplayStyle.Flex;
+        chestInventoryMenu.style.display = DisplayStyle.None;
+        menuSystemUI.style.display = DisplayStyle.None;
     }
 
     public InventorySlot GetSelectedSlot()
@@ -409,26 +432,26 @@ public class PlayerInventoryUI : MonoBehaviour
 
     public void DropSelectedItem()
     {
-        //if (selectedInventorySlot == null || selectedInventorySlot.ItemData == null)
-        //{
-        //    return;
-        //}
+        if (selectedInventorySlot == null || selectedInventorySlot.ItemData == null)
+        {
+            return;
+        }
 
-        //GameObject dropPrefab = selectedInventorySlot.ItemData.dropPrefab;
-        //if (dropPrefab != null)
-        //{
-        //    Vector3 dropPosition = player.transform.position + player.transform.forward * 1.5f;
-        //    GameObject.Instantiate(dropPrefab, dropPosition, Quaternion.identity);
-        //}
+        GameObject dropPrefab = selectedInventorySlot.ItemData.dropPrefab;
+        if (dropPrefab != null)
+        {
+            Vector3 dropPosition = player.transform.position + player.transform.forward * 1.5f;
+            GameObject.Instantiate(dropPrefab, dropPosition, Quaternion.identity);
+        }
 
-        //selectedInventorySlot.RemoveFromStack(1);
+        selectedInventorySlot.RemoveFromStack(1);
 
-        //if (selectedInventorySlot.StackSize <= 0)
-        //{
-        //    selectedInventorySlot.UpdateInventorySlot(null, 0);
-        //}
+        if (selectedInventorySlot.StackSize <= 0)
+        {
+            selectedInventorySlot.UpdateInventorySlot(null, 0);
+        }
 
-        //inventory.OnInventorySlotChanged?.Invoke(selectedInventorySlot);
-        //RefreshInventory();
+        hotBarInventory.OnInventorySlotChanged?.Invoke(selectedInventorySlot);
+        RefreshInventory();
     }
 }

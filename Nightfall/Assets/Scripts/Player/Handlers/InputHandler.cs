@@ -59,6 +59,8 @@ namespace Catalyst.Player
         private InputAction _toggleInventoryAction;
         private bool _inventoryPressedThisFrame;
         private bool _interactPressedThisFrame;
+        private int _lastInteractFrame = -1;
+        private int _lastInventoryFrame = -1;
 
 
         private PlayerController _playerController;
@@ -129,9 +131,6 @@ namespace Catalyst.Player
             _attackAction.performed += inputInfo => AttackTriggered = true;
             _attackAction.canceled += inputInfo => AttackTriggered = false;
 
-            _interactAction.performed += inputInfo => InteractTriggered = true;
-            _interactAction.canceled += inputInfo => InteractTriggered = false;
-
             _dashAction.performed += inputInfo => DashTriggered = true;
             _dashAction.canceled += inputInfo => DashTriggered = false;
 
@@ -154,8 +153,23 @@ namespace Catalyst.Player
             _toggleCameraAction.performed += inputInfo => ToggleCameraTriggered = true;
             _toggleCameraAction.canceled += inputInfo => ToggleCameraTriggered = false;
 
-            _toggleInventoryAction.performed += inputInfo => _inventoryPressedThisFrame = true;
-            _interactAction.performed += inputInfo => _interactPressedThisFrame = true;
+            _interactAction.started += ctx =>
+            {
+                if (Time.frameCount != _lastInteractFrame)
+                {
+                    _interactPressedThisFrame = true;
+                    _lastInteractFrame = Time.frameCount;
+                }
+            };
+
+            _toggleInventoryAction.started += ctx =>
+            {
+                if (Time.frameCount != _lastInventoryFrame)
+                {
+                    _inventoryPressedThisFrame = true;
+                    _lastInventoryFrame = Time.frameCount;
+                }
+            };
 
         }
 
@@ -172,10 +186,11 @@ namespace Catalyst.Player
 
         private void Update()
         {
-            ToggleInventoryTriggered = _inventoryPressedThisFrame;
-            _inventoryPressedThisFrame = false;
             InteractTriggered = _interactPressedThisFrame;
             _interactPressedThisFrame = false;
+
+            ToggleInventoryTriggered = _inventoryPressedThisFrame;
+            _inventoryPressedThisFrame = false;
         }
 
     }

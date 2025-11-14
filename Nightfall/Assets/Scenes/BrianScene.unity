@@ -2167,7 +2167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 747bfff33393e5c48ac45dacbdfd2b2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Chest
-  primaryInventorySize: 27
+  primaryInventorySize: 15
   primaryInventory:
     inventorySlots: []
 --- !u!4 &864302013 stripped
