@@ -34,6 +34,10 @@ public class PlayerInventoryUI : MonoBehaviour
     private InputHandler inputHandler;
     public bool toggleInventory;
 
+    private Button inventoryButton;
+    private Button shopButton;
+    private Button achieveButton;
+
     private Catalyst.Player.PlayerController playerController;
     private GameObject player;
 
@@ -58,6 +62,10 @@ public class PlayerInventoryUI : MonoBehaviour
         chestInventoryUI = root.Q<VisualElement>("ChestInventorySlots");
         chestInventoryMenu = root.Q<VisualElement>("ChestInventoryMenu");
         menuSystemUI = root.Q<VisualElement>("MenuSystem");
+
+        inventoryButton = root.Q<Button>("InventoryButton");
+        shopButton = root.Q<Button>("ShopButton");
+        achieveButton = root.Q<Button>("AchieveButton");
 
         InventoryHolder.OnDynamicInventoryDisplayRequested += OpenChest;
 
@@ -376,7 +384,6 @@ public class PlayerInventoryUI : MonoBehaviour
 
     private void OpenChest(Inventory chest)
     {
-        Debug.Log("Opening CHests");
         chestInventory = chest;
         isChestOpen = true;
 
