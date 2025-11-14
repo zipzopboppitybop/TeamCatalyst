@@ -130,7 +130,9 @@ public class TilePainter : MonoBehaviour
     {
         if (heldItem == null)
         {
+
             return;
+
         }
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, placeDist, ~ignoreLayer))
@@ -141,6 +143,21 @@ public class TilePainter : MonoBehaviour
 
             GameObject existing = map.GetInstantiatedObject(currentCell);
             TowerBase existingTower = existing ? existing.GetComponent<TowerBase>() : null;
+
+            if (existing)
+                Debug.Log(existing.name);
+            if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Crop && existingTower.isFullyGrown)
+            {
+
+                Debug.Log("Start harvesting Crop!");
+                existingTower.HarvestCrop(inv.playerInventory);
+                Debug.Log("Harvested Crop!");
+                map.SetTile(currentCell, null);
+                Debug.Log("Removed Crop!");
+                map.SetTile(currentCell, selectedTile[0]);
+                Debug.Log("Replaced Farmland!");
+
+            }
 
             if (heldItem.name.Contains("Rake"))
             {
@@ -198,6 +215,7 @@ public class TilePainter : MonoBehaviour
 
             }
         }
+
     }
 
 }
