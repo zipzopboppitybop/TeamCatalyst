@@ -26,8 +26,8 @@ namespace Catalyst.Player
 
         public ParticleSystem hitEffect;
         public float impactForce;
-        //public ParticleSystem muzzleFlash;
-        //public Transform muzzleFlashPosition;
+        public ParticleSystem muzzleFlash;
+        public Transform muzzleFlashPosition;
     }
 
 }

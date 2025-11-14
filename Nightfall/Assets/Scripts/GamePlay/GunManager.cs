@@ -9,6 +9,7 @@ namespace Catalyst.GamePlay
     {
         [SerializeField] private GameObject gunModel;
         [SerializeField] private Transform gunPos;
+
         [SerializeField] private PlayerData player;
         [SerializeField] private Transform gunHolder;
         [SerializeField] private Animator animator;
@@ -17,11 +18,7 @@ namespace Catalyst.GamePlay
         [SerializeField] private PlayerController playerController;
         [SerializeField] private AudioClip magPickupSound;
 
-        private WeaponData _currentWeapon;
-
         private AudioClip[] shootSound;
-
-
 
         [SerializeField] private LayerMask ignoreLayer;
 
@@ -58,7 +55,7 @@ namespace Catalyst.GamePlay
         }
         private void Start()
         {
-
+            ClearCurrentGun();
             EquipGun();
 
 
@@ -69,29 +66,31 @@ namespace Catalyst.GamePlay
         {
             _shootTimer += Time.deltaTime;
 
-            if (player.CurrentGun != null)
-            {
-                SelectWeapon();
-            }
+
 
             if (player.Guns.Count == 0 || player.CurrentGun == null)
             {
                 HealthBarUI.instance.HideWeaponUI();
+                gunModel.SetActive(false);
                 return;
+            }
+            else
+            {
+                SelectWeapon();
             }
 
         }
 
-
-
         private void EquipGun()
         {
-
-
+            if (player.Guns.Count == 0) return;
             ChangeWeapon();
-            //animator.SetBool(_animArmed, true);
-
         }
+        private void ClearCurrentGun()
+        {
+            player.CurrentGun = null;
+        }
+
 
         public void GetWeaponData(WeaponData weaponData)
         {
@@ -116,12 +115,17 @@ namespace Catalyst.GamePlay
         {
             player.CurrentGun = player.Guns[_gunListPos];
             shootSound = player.CurrentGun.shootSounds;
-            Debug.Log("Equipped " + _currentWeapon.name);
-            gunModel = Instantiate(player.CurrentGun.model, gunPos.position, gunPos.rotation, gunPos);
+            Debug.Log("Equipped " + player.CurrentGun.name);
+
+
+
+
+
+            //gunModel = Instantiate(player.CurrentGun.model, gunPos.position, gunPos.rotation, gunPos);
             //gunModel.GetComponent<MeshFilter>().sharedMesh = player.CurrentGun.model.GetComponent<MeshFilter>().sharedMesh;
             //gunModel.GetComponent<MeshRenderer>().sharedMaterial = player.CurrentGun.model.GetComponent<MeshRenderer>().sharedMaterial;
 
-            if (_currentWeapon.ammoCur > 0)
+            if (player.CurrentGun.ammoCur > 0)
                 aud.PlayOneShot(player.CurrentGun.pickUpSound, 0.5f);
 
             player.ShootDamage = player.CurrentGun.shootDamage;
@@ -129,6 +133,9 @@ namespace Catalyst.GamePlay
             player.ShootRate = player.CurrentGun.shootRate;
             player.AmmoCount = player.CurrentGun.ammoCur;
             player.AmmoMax = player.CurrentGun.ammoMax;
+
+            if (player.CurrentGun.gunType == WeaponData.GunType.Shotgun)
+                gunModel.SetActive(true);
 
             HealthBarUI.instance.ShowWeaponUI();
 
@@ -155,6 +162,7 @@ namespace Catalyst.GamePlay
             //}
             HandleAim();
             HandleReload();
+
         }
         private void SetupCombatAnimator()
         {
