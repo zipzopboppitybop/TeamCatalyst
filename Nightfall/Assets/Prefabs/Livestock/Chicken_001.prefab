@@ -753,8 +753,9 @@ GameObject:
   - component: {fileID: 132955532179657302}
   - component: {fileID: 568518923008852087}
   - component: {fileID: 382340219009877498}
-  - component: {fileID: 3566406771193450459}
   - component: {fileID: 8573864735616901185}
+  - component: {fileID: 6865764882838416240}
+  - component: {fileID: 603555874142491289}
   m_Layer: 0
   m_Name: Chicken_001
   m_TagString: LiveStock
@@ -840,9 +841,9 @@ MonoBehaviour:
   FeedingTrough: {fileID: 0}
   aud: {fileID: 382340219009877498}
   audIdles:
-  - {fileID: 8300000, guid: 2a6979ffe6559ce488d9dcde3eca6baf, type: 3}
+  - {fileID: 8300000, guid: a0ed48239ae2be748b7514754963308d, type: 3}
   audHurt:
-  - {fileID: 8300000, guid: 66dddd7eade4f024bb0c8b5f7cdd1e79, type: 3}
+  - {fileID: 8300000, guid: a0ed48239ae2be748b7514754963308d, type: 3}
   idleSoundMinDelay: 4
   idleSoundMaxDelay: 20
   verticalParam: Vert
@@ -988,7 +989,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!54 &3566406771193450459
+--- !u!135 &8573864735616901185
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5650438882327132379}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!54 &6865764882838416240
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1015,7 +1037,7 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 0
   m_CollisionDetection: 1
---- !u!135 &8573864735616901185
+--- !u!135 &603555874142491289
 SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
