@@ -8,11 +8,7 @@ namespace Catalyst.CameraController
     public class CamController : MonoBehaviour
     {
 
-        public Camera sceneCam;
-        public Camera gunCam;
-        public CinemachineCamera FPSCamera;
-        public CinemachineCamera thirdPersonCamera;
-        public CinemachineCamera AimCamera;
+        [SerializeField] private PlayerData playerData;
         [SerializeField] private Transform followTarget;
         [SerializeField] private Transform aimTarget;
         [SerializeField, Range(1, 20)] private int aimFollowSpeed;
@@ -20,9 +16,15 @@ namespace Catalyst.CameraController
         [SerializeField] private LayerMask thirdPersonLayers;
         [SerializeField] private LayerMask ignoreLayer;
         [SerializeField] private GameObject[] hideInFPS;
-        [SerializeField] private InputHandler playerInputHandler;
-        [SerializeField] private PlayerData playerData;
-        [SerializeField] private PlayerController playerController;
+
+        private Camera _mainCamera;
+        private Camera _gunCamera;
+        private CinemachineCamera _fpsCamera;
+        private CinemachineCamera _thirdPersonCamera;
+        private CinemachineCamera _aimCamera;
+        private InputHandler _playerInput;
+
+        private PlayerController _playerController;
 
         public bool isInverted;
 
@@ -35,10 +37,33 @@ namespace Catalyst.CameraController
 
         private float _verticalRotation;
 
+        public Camera MainCamera => _mainCamera;
+        public CinemachineCamera FPSCamera => _fpsCamera;
+        public CinemachineCamera ThirdPersonCamera => _thirdPersonCamera;
+        public CinemachineCamera AimCamera => _aimCamera;
+        public Transform FollowTarget => followTarget;
+        public Transform AimTarget => aimTarget;
+
+
+
+        private void Awake()
+        {
+            _mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+            _gunCamera = GameObject.FindGameObjectWithTag("GunCamera").GetComponent<Camera>();
+            _fpsCamera = GameObject.FindGameObjectWithTag("FPSCamera").GetComponent<CinemachineCamera>();
+            _thirdPersonCamera = GameObject.FindGameObjectWithTag("ThirdPersonCamera").GetComponent<CinemachineCamera>();
+            _aimCamera = GameObject.FindGameObjectWithTag("AimCamera").GetComponent<CinemachineCamera>();
+
+            _playerInput = GetComponent<InputHandler>();
+
+            _playerController = GetComponent<PlayerController>();
+
+        }
+
         private void Start()
         {
-            thirdPersonCamera.gameObject.SetActive(false);
-            AimCamera.gameObject.SetActive(false);
+            _thirdPersonCamera.gameObject.SetActive(false);
+            _aimCamera.gameObject.SetActive(false);
             StartCoroutine(ToggleCullingLayer(0.5f));
         }
 
@@ -57,7 +82,7 @@ namespace Catalyst.CameraController
 
             {
                 ApplyThirdPersonRotation(_mouseYRotation, _mouseXRotation);
-                ToggleAimCamera(playerInputHandler.AimHeld);
+                ToggleAimCamera(_playerInput.AimHeld);
             }
 
         }
@@ -65,20 +90,20 @@ namespace Catalyst.CameraController
         private bool ThirdPersonActive()
         {
 
-            if (playerInputHandler.ToggleCameraTriggered)
+            if (_playerInput.ToggleCameraTriggered)
             {
-                StartCoroutine(ToggleCamera(thirdPersonCamera));
+                StartCoroutine(ToggleCamera(_thirdPersonCamera));
             }
-            return thirdPersonCamera.gameObject.activeSelf;
+            return _thirdPersonCamera.gameObject.activeSelf;
         }
 
         private void ApplyHorizontalRotation(float rotationAmount)
         {
-            if (ThirdPersonActive() && playerInputHandler.MoveInput.magnitude < 0.1)
+            if (ThirdPersonActive() && _playerInput.MoveInput.magnitude < 0.1)
             {
                 return;
             }
-            else if (ThirdPersonActive() && playerInputHandler.MoveInput.magnitude >= 0.1)
+            else if (ThirdPersonActive() && _playerInput.MoveInput.magnitude >= 0.1)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(0, followTarget.eulerAngles.y, 0), Time.deltaTime * playerData.CameraRotationSpeed * playerData.RotationSpeed);
 
@@ -101,20 +126,20 @@ namespace Catalyst.CameraController
                 _verticalRotation = Mathf.Clamp(_verticalRotation - rotationAmount, -playerData.FPSVerticalRange, playerData.FPSVerticalRange);
             }
 
-            FPSCamera.transform.localRotation = Quaternion.Euler(_verticalRotation, 0, 0);
+            _fpsCamera.transform.localRotation = Quaternion.Euler(_verticalRotation, 0, 0);
         }
 
 
 
         private void HandleRotation()
         {
-            if (playerController.isInventoryOpen)
+            if (_playerController.isInventoryOpen)
             {
                 return;
             }
 
-            _mouseXRotation = playerInputHandler.RotationInput.x * playerData.MouseSensitivity * playerData.CameraRotationSpeed;
-            _mouseYRotation = playerInputHandler.RotationInput.y * playerData.MouseSensitivity;
+            _mouseXRotation = _playerInput.RotationInput.x * playerData.MouseSensitivity * playerData.CameraRotationSpeed;
+            _mouseYRotation = _playerInput.RotationInput.y * playerData.MouseSensitivity;
 
             ApplyHorizontalRotation(_mouseXRotation);
             ApplyVerticalRotation(_mouseYRotation);
@@ -149,17 +174,17 @@ namespace Catalyst.CameraController
         }
         private void ToggleGunCam()
         {
-            if (gunCam == null)
+            if (_gunCamera == null)
                 return;
-            if (thirdPersonCamera.gameObject.activeSelf)
+            if (_thirdPersonCamera.gameObject.activeSelf)
             {
-                gunCam.enabled = false;
+                _gunCamera.enabled = false;
 
             }
 
             else
             {
-                gunCam.enabled = true;
+                _gunCamera.enabled = true;
                 Debug.Log("Gun cam enabled");
                 // enable ignore layers on main camera 
 
@@ -169,13 +194,13 @@ namespace Catalyst.CameraController
 
         IEnumerator ToggleCullingLayer(float time)
         {
-            if (FPSCamera == null)
+            if (_fpsCamera == null)
                 yield break;
 
-            if (thirdPersonCamera.gameObject.activeSelf)
+            if (_thirdPersonCamera.gameObject.activeSelf)
             {
                 yield return new WaitForEndOfFrame();
-                sceneCam.cullingMask |= thirdPersonLayers;
+                _mainCamera.cullingMask |= thirdPersonLayers;
                 Debug.Log("Adding culling layers to main camera");
 
                 foreach (GameObject go in hideInFPS)
@@ -185,16 +210,16 @@ namespace Catalyst.CameraController
 
                 if (playerData.AmmoCount > 0)
                 {
-                    sceneCam.cullingMask |= ~gunCamLayers;
+                    _mainCamera.cullingMask |= ~gunCamLayers;
                 }
             }
-            else if (gunCam.enabled)
+            else if (_gunCamera.enabled)
             {
                 // Wait until camera blend is done for sure
                 yield return new WaitForSeconds(time);
 
-                sceneCam.cullingMask &= ~thirdPersonLayers;
-                sceneCam.cullingMask &= ~gunCamLayers;
+                _mainCamera.cullingMask &= ~thirdPersonLayers;
+                _mainCamera.cullingMask &= ~gunCamLayers;
 
                 foreach (GameObject go in hideInFPS)
                 {
@@ -206,11 +231,11 @@ namespace Catalyst.CameraController
 
         public void ToggleAimCamera(bool isAiming)
         {
-            if (AimCamera == null)
+            if (_aimCamera == null)
                 return;
             if (ThirdPersonActive())
             {
-                AimCamera.gameObject.SetActive(isAiming);
+                _aimCamera.gameObject.SetActive(isAiming);
                 if (isAiming)
                     FollowMousePosition();
 
@@ -220,19 +245,19 @@ namespace Catalyst.CameraController
         IEnumerator ToggleCamera(CinemachineCamera cam)
         {
             // Stop everything a bit to avoid multiple toggles      
-            playerInputHandler.enabled = false;
+            _playerInput.enabled = false;
             cam.gameObject.SetActive(!cam.gameObject.activeSelf);
             ToggleGunCam();
             yield return new WaitForSeconds(1.0f);
-            playerInputHandler.enabled = true;
+            _playerInput.enabled = true;
         }
 
         public Vector3 GetMouseWorldPosition()
         {
 
             Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
-            Ray ray = sceneCam.ScreenPointToRay(screenCenterPoint);
-            if (Physics.Raycast(ray, out RaycastHit hit, sceneCam.farClipPlane, ~ignoreLayer, QueryTriggerInteraction.Ignore))
+            Ray ray = _mainCamera.ScreenPointToRay(screenCenterPoint);
+            if (Physics.Raycast(ray, out RaycastHit hit, _mainCamera.farClipPlane, ~ignoreLayer, QueryTriggerInteraction.Ignore))
             {
                 return hit.point;
             }

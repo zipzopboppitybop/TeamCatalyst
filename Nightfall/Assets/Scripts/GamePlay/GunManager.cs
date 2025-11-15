@@ -1,5 +1,6 @@
 ﻿
 using Catalyst.Player;
+using Catalyst.Player.Handlers;
 using UnityEngine;
 
 
@@ -10,45 +11,30 @@ namespace Catalyst.GamePlay
         [SerializeField] private GameObject gunModel;
         [SerializeField] private Transform gunPos;
         [SerializeField] private PlayerData player;
-        [SerializeField] private Animator animator;
-        [SerializeField] private AudioSource aud;
-        [SerializeField] private InputHandler playerInputHandler;
-        [SerializeField] private PlayerController playerController;
         [SerializeField] private AudioClip magPickupSound;
-
-
         [SerializeField] private LayerMask ignoreLayer;
+        private AudioSource aud;
+        private InputHandler playerInputHandler;
+        private PlayerController playerController;
+        private AnimationHandler anim;
+
 
         private int _gunListPos;
 
-        private int _animAim;
-        private int _animShoot;
-        private int _animReload;
-        private int _animArmed;
-        private AudioClip[] shootSound;
-
         private float _shootTimer = 0f;
 
-        private bool isReloading = false;
-
+        public bool isReloading = false;
+        public bool isArmed = false;
 
 
         private void Awake()
         {
-            if (playerInputHandler == null)
-            {
-                playerInputHandler = transform.GetComponent<InputHandler>();
-            }
-            if (animator == null)
-            {
-                animator = transform.GetComponent<Animator>();
-            }
-            if (aud == null)
-            {
-                aud = transform.GetComponent<AudioSource>();
 
-            }
-            SetupCombatAnimator();
+            aud = GetComponent<AudioSource>();
+            playerInputHandler = GetComponent<InputHandler>();
+            playerController = GetComponent<PlayerController>();
+            anim = GetComponent<AnimationHandler>();
+
         }
         private void Start()
         {
@@ -80,7 +66,11 @@ namespace Catalyst.GamePlay
 
         private void EquipGun()
         {
-            if (player.Guns.Count == 0) return;
+            if (player.Guns.Count == 0)
+            {
+                isArmed = false;
+                return;
+            }
             ChangeWeapon();
         }
         private void ClearCurrentGun()
@@ -111,7 +101,6 @@ namespace Catalyst.GamePlay
         private void ChangeWeapon()
         {
             player.CurrentGun = player.Guns[_gunListPos];
-            shootSound = player.CurrentGun.shootSounds;
             Debug.Log("Equipped " + player.CurrentGun.name);
 
 
@@ -133,7 +122,7 @@ namespace Catalyst.GamePlay
 
             if (player.CurrentGun.gunType == WeaponData.GunType.Shotgun)
                 gunModel.SetActive(true);
-
+            isArmed = true;
             HealthBarUI.instance.ShowWeaponUI();
 
         }
@@ -161,19 +150,13 @@ namespace Catalyst.GamePlay
             HandleReload();
 
         }
-        private void SetupCombatAnimator()
-        {
-            _animAim = Animator.StringToHash("Aiming");
-            _animShoot = Animator.StringToHash("Shoot");
-            _animReload = Animator.StringToHash("isReloading");
-            _animArmed = Animator.StringToHash("isArmed");
-        }
 
         private bool PlayerCanShoot()
         {
 
             if (player.Guns.Count == 0)
             {
+                isArmed = false;
                 HealthBarUI.instance.HideWeaponUI();
                 return false;
             }
@@ -188,19 +171,18 @@ namespace Catalyst.GamePlay
 
             if (!PlayerCanShoot())
             {
-                animator.SetBool(_animArmed, false);
                 return;
             }
             if (playerInputHandler.AimHeld)
             {
-                animator.SetBool(_animAim, true);
+                anim.SetAiming(true);
                 Debug.Log("Aiming");
                 HandleShoot();
 
             }
             else
             {
-                animator.SetBool(_animAim, false);
+                anim.SetAiming(false);
 
             }
 
@@ -226,7 +208,10 @@ namespace Catalyst.GamePlay
                     return;
                 }
                 else
-                    animator.SetTrigger(_animShoot);
+                {
+                    //aud.PlayOneShot(player.CurrentGun.shootSounds[Random.Range(0, player.Guns[_gunListPos].shootSounds.Length)], player.CurrentGun.shootVolume);
+                    anim.TriggerShoot();
+                }
 
                 Debug.Log("Shooting");
 
@@ -262,6 +247,11 @@ namespace Catalyst.GamePlay
             }
 
         }
+
+        public void PlayShotgunLoadSound()
+        {
+            aud.PlayOneShot(player.CurrentGun.loadSound, player.CurrentGun.shootVolume);
+        }
         public bool HasGun(WeaponData gun)
         {
             return player.Guns.Contains(gun);
@@ -278,9 +268,9 @@ namespace Catalyst.GamePlay
             {
                 player.MagazineSize--;
                 isReloading = true;
-                animator.SetTrigger(_animReload);
+                anim.TriggerReload();
                 Debug.Log("Reloading...");
-                FinishReload();
+
             }
 
         }

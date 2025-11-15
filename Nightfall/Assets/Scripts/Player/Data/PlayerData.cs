@@ -40,6 +40,8 @@ namespace Catalyst.Player
         [SerializeField] private float walkingSpeed;
         [SerializeField] private float sprintSpeed;
         [SerializeField] private float dashSpeed;
+        [SerializeField] private AudioClip[] footstepSounds;
+        [SerializeField, Range(0, 1f)] private float footstepVolume = 0.3f;
 
         [Header("Jump Parameters")]
         [SerializeField] private float jumpForce;
@@ -84,11 +86,15 @@ namespace Catalyst.Player
         public int MagazineSize { get => magazineSize; set => magazineSize = value; }
 
 
+
         public float Speed => walkingSpeed;
         public float SprintSpeed => sprintSpeed;
         public float DashSpeed => dashSpeed;
         public float CameraRotationSpeed => cameraRotationSpeed;
         public int RotationSpeed => rotationSpeed;
+        public AudioClip[] FootstepSounds => footstepSounds;
+        public float FootstepVolume { get => footstepVolume; set => footstepVolume = value; }
+
 
 
 

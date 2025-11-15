@@ -26,6 +26,9 @@ public class TowerBase : MonoBehaviour, IDamage
     [SerializeField] GameObject shootPos;
     [SerializeField] Renderer model;
 
+    [SerializeField] AudioClip[] audBreak;
+    [SerializeField] AudioSource audSrc;
+
     Color colorOrig;
 
     public bool isFullyGrown = false;
@@ -277,6 +280,8 @@ public class TowerBase : MonoBehaviour, IDamage
 
         hp -= amount;
         StartCoroutine(flashRed());
+        if (audBreak.Length > 0)
+            audSrc.PlayOneShot(audBreak[Random.Range(0, audBreak.Length)]);
 
         if (hp <= 0)
         {

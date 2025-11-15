@@ -1,8 +1,7 @@
 using System.Collections;
-using System.IO;
 using Catalyst.CameraController;
 using Catalyst.GamePlay;
-using Unity.Cinemachine;
+using Catalyst.Player.Handlers;
 using UnityEngine;
 
 namespace Catalyst.Player
@@ -11,8 +10,8 @@ namespace Catalyst.Player
     {
         [Header("References")]
 
-        [SerializeField] private Animator animator;
-        [SerializeField] CamController camController;
+
+
 
         [SerializeField] public PlayerInventoryUI playerInventory;
         public AudioSource aud;
@@ -22,22 +21,15 @@ namespace Catalyst.Player
         [SerializeField] private LayerMask ignoreLayer;
 
         private Vector3 _currentMovement;
+        private CamController camController;
 
+        private AnimationHandler anim;
 
         public bool isInventoryOpen;
 
 
 
-        [Header("Animation")]
-        private int _animJump;
-        private int _animGrounded;
-        private int _animAttack;
-        private int _animDash;
 
-        private float _velocityX;
-        private float _velocityZ;
-        private int _animVelocityX;
-        private int _animVelocityZ;
 
         private int _jumpCount = 0;
 
@@ -47,7 +39,10 @@ namespace Catalyst.Player
         private void Start()
         {
             characterController = GetComponent<CharacterController>();
-            SetupAnimator();
+            camController = GetComponent<CamController>();
+            anim = GetComponent<AnimationHandler>();
+            playerInputHandler = GetComponent<InputHandler>();
+
         }
 
         private float CurrentSpeed => playerData.Speed * (playerInputHandler.SprintHeld ? playerData.SprintSpeed : 1);
@@ -62,19 +57,11 @@ namespace Catalyst.Player
                 HandleAttack();
                 HandleDash();
                 UpdateInteract();
-                UpdateAnimator();
+
             }
         }
 
-        private void SetupAnimator()
-        {
-            _animJump = Animator.StringToHash("Jump");
-            _animGrounded = Animator.StringToHash("Grounded");
-            _animAttack = Animator.StringToHash("Attack");
-            _animDash = Animator.StringToHash("Dash");
-            _animVelocityX = Animator.StringToHash("Velocity X");
-            _animVelocityZ = Animator.StringToHash("Velocity Z");
-        }
+
 
         public void EnablePlayerInput(bool enabled)
         {
@@ -91,7 +78,7 @@ namespace Catalyst.Player
 
             if (playerInputHandler.AttackTriggered)
             {
-                StartCoroutine(Attack());
+                anim.TriggerAttack();
             }
 
         }
@@ -113,14 +100,14 @@ namespace Catalyst.Player
 
                 _currentMovement.y = -1f; // Small downward force to keep the player grounded
 
-                animator.SetBool(_animGrounded, true);
+                anim.SetGrounded(true);
 
                 if (playerInputHandler.JumpTriggered && _jumpCount < playerData.JumpMax)
                 {
 
                     _currentMovement.y = playerData.JumpForce;
 
-                    StartCoroutine(Jump());
+                    anim.TriggerJump();
                     _jumpCount++;
 
                 }
@@ -132,8 +119,8 @@ namespace Catalyst.Player
             {
 
                 _currentMovement.y += Physics.gravity.y * playerData.GravityMultiplier * Time.deltaTime;
-                animator.SetBool(_animGrounded, false);
-                animator.ResetTrigger(_animJump);
+                anim.SetGrounded(false);
+                //animator.ResetTrigger(_animJump);
 
             }
         }
@@ -142,7 +129,7 @@ namespace Catalyst.Player
         {             // Dash logic here
             if (playerInputHandler.DashTriggered)
             {
-                StartCoroutine(Dash());
+                anim.TriggerDash();
                 PlayerDash();
             }
         }
@@ -170,13 +157,7 @@ namespace Catalyst.Player
 
             characterController.Move(_currentMovement * Time.deltaTime);
 
-            if (playerInputHandler.AimHeld)
-                animator.SetFloat(_animVelocityX, playerInputHandler.MoveInput.x * 0.1f);
-
-            else
-                animator.SetFloat(_animVelocityX, Mathf.SmoothDamp(animator.GetFloat(_animVelocityX), playerInputHandler.MoveInput.x * _currentMovement.magnitude, ref _velocityX, 0.1f));
-
-            animator.SetFloat(_animVelocityZ, Mathf.SmoothDamp(animator.GetFloat(_animVelocityZ), playerInputHandler.MoveInput.y * _currentMovement.magnitude, ref _velocityZ, 0.1f));
+            anim.UpdateMoveAnimations(_currentMovement);
         }
 
         public void UpdateInteract()
@@ -191,15 +172,26 @@ namespace Catalyst.Player
                 Vector3 origin = camController.FPSCamera.transform.position;
                 Vector3 direction = camController.FPSCamera.transform.forward;
 
-                Debug.DrawRay(origin, direction * playerData.InteractRange, Color.red, 1f);
-
-                if (Physics.Raycast(origin, direction, out RaycastHit hit, playerData.InteractRange, ~ignoreLayer))
+                Debug.DrawRay(origin, direction * playerData.InteractRange, Color.green, 2f);
+                // Raycast to check for interactable objects in a half circle range
+                if (Physics.SphereCast(origin, playerData.InteractRange, direction, out RaycastHit hit, playerData.InteractRange, ~ignoreLayer))
                 {
                     IInteractable target = hit.collider.GetComponent<IInteractable>();
-
                     target?.Interact();
                     return;
                 }
+
+
+
+                //if (Physics.Raycast(origin, direction, out RaycastHit hit, playerData.InteractRange, ~ignoreLayer))
+                //{
+                //    Chest chest = hit.collider.GetComponent<Chest>();
+                //    chest?.OpenChest();
+
+                //    IInteractable target = hit.collider.GetComponent<IInteractable>();
+
+                //    target?.Interact();
+                //}
 
                 TilePainter painter = FindAnyObjectByType<TilePainter>();
                 if (painter != null)
@@ -219,22 +211,6 @@ namespace Catalyst.Player
             return playerInventory;
         }
 
-        IEnumerator FlashDamageScreen()
-        {
-            //HUDManager.instance.playerDamageScreen.SetActive(true);
-            yield return new WaitForSeconds(0.1f);
-            //HUDManager.instance.playerDamageScreen.SetActive(false);
-        }
-
-        IEnumerator Attack()
-        {
-
-            animator.SetTrigger(_animAttack);
-            yield return new WaitForSeconds(1.0f);
-            animator.ResetTrigger(_animAttack);
-            playerInputHandler.AttackTriggered = false;
-        }
-
         public void PlayerDash()
         {
             Vector3 dodgeDirection = CalculateMoveDirection();
@@ -245,23 +221,10 @@ namespace Catalyst.Player
             characterController.Move(dodgeDirection.normalized * playerData.DashSpeed * Time.deltaTime);
         }
 
-        IEnumerator Dash()
-        {
-            animator.SetTrigger(_animDash);
-
-            yield return new WaitForSeconds(1.0f);
-            animator.ResetTrigger(_animDash);
-            playerInputHandler.DashTriggered = false;
-        }
 
 
-        IEnumerator Jump()
-        {
-            animator.SetTrigger(_animJump);
-            yield return new WaitForSeconds(0.5f);
-            animator.ResetTrigger(_animJump);
-            playerInputHandler.JumpTriggered = false;
-        }
+
+
 
         public void takeDamage(int amount)
         {
@@ -275,13 +238,13 @@ namespace Catalyst.Player
 
             UpdatePlayerHealthBarUI();*/
 
-            StartCoroutine(FlashDamageScreen());
+            //StartCoroutine(FlashDamageScreen());
 
-            if (playerData.Health <= 0)
-            {
-                GameManager.instance.YouLose();
-                playerData.Health = playerData.HealthMax;
-            }
+            //if (playerData.Health <= 0)
+            //{
+            //    GameManager.instance.YouLose();
+            //    playerData.Health = playerData.HealthMax;
+            //}
         }
 
         public void Heal(int amount)
@@ -310,15 +273,15 @@ namespace Catalyst.Player
             }
         }
 
-        private void UpdateAnimator()
+
+        public void PlayRandomFootstep()
         {
-            animator.SetLayerWeight(1, 1 - (playerData.Health / playerData.HealthMax));
-
+            if (aud != null && playerData.FootstepSounds.Length > 0)
+            {
+                int index = Random.Range(0, playerData.FootstepSounds.Length);
+                aud.PlayOneShot(playerData.FootstepSounds[index], playerData.FootstepVolume);
+            }
         }
-
 
     }
 }
-
-
-

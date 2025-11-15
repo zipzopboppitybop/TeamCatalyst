@@ -46,10 +46,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TilePainter
   ignoreLayer:
     serializedVersion: 2
-    m_Bits: 1288
+    m_Bits: 34056
   selectedTile:
   - {fileID: 11400000, guid: 1b9655edb1c7e594391e5d026091828c, type: 2}
   - {fileID: 11400000, guid: 968c212aabe1c3d46a53cc655e183466, type: 2}
+  - {fileID: 11400000, guid: f7fbbc362e0f9784d84930dc77905da7, type: 2}
   map: {fileID: 0}
-  ghost: {fileID: 0}
+  inv: {fileID: 0}
+  ghostPlacer: {fileID: 0}
   placeDist: 20
+  placeFence: 1
