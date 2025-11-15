@@ -820,7 +820,7 @@ MonoBehaviour:
   model: {fileID: 3004295454459718292}
   agent: {fileID: 568518923008852087}
   headPos: {fileID: 5166396093621203744}
-  itemDrop: {fileID: 0}
+  itemDrop: {fileID: 9200504469430559370, guid: 8088a49a955fb4643924f0ff2983d221, type: 3}
   targetObj: {fileID: 0}
   cropSearchInterval: 0
   cropDetectionRadius: 0
