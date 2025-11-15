@@ -189,6 +189,11 @@ public class ShopUI : MonoBehaviour
                     livestockComponent.homePos = homePoint;
                     livestockComponent.FeedingTrough = feedingTrough.GetComponent<Chest>();
                     boughtChickens++;
+
+                    if(boughtChickens == 1 && PlayerInventoryUI.Instance != null)
+                    {
+                        PlayerInventoryUI.Instance.OnLivestockOwnedAchieved();
+                    }
                 }
             }
             else
@@ -200,6 +205,8 @@ public class ShopUI : MonoBehaviour
 
     public void SellItems()
     {
+        bool soldAnything = false;
+
         foreach (InventorySlot slot in chest.PrimaryInventory.InventorySlots)
         {
             if (slot.ItemData != null)
@@ -208,9 +215,15 @@ public class ShopUI : MonoBehaviour
                 playerData.Currency += slot.ItemData.price / 2 * amount;
 
                 slot.ClearSlot();
+                soldAnything = true;
             }
 
             chest.PrimaryInventory.NotifySlotChanged(slot);
+        }
+        
+        if (soldAnything && PlayerInventoryUI.instance !=null)
+        {
+            PlayerInventoryUI.Instance.OnCropSoldAchieved();
         }
 
         ShopUI.instance.DeliverItems();

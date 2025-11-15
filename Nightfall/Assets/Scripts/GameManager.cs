@@ -249,6 +249,11 @@ public class GameManager : MonoBehaviour
         }
         wasNight = isNight;
 
+        if(day == 2 && PlayerInventoryUI.Instance != null)
+        {
+            PlayerInventoryUI.Instance.OnDayOneAchieved();
+        }
+
     }
 
     public void UpdateCropCount(int amt)

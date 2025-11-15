@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 9dc66a1d450c4f74684d29f3ecf2eb99
+timeCreated: 1499689764
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: -1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 98389
+  packageName: Animated Cow
+  packageVersion: 1.0
+  assetPath: Assets/Animated Cow/Models/Materials/Cow Skin.mat
+  uploadId: 196854

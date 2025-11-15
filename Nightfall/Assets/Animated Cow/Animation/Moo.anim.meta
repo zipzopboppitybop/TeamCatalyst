@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 477a6008e2068a74cb116ec30309083f
+timeCreated: 1503249440
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 98389
+  packageName: Animated Cow
+  packageVersion: 1.0
+  assetPath: Assets/Animated Cow/Animation/Moo.anim
+  uploadId: 196854

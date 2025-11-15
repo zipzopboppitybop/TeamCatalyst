@@ -4,14 +4,18 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using Catalyst.Player;
+using UnityEngine.Animations.Rigging;
 
 public class PlayerInventoryUI : MonoBehaviour
 {
+    public static PlayerInventoryUI Instance;
+
     [SerializeField] private UIDocument document;
 
     public Inventory hotBarInventory;
     public Inventory playerInventory;
     public Inventory chestInventory;
+
     private VisualElement hotBarUI;
     private VisualElement root;
     private VisualElement playerInventoryUI;
@@ -21,9 +25,18 @@ public class PlayerInventoryUI : MonoBehaviour
     private VisualElement shopMenu;
     private VisualElement achievementsMenu;
     private VisualElement menuSystemUI;
+
+    private VisualElement dayOneUnlocked;
+    private VisualElement cropSoldUnlocked;
+    private VisualElement livestockOwnedUnlocked;
+    private VisualElement dayOnelocked;
+    private VisualElement cropSoldLocked;
+    private VisualElement livestockOwnedLocked;
+
     private VisualElement[] hotBarSlots;
     private VisualElement[] playerInventorySlots;
     private VisualElement[] chestSlots;
+
     private int playerInventorySlotCount;
     private int chestSlotCount;
     private int hotBarSlotCount;
@@ -38,9 +51,14 @@ public class PlayerInventoryUI : MonoBehaviour
 
     private Catalyst.Player.PlayerController playerController;
     private GameObject player;
+    internal static object instance;
 
     public event System.Action<ItemData> OnSelectedItemChanged;
 
+    private void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
         player = GameManager.instance.player;
@@ -62,6 +80,17 @@ public class PlayerInventoryUI : MonoBehaviour
         menuSystemUI = root.Q<VisualElement>("MenuSystem");
         shopMenu = root.Q<VisualElement>("ShopMenu");
         achievementsMenu = root.Q<VisualElement>("AchieveMenu");
+
+        dayOneUnlocked = root.Q<VisualElement>("DayOneUnlocked");
+        cropSoldUnlocked = root.Q<VisualElement>("CropSoldUnlocked");
+        livestockOwnedUnlocked = root.Q<VisualElement>("OwnLivestockUnlocked");
+        dayOnelocked = root.Q<VisualElement>("DayOneLocked");
+        cropSoldLocked = root.Q<VisualElement>("CropSoldLocked");
+        livestockOwnedLocked = root.Q<VisualElement>("OwnLivestockLocked");
+
+        SetLockState(dayOnelocked, dayOneUnlocked);
+        SetLockState(cropSoldLocked, cropSoldUnlocked);
+        SetLockState(livestockOwnedLocked, livestockOwnedUnlocked);
 
         InventoryHolder.OnDynamicInventoryDisplayRequested += OpenChest;
 
@@ -462,5 +491,39 @@ public class PlayerInventoryUI : MonoBehaviour
 
         hotBarInventory.OnInventorySlotChanged?.Invoke(selectedInventorySlot);
         RefreshInventory();
+    }
+    private void SetLockState(VisualElement locked, VisualElement unlocked)
+    {
+        if(locked != null)
+        {
+            locked.style.display = DisplayStyle.Flex;
+        }
+        if (unlocked != null)
+        {
+            unlocked.style.display = DisplayStyle.None;
+        }
+    }
+    private void OnUnlocked(VisualElement locked, VisualElement unlocked)
+    {
+        if (locked != null)
+        {
+            locked.style.display = DisplayStyle.None;
+        }
+        if(unlocked != null)
+        {
+            unlocked.style.display= DisplayStyle.Flex;
+        }
+    }
+    public void OnDayOneAchieved()
+    {
+        OnUnlocked(dayOnelocked, dayOneUnlocked);
+    }
+    public void OnCropSoldAchieved()
+    {
+        OnUnlocked(cropSoldLocked, cropSoldUnlocked);
+    }
+    public void OnLivestockOwnedAchieved()
+    {
+        OnUnlocked(livestockOwnedLocked, livestockOwnedUnlocked);
     }
 }
