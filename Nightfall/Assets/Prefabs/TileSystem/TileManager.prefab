@@ -53,6 +53,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f7fbbc362e0f9784d84930dc77905da7, type: 2}
   map: {fileID: 0}
   inv: {fileID: 0}
-  ghostPlacer: {fileID: 0}
+  ghostPlacer: {fileID: 8428799964323815448, guid: 8359efc4819e0c544a7a3a4c1d545c76, type: 3}
   placeDist: 20
   placeFence: 1

@@ -810,6 +810,7 @@ GameObject:
   - component: {fileID: 3138365283224506308}
   - component: {fileID: 538759310395422624}
   - component: {fileID: 408758446433344733}
+  - component: {fileID: 7431182402996749733}
   m_Layer: 0
   m_Name: Cow
   m_TagString: Untagged
@@ -868,7 +869,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7f6d1356d719554f86e11466dfd71e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Livestock
-  animator: {fileID: 3138365283224506308}
   model: {fileID: 2605940426366929503}
   agent: {fileID: 408758446433344733}
   headPos: {fileID: 6039622944029711159}
@@ -877,6 +877,7 @@ MonoBehaviour:
   cropSearchInterval: 0
   cropDetectionRadius: 0
   cropThreshold: 0
+  animator: {fileID: 3138365283224506308}
   hp: 0
   hpMax: 0
   hunger: 0
@@ -890,6 +891,13 @@ MonoBehaviour:
   biteRate: 0
   homePos: {x: 0, y: 0, z: 0}
   FeedingTrough: {fileID: 0}
+  aud: {fileID: 7431182402996749733}
+  audIdles:
+  - {fileID: 8300000, guid: 722d01b13744a8343b1c16202c437dd8, type: 3}
+  audHurt:
+  - {fileID: 8300000, guid: 052c207e04692f049b8891054e3b1d59, type: 3}
+  idleSoundMinDelay: 0
+  idleSoundMaxDelay: 0
 --- !u!195 &408758446433344733
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -912,6 +920,103 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!82 &7431182402996749733
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4161425625369006990}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 8329519579811139567, guid: 7dd4277552737ee4b947714ea1fd19be, type: 2}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &4277291316074486812
 GameObject:
   m_ObjectHideFlags: 0
