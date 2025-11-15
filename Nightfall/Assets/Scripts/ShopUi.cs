@@ -1,7 +1,7 @@
+using Catalyst.Player;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using System.Collections.Generic;
-using Catalyst.Player;
 
 
 
@@ -9,7 +9,7 @@ using Catalyst.Player;
 public class ShopUI : MonoBehaviour
 {
     public static ShopUI instance;
-    [SerializeField] private UIDocument uiDocument;
+    [SerializeField] private UIDocument document;
     [SerializeField] private ItemData[] itemsForSale;
     [SerializeField] private Chest chest;
     [SerializeField] private PlayerInventoryUI playerInventory;
@@ -42,7 +42,7 @@ public class ShopUI : MonoBehaviour
     private void Start()
     {
         instance = this;
-        root = uiDocument.rootVisualElement.Q<VisualElement>("Root");
+        root = document.rootVisualElement;
         itemsContainer = root.Q<ScrollView>("ItemsContainer");
 
         root.style.display = DisplayStyle.None; 
@@ -119,7 +119,7 @@ public class ShopUI : MonoBehaviour
 
         bool express = false;
 
-        var gm = GameManager.instance;
+        GameManager gm = GameManager.instance;
         if (gm != null && gm.playerController != null && gm.playerController.playerInputHandler != null)
         {
             express = gm.playerController.playerInputHandler.SprintHeld;
@@ -129,7 +129,7 @@ public class ShopUI : MonoBehaviour
 
         deliveries.Add(new Delivery(item, days));
 
-        playerData.Currency -= item.price;
+        playerData.Currency -= finalPrice;
     }
 
     private void AddItemToInventory(Inventory inventory, ItemData item, int amount)

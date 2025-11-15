@@ -64,23 +64,50 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetButtonDown("Cancel"))
         {
-            if (PauseMenuUI.instance != null && PauseMenuUI.instance.IsScreenOpen)
-                return;
-
-            if(!isPaused)
+            if (playerController.isInventoryOpen)
             {
+                playerController.playerInventory.toggleInventory = false;
+                playerController.playerInventory.CloseChest();
+                playerController.isInventoryOpen = false;
+
                 StatePause();
-                if (PauseMenuUI.instance != null) PauseMenuUI.instance.Show();
+                if (PauseMenuUI.instance != null)
+                {
+                    PauseMenuUI.instance.Show();
+                }
+
+                return;
             }
-            else
+
+            if (PauseMenuUI.instance != null && PauseMenuUI.instance.IsScreenOpen)
             {
                 StateUnpause();
-                if (PauseMenuUI.instance !=null) PauseMenuUI.instance.Hide();
-                if (menuPause != null) menuPause.Hide();
-            }
-        }
-        UpdateGameClock();
+                PauseMenuUI.instance.Hide();
+                if (menuPause != null)
+                {
+                    menuPause.Hide();
+                }
 
+                return;
+            }
+
+            StatePause();
+            if (PauseMenuUI.instance != null)
+            {
+                PauseMenuUI.instance.Show();
+            }
+
+            return;
+        }
+
+        if (isPaused && playerController.isInventoryOpen)
+        {
+            playerController.playerInventory.toggleInventory = false;
+            playerController.playerInventory.CloseChest();
+            playerController.isInventoryOpen = false;
+        }
+
+        UpdateGameClock();
     }
     public void StatePause()
     {
