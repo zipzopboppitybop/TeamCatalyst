@@ -1,4 +1,3 @@
-using Catalyst.GamePlay;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 
@@ -8,16 +7,13 @@ namespace Catalyst.Player.Handlers
     public class RigHandler : MonoBehaviour
     {
         private Rig rig;
-        private InputHandler _playerInput;
-        private PlayerController _playerController;
-        private GunManager _gunManager;
+        [SerializeField] private InputHandler _playerInput;
         private float targetWeight;
 
         void Awake()
         {
             rig = transform.GetComponent<Rig>();
-            _playerInput = GetComponent<InputHandler>();
-            _playerController = transform.GetComponent<PlayerController>();
+            rig.weight = 0f;
             targetWeight = 0f;
         }
 

@@ -227,7 +227,7 @@ MonoBehaviour:
   magPickupSound: {fileID: 8300000, guid: 57e1f2f1d21957d4b9c43052a5ae927f, type: 3}
   ignoreLayer:
     serializedVersion: 2
-    m_Bits: 2097160
+    m_Bits: 6291464
   isReloading: 0
   isArmed: 0
 --- !u!114 &3158196094379276507
@@ -1870,6 +1870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1beb26cb57cba5b4693e5b788a32720b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Catalyst.Player.Handlers.RigHandler
+  _playerInput: {fileID: 3477844435629080077}
 --- !u!1 &4407950511073704682
 GameObject:
   m_ObjectHideFlags: 0
