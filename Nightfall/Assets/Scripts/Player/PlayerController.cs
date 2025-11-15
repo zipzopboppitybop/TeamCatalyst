@@ -169,7 +169,7 @@ namespace Catalyst.Player
 
                 Debug.DrawRay(origin, direction * playerData.InteractRange, Color.green, 2f);
                 // Raycast to check for interactable objects in a half circle range
-                if (Physics.SphereCast(origin, 0.5f, direction, out RaycastHit hit, playerData.InteractRange, ~ignoreLayer))
+                if (Physics.SphereCast(origin, playerData.InteractRange, direction, out RaycastHit hit, playerData.InteractRange, ~ignoreLayer))
                 {
                     Chest chest = hit.collider.GetComponent<Chest>();
                     chest?.OpenChest();

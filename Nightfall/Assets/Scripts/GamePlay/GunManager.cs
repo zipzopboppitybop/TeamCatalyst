@@ -248,9 +248,9 @@ namespace Catalyst.GamePlay
 
         }
 
-        public void PlayShotgunReload()
+        public void PlayShotgunLoadSound()
         {
-            aud.PlayOneShot(player.CurrentGun.reloadSound, player.CurrentGun.shootVolume);
+            aud.PlayOneShot(player.CurrentGun.loadSound, player.CurrentGun.shootVolume);
         }
         public bool HasGun(WeaponData gun)
         {
