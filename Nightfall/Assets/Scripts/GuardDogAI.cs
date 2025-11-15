@@ -10,7 +10,8 @@ public class GuardDogAI : AILogic, IInteractable
     [SerializeField] Transform homePosTransform;
     [SerializeField] private AudioClip[] audHappy;
     private Transform playerPos;
-    private Vector3 homePos;
+    public Vector3 homePos;
+    public Chest FeedingTrough;
     private bool targetInRange;
 
     private List<GameObject> enemiesInRange = new List<GameObject>();
@@ -239,10 +240,12 @@ public class GuardDogAI : AILogic, IInteractable
 
     IEnumerator Heal()
     {
-        while (agent.pathPending || agent.remainingDistance > 0.1f)
-        {
+        while (!agent.isOnNavMesh || agent.pathPending)
             yield return null;
-        }
+
+        while (Vector3.Distance(transform.position, homePos) > 0.5f)
+            yield return null;
+
         isHealing = true; 
         agent.isStopped = true;
         agent.velocity = Vector3.zero; 

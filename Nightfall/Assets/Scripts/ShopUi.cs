@@ -26,8 +26,10 @@ public class ShopUI : MonoBehaviour
     private List<Delivery> deliveries = new List<Delivery>();
     private ScrollView itemsContainer;
     public bool shopOpen = false;
+    private bool boughtDog;
 
     private int boughtChickens = 0;
+    private int boughtCow = 0;
 
     [System.Serializable]
     private class Delivery
@@ -197,19 +199,23 @@ public class ShopUI : MonoBehaviour
                         PlayerInventoryUI.Instance.OnLivestockOwnedAchieved();
                     }
                 }
-                else if (item.name.Contains("GuardDog") && boughtChickens < 5)
+                else if (item.name.Contains("GuardDog") && !boughtDog)
                 {
-                    Vector3 homePoint = chickenCoop.transform.Find("DogHouseHomePos").position;
+                    Vector3 homePoint = doghouse.transform.Find("DogHouseHomePos").position;
                     GameObject dog = Instantiate(livestock[1], homePoint, Quaternion.identity);
-                    //Livestock livestockComponent = chicken.GetComponent<Livestock>();
-                    //livestockComponent.homePos = homePoint;
-                    //livestockComponent.FeedingTrough = feedingTrough.GetComponent<Chest>();
-                    //boughtChickens++;
-
-                    //if (boughtChickens == 1 && PlayerInventoryUI.Instance != null)
-                    //{
-                    //    PlayerInventoryUI.Instance.OnLivestockOwnedAchieved();
-                    //}
+                    GuardDogAI livestockComponent = dog.GetComponent<GuardDogAI>();
+                    livestockComponent.homePos = homePoint;
+                    livestockComponent.FeedingTrough = feedingTrough.GetComponent<Chest>();
+                    boughtDog = true;
+                }
+                else if (item.name.Contains("Cow") && boughtCow < 2)
+                {
+                    Vector3 homePoint = chickenCoop.transform.Find("ChickenCoopHome").position;
+                    GameObject cow = Instantiate(livestock[2], homePoint, Quaternion.identity);
+                    Livestock livestockComponent = cow.GetComponent<Livestock>();
+                    livestockComponent.homePos = homePoint;
+                    livestockComponent.FeedingTrough = feedingTrough.GetComponent<Chest>();
+                    boughtCow++;
                 }
             }
             else
@@ -228,7 +234,7 @@ public class ShopUI : MonoBehaviour
             if (slot.ItemData != null)
             {
                 float amount = slot.StackSize;
-                playerData.Currency += slot.ItemData.price / 2 * amount;
+                playerData.Currency += slot.ItemData.price * amount;
 
                 slot.ClearSlot();
                 soldAnything = true;
