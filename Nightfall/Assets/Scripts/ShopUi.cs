@@ -20,6 +20,9 @@ public class ShopUI : MonoBehaviour
     [SerializeField] private GameObject[] livestock;
 
     private VisualElement root;
+    private VisualElement shopMenu;
+    private VisualElement shopUI;
+    private VisualElement[] shopSlots;
     private List<Delivery> deliveries = new List<Delivery>();
     private ScrollView itemsContainer;
     public bool shopOpen = false;
@@ -43,30 +46,29 @@ public class ShopUI : MonoBehaviour
     {
         instance = this;
         root = document.rootVisualElement;
-        itemsContainer = root.Q<ScrollView>("ItemsContainer");
-
-        root.style.display = DisplayStyle.None; 
+        shopMenu = root.Q<VisualElement>("ShopMenu");
+        shopUI = root.Q<VisualElement>("ShopSlots");
 
         PopulateShop();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            if (playerInventory.toggleInventory)
-            {
-                playerInventory.toggleInventory = false;
-            }
+        //if (Input.GetKeyDown(KeyCode.J))
+        //{
+        //    if (playerInventory.toggleInventory)
+        //    {
+        //        playerInventory.toggleInventory = false;
+        //    }
 
-            root.BringToFront();
-            ToggleShop();
-        }
+        //    root.BringToFront();
+        //    ToggleShop();
+        //}
 
-        if ((playerInventory.toggleInventory && shopOpen) || (Input.GetKeyDown(KeyCode.E) && shopOpen) || (Input.GetKeyDown(KeyCode.Escape)) && shopOpen)
-        {
-            ToggleShop();
-        }
+        //if ((playerInventory.toggleInventory && shopOpen) || (Input.GetKeyDown(KeyCode.E) && shopOpen) || (Input.GetKeyDown(KeyCode.Escape)) && shopOpen)
+        //{
+        //    ToggleShop();
+        //}
     }
 
     private void ToggleShop()
@@ -88,25 +90,25 @@ public class ShopUI : MonoBehaviour
 
     private void PopulateShop()
     {
-        itemsContainer.Clear(); 
+        shopUI.Clear();
 
         foreach (ItemData item in itemsForSale)
         {
             VisualElement slot = new VisualElement();
-            slot.AddToClassList("slot");
+            slot.AddToClassList("shopSlot");
 
             VisualElement icon = new VisualElement();
-            icon.AddToClassList("icon");
+            icon.AddToClassList("shopIcon");
             icon.style.backgroundImage = new StyleBackground(item.Icon);
             slot.Add(icon);
 
             Label price = new Label($"{item.displayName}\n${item.price}");
-            price.AddToClassList("count");
+            price.AddToClassList("shopCount");
             slot.Add(price);
 
             slot.RegisterCallback<PointerDownEvent>(e => BuyItem(item));
 
-            itemsContainer.Add(slot);
+            shopUI.Add(slot);
         }
     }
 

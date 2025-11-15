@@ -17,7 +17,7 @@ MonoBehaviour:
   dropPrefab: {fileID: 6977562127469438968, guid: befd4f9e43f862c41b6f3ac17b3fe269, type: 3}
   pickupSound: {fileID: 0}
   audVol: 0
-  displayName: 
-  id: 0
-  price: 0
-  maxStackSize: 0
+  displayName: Fertilizer
+  id: 99
+  price: 1
+  maxStackSize: 5
