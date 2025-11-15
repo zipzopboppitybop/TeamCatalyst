@@ -270,7 +270,7 @@ namespace Catalyst.GamePlay
                 isReloading = true;
                 anim.TriggerReload();
                 Debug.Log("Reloading...");
-                FinishReload();
+
             }
 
         }

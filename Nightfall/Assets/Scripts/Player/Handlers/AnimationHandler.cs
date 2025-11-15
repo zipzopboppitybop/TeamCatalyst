@@ -57,7 +57,7 @@ namespace Catalyst.Player.Handlers
 
             _animAim = Animator.StringToHash("Aiming");
             _animShoot = Animator.StringToHash("Shoot");
-            _animReload = Animator.StringToHash("isReloading");
+            _animReload = Animator.StringToHash("Reload");
             _animArmed = Animator.StringToHash("isArmed");
         }
 
