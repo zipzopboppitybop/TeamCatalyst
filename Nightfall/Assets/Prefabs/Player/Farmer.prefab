@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2602afaa71c0374a8ac4e4c23eaf689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.Controller.PlayerController
-  hotbar: {fileID: 0}
+  playerInventory: {fileID: 0}
   aud: {fileID: 853817436050279361}
   playerInputHandler: {fileID: 3477844435629080077}
   playerData: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
@@ -227,7 +227,7 @@ MonoBehaviour:
   magPickupSound: {fileID: 8300000, guid: 57e1f2f1d21957d4b9c43052a5ae927f, type: 3}
   ignoreLayer:
     serializedVersion: 2
-    m_Bits: 2097160
+    m_Bits: 6291464
   isReloading: 0
   isArmed: 0
 --- !u!114 &3158196094379276507
@@ -1870,6 +1870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1beb26cb57cba5b4693e5b788a32720b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Catalyst.Player.Handlers.RigHandler
+  _playerInput: {fileID: 3477844435629080077}
 --- !u!1 &4407950511073704682
 GameObject:
   m_ObjectHideFlags: 0
@@ -3225,11 +3226,11 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 2097160
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
 --- !u!54 &5093016648507446249

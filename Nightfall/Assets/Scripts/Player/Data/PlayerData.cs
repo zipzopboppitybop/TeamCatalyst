@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Catalyst.GamePlay.Farming;
-
-
+using Unity.Mathematics;
 using UnityEngine;
 
 
@@ -112,6 +111,7 @@ namespace Catalyst.Player
 
         public int roomsClear = 0;
 
+        public Vector3 respawnPosition;
 
         [SerializeField] List<WeaponData> guns;
         public List<WeaponData> Guns => guns;

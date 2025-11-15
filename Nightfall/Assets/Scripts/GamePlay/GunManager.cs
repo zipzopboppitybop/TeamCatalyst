@@ -103,10 +103,6 @@ namespace Catalyst.GamePlay
             player.CurrentGun = player.Guns[_gunListPos];
             Debug.Log("Equipped " + player.CurrentGun.name);
 
-
-
-
-
             //gunModel = Instantiate(player.CurrentGun.model, gunPos.position, gunPos.rotation, gunPos);
             //gunModel.GetComponent<MeshFilter>().sharedMesh = player.CurrentGun.model.GetComponent<MeshFilter>().sharedMesh;
             //gunModel.GetComponent<MeshRenderer>().sharedMaterial = player.CurrentGun.model.GetComponent<MeshRenderer>().sharedMaterial;
