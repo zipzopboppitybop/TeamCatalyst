@@ -4,28 +4,7 @@ using UnityEngine.AI;
 
 public class Livestock : MonoBehaviour, IDamage
 {
-    [SerializeField] Animator animator;
 
-    [SerializeField] Renderer model;
-    [SerializeField] NavMeshAgent agent;
-    [SerializeField] Transform headPos;
-    [SerializeField] GameObject itemDrop;
-    [SerializeField] GameObject targetObj;
-    [SerializeField] float cropSearchInterval;
-    [SerializeField] float cropDetectionRadius;
-    [SerializeField] float cropThreshold;
-
-    [SerializeField] int hp;
-    [SerializeField] int hpMax;
-    [SerializeField] float hunger;
-    [SerializeField] float hungerMax;
-    [SerializeField] float hungerRate;
-    [SerializeField] int faceTargetSpeed;
-    [SerializeField] int FOV;
-    [SerializeField] int roamDist;
-    [SerializeField] int roamPauseTime;
-    [Range(0, 100)][SerializeField] int dropChance;
-    [SerializeField] float biteRate;
     [SerializeField] protected Renderer model;
     [SerializeField] protected NavMeshAgent agent;
     [SerializeField] protected Transform headPos;
