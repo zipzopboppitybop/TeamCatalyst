@@ -9,6 +9,7 @@ namespace Catalyst.GamePlay
     public class SaveSystem
     {
         private static SaveData _saveData = new SaveData();
+        //[SerializeField] Loading load;
 
         public struct SaveData
         {
@@ -37,7 +38,7 @@ namespace Catalyst.GamePlay
             if (File.Exists(SaveFileName()))
             {
                 _saveData = JsonUtility.FromJson<SaveData>(File.ReadAllText(SaveFileName()));
-                HandleLoadData();
+                HandleLoadData(GetLoad());
             }
             else
             {
@@ -45,9 +46,18 @@ namespace Catalyst.GamePlay
             }
         }
 
-        private static void HandleLoadData()
+        private static Loading GetLoad()
         {
+            Loading load = GameObject.FindFirstObjectByType<Loading>();
+            return load;
+        }
+
+        private static void HandleLoadData(Loading load)
+        {
+            load.LoadScene(_saveData.playerData.playerData.SceneIndex);
             GameManager.instance.playerController.Load(ref _saveData.playerData);
+
+
         }
 
     }

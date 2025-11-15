@@ -1,3 +1,4 @@
+using Catalyst.GamePlay;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -14,6 +15,8 @@ public class MainMenuController : MonoBehaviour
     private VisualElement mainMenu;
     private VisualElement settingsMenu;
     private VisualElement creditsMenu;
+    private VisualElement loadPopup;
+
 
     private Button playButton;
     private Button settingsButton;
@@ -21,6 +24,8 @@ public class MainMenuController : MonoBehaviour
     private Button quitButton;
     private Button backButton;
     private Button creditBackButton;
+    private Button loadButton;
+    private Button dontLoadButton;
 
     private SliderInt volume;
     private SliderInt music;
@@ -36,6 +41,7 @@ public class MainMenuController : MonoBehaviour
         mainMenu = root.Q<VisualElement>("MainMenu");
         settingsMenu = root.Q<VisualElement>("SettingsMenu");
         creditsMenu = root.Q<VisualElement>("CreditsMenu");
+        loadPopup = root.Q<VisualElement>("LoadPopup");
 
         playButton = root.Q<Button>("PlayButton");
         settingsButton = root.Q<Button>("SettingsButton");
@@ -43,6 +49,8 @@ public class MainMenuController : MonoBehaviour
         quitButton = root.Q<Button>("QuitButton");
         backButton = root.Q<Button>("BackButton");
         creditBackButton = root.Q<Button>("CreditBackButton");
+        loadButton = root.Q<Button>("LoadButton");
+        dontLoadButton = root.Q<Button>("DontLoadButton");
 
         volume = root.Q<SliderInt>("VolumeSlider");
         music = root.Q<SliderInt>("MusicSlider");
@@ -66,7 +74,13 @@ public class MainMenuController : MonoBehaviour
             backButton.clicked += () => { OnClickSound(); OnBackSettingsButtonClicked(); };
         if (creditBackButton != null)
             creditBackButton.clicked += () => { OnClickSound(); OnCreditsBackButtonClicked(); };
+
+        if (loadButton != null)
+            loadButton.clicked += () => { OnClickSound(); OnLoadButtonClicked(); };
+        if (dontLoadButton != null)
+            dontLoadButton.clicked += () => { OnClickSound(); OnDontLoadButtonClicked(); };
     }
+
     private void OnClickSound()
     {
         if (audioSource != null && clickSound != null)
@@ -74,8 +88,9 @@ public class MainMenuController : MonoBehaviour
     }
     private void OnPlayButtonClicked()
     {
-        Hide();
-        load.LoadScene(1);
+        ShowLoadPopup();
+        //Hide();
+
     }
     private void OnSettingsButtonClicked()
     {
@@ -105,6 +120,18 @@ public class MainMenuController : MonoBehaviour
         Application.Quit();
 #endif
     }
+    private void OnLoadButtonClicked()
+    {
+        HideLoadPopup();
+        Hide();
+        SaveSystem.Load();
+    }
+    private void OnDontLoadButtonClicked()
+    {
+        HideLoadPopup();
+        Hide();
+        load.LoadScene(1);
+    }
     public void Show()
     {
         if (mainMenu != null)
@@ -115,4 +142,13 @@ public class MainMenuController : MonoBehaviour
         if (mainMenu != null || Input.GetButtonDown("Pause"))
             mainMenu.style.display = DisplayStyle.None;
     }
+    private void ShowLoadPopup()
+    {
+        loadPopup.style.display = DisplayStyle.Flex;
+    }
+    private void HideLoadPopup()
+    {
+        loadPopup.style.display = DisplayStyle.None;
+    }
+
 }
