@@ -230,6 +230,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 132246624}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!20 &230388194 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 1827939816159163505, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+  m_PrefabInstance: {fileID: 612204924}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &324765177
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,10 +469,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Farmer
       objectReference: {fileID: 0}
-    - target: {fileID: 2704039868389915847, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
-      propertyPath: playerInventory
-      value: 
-      objectReference: {fileID: 1207203870}
     - target: {fileID: 6811085360175029284, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -853,6 +854,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 229045996838109253, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
+      propertyPath: 'm_Cameras.Array.data[0]'
+      value: 
+      objectReference: {fileID: 230388194}
     - target: {fileID: 1770251509508178895, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: m_Name
       value: UI
@@ -1011,17 +1016,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aaa372a4e8379484db211fff1380e63f, type: 3}
---- !u!114 &1207203870 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1252265930087341137, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
-  m_PrefabInstance: {fileID: 936126956}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8d5be07c4c084a409a8fa42c321aca3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventoryUI
 --- !u!1 &1282390783 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 906805268855091345, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
