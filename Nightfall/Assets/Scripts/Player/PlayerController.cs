@@ -279,5 +279,26 @@ namespace Catalyst.Player
             }
         }
 
+        public void Save(ref PlayerSaveData data)
+        {
+            data.Position = transform.position;
+            data.playerData = playerData;
+        }
+
+        public void Load(ref PlayerSaveData data)
+        {
+            characterController.enabled = false;
+            transform.position = data.Position;
+            playerData = data.playerData;
+            characterController.enabled = true;
+        }
+
+    }
+
+    [System.Serializable]
+    public struct PlayerSaveData
+    {
+        public Vector3 Position;
+        public PlayerData playerData;
     }
 }
