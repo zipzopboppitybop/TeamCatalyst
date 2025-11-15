@@ -201,7 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2602afaa71c0374a8ac4e4c23eaf689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.Controller.PlayerController
-  hotbar: {fileID: 0}
+  playerInventory: {fileID: 0}
   aud: {fileID: 853817436050279361}
   playerInputHandler: {fileID: 3477844435629080077}
   playerData: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
@@ -3225,11 +3225,11 @@ MeshCollider:
     serializedVersion: 2
     m_Bits: 2097160
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
 --- !u!54 &5093016648507446249
