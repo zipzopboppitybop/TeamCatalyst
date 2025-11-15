@@ -13,7 +13,32 @@ public class ChickenAI : Livestock
     // Update is called once per frame
     protected override void Update()
     {
-        base.Update();
+        if (agent == null || !agent.isOnNavMesh) return;
+
+        if (agent.remainingDistance < 0.01f)
+            roamTimer += Time.deltaTime;
+
+        HandleIdleSound();
+
+        if (!GameManager.instance.IsNight)
+        {
+            CheckRoam();
+            hunger -= hungerRate;
+        }
+        else
+        {
+            HeadHome();
+        }
+
+        if (hunger <= 50)
+        {
+            FindFood();
+        }
+        else if (hunger <= 0)
+        {
+            Destroy(gameObject);
+        }
+
         HandleAnimation();
     }
 

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5005380013317110253}
   - component: {fileID: 3034832849206208466}
   - component: {fileID: 6479850854489460868}
+  - component: {fileID: -1948671034456402560}
   m_Layer: 0
   m_Name: MilkBucket
   m_TagString: Untagged
@@ -91,6 +92,19 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-1948671034456402560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5078650489348431731}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18c5569e2d426d7499b88c61a968348f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Pickup
+  item: {fileID: 11400000, guid: 9a5dc30f15b3be042a94fcd4a46d63a6, type: 2}
 --- !u!1 &9124544936754261175
 GameObject:
   m_ObjectHideFlags: 0
