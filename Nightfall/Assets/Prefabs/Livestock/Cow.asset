@@ -19,5 +19,5 @@ MonoBehaviour:
   audVol: 0
   displayName: Cow
   id: 43
-  price: 500
+  price: 1
   maxStackSize: 1

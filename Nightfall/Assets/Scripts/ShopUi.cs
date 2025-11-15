@@ -131,9 +131,34 @@ public class ShopUI : MonoBehaviour
         float finalPrice = express ? item.price * 1.5f : item.price;
         int days = express ? 0 : 1;
 
-        deliveries.Add(new Delivery(item, days));
+        if (item.itemType == ItemData.ItemType.Livestock)
+        {
+            if (item.name.Contains("Chicken") && boughtChickens < 5)
+            {
+                boughtChickens++;
+                deliveries.Add(new Delivery(item, days));
+                playerData.Currency -= finalPrice;
+            }
+            else if (item.name.Contains("GuardDog") && !boughtDog)
+            {
+                boughtDog = true;
+                deliveries.Add(new Delivery(item, days));
+                playerData.Currency -= finalPrice;
+            }
+            else if (item.name.Contains("Cow") && boughtCow < 2)
+            {
+                boughtCow++;
+                deliveries.Add(new Delivery(item, days));
+                playerData.Currency -= finalPrice;
+            }
+        }
+        else
+        {
+            deliveries.Add(new Delivery(item, days));
+            playerData.Currency -= finalPrice;
+        }
 
-        playerData.Currency -= finalPrice;
+
     }
 
     private void AddItemToInventory(Inventory inventory, ItemData item, int amount)
@@ -185,37 +210,34 @@ public class ShopUI : MonoBehaviour
             if (item.itemType == ItemData.ItemType.Livestock)
             {
                 GameObject feedingTrough = GameObject.FindWithTag("FeedingTrough");
-                if (item.name.Contains("Chicken") && boughtChickens < 5)
+                if (item.name.Contains("Chicken"))
                 {
                     Vector3 homePoint = chickenCoop.transform.Find("ChickenCoopHome").position;
                     GameObject chicken = Instantiate(livestock[0], homePoint, Quaternion.identity);
                     Livestock livestockComponent = chicken.GetComponent<Livestock>();
                     livestockComponent.homePos = homePoint;
                     livestockComponent.FeedingTrough = feedingTrough.GetComponent<Chest>();
-                    boughtChickens++;
 
                     if(boughtChickens == 1 && PlayerInventoryUI.Instance != null)
                     {
                         PlayerInventoryUI.Instance.OnLivestockOwnedAchieved();
                     }
                 }
-                else if (item.name.Contains("GuardDog") && !boughtDog)
+                else if (item.name.Contains("GuardDog"))
                 {
                     Vector3 homePoint = doghouse.transform.Find("DogHouseHomePos").position;
                     GameObject dog = Instantiate(livestock[1], homePoint, Quaternion.identity);
                     GuardDogAI livestockComponent = dog.GetComponent<GuardDogAI>();
                     livestockComponent.homePos = homePoint;
                     livestockComponent.FeedingTrough = feedingTrough.GetComponent<Chest>();
-                    boughtDog = true;
                 }
-                else if (item.name.Contains("Cow") && boughtCow < 2)
+                else if (item.name.Contains("Cow"))
                 {
-                    Vector3 homePoint = chickenCoop.transform.Find("ChickenCoopHome").position;
+                    Vector3 homePoint = barn.transform.Find("BarnHomePos").position;
                     GameObject cow = Instantiate(livestock[2], homePoint, Quaternion.identity);
                     Livestock livestockComponent = cow.GetComponent<Livestock>();
                     livestockComponent.homePos = homePoint;
                     livestockComponent.FeedingTrough = feedingTrough.GetComponent<Chest>();
-                    boughtCow++;
                 }
             }
             else

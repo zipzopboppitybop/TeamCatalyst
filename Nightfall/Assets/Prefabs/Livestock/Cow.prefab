@@ -813,7 +813,7 @@ GameObject:
   - component: {fileID: 7431182402996749733}
   m_Layer: 0
   m_Name: Cow
-  m_TagString: Untagged
+  m_TagString: LiveStock
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -878,13 +878,13 @@ MonoBehaviour:
   cropDetectionRadius: 0
   cropThreshold: 0
   animator: {fileID: 3138365283224506308}
-  hp: 0
-  hpMax: 0
-  hunger: 0
-  hungerMax: 0
-  hungerRate: 0
-  faceTargetSpeed: 0
-  FOV: 0
+  hp: 10
+  hpMax: 10
+  hunger: 100
+  hungerMax: 100
+  hungerRate: 1
+  faceTargetSpeed: 5
+  FOV: 90
   roamDist: 25
   roamPauseTime: 2
   dropChance: 50
@@ -896,8 +896,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 722d01b13744a8343b1c16202c437dd8, type: 3}
   audHurt:
   - {fileID: 8300000, guid: 052c207e04692f049b8891054e3b1d59, type: 3}
-  idleSoundMinDelay: 0
-  idleSoundMaxDelay: 0
+  idleSoundMinDelay: 4
+  idleSoundMaxDelay: 20
 --- !u!195 &408758446433344733
 NavMeshAgent:
   m_ObjectHideFlags: 0

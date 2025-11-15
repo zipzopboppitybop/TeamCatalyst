@@ -23,7 +23,6 @@ public class GuardDogAI : AILogic, IInteractable
     protected override void Start()
     {
         base.Start();
-        homePos = homePosTransform.position;
         targetObj = null;
         agent.updateRotation = false;
         playerPos = GameManager.instance.player.transform;

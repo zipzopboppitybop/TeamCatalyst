@@ -14,15 +14,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fcb38a35742b66345b72b1342aa89f54, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -13.93622
+      value: -20.56398
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fcb38a35742b66345b72b1342aa89f54, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fcb38a35742b66345b72b1342aa89f54, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -19.30968
+      value: 17.0224
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: fcb38a35742b66345b72b1342aa89f54, type: 3}
       propertyPath: m_LocalRotation.w
@@ -116,7 +116,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.45741078
+  m_Radius: 1
   m_Center: {x: -0.00096048415, y: 0.46283248, z: -0.011200026}
 --- !u!114 &5254927193938233294
 MonoBehaviour:
