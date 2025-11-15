@@ -17,6 +17,7 @@ MonoBehaviour:
   pickUpSound: {fileID: 8300000, guid: 7bee7c2511200ec4fba66edf0ca51ba3, type: 3}
   emptyClipSound: {fileID: 8300000, guid: 26dcc88d2ba71624a94f96d9a22f2824, type: 3}
   reloadSound: {fileID: 8300000, guid: 7bee7c2511200ec4fba66edf0ca51ba3, type: 3}
+  loadSound: {fileID: 8300000, guid: 49e1961cd153aa440807cafc6b19cf6a, type: 3}
   shootSounds:
   - {fileID: 8300000, guid: 904e5767e7b1a0849a28505ff0194f51, type: 3}
   shootVolume: 0.5
@@ -29,5 +30,5 @@ MonoBehaviour:
   reloadTime: 0
   hitEffect: {fileID: 970440554703164915, guid: 47096eff328e11a418ace7db2d72aa97, type: 3}
   impactForce: 10
-  muzzleFlash: {fileID: 0}
-  muzzleFlashPosition: {fileID: 0}
+  muzzleFlash: {fileID: 5991545297567742199, guid: 36a3ddd9e9258474aa29a08939eeda45, type: 3}
+  muzzleFlashPosition: {fileID: 5942898308783669294, guid: 499c3080486d50544bd58f1c92557e23, type: 3}

@@ -13,6 +13,12 @@ TagManager:
   - HomePos
   - lb_bird
   - Shotgun
+  - GunCamera
+  - FPSCamera
+  - ThirdPersonCamera
+  - AimCamera
+  - FollowTarget
+  - AimTarget
   layers:
   - Default
   - TransparentFX
