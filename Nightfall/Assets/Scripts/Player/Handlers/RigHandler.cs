@@ -12,14 +12,14 @@ namespace Catalyst.Player.Handlers
         private Animator _animator;
         private PlayerController _playerController;
         private GunManager _gunManager;
-        [SerializeField] private float targetWeight;
+        private float targetWeight;
 
         void Awake()
         {
             rig = GetComponent<Rig>();
             _playerInput = GetComponentInParent<InputHandler>();
             _playerController = GetComponentInParent<PlayerController>();
-            targetWeight = 0f;
+            rig.weight = 0f;
         }
 
         // Update is called once per frame
@@ -27,7 +27,7 @@ namespace Catalyst.Player.Handlers
         {
             //playerInput.AimHeld = true; // For testing purposes, remove this line in production 
 
-            if (_gunManager.isArmed && _animator.GetBool("Aiming")) // Right mouse button held
+            if (_playerInput.AimHeld) // Right mouse button held
             {
                 SetTargetWeight(1f);
                 //targetWeight = 1f;

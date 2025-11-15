@@ -474,6 +474,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Farmer
       objectReference: {fileID: 0}
+    - target: {fileID: 1539350400133372366, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1827939816159163505, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: near clip plane
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 3062132966301943290, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: m_Weight
       value: 0.7
@@ -518,6 +526,70 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -393.475
       objectReference: {fileID: 0}
+    - target: {fileID: 4737717382609092415, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737717382609092415, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.0000000011573718
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737717382609092415, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737717382609092415, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737717382609092415, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -0.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 5215033418170073862, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5215033418170073862, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 5215033418170073862, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5215033418170073862, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.94521075
+      objectReference: {fileID: 0}
+    - target: {fileID: 5215033418170073862, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.029195983
+      objectReference: {fileID: 0}
+    - target: {fileID: 5215033418170073862, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.3219776
+      objectReference: {fileID: 0}
+    - target: {fileID: 5215033418170073862, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.04532963
+      objectReference: {fileID: 0}
+    - target: {fileID: 5215033418170073862, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 1.49
+      objectReference: {fileID: 0}
+    - target: {fileID: 5215033418170073862, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -37.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5215033418170073862, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6430030390105382501, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+      propertyPath: m_RigLayers.Array.data[0].m_Rig
+      value: 
+      objectReference: {fileID: 1633445874}
     - target: {fileID: 6811085360175029284, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1083,6 +1155,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 6822405650549685224, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
+      propertyPath: field of view
+      value: 60.000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 6822405650549685224, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
+      propertyPath: near clip plane
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 8339759917498689376, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: player
       value: 
@@ -1340,7 +1420,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1beb26cb57cba5b4693e5b788a32720b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Catalyst.Player.Handlers.RigHandler
-  targetWeight: 0
+--- !u!114 &1633445874 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1186338129166663318, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
+  m_PrefabInstance: {fileID: 612204924}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1633445870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.Rig
 --- !u!1 &1637306646
 GameObject:
   m_ObjectHideFlags: 0
