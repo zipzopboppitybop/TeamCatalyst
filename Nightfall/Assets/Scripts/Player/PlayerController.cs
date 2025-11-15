@@ -169,8 +169,8 @@ namespace Catalyst.Player
 
             if (playerInputHandler.InteractTriggered)
             {
-                Vector3 origin = camController.FPSCamera.transform.position;
-                Vector3 direction = camController.FPSCamera.transform.forward;
+                Vector3 origin = camController.MainCamera.transform.position;
+                Vector3 direction = camController.MainCamera.transform.forward;
 
                 Debug.DrawRay(origin, direction * playerData.InteractRange, Color.green, 2f);
                 // Raycast to check for interactable objects in a half circle range
@@ -187,9 +187,7 @@ namespace Catalyst.Player
                 //{
                 //    Chest chest = hit.collider.GetComponent<Chest>();
                 //    chest?.OpenChest();
-
                 //    IInteractable target = hit.collider.GetComponent<IInteractable>();
-
                 //    target?.Interact();
                 //}
 
@@ -272,8 +270,6 @@ namespace Catalyst.Player
                 yield return null;
             }
         }
-
-
         public void PlayRandomFootstep()
         {
             if (aud != null && playerData.FootstepSounds.Length > 0)
