@@ -28,6 +28,7 @@ public class PauseMenuUI : MonoBehaviour
     private Button saveButton;
     private Button loadButton;
     private Button dontSaveButton;
+    private Button mainMenuButton;
 
     private Label winDayLabel;
     private Label winCropLabel;
@@ -65,6 +66,7 @@ public class PauseMenuUI : MonoBehaviour
         backButton = root.Q<Button>("backButton");
         winOkButton = root.Q<Button>("winOk");
         loseOkButton = root.Q<Button>("loseOk");
+        mainMenuButton = root.Q<Button>("mainMenuButton");
 
         saveButton = root.Q<Button>("saveButton");
         loadButton = root.Q<Button>("loadButton");
@@ -98,6 +100,9 @@ public class PauseMenuUI : MonoBehaviour
             winOkButton.clicked += () => { OnClickSound(); OnWinOkClicked(); };
         if (loseOkButton != null)
             loseOkButton.clicked += () => { OnClickSound(); OnLoseOkClicked(); };
+        if (mainMenuButton != null)
+            mainMenuButton.clicked += () => { OnClickSound(); OnMainMenuClicked(); };
+
 
 
         if (saveButton != null)
@@ -188,6 +193,11 @@ public class PauseMenuUI : MonoBehaviour
         GameManager.instance.StatePause();
         UpdateStats();
         WinScreen.style.display = DisplayStyle.Flex;
+    }
+    public void OnMainMenuClicked()
+    {
+        Hide();
+        SceneManager.LoadScene(1);
     }
 
     public void ShowSavePopup()
