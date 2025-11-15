@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fff52d00b5194643aee23e84ee9b49b, type: 3}
   m_Name: GuardDog
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  Icon: {fileID: 21300000, guid: e336bd82ab8169b4aa4519def4f873c3, type: 3}
-  itemType: 0
+  Icon: {fileID: 21300000, guid: 96202410c0d009c499a4a7e5d95cbb38, type: 3}
+  itemType: 4
   dropPrefab: {fileID: 7934035346412971381, guid: 34052a25c83a55841ac10cd3362ef328, type: 3}
   pickupSound: {fileID: 0}
   audVol: 0
-  displayName: 
+  displayName: GuardDog
   id: 76
   price: 150
   maxStackSize: 1
