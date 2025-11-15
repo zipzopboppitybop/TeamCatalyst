@@ -164,30 +164,30 @@ namespace Catalyst.Player
         {
             if (playerInputHandler.InteractTriggered)
             {
-                Vector3 origin = camController.FPSCamera.transform.position;
-                Vector3 direction = camController.FPSCamera.transform.forward;
+                Vector3 origin = camController.MainCamera.transform.position;
+                Vector3 direction = camController.MainCamera.transform.forward;
 
                 Debug.DrawRay(origin, direction * playerData.InteractRange, Color.green, 2f);
                 // Raycast to check for interactable objects in a half circle range
-                if (Physics.SphereCast(origin, playerData.InteractRange, direction, out RaycastHit hit, playerData.InteractRange, ~ignoreLayer))
-                {
-                    Chest chest = hit.collider.GetComponent<Chest>();
-                    chest?.OpenChest();
-                    IInteractable target = hit.collider.GetComponent<IInteractable>();
-                    target?.Interact();
-                }
-
-
-
-                //if (Physics.Raycast(origin, direction, out RaycastHit hit, playerData.InteractRange, ~ignoreLayer))
+                //if (Physics.SphereCast(origin, 0.5f, direction, out RaycastHit hit, playerData.InteractRange, ~ignoreLayer))
                 //{
                 //    Chest chest = hit.collider.GetComponent<Chest>();
                 //    chest?.OpenChest();
-
                 //    IInteractable target = hit.collider.GetComponent<IInteractable>();
-
                 //    target?.Interact();
                 //}
+
+
+
+                if (Physics.Raycast(origin, direction, out RaycastHit hit, playerData.InteractRange, ~ignoreLayer))
+                {
+                    Chest chest = hit.collider.GetComponent<Chest>();
+                    chest?.OpenChest();
+
+                    IInteractable target = hit.collider.GetComponent<IInteractable>();
+
+                    target?.Interact();
+                }
 
                 TilePainter painter = FindAnyObjectByType<TilePainter>();
                 if (painter != null)
