@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 85c0cac424bdb8b4bb203a7b6b372277
+guid: ed54e6ae69360354395daf91410ec12a
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -31,15 +31,15 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: T-Pose@Rifle Idle
+      name: T-Pose@SHOTGUNRELOAD
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 231
+      lastFrame: 77
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
-      cycleOffset: 0
+      cycleOffset: -0.38
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
@@ -51,7 +51,7 @@ ModelImporter:
       keepOriginalPositionY: 0
       keepOriginalPositionXZ: 0
       heightFromFeet: 1
-      mirror: 1
+      mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
@@ -597,7 +597,8 @@ ModelImporter:
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 303e444b1c126dd46baeb253d99184b5, type: 2}
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 303e444b1c126dd46baeb253d99184b5,
+    type: 2}
   autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1

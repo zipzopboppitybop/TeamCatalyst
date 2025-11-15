@@ -1,8 +1,6 @@
 using System.Collections;
-using System.IO;
 using Catalyst.CameraController;
 using Catalyst.GamePlay;
-using Unity.Cinemachine;
 using UnityEngine;
 
 namespace Catalyst.Player
