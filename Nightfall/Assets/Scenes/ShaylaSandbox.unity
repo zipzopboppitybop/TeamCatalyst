@@ -135,17 +135,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67d5beda8dd6c184db0b197f702c6e45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DoorController
---- !u!114 &413926382 stripped
+--- !u!114 &284173590 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7495287071872077249, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
+  m_CorrespondingSourceObject: {fileID: 479586302813004406, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
   m_PrefabInstance: {fileID: 793707586}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c8d5be07c4c084a409a8fa42c321aca3, type: 3}
+  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventoryUI
+  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
 --- !u!1 &518961229
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,15 +337,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1395955742324642863, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -962.6055
+      value: -961.6055
       objectReference: {fileID: 0}
     - target: {fileID: 1395955742324642863, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -538.7555
+      value: -538.5985
       objectReference: {fileID: 0}
     - target: {fileID: 1395955742324642863, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -9.83865
+      value: -7.5966496
       objectReference: {fileID: 0}
     - target: {fileID: 1770251509508178895, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: m_Name
@@ -447,6 +447,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8866854686594925563, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
+      propertyPath: document
+      value: 
+      objectReference: {fileID: 284173590}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -460,17 +464,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 995410233}
     m_Modifications:
+    - target: {fileID: 816676368903131111, guid: 990ab44353ac7944f9caf6396c8b0a4e, type: 3}
+      propertyPath: near clip plane
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 5090203682555928608, guid: 990ab44353ac7944f9caf6396c8b0a4e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1479.0039
+      value: -1478.0039
       objectReference: {fileID: 0}
     - target: {fileID: 5090203682555928608, guid: 990ab44353ac7944f9caf6396c8b0a4e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.2444856
+      value: 1.4014857
       objectReference: {fileID: 0}
     - target: {fileID: 5090203682555928608, guid: 990ab44353ac7944f9caf6396c8b0a4e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5115.192
+      value: -5112.9497
       objectReference: {fileID: 0}
     - target: {fileID: 5090203682555928608, guid: 990ab44353ac7944f9caf6396c8b0a4e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -918,7 +926,7 @@ PrefabInstance:
     - target: {fileID: 2704039868389915847, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: hotbar
       value: 
-      objectReference: {fileID: 413926382}
+      objectReference: {fileID: 0}
     - target: {fileID: 2704039868389915847, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: sceneCam
       value: 
