@@ -25,7 +25,7 @@ public class TilePainter : MonoBehaviour
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    void Start()
     {
 
         map = (Tilemap)FindAnyObjectByType(typeof(Tilemap));
@@ -97,17 +97,25 @@ public class TilePainter : MonoBehaviour
         if (item)
         {
             currentItemName = item.name;
-            switch (currentItemName)
+            ghostPlacer.canShowObj = true;
+
+            if (currentItemName.Contains("Rake"))
             {
-
-                case "Rake":
-                    ghostPlacer.ShowGhost(selectedTile[0]);
-                    break;
-                default:
-                    ghostPlacer.HideGhost();
-                    break;
-
+                ghostPlacer.ShowGhost(selectedTile[0]);
             }
+            else if (currentItemName.Contains("Seed"))
+            {
+                ghostPlacer.ShowGhost(selectedTile[1]);
+            }
+            else
+            {
+                ghostPlacer.HideGhost();
+            }
+        }
+        else
+        {
+            ghostPlacer.canShowObj = false;
+            ghostPlacer.HideGhost();
         }
 
 
@@ -120,16 +128,46 @@ public class TilePainter : MonoBehaviour
 
     }
 
+    public void TryHarvestCrop()
+    {
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, placeDist, ~ignoreLayer))
+        {
+            //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * placeDist, Color.blue);
+
+            currentCell = map.WorldToCell(hit.point);
+
+            GameObject existing = map.GetInstantiatedObject(currentCell);
+            TowerBase existingTower = existing ? existing.GetComponent<TowerBase>() : null;
+
+            if (existing)
+                Debug.Log(existing.name);
+            if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Crop && existingTower.isFullyGrown)
+            {
+
+                Debug.Log("Start harvesting Crop!");
+                existingTower.HarvestCrop(inv.playerInventory);
+                Debug.Log("Harvested Crop!");
+                map.SetTile(currentCell, null);
+                Debug.Log("Removed Crop!");
+                map.SetTile(currentCell, selectedTile[0]);
+                Debug.Log("Replaced Farmland!");
+
+            }
+        }
+    }
+
     public void TryPlaceTile(GameObject heldItem)
     {
         if (heldItem == null)
         {
+
             return;
+
         }
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, placeDist, ~ignoreLayer))
         {
-            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * placeDist, Color.blue);
+            //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * placeDist, Color.blue);
 
             currentCell = map.WorldToCell(hit.point);
 
@@ -177,16 +215,22 @@ public class TilePainter : MonoBehaviour
                         }
                     }
                 }
-                else if (heldItem.name.Contains("Watering"))
-                {
-
-                }
                 else
                 {       
                     Debug.Log("Can't plant seed — need fertilized farmland.");
                 }
             }
+            else if (heldItem.name.Contains("Watering"))
+            {
+
+                if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Crop)
+                {
+                    existingTower.WaterCrop();
+                }
+
+            }
         }
+
     }
 
 }

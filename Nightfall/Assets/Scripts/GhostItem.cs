@@ -10,6 +10,7 @@ public class GhostItem : MonoBehaviour
     [SerializeField] GameObject ghostModel;
     [SerializeField] int offset;
     public bool hiding = true;
+    public bool canShowObj = false;
     GameObject ghostObj;
     
     Vector3Int lastTilePos;
@@ -31,12 +32,21 @@ public class GhostItem : MonoBehaviour
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, 20, ~ignoreLayer))
         {
 
+            if (hiding && canShowObj)
+            {
+                ShowGhost(ghostPrefab);
+            }
+
             if (map.WorldToCell(hit.point) != lastTilePos)
             {            
                 lastTilePos = map.WorldToCell(hit.point);
                 UpdateGhostPos();
             }
 
+        }
+        else
+        {
+            HideGhost();
         }
 
     }
@@ -45,6 +55,7 @@ public class GhostItem : MonoBehaviour
     {
 
         hiding = false;
+        ghostPrefab = tile;
         UpdateGhostObject(tile.m_DefaultGameObject);
 
     }
