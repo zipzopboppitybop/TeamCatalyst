@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Quantum/QuantumSandbox.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
+    path: Assets/Scenes/BrandingSequence.unity
+    guid: 00bf863f946906a4e9c9dfd9975ee463
+  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: e5fd0129b0bc95946a9b3e7fb2d48653
   - enabled: 1
