@@ -4,6 +4,8 @@ using UnityEngine.AI;
 
 public class Livestock : MonoBehaviour, IDamage
 {
+    [SerializeField] Animator animator;
+
     [SerializeField] Renderer model;
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Transform headPos;
@@ -69,6 +71,7 @@ public class Livestock : MonoBehaviour, IDamage
         {
             Destroy(gameObject);
         }
+        UpdateMovement();
     }
 
     public void takeDamage(int amount)
@@ -139,6 +142,8 @@ public class Livestock : MonoBehaviour, IDamage
 
     void EatCrop(InventorySlot cropSlot)
     {
+        PlayEatAnimation();
+
         cropSlot.RemoveFromStack(1);
 
         if (cropSlot.StackSize <= 0)
@@ -147,6 +152,25 @@ public class Livestock : MonoBehaviour, IDamage
         }
 
         FeedingTrough.PrimaryInventory.OnInventorySlotChanged?.Invoke(cropSlot);
+    }
+    void PlayEatAnimation()
+    {
+        if (animator != null)
+        {
+            return;
+        }
+
+        animator.SetTrigger("Chewing");
+    }
+
+    void UpdateMovement()
+    {
+        if ( animator == null || agent == null)
+        {
+            return ;
+        }
+        bool isMoving = agent.velocity.sqrMagnitude > 1;
+        animator.SetBool("Walking", isMoving);
     }
 
     IEnumerator flashRed()
