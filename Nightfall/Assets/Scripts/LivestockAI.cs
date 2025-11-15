@@ -26,6 +26,7 @@ public class Livestock : MonoBehaviour, IDamage
     [SerializeField] protected float biteRate;
     public Vector3 homePos;
     public Chest FeedingTrough;
+    protected bool isScared = false;
 
     Color colorOrig;
 
@@ -90,6 +91,7 @@ public class Livestock : MonoBehaviour, IDamage
         aud.clip = audHurt[Random.Range(0, audHurt.Length)];
         aud.Play();
         StartCoroutine(flashRed());
+        StartCoroutine(getScared());
         if (hp <= 0)
         {
             Destroy(gameObject);
@@ -181,5 +183,14 @@ public class Livestock : MonoBehaviour, IDamage
             idleSoundTimer = 0f;
             nextIdleSoundTime = Random.Range(idleSoundMinDelay, idleSoundMaxDelay);
         }
+    }
+
+    protected IEnumerator getScared()
+    {
+        isScared = true;
+        roamPauseTime = 1;
+        yield return new WaitForSeconds(10);
+        roamPauseTime = roamTimeOrig;
+        isScared = false;
     }
 }

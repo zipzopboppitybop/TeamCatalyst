@@ -9,7 +9,7 @@ public class RabbitAI : EnemyAI
     {
         base.Start();
 
-
+        targetsPlayer = false;
     }
 
     // Update is called once per frame
@@ -19,7 +19,7 @@ public class RabbitAI : EnemyAI
         HandleAnimation();
     }
 
-    protected virtual void HandleAnimation()
+    protected override void HandleAnimation()
     {
         if (animator == null) return;
 
@@ -89,5 +89,21 @@ public class RabbitAI : EnemyAI
         yield return new WaitForSeconds(2f);  
 
         Destroy(gameObject);
+    }
+
+    protected override void LookForTarget()
+    {
+        if (cropSearchTimer >= cropSearchInterval)
+        {
+            cropSearchTimer = 0f;
+            FindNearestCrop();
+        }
+        if (targetObj == null)
+        {
+            CheckRoam();
+            return;
+        }
+
+        CanSeeTarget();
     }
 }

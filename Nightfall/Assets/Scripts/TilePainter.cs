@@ -166,81 +166,60 @@ public class TilePainter : MonoBehaviour
     public void TryPlaceTile(GameObject heldItem)
     {
         if (heldItem == null)
-        {
-
             return;
 
-        }
+        if (!Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, placeDist, ~ignoreLayer))
+            return;
 
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, placeDist, ~ignoreLayer))
+        currentCell = map.WorldToCell(hit.point);
+
+        GameObject existing = map.GetInstantiatedObject(currentCell);
+        TowerBase existingTower = existing ? existing.GetComponent<TowerBase>() : null;
+
+        string item = heldItem.name;
+
+        if (item.Contains("Rake"))
         {
-            //Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * placeDist, Color.blue);
-
-            currentCell = map.WorldToCell(hit.point);
-
-            GameObject existing = map.GetInstantiatedObject(currentCell);
-            TowerBase existingTower = existing ? existing.GetComponent<TowerBase>() : null;
-
-            if (heldItem.name.Contains("Rake"))
+            if (existingTower == null)
             {
-                if (existingTower == null)
-                {
-                    if (placeFence)
-                        map.SetTile(currentCell, selectedTile[2]);
-                    else
-                        map.SetTile(currentCell, selectedTile[0]);
-                    Debug.Log("Placed farmland tile!");
-                }
+                map.SetTile(currentCell, placeFence ? selectedTile[2] : selectedTile[0]);
             }
-            else if(heldItem.name.Contains("Seed"))
-            {
-                if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Farmland && existingTower.isFertilized)
-                {
-                    map.SetTile(currentCell, selectedTile[1]);
-                    Catalyst.Player.PlayerController player = GameManager.instance.player.GetComponent<Catalyst.Player.PlayerController>();
-
-                    if (player != null)
-                    {
-                        PlayerInventoryUI playerInventory = player.GetHotBar();
-                        InventorySlot slot = playerInventory.GetSelectedSlot();
-                        if (slot != null)
-                        {
-                            slot.RemoveFromStack(1);
-                            GameObject crop = map.GetInstantiatedObject(currentCell);
-                            GameManager.instance.AddCrop(crop);
-
-
-                            //towerScript = null;
-                            //Destroy(tower);
-                            //map.SetTile(currentCell, null);
-                            //map.SetTile(currentCell, selectedTile[tileType]);
-                            if (slot.StackSize <= 0)
-                            {
-                                slot.UpdateInventorySlot(null, 0);
-                            }
-
-                            playerInventory.hotBarInventory.OnInventorySlotChanged?.Invoke(slot);
-
-                            playerInventory.RefreshInventory();
-                        }
-                    }
-                }
-                else
-                {       
-                    Debug.Log("Can't plant seed — need fertilized farmland.");
-                }
-            }
-            else if (heldItem.name.Contains("Watering"))
-            {
-
-                if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Crop)
-                {
-                    existingTower.WaterCrop();
-                }
-
-            }
+            return;
         }
 
+        if (item.Contains("Seed"))
+        {
+            if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Farmland && existingTower.isFertilized)
+            {
+                map.SetTile(currentCell, selectedTile[1]);
+                Catalyst.Player.PlayerController player = GameManager.instance.player.GetComponent<Catalyst.Player.PlayerController>();
+
+                PlayerInventoryUI playerInventory = player.GetHotBar();
+                InventorySlot slot = playerInventory.GetSelectedSlot();
+
+                slot.RemoveFromStack(1);
+
+                GameObject crop = map.GetInstantiatedObject(currentCell);
+                GameManager.instance.AddCrop(crop);
+
+                if (slot.StackSize <= 0)
+                    slot.UpdateInventorySlot(null, 0);
+
+                playerInventory.hotBarInventory.OnInventorySlotChanged?.Invoke(slot);
+                playerInventory.RefreshInventory();
+            }
+            else
+            {
+                Debug.Log("Need fertilized farmland.");
+            }
+            return;
+        }
+
+        if (item.Contains("Watering"))
+        {
+            if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Crop)
+                existingTower.WaterCrop();
+        }
     }
 
 }

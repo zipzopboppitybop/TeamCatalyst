@@ -177,8 +177,11 @@ namespace Catalyst.Player
                 if (Physics.SphereCast(origin, .25f, direction, out RaycastHit hit, playerData.InteractRange, ~ignoreLayer))
                 {
                     IInteractable target = hit.collider.GetComponent<IInteractable>();
-                    target?.Interact();
-                    return;
+                    if (target != null)
+                    {
+                        target.Interact();
+                        return;
+                    }
                 }
 
 
