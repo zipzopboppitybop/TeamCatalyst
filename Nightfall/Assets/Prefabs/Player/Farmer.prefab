@@ -242,10 +242,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2ee2b8d0c15c874285d824d1397e2b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInventoryHolder
-  primaryInventorySize: 9
+  primaryInventorySize: 8
   primaryInventory:
     inventorySlots: []
-  secondaryInventorySize: 27
+  secondaryInventorySize: 15
   secondaryInventory:
     inventorySlots: []
   hotbarUI: {fileID: 0}
