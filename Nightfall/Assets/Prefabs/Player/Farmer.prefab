@@ -83,6 +83,8 @@ GameObject:
   - component: {fileID: 3477844435629080077}
   - component: {fileID: 3868985803478503282}
   - component: {fileID: 853817436050279361}
+  - component: {fileID: 7506984335769571920}
+  - component: {fileID: 6138632242443807647}
   m_Layer: 3
   m_Name: Farmer
   m_TagString: Player
@@ -148,7 +150,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 303e444b1c126dd46baeb253d99184b5, type: 2}
   m_Controller: {fileID: 9100000, guid: 94ab48a10fafa19458ee94ab03393947, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -205,7 +207,7 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
   ignoreLayer:
     serializedVersion: 2
-    m_Bits: 3145864
+    m_Bits: 1048712
   isInventoryOpen: 0
 --- !u!114 &2426824615145339528
 MonoBehaviour:
@@ -400,6 +402,121 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7506984335769571920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906805268855091345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.RigBuilder
+  m_RigLayers:
+  - m_Rig: {fileID: 1186338129166663318}
+    m_Active: 1
+  m_Effectors:
+  - m_Transform: {fileID: 2400763769896934826}
+    m_Style:
+      shape: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
+      color: {r: 1, g: 0, b: 0, a: 0.5}
+      size: 0.1
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+    m_Visible: 1
+  - m_Transform: {fileID: 2400763769896934826}
+    m_Style:
+      shape: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
+      color: {r: 1, g: 0, b: 0, a: 0.5}
+      size: 0.1
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+    m_Visible: 1
+  - m_Transform: {fileID: 2400763769896934826}
+    m_Style:
+      shape: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
+      color: {r: 1, g: 0, b: 0, a: 0.5}
+      size: 0.1
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+    m_Visible: 1
+  - m_Transform: {fileID: 2400763769896934826}
+    m_Style:
+      shape: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
+      color: {r: 1, g: 0, b: 0, a: 0.5}
+      size: 0.1
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+    m_Visible: 1
+  - m_Transform: {fileID: 2400763769896934826}
+    m_Style:
+      shape: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
+      color: {r: 1, g: 0, b: 0, a: 0.5}
+      size: 0.1
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0}
+    m_Visible: 1
+--- !u!114 &6138632242443807647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906805268855091345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.BoneRenderer
+  boneShape: 1
+  drawBones: 1
+  drawTripods: 0
+  boneSize: 1.2
+  tripodSize: 1
+  boneColor: {r: 0, g: 0, b: 1, a: 0.5}
+  m_Transforms:
+  - {fileID: 4226795571723875414}
+  - {fileID: 9118851188819150932}
+  - {fileID: 3642216426064297882}
+  - {fileID: 7092026174850576703}
+  - {fileID: 1372611802868749288}
+  - {fileID: 8738657100344675552}
+  - {fileID: 6463060295940116824}
+  - {fileID: 3006508039762570396}
+  - {fileID: 3869387463760560753}
+  - {fileID: 1605945969748172843}
+  - {fileID: 639018167454423211}
+  - {fileID: 7872989094928553437}
+  - {fileID: 5028649644423987692}
+  - {fileID: 5630706522830124982}
+  - {fileID: 346073004813391544}
+  - {fileID: 7854051626858122662}
+  - {fileID: 2505023767250567195}
+  - {fileID: 6156302571525515132}
+  - {fileID: 8236527664759427526}
+  - {fileID: 6260466600586017231}
+  - {fileID: 6072577632893654120}
+  - {fileID: 9139389480209482089}
+  - {fileID: 7489305989273343683}
+  - {fileID: 7032451586597583435}
+  - {fileID: 8910601040519100659}
+  - {fileID: 5974900615816801466}
+  - {fileID: 8241132770384624890}
+  - {fileID: 8680354983646744517}
+  - {fileID: 7467399335971724229}
+  - {fileID: 4293016991140193201}
+  - {fileID: 2948531907812444578}
+  - {fileID: 4662731535768667597}
+  - {fileID: 2402720378209924580}
+  - {fileID: 2493696724016125463}
+  - {fileID: 6622141302261767912}
+  - {fileID: 2222187795805366058}
+  - {fileID: 283638352790972741}
+  - {fileID: 6215489664334041895}
+  - {fileID: 772177304482438768}
+  - {fileID: 4716628634256259648}
 --- !u!1 &911967790513804149
 GameObject:
   m_ObjectHideFlags: 0
@@ -509,7 +626,7 @@ GameObject:
   - component: {fileID: 5215033418170073862}
   - component: {fileID: 1827939816159163505}
   - component: {fileID: 4626395498140151938}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GunCam
   m_TagString: GunCamera
   m_Icon: {fileID: 0}
@@ -525,7 +642,7 @@ Transform:
   m_GameObject: {fileID: 1530143051171900557}
   serializedVersion: 2
   m_LocalRotation: {x: 0.029195983, y: -0.3219776, z: -0.04532963, w: 0.94521075}
-  m_LocalPosition: {x: 0, y: 1.29, z: 0.2}
+  m_LocalPosition: {x: 0, y: 1.27, z: 0.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -562,9 +679,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.01
+  near clip plane: 0.15
   far clip plane: 50
-  field of view: 40
+  field of view: 41.7
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -638,7 +755,7 @@ GameObject:
   - component: {fileID: 6290561366353044341}
   - component: {fileID: 6936204636791074862}
   - component: {fileID: 3037667461735446284}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AimCamera
   m_TagString: AimCamera
   m_Icon: {fileID: 0}
@@ -721,7 +838,7 @@ MonoBehaviour:
   CameraSide: 0.118
   CameraDistance: 2
   AvoidObstacles:
-    Enabled: 0
+    Enabled: 1
     CollisionFilter:
       serializedVersion: 2
       m_Bits: 1
@@ -855,7 +972,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3c430f382484144e925c097c2d33cfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.MultiAimConstraint
-  m_Weight: 0.9
+  m_Weight: 1
   m_Data:
     m_ConstrainedObject: {fileID: 6463060295940116824}
     m_SourceObjects:
@@ -1197,7 +1314,7 @@ GameObject:
   - component: {fileID: 1346944754028380956}
   - component: {fileID: 3444322935365968269}
   - component: {fileID: 7415538437434531785}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FPSCam
   m_TagString: FPSCamera
   m_Icon: {fileID: 0}
@@ -1448,8 +1565,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 230611059466799411}
-  - component: {fileID: 7528801262977587223}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: NOLAN@T-Pose
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1475,65 +1591,6 @@ Transform:
   - {fileID: 8781474134930730962}
   m_Father: {fileID: 6811085360175029284}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7528801262977587223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4093920640562464863}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.BoneRenderer
-  boneShape: 1
-  drawBones: 1
-  drawTripods: 0
-  boneSize: 1
-  tripodSize: 1
-  boneColor: {r: 0, g: 0, b: 1, a: 0.5}
-  m_Transforms:
-  - {fileID: 4226795571723875414}
-  - {fileID: 9118851188819150932}
-  - {fileID: 3642216426064297882}
-  - {fileID: 7092026174850576703}
-  - {fileID: 1372611802868749288}
-  - {fileID: 8738657100344675552}
-  - {fileID: 6463060295940116824}
-  - {fileID: 3006508039762570396}
-  - {fileID: 3869387463760560753}
-  - {fileID: 1605945969748172843}
-  - {fileID: 639018167454423211}
-  - {fileID: 7872989094928553437}
-  - {fileID: 5028649644423987692}
-  - {fileID: 5630706522830124982}
-  - {fileID: 346073004813391544}
-  - {fileID: 7854051626858122662}
-  - {fileID: 2505023767250567195}
-  - {fileID: 6156302571525515132}
-  - {fileID: 8236527664759427526}
-  - {fileID: 6260466600586017231}
-  - {fileID: 6072577632893654120}
-  - {fileID: 9139389480209482089}
-  - {fileID: 7489305989273343683}
-  - {fileID: 7032451586597583435}
-  - {fileID: 8910601040519100659}
-  - {fileID: 5974900615816801466}
-  - {fileID: 8241132770384624890}
-  - {fileID: 8680354983646744517}
-  - {fileID: 7467399335971724229}
-  - {fileID: 4293016991140193201}
-  - {fileID: 2948531907812444578}
-  - {fileID: 4662731535768667597}
-  - {fileID: 2402720378209924580}
-  - {fileID: 2493696724016125463}
-  - {fileID: 6622141302261767912}
-  - {fileID: 2222187795805366058}
-  - {fileID: 283638352790972741}
-  - {fileID: 6215489664334041895}
-  - {fileID: 772177304482438768}
-  - {fileID: 4716628634256259648}
 --- !u!1 &4203392548023142232
 GameObject:
   m_ObjectHideFlags: 0
@@ -1546,7 +1603,7 @@ GameObject:
   - component: {fileID: 8277316637815074276}
   - component: {fileID: 3133442214757443783}
   - component: {fileID: 4386061755197533023}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FollowCamera
   m_TagString: ThirdPersonCamera
   m_Icon: {fileID: 0}
@@ -1629,7 +1686,7 @@ MonoBehaviour:
   CameraSide: 0
   CameraDistance: 2
   AvoidObstacles:
-    Enabled: 0
+    Enabled: 1
     CollisionFilter:
       serializedVersion: 2
       m_Bits: 1
@@ -2034,7 +2091,7 @@ GameObject:
   - component: {fileID: 2400763769896934826}
   - component: {fileID: 7659421528307872263}
   - component: {fileID: 6589878699584753098}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: AimTarget
   m_TagString: AimTarget
   m_Icon: {fileID: 0}
@@ -2906,7 +2963,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5629587793951799693}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: FollowTarget
   m_TagString: FollowTarget
   m_Icon: {fileID: 0}
