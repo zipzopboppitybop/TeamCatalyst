@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 642840f828d3fbf4f969e6d4f971b67c
+timeCreated: 1501532306
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 98389
+  packageName: Animated Cow
+  packageVersion: 1.0
+  assetPath: Assets/Animated Cow/Animation/Cow.controller
+  uploadId: 196854

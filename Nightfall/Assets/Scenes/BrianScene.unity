@@ -1738,11 +1738,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf1b8c21173815a42a7c629fe33d02b8, type: 3}
---- !u!1 &786061326 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2104961067238135086, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
-  m_PrefabInstance: {fileID: 6825398107756066911}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &792852743
 GameObject:
   m_ObjectHideFlags: 0
@@ -3064,78 +3059,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1720193035 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3477844435629080077, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
-  m_PrefabInstance: {fileID: 2132725092}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2b001fb2d5e47d9a698c8792bd927ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WTIM.Player.PlayerInputHandler
 --- !u!114 &1720876977 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1252265930087341137, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
   m_PrefabInstance: {fileID: 6825398107756066911}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 786061326}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c8d5be07c4c084a409a8fa42c321aca3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInventoryUI
---- !u!114 &1720876978 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1908160258578461097, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
-  m_PrefabInstance: {fileID: 6825398107756066911}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 786061326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.dll::UnityEngine.UIElements.UIDocument
---- !u!114 &1720876979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 786061326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d64a5942c5d2b3245a28d6829dc91243, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ShopUI
-  document: {fileID: 1720876978}
-  itemsForSale:
-  - {fileID: 11400000, guid: b935d8a96a497354cb6eaa4371837ad2, type: 2}
-  - {fileID: 11400000, guid: 9134455b50eaecd4f8f1655262ce501a, type: 2}
-  chest: {fileID: 832298685}
-  playerInventory: {fileID: 1720876977}
-  playerData: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
-  chickenCoop: {fileID: 1478762436}
-  doghouse: {fileID: 0}
-  barn: {fileID: 0}
-  livestock:
-  - {fileID: 1303558852173046073, guid: 6553522a7ebdcf041b82b630be5f2be5, type: 3}
-  - {fileID: 7934035346412971381, guid: 34052a25c83a55841ac10cd3362ef328, type: 3}
-  shopOpen: 0
---- !u!114 &1720876981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 786061326}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9de307f3b49b5634ebe05544891678c8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TabManager
-  uiDocument: {fileID: 1720876978}
 --- !u!4 &1748178923 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7599765503975202549, guid: 4e85cafb5039f5049bbfe8582346e40f, type: 3}
@@ -3533,26 +3467,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Farmer
       objectReference: {fileID: 0}
-    - target: {fileID: 2426824615145339528, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
-      propertyPath: playerInputHandler
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 2704039868389915847, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: playerInventory
       value: 
       objectReference: {fileID: 1720876977}
-    - target: {fileID: 2704039868389915847, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
-      propertyPath: playerInputHandler
-      value: 
-      objectReference: {fileID: 1720193035}
-    - target: {fileID: 3158196094379276507, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
-      propertyPath: primaryInventorySize
-      value: 8
-      objectReference: {fileID: 0}
-    - target: {fileID: 3158196094379276507, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
-      propertyPath: secondaryInventorySize
-      value: 15
-      objectReference: {fileID: 0}
     - target: {fileID: 6811085360175029284, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3592,14 +3510,6 @@ PrefabInstance:
     - target: {fileID: 6811085360175029284, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8520908250337453854, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
-      propertyPath: sceneCam
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8520908250337453854, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
-      propertyPath: playerInputHandler
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3875,6 +3785,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 5143711484263356632, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
+      propertyPath: chest
+      value: 
+      objectReference: {fileID: 832298685}
+    - target: {fileID: 5143711484263356632, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
+      propertyPath: chickenCoop
+      value: 
+      objectReference: {fileID: 1478762436}
     - target: {fileID: 8339759917498689376, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
       propertyPath: playerSpawnPos
       value: 
@@ -3959,27 +3877,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8866854686594925563, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
-      propertyPath: chest
-      value: 
-      objectReference: {fileID: 832298685}
-    - target: {fileID: 8866854686594925563, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
-      propertyPath: chickenCoop
-      value: 
-      objectReference: {fileID: 1478762436}
-    m_RemovedComponents:
-    - {fileID: 8866854686594925563, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
-    m_RemovedGameObjects:
-    - {fileID: 280641295340854107, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
-    - {fileID: 3957189313621549143, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2104961067238135086, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1720876979}
-    - targetCorrespondingSourceObject: {fileID: 2104961067238135086, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1720876981}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f92c938c498f294488b7dd2e803b1796, type: 3}
 --- !u!1001 &7327509235067169316
 PrefabInstance:

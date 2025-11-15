@@ -57,6 +57,7 @@ namespace Catalyst.CameraController
             _playerInput = GetComponent<InputHandler>();
 
             _playerController = GetComponent<PlayerController>();
+            aimTarget.gameObject.SetActive(false);
 
         }
 
@@ -64,6 +65,8 @@ namespace Catalyst.CameraController
         {
             _thirdPersonCamera.gameObject.SetActive(false);
             _aimCamera.gameObject.SetActive(false);
+
+
             StartCoroutine(ToggleCullingLayer(0.5f));
         }
 
@@ -180,6 +183,7 @@ namespace Catalyst.CameraController
             {
                 _gunCamera.enabled = false;
 
+
             }
 
             else
@@ -187,6 +191,7 @@ namespace Catalyst.CameraController
                 _gunCamera.enabled = true;
                 Debug.Log("Gun cam enabled");
                 // enable ignore layers on main camera 
+
 
             }
             StartCoroutine(ToggleCullingLayer(1f));
@@ -235,7 +240,10 @@ namespace Catalyst.CameraController
                 return;
             if (ThirdPersonActive())
             {
+                aimTarget.gameObject.SetActive(isAiming);
                 _aimCamera.gameObject.SetActive(isAiming);
+
+
                 if (isAiming)
                     FollowMousePosition();
 
@@ -257,6 +265,7 @@ namespace Catalyst.CameraController
 
             Vector2 screenCenterPoint = new Vector2(Screen.width / 2f, Screen.height / 2f);
             Ray ray = _mainCamera.ScreenPointToRay(screenCenterPoint);
+
             if (Physics.Raycast(ray, out RaycastHit hit, _mainCamera.farClipPlane, ~ignoreLayer, QueryTriggerInteraction.Ignore))
             {
                 return hit.point;

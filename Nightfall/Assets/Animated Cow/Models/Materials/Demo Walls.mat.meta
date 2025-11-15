@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: d84f954f725965848844dd9023bf0183
+timeCreated: 1503248707
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 98389
+  packageName: Animated Cow
+  packageVersion: 1.0
+  assetPath: Assets/Animated Cow/Models/Materials/Demo Walls.mat
+  uploadId: 196854
