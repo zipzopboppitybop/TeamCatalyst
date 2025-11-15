@@ -29,8 +29,8 @@ namespace Catalyst.GamePlay
 
         private float _shootTimer = 0f;
 
-        private bool isReloading = false;
-
+        public bool isReloading = false;
+        public bool isArmed = false;
 
 
         private void Awake()
@@ -80,7 +80,11 @@ namespace Catalyst.GamePlay
 
         private void EquipGun()
         {
-            if (player.Guns.Count == 0) return;
+            if (player.Guns.Count == 0)
+            {
+                isArmed = false;
+                return;
+            }
             ChangeWeapon();
         }
         private void ClearCurrentGun()
@@ -133,7 +137,7 @@ namespace Catalyst.GamePlay
 
             if (player.CurrentGun.gunType == WeaponData.GunType.Shotgun)
                 gunModel.SetActive(true);
-
+            isArmed = true;
             HealthBarUI.instance.ShowWeaponUI();
 
         }
@@ -174,6 +178,7 @@ namespace Catalyst.GamePlay
 
             if (player.Guns.Count == 0)
             {
+                isArmed = false;
                 HealthBarUI.instance.HideWeaponUI();
                 return false;
             }

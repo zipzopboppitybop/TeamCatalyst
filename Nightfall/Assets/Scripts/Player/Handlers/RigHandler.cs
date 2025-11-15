@@ -1,3 +1,4 @@
+using Catalyst.GamePlay;
 using Catalyst.Player;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
@@ -7,22 +8,26 @@ namespace Catalyst.Player.Handlers
     public class RigHandler : MonoBehaviour
     {
         private Rig rig;
-        private InputHandler playerInput;
-        private float targetWeight;
+        private InputHandler _playerInput;
+        private Animator _animator;
+        private PlayerController _playerController;
+        private GunManager _gunManager;
+        [SerializeField] private float targetWeight;
 
         void Awake()
         {
             rig = GetComponent<Rig>();
-            playerInput = GetComponentInParent<InputHandler>();
+            _playerInput = GetComponentInParent<InputHandler>();
+            _playerController = GetComponentInParent<PlayerController>();
             targetWeight = 0f;
         }
 
         // Update is called once per frame
         void Update()
         {
+            //playerInput.AimHeld = true; // For testing purposes, remove this line in production 
 
-
-            if (playerInput.AimHeld) // Right mouse button held
+            if (_gunManager.isArmed && _animator.GetBool("Aiming")) // Right mouse button held
             {
                 SetTargetWeight(1f);
                 //targetWeight = 1f;
