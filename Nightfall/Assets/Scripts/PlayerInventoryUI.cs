@@ -18,6 +18,8 @@ public class PlayerInventoryUI : MonoBehaviour
     private VisualElement playerInventoryMenu;
     private VisualElement chestInventoryUI;
     private VisualElement chestInventoryMenu;
+    private VisualElement shopMenu;
+    private VisualElement achievementsMenu;
     private VisualElement menuSystemUI;
     private VisualElement[] hotBarSlots;
     private VisualElement[] playerInventorySlots;
@@ -33,10 +35,6 @@ public class PlayerInventoryUI : MonoBehaviour
     private Inventory draggingFromInventory;
     private InputHandler inputHandler;
     public bool toggleInventory;
-
-    private Button inventoryButton;
-    private Button shopButton;
-    private Button achieveButton;
 
     private Catalyst.Player.PlayerController playerController;
     private GameObject player;
@@ -62,10 +60,8 @@ public class PlayerInventoryUI : MonoBehaviour
         chestInventoryUI = root.Q<VisualElement>("ChestInventorySlots");
         chestInventoryMenu = root.Q<VisualElement>("ChestInventoryMenu");
         menuSystemUI = root.Q<VisualElement>("MenuSystem");
-
-        inventoryButton = root.Q<Button>("InventoryButton");
-        shopButton = root.Q<Button>("ShopButton");
-        achieveButton = root.Q<Button>("AchieveButton");
+        shopMenu = root.Q<VisualElement>("ShopMenu");
+        achievementsMenu = root.Q<VisualElement>("AchieveMenu");
 
         InventoryHolder.OnDynamicInventoryDisplayRequested += OpenChest;
 
@@ -392,7 +388,9 @@ public class PlayerInventoryUI : MonoBehaviour
 
         menuSystemUI.style.display = DisplayStyle.Flex;
         chestInventoryMenu.style.display = DisplayStyle.Flex;
-        playerInventoryMenu.style.left = new Length(10, LengthUnit.Percent);
+        playerInventoryMenu.style.left = new Length(5, LengthUnit.Percent);
+        shopMenu.style.left = new Length(5, LengthUnit.Percent);
+        achievementsMenu.style.left = new Length(5, LengthUnit.Percent);
 
         UnityEngine.Cursor.lockState = CursorLockMode.None;
         UnityEngine.Cursor.visible = true;
@@ -421,6 +419,8 @@ public class PlayerInventoryUI : MonoBehaviour
         toggleInventory = false; 
         playerController.isInventoryOpen = false;
         playerInventoryMenu.style.left = new Length(30, LengthUnit.Percent);
+        shopMenu.style.left = new Length(30, LengthUnit.Percent);
+        achievementsMenu.style.left = new Length(30, LengthUnit.Percent);
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         UnityEngine.Cursor.visible = false;
 
