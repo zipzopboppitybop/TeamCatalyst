@@ -269,7 +269,14 @@ namespace Catalyst.Player
         }
 
 
-
+        public void PlayRandomFootstep()
+        {
+            if (aud != null && playerData.FootstepSounds.Length > 0)
+            {
+                int index = Random.Range(0, playerData.FootstepSounds.Length);
+                aud.PlayOneShot(playerData.FootstepSounds[index], playerData.FootstepVolume);
+            }
+        }
 
     }
 }

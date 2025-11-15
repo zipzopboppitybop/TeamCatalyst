@@ -19,9 +19,6 @@ namespace Catalyst.GamePlay
         private AnimationHandler anim;
 
 
-
-
-
         private int _gunListPos;
 
         private float _shootTimer = 0f;
@@ -212,7 +209,7 @@ namespace Catalyst.GamePlay
                 }
                 else
                 {
-                    aud.PlayOneShot(player.CurrentGun.shootSounds[Random.Range(0, player.Guns[_gunListPos].shootSounds.Length)], player.CurrentGun.shootVolume);
+                    //aud.PlayOneShot(player.CurrentGun.shootSounds[Random.Range(0, player.Guns[_gunListPos].shootSounds.Length)], player.CurrentGun.shootVolume);
                     anim.TriggerShoot();
                 }
 

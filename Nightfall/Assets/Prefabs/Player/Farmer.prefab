@@ -82,7 +82,6 @@ GameObject:
   - component: {fileID: 5796168270863737799}
   - component: {fileID: 3477844435629080077}
   - component: {fileID: 3868985803478503282}
-  - component: {fileID: 7779427169407366512}
   - component: {fileID: 853817436050279361}
   m_Layer: 3
   m_Name: Farmer
@@ -304,65 +303,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AnimationHandler
   playerData: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
---- !u!114 &7779427169407366512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 906805268855091345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.BoneRenderer
-  boneShape: 1
-  drawBones: 1
-  drawTripods: 0
-  boneSize: 1
-  tripodSize: 1
-  boneColor: {r: 0, g: 0, b: 1, a: 0.5}
-  m_Transforms:
-  - {fileID: 4226795571723875414}
-  - {fileID: 9118851188819150932}
-  - {fileID: 3642216426064297882}
-  - {fileID: 7092026174850576703}
-  - {fileID: 1372611802868749288}
-  - {fileID: 8738657100344675552}
-  - {fileID: 6463060295940116824}
-  - {fileID: 3006508039762570396}
-  - {fileID: 3869387463760560753}
-  - {fileID: 1605945969748172843}
-  - {fileID: 639018167454423211}
-  - {fileID: 7872989094928553437}
-  - {fileID: 5028649644423987692}
-  - {fileID: 5630706522830124982}
-  - {fileID: 346073004813391544}
-  - {fileID: 7854051626858122662}
-  - {fileID: 2505023767250567195}
-  - {fileID: 6156302571525515132}
-  - {fileID: 8236527664759427526}
-  - {fileID: 6260466600586017231}
-  - {fileID: 6072577632893654120}
-  - {fileID: 9139389480209482089}
-  - {fileID: 7489305989273343683}
-  - {fileID: 7032451586597583435}
-  - {fileID: 8910601040519100659}
-  - {fileID: 5974900615816801466}
-  - {fileID: 8241132770384624890}
-  - {fileID: 8680354983646744517}
-  - {fileID: 7467399335971724229}
-  - {fileID: 4293016991140193201}
-  - {fileID: 2948531907812444578}
-  - {fileID: 4662731535768667597}
-  - {fileID: 2402720378209924580}
-  - {fileID: 2493696724016125463}
-  - {fileID: 6622141302261767912}
-  - {fileID: 2222187795805366058}
-  - {fileID: 283638352790972741}
-  - {fileID: 6215489664334041895}
-  - {fileID: 772177304482438768}
-  - {fileID: 4716628634256259648}
 --- !u!82 &853817436050279361
 AudioSource:
   m_ObjectHideFlags: 0
@@ -1508,6 +1448,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 230611059466799411}
+  - component: {fileID: 7528801262977587223}
   m_Layer: 0
   m_Name: NOLAN@T-Pose
   m_TagString: Untagged
@@ -1534,6 +1475,65 @@ Transform:
   - {fileID: 8781474134930730962}
   m_Father: {fileID: 6811085360175029284}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7528801262977587223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4093920640562464863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.BoneRenderer
+  boneShape: 1
+  drawBones: 1
+  drawTripods: 0
+  boneSize: 1
+  tripodSize: 1
+  boneColor: {r: 0, g: 0, b: 1, a: 0.5}
+  m_Transforms:
+  - {fileID: 4226795571723875414}
+  - {fileID: 9118851188819150932}
+  - {fileID: 3642216426064297882}
+  - {fileID: 7092026174850576703}
+  - {fileID: 1372611802868749288}
+  - {fileID: 8738657100344675552}
+  - {fileID: 6463060295940116824}
+  - {fileID: 3006508039762570396}
+  - {fileID: 3869387463760560753}
+  - {fileID: 1605945969748172843}
+  - {fileID: 639018167454423211}
+  - {fileID: 7872989094928553437}
+  - {fileID: 5028649644423987692}
+  - {fileID: 5630706522830124982}
+  - {fileID: 346073004813391544}
+  - {fileID: 7854051626858122662}
+  - {fileID: 2505023767250567195}
+  - {fileID: 6156302571525515132}
+  - {fileID: 8236527664759427526}
+  - {fileID: 6260466600586017231}
+  - {fileID: 6072577632893654120}
+  - {fileID: 9139389480209482089}
+  - {fileID: 7489305989273343683}
+  - {fileID: 7032451586597583435}
+  - {fileID: 8910601040519100659}
+  - {fileID: 5974900615816801466}
+  - {fileID: 8241132770384624890}
+  - {fileID: 8680354983646744517}
+  - {fileID: 7467399335971724229}
+  - {fileID: 4293016991140193201}
+  - {fileID: 2948531907812444578}
+  - {fileID: 4662731535768667597}
+  - {fileID: 2402720378209924580}
+  - {fileID: 2493696724016125463}
+  - {fileID: 6622141302261767912}
+  - {fileID: 2222187795805366058}
+  - {fileID: 283638352790972741}
+  - {fileID: 6215489664334041895}
+  - {fileID: 772177304482438768}
+  - {fileID: 4716628634256259648}
 --- !u!1 &4203392548023142232
 GameObject:
   m_ObjectHideFlags: 0

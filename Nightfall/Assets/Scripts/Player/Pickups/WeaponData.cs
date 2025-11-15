@@ -13,6 +13,7 @@ namespace Catalyst.Player
         public AudioClip pickUpSound;
         public AudioClip emptyClipSound;
         public AudioClip reloadSound;
+        public AudioClip loadSound;
         public AudioClip[] shootSounds;
         [Range(0, 1)] public float shootVolume = 0.5f; // Volume of the shooting sound
 
