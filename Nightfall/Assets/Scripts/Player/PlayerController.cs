@@ -177,8 +177,11 @@ namespace Catalyst.Player
                 if (Physics.SphereCast(origin, .25f, direction, out RaycastHit hit, playerData.InteractRange, ~ignoreLayer))
                 {
                     IInteractable target = hit.collider.GetComponent<IInteractable>();
-                    target?.Interact();
-                    return;
+                    if (target != null)
+                    {
+                        target.Interact();
+                        return;
+                    }
                 }
 
 
@@ -279,5 +282,26 @@ namespace Catalyst.Player
             }
         }
 
+        public void Save(ref PlayerSaveData data)
+        {
+            data.Position = transform.position;
+            data.playerData = playerData;
+        }
+
+        public void Load(ref PlayerSaveData data)
+        {
+            characterController.enabled = false;
+            transform.position = data.Position;
+            playerData = data.playerData;
+            characterController.enabled = true;
+        }
+
+    }
+
+    [System.Serializable]
+    public struct PlayerSaveData
+    {
+        public Vector3 Position;
+        public PlayerData playerData;
     }
 }

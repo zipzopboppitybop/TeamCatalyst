@@ -1,3 +1,4 @@
+using Catalyst.GamePlay;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
@@ -8,13 +9,14 @@ public class PauseMenuUI : MonoBehaviour
 
     [SerializeField] private UIDocument uIDocument;
     [SerializeField] private AudioClip clickSound;
-    [SerializeField]private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSource;
 
     private VisualElement root;
     private VisualElement pauseMenu;
     private VisualElement settingsMenu;
     private VisualElement LoseScreen;
     private VisualElement WinScreen;
+    private VisualElement SavePopup;
 
     private Button resumeButton;
     private Button settingsButton;
@@ -23,12 +25,15 @@ public class PauseMenuUI : MonoBehaviour
     private Button backButton;
     private Button winOkButton;
     private Button loseOkButton;
+    private Button saveButton;
+    private Button loadButton;
+    private Button dontSaveButton;
 
     private Label winDayLabel;
     private Label winCropLabel;
     private Label winMoneyLabel;
     private Label loseCropLabel;
-    
+
 
     private void Awake()
     {
@@ -37,7 +42,7 @@ public class PauseMenuUI : MonoBehaviour
         if (uIDocument == null)
             uIDocument = GetComponent<UIDocument>();
 
-        if(audioSource == null)
+        if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
 
     }
@@ -51,6 +56,7 @@ public class PauseMenuUI : MonoBehaviour
         settingsMenu = root.Q<VisualElement>("SettingsMenu");
         LoseScreen = root.Q<VisualElement>("YouLose");
         WinScreen = root.Q<VisualElement>("YouWin");
+        SavePopup = root.Q<VisualElement>("SavePopup");
 
         resumeButton = root.Q<Button>("resumeButton");
         settingsButton = root.Q<Button>("settingsButton");
@@ -60,6 +66,11 @@ public class PauseMenuUI : MonoBehaviour
         winOkButton = root.Q<Button>("winOk");
         loseOkButton = root.Q<Button>("loseOk");
 
+        saveButton = root.Q<Button>("saveButton");
+        loadButton = root.Q<Button>("loadButton");
+        dontSaveButton = root.Q<Button>("dontSaveButton");
+
+
         winDayLabel = root.Q<Label>("DayCycle");
         winCropLabel = root.Q<Label>("CropCount");
         winMoneyLabel = root.Q<Label>("MoneyEarned");
@@ -68,7 +79,7 @@ public class PauseMenuUI : MonoBehaviour
 
         Hide();
 
-        
+
         if (resumeButton != null)
             resumeButton.clicked += () => { OnClickSound(); OnResumeButtonClicked(); };
 
@@ -88,6 +99,15 @@ public class PauseMenuUI : MonoBehaviour
         if (loseOkButton != null)
             loseOkButton.clicked += () => { OnClickSound(); OnLoseOkClicked(); };
 
+
+        if (saveButton != null)
+            saveButton.clicked += () => { OnClickSound(); SaveSystem.Save(); OnQuitConfirmed(); };
+        if (loadButton != null)
+            loadButton.clicked += () => { OnClickSound(); SaveSystem.Load(); };
+
+        if (dontSaveButton != null)
+            dontSaveButton.clicked += () => { OnClickSound(); OnQuitConfirmed(); };
+
     }
     public bool IsScreenOpen =>
         (pauseMenu.style.display == DisplayStyle.Flex) ||
@@ -97,7 +117,7 @@ public class PauseMenuUI : MonoBehaviour
 
     private void OnClickSound()
     {
-        if(audioSource != null && clickSound != null)
+        if (audioSource != null && clickSound != null)
             audioSource.PlayOneShot(clickSound);
     }
     private void OnResumeButtonClicked()
@@ -121,7 +141,18 @@ public class PauseMenuUI : MonoBehaviour
     }
     private void OnQuitButtonClicked()
     {
+        ShowSavePopup();
+
+
+    }
+
+    private void OnQuitConfirmed()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
         Application.Quit();
+#endif
     }
     private void OnWinOkClicked()
     {
@@ -149,7 +180,7 @@ public class PauseMenuUI : MonoBehaviour
         Hide();
         GameManager.instance.StatePause();
         UpdateStats();
-        LoseScreen.style.display = DisplayStyle.Flex; 
+        LoseScreen.style.display = DisplayStyle.Flex;
     }
     public void ShowWinScreen()
     {
@@ -158,12 +189,17 @@ public class PauseMenuUI : MonoBehaviour
         UpdateStats();
         WinScreen.style.display = DisplayStyle.Flex;
     }
+
+    public void ShowSavePopup()
+    {
+        SavePopup.style.display = DisplayStyle.Flex;
+    }
     public void Hide()
     {
-         pauseMenu.style.display = DisplayStyle.None;
-         settingsMenu.style.display = DisplayStyle.None;
-         LoseScreen.style.display = DisplayStyle.None;
-         WinScreen.style.display = DisplayStyle.None;
+        pauseMenu.style.display = DisplayStyle.None;
+        settingsMenu.style.display = DisplayStyle.None;
+        LoseScreen.style.display = DisplayStyle.None;
+        WinScreen.style.display = DisplayStyle.None;
     }
     private void UpdateStats()
     {

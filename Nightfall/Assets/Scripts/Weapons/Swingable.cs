@@ -13,10 +13,21 @@ namespace Catalyst.GamePlay.Weapons
         [SerializeField] private float swingPitchRange = 0.2f;
         [SerializeField] private AudioClip[] hitSounds;
 
+
         private AudioSource aud;
+        private Collider weaponCollider;
+
         private void Awake()
         {
             aud = GetComponent<AudioSource>();
+            weaponCollider = GetComponent<Collider>();
+        }
+        private void Start()
+        {
+            if (weaponCollider != null)
+            {
+                weaponCollider.enabled = false; // Disable collider at start
+            }
         }
 
         private void ApplyDamage(Collider other, float damage, Vector3 hitPoint, Vector3 hitDirection)
@@ -26,7 +37,7 @@ namespace Catalyst.GamePlay.Weapons
             if (rb != null)
             {
                 rb.AddForceAtPosition(hitDirection.normalized * swingForce, hitPoint, ForceMode.Impulse);
-                
+
             }
 
 
@@ -48,7 +59,7 @@ namespace Catalyst.GamePlay.Weapons
         }
 
         public void PlayHitSound()
-            {
+        {
             if (hitSounds.Length > 0 && aud != null)
             {
                 AudioClip hitClip = hitSounds[Random.Range(0, hitSounds.Length)];
@@ -73,21 +84,21 @@ namespace Catalyst.GamePlay.Weapons
 
         public void TurnOnCollider()
         {
-
-            Collider col = GetComponent<Collider>();
-            if (col != null)
+            if (weaponCollider != null)
             {
-                col.enabled = true;
+                weaponCollider.enabled = true;
             }
+            Debug.Log("Weapon collider turned on.");
+
         }
 
         public void TurnOffCollider()
         {
-            Collider col = GetComponent<Collider>();
-            if (col != null)
+            if (weaponCollider != null)
             {
-                col.enabled = false;
+                weaponCollider.enabled = false;
             }
+            Debug.Log("Weapon collider turned off.");
         }
     }
 }

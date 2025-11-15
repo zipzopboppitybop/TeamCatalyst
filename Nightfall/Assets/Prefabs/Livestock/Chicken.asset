@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fff52d00b5194643aee23e84ee9b49b, type: 3}
   m_Name: Chicken
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  Icon: {fileID: 21300000, guid: c6f3ddfa43da4ad4cad2375c9d4df858, type: 3}
+  Icon: {fileID: 21300000, guid: f9e3a7b06f6e0874fb4940e369102a33, type: 3}
   itemType: 4
-  dropPrefab: {fileID: 0}
+  dropPrefab: {fileID: 5650438882327132379, guid: 795ba094a2ca8dd4ba8ef921ca01c742, type: 3}
   pickupSound: {fileID: 0}
   audVol: 0
   displayName: Chicken
   id: 100
-  sellValue: 1
   price: 1
   maxStackSize: 1

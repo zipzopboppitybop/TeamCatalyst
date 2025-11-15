@@ -28,7 +28,7 @@ public class AILogic : MonoBehaviour, IDamage
     Color colorOrig;
 
     protected bool playerInRange;
-    [SerializeField] protected bool targetsPlayer = true;
+    [SerializeField] protected bool targetsPlayer;
     protected bool isScared = false;
     protected bool isHealing;
     protected bool isPlayingSteps;
@@ -75,7 +75,7 @@ public class AILogic : MonoBehaviour, IDamage
 
         if (targetsPlayer)
         {
-            targetObj = GameManager.instance.player;
+            targetObj = null; 
         }
 
         nextIdleSoundTime = Random.Range(idleSoundMinDelay, idleSoundMaxDelay);
@@ -101,37 +101,45 @@ public class AILogic : MonoBehaviour, IDamage
 
     protected virtual void LookForTarget()
     {
-
         if (!targetsPlayer)
         {
-            if (targetObj == null || !targetObj.activeInHierarchy)
-            {
-                if (cropSearchTimer >= cropSearchInterval)
-                {
-                    FindNearestCrop();
-                    cropSearchTimer = 0f;
-                }
-            }
-
-            if (targetObj == null)
-            {
-                CheckRoam();
-                return;
-            }
-
-            CanSeeTarget();
+            FindNearestCrop();
+            return;
         }
-        else
+
+        if (playerInRange && GameManager.instance != null)
         {
-            if (playerInRange && !CanSeeTarget())
-                CheckRoam();
-            else if (!playerInRange)
-                CheckRoam();
+            targetObj = GameManager.instance.player;
+            CanSeeTarget();
+            return;
         }
 
-        if (!targetsPlayer && targetObj == null && agent.remainingDistance < 0.5f)
-            CheckRoam();
+        GameObject nearestLivestock = FindNearestLivestock();
+        if (nearestLivestock != null)
+        {
+            targetObj = nearestLivestock;
+            CanSeeTarget();
+            return;
+        }
 
+        if (targetObj == null || !targetObj.activeInHierarchy)
+        {
+            if (cropSearchTimer >= cropSearchInterval)
+            {
+                FindNearestCrop();
+                cropSearchTimer = 0f;
+            }
+        }
+
+        if (targetObj == null && GameManager.instance != null)
+        {
+            targetObj = GameManager.instance.player;
+        }
+
+        if (targetObj != null)
+            CanSeeTarget();
+        else
+            CheckRoam();
     }
 
     public virtual void takeDamage(int amount)
@@ -274,18 +282,33 @@ public class AILogic : MonoBehaviour, IDamage
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") || other.GetComponent<TowerBase>() && other.GetComponent<TowerBase>().typeTower == TowerBase.TowerType.Crop)
+        if (other.CompareTag("Player"))
         {
             playerInRange = true;
+            return;
+        }
+
+        if (other.CompareTag("LiveStock"))
+        {
+            targetObj = other.gameObject;
+            return;
+        }
+
+        TowerBase tower = other.GetComponent<TowerBase>();
+        if (tower != null && tower.typeTower == TowerBase.TowerType.Crop)
+        {
+            targetObj = other.gameObject;
+            return;
         }
     }
 
     protected virtual void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") || other.GetComponent<TowerBase>() && other.GetComponent<TowerBase>().typeTower == TowerBase.TowerType.Crop)
+        if (other.CompareTag("Player"))
         {
             playerInRange = false;
             agent.stoppingDistance = 0;
+            return;
         }
     }
 
@@ -297,7 +320,10 @@ public class AILogic : MonoBehaviour, IDamage
         IDamage targetHealth = target.GetComponentInParent<IDamage>();
         if (targetHealth != null)
         {
-            aud.PlayOneShot(audBites[Random.Range(0, audBites.Length)]);
+            if (audBites.Length > 0)
+            {
+                aud.PlayOneShot(audBites[Random.Range(0, audBites.Length)]);
+            }
             targetHealth.takeDamage(1);
             biteTimer = 0;
         }
@@ -322,7 +348,11 @@ public class AILogic : MonoBehaviour, IDamage
     protected IEnumerator PlayStep()
     {
         isPlayingSteps = true;
-        aud.PlayOneShot(audSteps[Random.Range(0, audSteps.Length)]);
+        if (audSteps.Length > 0)
+        {
+            aud.PlayOneShot(audSteps[Random.Range(0, audSteps.Length)]);
+        }
+
         yield return new WaitForSeconds(.3f);
         isPlayingSteps = false;
     }
@@ -330,6 +360,8 @@ public class AILogic : MonoBehaviour, IDamage
     {
         if (GameManager.instance == null || GameManager.instance.crops.Count == 0)
         {
+            targetObj = null;   
+            attackingWall = false;
             return;
         }
 
@@ -350,13 +382,35 @@ public class AILogic : MonoBehaviour, IDamage
 
         if (nearestCrop != null)
         {
-
             targetObj = nearestCrop;
             agent.SetDestination(targetObj.transform.position);
             attackingWall = false;
-            
+        }
+        else
+        {
+            targetObj = null;
+        }
+    }
+
+    protected GameObject FindNearestLivestock()
+    {
+        GameObject[] livestock = GameObject.FindGameObjectsWithTag("LiveStock");
+        float closestDist = Mathf.Infinity;
+        GameObject nearest = null;
+
+        foreach (GameObject animal in livestock)
+        {
+            if (animal == null || !animal.activeInHierarchy) continue;
+
+            float dist = Vector3.Distance(transform.position, animal.transform.position);
+            if (dist < closestDist)
+            {
+                closestDist = dist;
+                nearest = animal;
+            }
         }
 
+        return nearest;
     }
 
     protected virtual void HandleIdleSound()
@@ -365,7 +419,10 @@ public class AILogic : MonoBehaviour, IDamage
 
         if (idleSoundTimer >= nextIdleSoundTime)
         {
-            aud.PlayOneShot(audIdles[Random.Range(0, audIdles.Length)]);
+            if (audIdles.Length > 0)
+            {
+                aud.PlayOneShot(audIdles[Random.Range(0, audIdles.Length)]);
+            }
             idleSoundTimer = 0f;
             nextIdleSoundTime = Random.Range(idleSoundMinDelay, idleSoundMaxDelay);
         }

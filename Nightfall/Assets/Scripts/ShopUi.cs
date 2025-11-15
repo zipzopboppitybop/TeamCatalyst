@@ -197,6 +197,20 @@ public class ShopUI : MonoBehaviour
                         PlayerInventoryUI.Instance.OnLivestockOwnedAchieved();
                     }
                 }
+                else if (item.name.Contains("GuardDog") && boughtChickens < 5)
+                {
+                    Vector3 homePoint = chickenCoop.transform.Find("DogHouseHomePos").position;
+                    GameObject dog = Instantiate(livestock[1], homePoint, Quaternion.identity);
+                    //Livestock livestockComponent = chicken.GetComponent<Livestock>();
+                    //livestockComponent.homePos = homePoint;
+                    //livestockComponent.FeedingTrough = feedingTrough.GetComponent<Chest>();
+                    //boughtChickens++;
+
+                    //if (boughtChickens == 1 && PlayerInventoryUI.Instance != null)
+                    //{
+                    //    PlayerInventoryUI.Instance.OnLivestockOwnedAchieved();
+                    //}
+                }
             }
             else
             {
