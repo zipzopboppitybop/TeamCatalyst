@@ -150,7 +150,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 303e444b1c126dd46baeb253d99184b5, type: 2}
   m_Controller: {fileID: 9100000, guid: 94ab48a10fafa19458ee94ab03393947, type: 2}
-  m_CullingMode: 1
+  m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -222,12 +222,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Catalyst.GamePlay.GunManager
   gunModel: {fileID: 2145181983208484462}
-  gunPos: {fileID: 0}
+  gunPos: {fileID: 6673977465084515460}
   player: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
   magPickupSound: {fileID: 8300000, guid: 57e1f2f1d21957d4b9c43052a5ae927f, type: 3}
   ignoreLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2097160
   isReloading: 0
   isArmed: 0
 --- !u!114 &3158196094379276507
@@ -625,7 +625,7 @@ GameObject:
   - component: {fileID: 5215033418170073862}
   - component: {fileID: 1827939816159163505}
   - component: {fileID: 4626395498140151938}
-  m_Layer: 7
+  m_Layer: 22
   m_Name: GunCam
   m_TagString: GunCamera
   m_Icon: {fileID: 0}
@@ -754,7 +754,7 @@ GameObject:
   - component: {fileID: 6290561366353044341}
   - component: {fileID: 6936204636791074862}
   - component: {fileID: 3037667461735446284}
-  m_Layer: 7
+  m_Layer: 22
   m_Name: AimCamera
   m_TagString: AimCamera
   m_Icon: {fileID: 0}
@@ -840,7 +840,7 @@ MonoBehaviour:
     Enabled: 1
     CollisionFilter:
       serializedVersion: 2
-      m_Bits: 1
+      m_Bits: 1281
     IgnoreTag: 
     CameraRadius: 0.2
     DampingIntoCollision: 0
@@ -1314,7 +1314,7 @@ GameObject:
   - component: {fileID: 1346944754028380956}
   - component: {fileID: 3444322935365968269}
   - component: {fileID: 7415538437434531785}
-  m_Layer: 7
+  m_Layer: 22
   m_Name: FPSCam
   m_TagString: FPSCamera
   m_Icon: {fileID: 0}
@@ -1603,7 +1603,7 @@ GameObject:
   - component: {fileID: 8277316637815074276}
   - component: {fileID: 3133442214757443783}
   - component: {fileID: 4386061755197533023}
-  m_Layer: 7
+  m_Layer: 22
   m_Name: FollowCamera
   m_TagString: ThirdPersonCamera
   m_Icon: {fileID: 0}
@@ -1689,7 +1689,7 @@ MonoBehaviour:
     Enabled: 1
     CollisionFilter:
       serializedVersion: 2
-      m_Bits: 1
+      m_Bits: 1793
     IgnoreTag: 
     CameraRadius: 0.2
     DampingIntoCollision: 0
@@ -3278,6 +3278,11 @@ MonoBehaviour:
   destroyTime: 0
   dmgRate: 0
   swingForce: 10
+  damageAmount: 5
+  swingSounds: []
+  swingVolume: 0.7
+  swingPitchRange: 0.2
+  hitSounds: []
 --- !u!4 &4291862730945198642 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 721859638658786103, guid: de0524e603a1a3e438fb50f45849cada, type: 3}

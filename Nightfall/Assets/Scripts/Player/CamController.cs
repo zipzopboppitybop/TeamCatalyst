@@ -240,8 +240,9 @@ namespace Catalyst.CameraController
                 return;
             if (ThirdPersonActive())
             {
-                aimTarget.gameObject.SetActive(isAiming);
+
                 _aimCamera.gameObject.SetActive(isAiming);
+                aimTarget.gameObject.SetActive(isAiming);
 
 
                 if (isAiming)
