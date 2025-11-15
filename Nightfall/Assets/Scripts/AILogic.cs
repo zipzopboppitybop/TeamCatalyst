@@ -1,10 +1,13 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Tilemaps;
 
 public class AILogic : MonoBehaviour, IDamage
 {
     // need boolean to check if this attacks plants or not
+    [SerializeField] protected LayerMask ignoreLayer;
+
     [SerializeField] protected Renderer model;
     [SerializeField] protected NavMeshAgent agent;
     [SerializeField] protected Animator animator;
@@ -29,6 +32,7 @@ public class AILogic : MonoBehaviour, IDamage
     protected bool isScared = false;
     protected bool isHealing;
     protected bool isPlayingSteps;
+    protected bool attackingWall;
 
     protected float biteTimer;
     protected float roamTimer;
@@ -42,6 +46,10 @@ public class AILogic : MonoBehaviour, IDamage
 
     protected Vector3 targetDir;
     protected Vector3 startingPos;
+
+    protected Vector3Int currentCell;
+
+    protected Tilemap map;
 
     [SerializeField] protected AudioSource aud;
     [SerializeField] protected AudioClip[] audSteps;
@@ -87,6 +95,7 @@ public class AILogic : MonoBehaviour, IDamage
         }
 
         HandleIdleSound();
+        //LookForTarget();
 
     }
 
@@ -184,15 +193,47 @@ public class AILogic : MonoBehaviour, IDamage
     {
         if (!isScared)
         {
-            targetDir = targetObj.transform.position - headPos.position;
+            if (!attackingWall)
+            {
+
+                Debug.Log("Sees crop");
+
+                RaycastHit fenceCheck;
+
+                if (Physics.Raycast(headPos.position, targetObj.transform.position, out fenceCheck))
+                {
+
+                    Debug.Log("Sees fence");
+
+                    Debug.DrawRay(headPos.position, transform.forward * 20, Color.green);
+
+                    map = FindFirstObjectByType<Tilemap>();
+                    currentCell = map.WorldToCell(fenceCheck.point);
+
+                    GameObject existing = map.GetInstantiatedObject(currentCell);
+                    TowerBase existingTower = existing ? existing.GetComponent<TowerBase>() : null;
+
+                    if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Defensive)
+                    {
+
+                        attackingWall = true;
+                        Debug.Log("KILL fence");
+                        targetObj = existing;
+                        agent.SetDestination(targetObj.transform.position);
+
+                    }
+                }
+            }
+
+                targetDir = targetObj.transform.position - headPos.position;
             angleToTarget = Vector3.Angle(targetDir, transform.forward);
             Debug.DrawRay(headPos.position, targetDir, Color.red);
 
             RaycastHit hit;
-            Debug.Log("You made it this far");
+            //Debug.Log("You made it this far");
             if (Physics.Raycast(headPos.position, targetDir, out hit))
             {
-                Debug.Log(hit.collider.name);
+                //Debug.Log(hit.collider.name);
                 Debug.DrawRay(headPos.position, headPos.transform.forward, Color.red);
 
                 if (angleToTarget <= FOV)
@@ -309,9 +350,13 @@ public class AILogic : MonoBehaviour, IDamage
 
         if (nearestCrop != null)
         {
+
             targetObj = nearestCrop;
             agent.SetDestination(targetObj.transform.position);
+            attackingWall = false;
+            
         }
+
     }
 
     protected virtual void HandleIdleSound()

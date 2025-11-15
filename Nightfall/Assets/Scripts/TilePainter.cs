@@ -15,6 +15,8 @@ public class TilePainter : MonoBehaviour
 
     [SerializeField] int placeDist;
 
+    [SerializeField] bool placeFence;
+
     //int tileType = 0;
 
     // 0 = Farmland
@@ -101,7 +103,10 @@ public class TilePainter : MonoBehaviour
 
             if (currentItemName.Contains("Rake"))
             {
-                ghostPlacer.ShowGhost(selectedTile[0]);
+                if (placeFence)
+                    ghostPlacer.ShowGhost(selectedTile[2]);
+                else
+                    ghostPlacer.ShowGhost(selectedTile[0]);
             }
             else if (currentItemName.Contains("Seed"))
             {
@@ -140,7 +145,7 @@ public class TilePainter : MonoBehaviour
             TowerBase existingTower = existing ? existing.GetComponent<TowerBase>() : null;
 
             if (existing)
-                Debug.Log(existing.name);
+                //Debug.Log(existing.name);
             if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Crop && existingTower.isFullyGrown)
             {
 
@@ -178,7 +183,10 @@ public class TilePainter : MonoBehaviour
             {
                 if (existingTower == null)
                 {
-                    map.SetTile(currentCell, selectedTile[0]);
+                    if (placeFence)
+                        map.SetTile(currentCell, selectedTile[2]);
+                    else
+                        map.SetTile(currentCell, selectedTile[0]);
                     Debug.Log("Placed farmland tile!");
                 }
             }
