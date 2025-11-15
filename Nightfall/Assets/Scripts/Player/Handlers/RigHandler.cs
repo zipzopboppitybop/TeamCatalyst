@@ -1,7 +1,7 @@
 using Catalyst.GamePlay;
-using Catalyst.Player;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+
 
 namespace Catalyst.Player.Handlers
 {
@@ -15,29 +15,26 @@ namespace Catalyst.Player.Handlers
 
         void Awake()
         {
-            rig = GetComponent<Rig>();
-            _playerInput = GetComponentInParent<InputHandler>();
-            _playerController = GetComponentInParent<PlayerController>();
-            rig.weight = 0f;
+            rig = transform.GetComponent<Rig>();
+            _playerInput = transform.GetComponent<InputHandler>();
+            _playerController = transform.GetComponent<PlayerController>();
+            targetWeight = 0f;
         }
 
         // Update is called once per frame
         void Update()
         {
-            rig.weight = Mathf.Lerp(rig.weight, targetWeight, Time.deltaTime * 10f);
+            rig.weight = Mathf.Lerp(rig.weight, targetWeight, Time.deltaTime * 1);
 
             if (_playerInput.AimHeld) // Right mouse button held
             {
-                //SetTargetWeight(1f);
                 targetWeight = 1f;
 
 
             }
             else
             {
-                //SetTargetWeight(0f);
                 targetWeight = 0f;
-
             }
         }
 
