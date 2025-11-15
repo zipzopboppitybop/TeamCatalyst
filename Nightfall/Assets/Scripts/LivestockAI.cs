@@ -4,52 +4,64 @@ using UnityEngine.AI;
 
 public class Livestock : MonoBehaviour, IDamage
 {
-    [SerializeField] Renderer model;
-    [SerializeField] NavMeshAgent agent;
-    [SerializeField] Transform headPos;
-    [SerializeField] GameObject itemDrop;
-    [SerializeField] GameObject targetObj;
-    [SerializeField] float cropSearchInterval;
-    [SerializeField] float cropDetectionRadius;
-    [SerializeField] float cropThreshold;
-
-    [SerializeField] int hp;
-    [SerializeField] int hpMax;
-    [SerializeField] float hunger;
-    [SerializeField] float hungerMax;
-    [SerializeField] float hungerRate;
-    [SerializeField] int faceTargetSpeed;
-    [SerializeField] int FOV;
-    [SerializeField] int roamDist;
-    [SerializeField] int roamPauseTime;
-    [Range(0, 100)][SerializeField] int dropChance;
-    [SerializeField] float biteRate;
+    [SerializeField] protected Renderer model;
+    [SerializeField] protected NavMeshAgent agent;
+    [SerializeField] protected Transform headPos;
+    [SerializeField] protected GameObject itemDrop;
+    [SerializeField] protected GameObject targetObj;
+    [SerializeField] protected float cropSearchInterval;
+    [SerializeField] protected float cropDetectionRadius;
+    [SerializeField] protected float cropThreshold;
+    [SerializeField] protected Animator animator;
+    [SerializeField] protected int hp;
+    [SerializeField] protected int hpMax;
+    [SerializeField] protected float hunger;
+    [SerializeField] protected float hungerMax;
+    [SerializeField] protected float hungerRate;
+    [SerializeField] protected int faceTargetSpeed;
+    [SerializeField] protected int FOV;
+    [SerializeField] protected int roamDist;
+    [SerializeField] protected int roamPauseTime;
+    [Range(0, 100)][SerializeField] protected int dropChance;
+    [SerializeField] protected float biteRate;
     public Vector3 homePos;
     public Chest FeedingTrough;
 
     Color colorOrig;
 
-    float biteTimer;
-    float roamTimer;
-    float stoppingDistOrg;
-    int roamTimeOrig;
+    protected float biteTimer;
+    protected float roamTimer;
+    protected float stoppingDistOrg;
+    protected int roamTimeOrig;
 
-    Vector3 startingPos;
+    protected Vector3 startingPos;
 
-    void Start()
+    [SerializeField] protected AudioSource aud;
+    [SerializeField] protected AudioClip[] audIdles;
+    [SerializeField] protected AudioClip[] audHurt;
+    [SerializeField] protected float idleSoundMinDelay;
+    [SerializeField] protected float idleSoundMaxDelay;
+    protected float idleSoundTimer = 0f;
+    protected float nextIdleSoundTime = 0f;
+
+    protected virtual void Start()
     {
         colorOrig = model.material.color;
         roamTimeOrig = roamPauseTime;
         stoppingDistOrg = agent.stoppingDistance;
         startingPos = transform.position;
+
+        nextIdleSoundTime = Random.Range(idleSoundMinDelay, idleSoundMaxDelay);
     }
 
-    void Update()
+    protected virtual void Update()
     {
         if (agent == null || !agent.isOnNavMesh) return;
 
         if (agent.remainingDistance < 0.01f)
             roamTimer += Time.deltaTime;
+
+        HandleIdleSound();
 
         if (!GameManager.instance.IsNight)
         {
@@ -74,6 +86,9 @@ public class Livestock : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         hp -= amount;
+        aud.Stop();
+        aud.clip = audHurt[Random.Range(0, audHurt.Length)];
+        aud.Play();
         StartCoroutine(flashRed());
         if (hp <= 0)
         {
@@ -81,7 +96,7 @@ public class Livestock : MonoBehaviour, IDamage
         }
     }
 
-    void Roam()
+    protected void Roam()
     {
         roamTimer = 0;
         agent.stoppingDistance = 0;
@@ -94,7 +109,7 @@ public class Livestock : MonoBehaviour, IDamage
         }
     }
 
-    void CheckRoam()
+    protected void CheckRoam()
     {
         if (roamTimer >= roamPauseTime && agent.remainingDistance < 0.01f)
         {
@@ -102,12 +117,12 @@ public class Livestock : MonoBehaviour, IDamage
         }
     }
 
-    void HeadHome()
+    protected void HeadHome()
     {
         agent.SetDestination(homePos);
     }
 
-    void FindFood()
+    protected void FindFood()
     {
         if (FeedingTrough == null || FeedingTrough.PrimaryInventory == null) return;
 
@@ -137,7 +152,7 @@ public class Livestock : MonoBehaviour, IDamage
         }
     }
 
-    void EatCrop(InventorySlot cropSlot)
+    protected void EatCrop(InventorySlot cropSlot)
     {
         cropSlot.RemoveFromStack(1);
 
@@ -149,10 +164,22 @@ public class Livestock : MonoBehaviour, IDamage
         FeedingTrough.PrimaryInventory.OnInventorySlotChanged?.Invoke(cropSlot);
     }
 
-    IEnumerator flashRed()
+    protected IEnumerator flashRed()
     {
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         model.material.color = colorOrig;
+    }
+
+    protected virtual void HandleIdleSound()
+    {
+        idleSoundTimer += Time.deltaTime;
+
+        if (idleSoundTimer >= nextIdleSoundTime)
+        {
+            aud.PlayOneShot(audIdles[Random.Range(0, audIdles.Length)]);
+            idleSoundTimer = 0f;
+            nextIdleSoundTime = Random.Range(idleSoundMinDelay, idleSoundMaxDelay);
+        }
     }
 }
