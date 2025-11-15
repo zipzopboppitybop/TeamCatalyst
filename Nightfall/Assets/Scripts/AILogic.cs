@@ -22,7 +22,7 @@ public class AILogic : MonoBehaviour, IDamage
     [SerializeField] protected int FOV;
     [SerializeField] protected int roamDist;
     [SerializeField] protected int roamPauseTime;
-    [Range(0, 100)][SerializeField] int dropChance;
+    [Range(0, 100)][SerializeField] protected int dropChance;
     [SerializeField] protected float biteRate;
 
     Color colorOrig;
@@ -310,7 +310,7 @@ public class AILogic : MonoBehaviour, IDamage
         model.material.color = colorOrig;
     }
 
-    IEnumerator getScared()
+    protected IEnumerator getScared()
     {
         isScared = true;
         roamPauseTime = 1;

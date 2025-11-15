@@ -22,15 +22,15 @@ MonoBehaviour:
   staminaRegen: 10
   staminaMax: 10
   stealth: 5
-  interactRange: 2
+  interactRange: 3
   currency: 100
   currentFarmingState: 0
   shootDamage: 15
   shootRate: 1.5
   shootDist: 10
-  ammoCount: 5
+  ammoCount: 3
   ammoMax: 5
-  magazineSize: 0
+  magazineSize: 6
   walkingSpeed: 2
   sprintSpeed: 5
   dashSpeed: 3
