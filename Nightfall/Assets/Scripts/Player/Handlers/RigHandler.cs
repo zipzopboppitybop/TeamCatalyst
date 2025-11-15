@@ -9,7 +9,6 @@ namespace Catalyst.Player.Handlers
     {
         private Rig rig;
         private InputHandler _playerInput;
-        private Animator _animator;
         private PlayerController _playerController;
         private GunManager _gunManager;
         private float targetWeight;
@@ -25,19 +24,19 @@ namespace Catalyst.Player.Handlers
         // Update is called once per frame
         void Update()
         {
-            //playerInput.AimHeld = true; // For testing purposes, remove this line in production 
+            rig.weight = Mathf.Lerp(rig.weight, targetWeight, Time.deltaTime * 10f);
 
             if (_playerInput.AimHeld) // Right mouse button held
             {
-                SetTargetWeight(1f);
-                //targetWeight = 1f;
+                //SetTargetWeight(1f);
+                targetWeight = 1f;
 
 
             }
             else
             {
-                SetTargetWeight(0f);
-                //targetWeight = 0f;
+                //SetTargetWeight(0f);
+                targetWeight = 0f;
 
             }
         }
@@ -45,7 +44,7 @@ namespace Catalyst.Player.Handlers
         private void SetTargetWeight(float weight)
         {
             targetWeight = weight;
-            rig.weight = Mathf.Lerp(rig.weight, targetWeight, Time.deltaTime * 10f);
+
         }
 
     }

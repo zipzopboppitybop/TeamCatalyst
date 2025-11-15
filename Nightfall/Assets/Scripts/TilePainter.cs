@@ -31,8 +31,10 @@ public class TilePainter : MonoBehaviour
     {
 
         map = (Tilemap)FindAnyObjectByType(typeof(Tilemap));
-        inv.OnSelectedItemChanged += SelectedItemChanged;
-
+        if (inv != null)
+        {
+            inv.OnSelectedItemChanged += SelectedItemChanged;
+        }
     }
 
     // Update is called once per frame

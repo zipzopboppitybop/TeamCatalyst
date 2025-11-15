@@ -244,9 +244,8 @@ public class PlayerInventoryUI : MonoBehaviour
 
     private void RegisterChestSlotCallbacks(int index)
     {
-        Inventory inventoryRef = chestInventory;
-        chestSlots[index].RegisterCallback<PointerDownEvent>(e => OnSlotPointerDown(index, inventoryRef));
-        chestSlots[index].RegisterCallback<PointerUpEvent>(e => OnSlotPointerUp(index, inventoryRef));
+        chestSlots[index].RegisterCallback<PointerDownEvent>(e => OnSlotPointerDown(index, chestInventory));
+        chestSlots[index].RegisterCallback<PointerUpEvent>(e => OnSlotPointerUp(index, chestInventory));
     }
 
     public void RefreshHotBar(InventorySlot _ = null)
@@ -409,11 +408,20 @@ public class PlayerInventoryUI : MonoBehaviour
 
     private void OpenChest(Inventory chest)
     {
+        InventoryDragManager.EndDrag();
+
+        if (chestInventory != null)
+        {
+            chestInventory.OnInventorySlotChanged -= RefreshChest;
+        }
+
+
         chestInventory = chest;
         isChestOpen = true;
 
         toggleInventory = true; 
         playerController.isInventoryOpen = true;
+        inputHandler.InteractTriggered = false;
 
         menuSystemUI.style.display = DisplayStyle.Flex;
         chestInventoryMenu.style.display = DisplayStyle.Flex;
@@ -439,8 +447,9 @@ public class PlayerInventoryUI : MonoBehaviour
 
     public void CloseChest()
     {
+        InventoryDragManager.EndDrag();
         if (!isChestOpen) return;
-        Debug.Log("Closing CHests");
+
         chestInventory.OnInventorySlotChanged -= RefreshChest;
         chestInventory = null;
         isChestOpen = false;
