@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Catalyst.GamePlay.Farming;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 
 namespace Catalyst.Player
@@ -122,6 +123,7 @@ namespace Catalyst.Player
             get => currentGun;
             set => currentGun = value;
         }
+        public int SceneIndex => SceneManager.GetActiveScene().buildIndex;
 
         void OnEnable()
         {
@@ -139,6 +141,8 @@ namespace Catalyst.Player
             roomsClear = 0;
 
         }
+
+
 
         public FarmingStateMachine.FarmingState CurrentFarmingState
         {
