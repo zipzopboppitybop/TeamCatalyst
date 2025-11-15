@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4fff52d00b5194643aee23e84ee9b49b, type: 3}
-  m_Name: Chicken
+  m_Name: PumpkinSeed
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  Icon: {fileID: 21300000, guid: f9e3a7b06f6e0874fb4940e369102a33, type: 3}
-  itemType: 4
-  dropPrefab: {fileID: 5650438882327132379, guid: 795ba094a2ca8dd4ba8ef921ca01c742, type: 3}
+  Icon: {fileID: 21300000, guid: f03b7c9486052de4cbf33cefc6cafc1e, type: 3}
+  itemType: 1
+  dropPrefab: {fileID: 0}
   pickupSound: {fileID: 0}
   audVol: 0
-  displayName: Chicken
-  id: 100
+  displayName: PumpkinSeed
+  id: 9
   price: 1
-  maxStackSize: 1
+  maxStackSize: 5

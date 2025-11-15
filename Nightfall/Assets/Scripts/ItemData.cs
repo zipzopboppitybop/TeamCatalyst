@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class ItemData : ScriptableObject
 {
-    public enum ItemType { Tool, Seed, Weapon, Resource, Livestock}
+    public enum ItemType { Tool, Seed, Weapon, Resource, Livestock, Building}
     public Sprite Icon;
     public ItemType itemType;
     public GameObject dropPrefab;

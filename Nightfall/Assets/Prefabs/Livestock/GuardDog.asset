@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4fff52d00b5194643aee23e84ee9b49b, type: 3}
-  m_Name: Chicken
+  m_Name: GuardDog
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  Icon: {fileID: 21300000, guid: f9e3a7b06f6e0874fb4940e369102a33, type: 3}
-  itemType: 4
-  dropPrefab: {fileID: 5650438882327132379, guid: 795ba094a2ca8dd4ba8ef921ca01c742, type: 3}
+  Icon: {fileID: 21300000, guid: e336bd82ab8169b4aa4519def4f873c3, type: 3}
+  itemType: 0
+  dropPrefab: {fileID: 7934035346412971381, guid: 34052a25c83a55841ac10cd3362ef328, type: 3}
   pickupSound: {fileID: 0}
   audVol: 0
-  displayName: Chicken
-  id: 100
-  price: 1
+  displayName: 
+  id: 76
+  price: 150
   maxStackSize: 1
