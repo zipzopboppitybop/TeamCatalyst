@@ -40,9 +40,6 @@ namespace Catalyst.GamePlay
         {
             ClearCurrentGun();
             EquipGun();
-
-
-
         }
 
         private void Update()
