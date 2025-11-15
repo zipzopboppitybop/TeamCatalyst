@@ -73,17 +73,17 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6811085360175029284}
+  - component: {fileID: 1149818978128675595}
   - component: {fileID: 4961241792348632301}
   - component: {fileID: 8520908250337453854}
   - component: {fileID: 2704039868389915847}
-  - component: {fileID: 1149818978128675595}
+  - component: {fileID: 2426824615145339528}
   - component: {fileID: 3158196094379276507}
   - component: {fileID: 5796168270863737799}
-  - component: {fileID: 853817436050279361}
-  - component: {fileID: 2426824615145339528}
-  - component: {fileID: 6430030390105382501}
   - component: {fileID: 3477844435629080077}
+  - component: {fileID: 3868985803478503282}
   - component: {fileID: 7779427169407366512}
+  - component: {fileID: 853817436050279361}
   m_Layer: 3
   m_Name: Farmer
   m_TagString: Player
@@ -113,6 +113,31 @@ Transform:
   - {fileID: 230611059466799411}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!143 &1149818978128675595
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906805268855091345}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 1.7
+  m_Radius: 0.25
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.0001
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.85, z: 0}
 --- !u!95 &4961241792348632301
 Animator:
   serializedVersion: 7
@@ -147,11 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e89276c66830e9458031a39f7762ba4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Catalyst.CameraController.CamController
-  sceneCam: {fileID: 0}
-  gunCam: {fileID: 1827939816159163505}
-  FPSCamera: {fileID: 3444322935365968269}
-  thirdPersonCamera: {fileID: 8277316637815074276}
-  AimCamera: {fileID: 6290561366353044341}
+  playerData: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
   followTarget: {fileID: 5629587793951799693}
   aimTarget: {fileID: 2400763769896934826}
   aimFollowSpeed: 20
@@ -166,7 +187,6 @@ MonoBehaviour:
     m_Bits: 128
   hideInFPS:
   - {fileID: 6061531207049578280}
-  playerData: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
   isInverted: 0
 --- !u!114 &2704039868389915847
 MonoBehaviour:
@@ -180,8 +200,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2602afaa71c0374a8ac4e4c23eaf689, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player.Controller.PlayerController
-  animator: {fileID: 4961241792348632301}
-  camController: {fileID: 8520908250337453854}
   hotbar: {fileID: 0}
   aud: {fileID: 853817436050279361}
   playerInputHandler: {fileID: 3477844435629080077}
@@ -190,31 +208,27 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 3145864
   isInventoryOpen: 0
---- !u!143 &1149818978128675595
-CharacterController:
+--- !u!114 &2426824615145339528
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 906805268855091345}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 1.7
-  m_Radius: 0.25
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.0001
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.85, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8000d1da39d44c0289e754429b531475, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Catalyst.GamePlay.GunManager
+  gunModel: {fileID: 2145181983208484462}
+  gunPos: {fileID: 2787198989341151857}
+  player: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
+  magPickupSound: {fileID: 8300000, guid: 57e1f2f1d21957d4b9c43052a5ae927f, type: 3}
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  isReloading: 0
+  isArmed: 0
 --- !u!114 &3158196094379276507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -248,6 +262,107 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Catalyst.GamePlay.Farming.FarmingStateMachine
   farmerData: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
   animator: {fileID: 4961241792348632301}
+--- !u!114 &3477844435629080077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906805268855091345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2b001fb2d5e47d9a698c8792bd927ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::WTIM.Player.PlayerInputHandler
+  playerControls: {fileID: -944628639613478452, guid: b5f4a3bcfd003f24392728f8d0359a08, type: 3}
+  actionMapName: Farmer
+  movement: Move
+  rotation: Look
+  sprint: Sprint
+  attack: Attack
+  interact: Interact
+  dash: Dash
+  jump: Jump
+  previous: Previous
+  next: Next
+  aim: Aim
+  fire: Fire
+  reload: Reload
+  pause: Pause
+  toggleCamera: ToggleCamera
+  toggleInventory: Inventory
+--- !u!114 &3868985803478503282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906805268855091345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 092a86e1d3bb2b24aaf7f6e9bd314c64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AnimationHandler
+  playerData: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
+--- !u!114 &7779427169407366512
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 906805268855091345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.BoneRenderer
+  boneShape: 1
+  drawBones: 1
+  drawTripods: 0
+  boneSize: 1
+  tripodSize: 1
+  boneColor: {r: 0, g: 0, b: 1, a: 0.5}
+  m_Transforms:
+  - {fileID: 4226795571723875414}
+  - {fileID: 9118851188819150932}
+  - {fileID: 3642216426064297882}
+  - {fileID: 7092026174850576703}
+  - {fileID: 1372611802868749288}
+  - {fileID: 8738657100344675552}
+  - {fileID: 6463060295940116824}
+  - {fileID: 3006508039762570396}
+  - {fileID: 3869387463760560753}
+  - {fileID: 1605945969748172843}
+  - {fileID: 639018167454423211}
+  - {fileID: 7872989094928553437}
+  - {fileID: 5028649644423987692}
+  - {fileID: 5630706522830124982}
+  - {fileID: 346073004813391544}
+  - {fileID: 7854051626858122662}
+  - {fileID: 2505023767250567195}
+  - {fileID: 6156302571525515132}
+  - {fileID: 8236527664759427526}
+  - {fileID: 6260466600586017231}
+  - {fileID: 6072577632893654120}
+  - {fileID: 9139389480209482089}
+  - {fileID: 7489305989273343683}
+  - {fileID: 7032451586597583435}
+  - {fileID: 8910601040519100659}
+  - {fileID: 5974900615816801466}
+  - {fileID: 8241132770384624890}
+  - {fileID: 8680354983646744517}
+  - {fileID: 7467399335971724229}
+  - {fileID: 4293016991140193201}
+  - {fileID: 2948531907812444578}
+  - {fileID: 4662731535768667597}
+  - {fileID: 2402720378209924580}
+  - {fileID: 2493696724016125463}
+  - {fileID: 6622141302261767912}
+  - {fileID: 2222187795805366058}
+  - {fileID: 283638352790972741}
+  - {fileID: 6215489664334041895}
+  - {fileID: 772177304482438768}
+  - {fileID: 4716628634256259648}
 --- !u!82 &853817436050279361
 AudioSource:
   m_ObjectHideFlags: 0
@@ -345,175 +460,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &2426824615145339528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 906805268855091345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8000d1da39d44c0289e754429b531475, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Catalyst.GamePlay.GunManager
-  gunModel: {fileID: 2145181983208484462}
-  gunPos: {fileID: 2787198989341151857}
-  player: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
-  animator: {fileID: 4961241792348632301}
-  aud: {fileID: 853817436050279361}
-  playerInputHandler: {fileID: 3477844435629080077}
-  playerController: {fileID: 2704039868389915847}
-  magPickupSound: {fileID: 8300000, guid: 57e1f2f1d21957d4b9c43052a5ae927f, type: 3}
-  ignoreLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  isReloading: 0
-  isArmed: 0
---- !u!114 &6430030390105382501
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 906805268855091345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.RigBuilder
-  m_RigLayers:
-  - m_Rig: {fileID: 1186338129166663318}
-    m_Active: 1
-  m_Effectors:
-  - m_Transform: {fileID: 2400763769896934826}
-    m_Style:
-      shape: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
-      color: {r: 1, g: 0, b: 0, a: 0.5}
-      size: 0.1
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-    m_Visible: 1
-  - m_Transform: {fileID: 2400763769896934826}
-    m_Style:
-      shape: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
-      color: {r: 1, g: 0, b: 0, a: 0.5}
-      size: 0.1
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-    m_Visible: 1
-  - m_Transform: {fileID: 2400763769896934826}
-    m_Style:
-      shape: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
-      color: {r: 1, g: 0, b: 0, a: 0.5}
-      size: 0.1
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-    m_Visible: 1
-  - m_Transform: {fileID: 2400763769896934826}
-    m_Style:
-      shape: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
-      color: {r: 1, g: 0, b: 0, a: 0.5}
-      size: 0.1
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-    m_Visible: 1
-  - m_Transform: {fileID: 2400763769896934826}
-    m_Style:
-      shape: {fileID: 4300000, guid: c6793350c150f456688e39a81f97364a, type: 2}
-      color: {r: 1, g: 0, b: 0, a: 0.5}
-      size: 0.1
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-    m_Visible: 1
---- !u!114 &3477844435629080077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 906805268855091345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2b001fb2d5e47d9a698c8792bd927ad, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::WTIM.Player.PlayerInputHandler
-  playerControls: {fileID: -944628639613478452, guid: b5f4a3bcfd003f24392728f8d0359a08, type: 3}
-  actionMapName: Farmer
-  movement: Move
-  rotation: Look
-  sprint: Sprint
-  attack: Attack
-  interact: Interact
-  dash: Dash
-  jump: Jump
-  previous: Previous
-  next: Next
-  aim: Aim
-  fire: Fire
-  reload: Reload
-  pause: Pause
-  toggleCamera: ToggleCamera
-  toggleInventory: Inventory
---- !u!114 &7779427169407366512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 906805268855091345}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.BoneRenderer
-  boneShape: 1
-  drawBones: 1
-  drawTripods: 0
-  boneSize: 1
-  tripodSize: 1
-  boneColor: {r: 0, g: 0, b: 1, a: 0.5}
-  m_Transforms:
-  - {fileID: 4226795571723875414}
-  - {fileID: 9118851188819150932}
-  - {fileID: 3642216426064297882}
-  - {fileID: 7092026174850576703}
-  - {fileID: 1372611802868749288}
-  - {fileID: 8738657100344675552}
-  - {fileID: 6463060295940116824}
-  - {fileID: 3006508039762570396}
-  - {fileID: 3869387463760560753}
-  - {fileID: 1605945969748172843}
-  - {fileID: 639018167454423211}
-  - {fileID: 7872989094928553437}
-  - {fileID: 5028649644423987692}
-  - {fileID: 5630706522830124982}
-  - {fileID: 346073004813391544}
-  - {fileID: 7854051626858122662}
-  - {fileID: 2505023767250567195}
-  - {fileID: 6156302571525515132}
-  - {fileID: 8236527664759427526}
-  - {fileID: 6260466600586017231}
-  - {fileID: 6072577632893654120}
-  - {fileID: 9139389480209482089}
-  - {fileID: 7489305989273343683}
-  - {fileID: 7032451586597583435}
-  - {fileID: 8910601040519100659}
-  - {fileID: 5974900615816801466}
-  - {fileID: 8241132770384624890}
-  - {fileID: 8680354983646744517}
-  - {fileID: 7467399335971724229}
-  - {fileID: 4293016991140193201}
-  - {fileID: 2948531907812444578}
-  - {fileID: 4662731535768667597}
-  - {fileID: 2402720378209924580}
-  - {fileID: 2493696724016125463}
-  - {fileID: 6622141302261767912}
-  - {fileID: 2222187795805366058}
-  - {fileID: 283638352790972741}
-  - {fileID: 6215489664334041895}
-  - {fileID: 772177304482438768}
-  - {fileID: 4716628634256259648}
 --- !u!1 &911967790513804149
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,7 +571,7 @@ GameObject:
   - component: {fileID: 4626395498140151938}
   m_Layer: 0
   m_Name: GunCam
-  m_TagString: Untagged
+  m_TagString: GunCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -754,11 +700,11 @@ GameObject:
   - component: {fileID: 3037667461735446284}
   m_Layer: 0
   m_Name: AimCamera
-  m_TagString: Untagged
+  m_TagString: AimCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4737717382609092415
 Transform:
   m_ObjectHideFlags: 0
@@ -1313,7 +1259,7 @@ GameObject:
   - component: {fileID: 7415538437434531785}
   m_Layer: 0
   m_Name: FPSCam
-  m_TagString: Untagged
+  m_TagString: FPSCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1562,8 +1508,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 230611059466799411}
-  - component: {fileID: 3650453983584475584}
-  - component: {fileID: 8882627123561210787}
   m_Layer: 0
   m_Name: NOLAN@T-Pose
   m_TagString: Untagged
@@ -1590,44 +1534,6 @@ Transform:
   - {fileID: 8781474134930730962}
   m_Father: {fileID: 6811085360175029284}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &3650453983584475584
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4093920640562464863}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8882627123561210787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4093920640562464863}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.RigBuilder
-  m_RigLayers:
-  - m_Rig: {fileID: 1186338129166663318}
-    m_Active: 1
-  m_Effectors: []
 --- !u!1 &4203392548023142232
 GameObject:
   m_ObjectHideFlags: 0
@@ -1642,11 +1548,11 @@ GameObject:
   - component: {fileID: 4386061755197533023}
   m_Layer: 0
   m_Name: FollowCamera
-  m_TagString: Untagged
+  m_TagString: ThirdPersonCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8747230426482892787
 Transform:
   m_ObjectHideFlags: 0
@@ -1951,7 +1857,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3c430f382484144e925c097c2d33cfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.MultiAimConstraint
-  m_Weight: 0.7
+  m_Weight: 1
   m_Data:
     m_ConstrainedObject: {fileID: 7092026174850576703}
     m_SourceObjects:
@@ -2130,7 +2036,7 @@ GameObject:
   - component: {fileID: 6589878699584753098}
   m_Layer: 3
   m_Name: AimTarget
-  m_TagString: Untagged
+  m_TagString: AimTarget
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2441,7 +2347,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4528624581806746834}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: metarig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3002,7 +2908,7 @@ GameObject:
   - component: {fileID: 5629587793951799693}
   m_Layer: 0
   m_Name: FollowTarget
-  m_TagString: Untagged
+  m_TagString: FollowTarget
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

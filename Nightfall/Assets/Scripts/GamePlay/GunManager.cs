@@ -211,7 +211,10 @@ namespace Catalyst.GamePlay
                     return;
                 }
                 else
+                {
+                    aud.PlayOneShot(player.CurrentGun.shootSounds[Random.Range(0, player.Guns[_gunListPos].shootSounds.Length)], player.CurrentGun.shootVolume);
                     anim.TriggerShoot();
+                }
 
                 Debug.Log("Shooting");
 
@@ -246,6 +249,11 @@ namespace Catalyst.GamePlay
 
             }
 
+        }
+
+        public void PlayShotgunReload()
+        {
+            aud.PlayOneShot(player.CurrentGun.reloadSound, player.CurrentGun.shootVolume);
         }
         public bool HasGun(WeaponData gun)
         {

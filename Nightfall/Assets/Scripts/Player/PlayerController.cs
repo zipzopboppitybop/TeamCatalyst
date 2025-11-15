@@ -235,11 +235,11 @@ namespace Catalyst.Player
 
             //StartCoroutine(FlashDamageScreen());
 
-            if (playerData.Health <= 0)
-            {
-                GameManager.instance.YouLose();
-                playerData.Health = playerData.HealthMax;
-            }
+            //if (playerData.Health <= 0)
+            //{
+            //    GameManager.instance.YouLose();
+            //    playerData.Health = playerData.HealthMax;
+            //}
         }
 
         public void Heal(int amount)

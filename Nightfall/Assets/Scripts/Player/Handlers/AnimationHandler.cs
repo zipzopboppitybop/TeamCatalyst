@@ -6,7 +6,7 @@ namespace Catalyst.Player.Handlers
     public class AnimationHandler : MonoBehaviour
     {
         [Header("References")]
-        public PlayerData playerData;
+        [SerializeField] PlayerData playerData;
         private Animator _animator;
         private InputHandler _playerInputHandler;
 
@@ -35,9 +35,6 @@ namespace Catalyst.Player.Handlers
         {
             _animator = GetComponent<Animator>();
             _playerInputHandler = GetComponent<InputHandler>();
-
-
-
             SetupAnimator();
         }
 
@@ -45,7 +42,7 @@ namespace Catalyst.Player.Handlers
         void Update()
         {
             UpdateAnimator();
-            
+
 
         }
 
