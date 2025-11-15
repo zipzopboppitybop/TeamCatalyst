@@ -101,7 +101,7 @@ public class PauseMenuUI : MonoBehaviour
 
 
         if (saveButton != null)
-            saveButton.clicked += () => { OnClickSound(); SaveSystem.Save(); OnQuitButtonClicked(); };
+            saveButton.clicked += () => { OnClickSound(); SaveSystem.Save(); OnQuitConfirmed(); };
         if (loadButton != null)
             loadButton.clicked += () => { OnClickSound(); SaveSystem.Load(); };
 

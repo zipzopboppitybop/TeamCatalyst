@@ -16,7 +16,7 @@ namespace Catalyst.Player.Handlers
         void Awake()
         {
             rig = transform.GetComponent<Rig>();
-            _playerInput = transform.GetComponent<InputHandler>();
+            _playerInput = GetComponent<InputHandler>();
             _playerController = transform.GetComponent<PlayerController>();
             targetWeight = 0f;
         }
