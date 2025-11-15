@@ -101,8 +101,12 @@ public class AILogic : MonoBehaviour, IDamage
 
     protected virtual void LookForTarget()
     {
-
-        if (!targetsPlayer)
+        GameObject nearestLivestock = FindNearestLivestock();
+        if (nearestLivestock != null)
+        {
+            targetObj = nearestLivestock;
+        }
+        else
         {
             if (targetObj == null || !targetObj.activeInHierarchy)
             {
@@ -113,25 +117,16 @@ public class AILogic : MonoBehaviour, IDamage
                 }
             }
 
-            if (targetObj == null)
+            if (targetObj == null && GameManager.instance != null)
             {
-                CheckRoam();
-                return;
+                targetObj = GameManager.instance.player;
             }
+        }
 
+        if (targetObj != null)
             CanSeeTarget();
-        }
         else
-        {
-            if (playerInRange && !CanSeeTarget())
-                CheckRoam();
-            else if (!playerInRange)
-                CheckRoam();
-        }
-
-        if (!targetsPlayer && targetObj == null && agent.remainingDistance < 0.5f)
             CheckRoam();
-
     }
 
     public virtual void takeDamage(int amount)
@@ -274,15 +269,30 @@ public class AILogic : MonoBehaviour, IDamage
 
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") || other.GetComponent<TowerBase>() && other.GetComponent<TowerBase>().typeTower == TowerBase.TowerType.Crop)
+        if (other.CompareTag("LiveStock"))
+        {
+            targetObj = other.gameObject;
+            playerInRange = true;
+            return;
+        }
+
+        if (other.CompareTag("Player"))
         {
             playerInRange = true;
+            return;
+        }
+
+        if (other.GetComponent<TowerBase>() &&
+            other.GetComponent<TowerBase>().typeTower == TowerBase.TowerType.Crop)
+        {
+            playerInRange = true;
+            return;
         }
     }
 
     protected virtual void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player") || other.GetComponent<TowerBase>() && other.GetComponent<TowerBase>().typeTower == TowerBase.TowerType.Crop)
+        if (other.CompareTag("Player") || other.GetComponent<TowerBase>() && other.GetComponent<TowerBase>().typeTower == TowerBase.TowerType.Crop || other.CompareTag("LiveStock"))
         {
             playerInRange = false;
             agent.stoppingDistance = 0;
@@ -357,6 +367,27 @@ public class AILogic : MonoBehaviour, IDamage
             
         }
 
+    }
+
+    protected GameObject FindNearestLivestock()
+    {
+        GameObject[] livestock = GameObject.FindGameObjectsWithTag("LiveStock");
+        float closestDist = Mathf.Infinity;
+        GameObject nearest = null;
+
+        foreach (GameObject animal in livestock)
+        {
+            if (animal == null || !animal.activeInHierarchy) continue;
+
+            float dist = Vector3.Distance(transform.position, animal.transform.position);
+            if (dist < closestDist)
+            {
+                closestDist = dist;
+                nearest = animal;
+            }
+        }
+
+        return nearest;
     }
 
     protected virtual void HandleIdleSound()

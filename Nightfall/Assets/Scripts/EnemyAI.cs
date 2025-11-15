@@ -6,7 +6,6 @@ public class EnemyAI : AILogic
     {
         base.Start();
 
-        targetsPlayer = false;
         FindNearestCrop();
     }
 
