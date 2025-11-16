@@ -40,8 +40,16 @@ namespace Catalyst.Player
         [SerializeField] private float walkingSpeed;
         [SerializeField] private float sprintSpeed;
         [SerializeField] private float dashSpeed;
+
+        [Header("Movement Sounds")]
         [SerializeField] private AudioClip[] footstepSounds;
-        [SerializeField, Range(0, 1f)] private float footstepVolume = 0.3f;
+        [SerializeField, Range(0, 1f)] private float movementVolume = 0.3f;
+        [SerializeField, Range(0, 1f)] private float pitchVariation = 0.1f;
+        [SerializeField] private AudioClip[] jumpSound;
+        [SerializeField] private AudioClip[] landSound;
+        [SerializeField] private AudioClip[] dashSound;
+        [SerializeField] private AudioClip[] jumpTrailSound;
+        [SerializeField] private AudioClip[] hurtSound;
 
         [Header("Jump Parameters")]
         [SerializeField] private float jumpForce;
@@ -93,7 +101,14 @@ namespace Catalyst.Player
         public float CameraRotationSpeed => cameraRotationSpeed;
         public int RotationSpeed => rotationSpeed;
         public AudioClip[] FootstepSounds => footstepSounds;
-        public float FootstepVolume { get => footstepVolume; set => footstepVolume = value; }
+        public AudioClip[] JumpSound => jumpSound;
+        public AudioClip[] LandSound => landSound;
+        public AudioClip[] DashSound => dashSound;
+        public AudioClip[] JumpTrailSound => jumpTrailSound;
+        public AudioClip[] HurtSound => hurtSound;
+
+        public float MovementVolume { get => movementVolume; set => movementVolume = value; }
+        public float PitchVariation { get => pitchVariation; set => pitchVariation = value; }
 
 
 
