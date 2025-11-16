@@ -9,7 +9,15 @@ namespace Catalyst.GamePlay
     public class SaveSystem
     {
         private static SaveData _saveData = new SaveData();
+
         //[SerializeField] Loading load;
+        public int saveCount = 0;
+
+        public void Awake()
+        {
+
+
+        }
 
         public struct SaveData
         {
@@ -31,13 +39,15 @@ namespace Catalyst.GamePlay
         public static void HandleSaveData()
         {
             GameManager.instance.playerController.Save(ref _saveData.playerData);
+
         }
 
         public static void Load()
         {
             if (File.Exists(SaveFileName()))
             {
-                _saveData = JsonUtility.FromJson<SaveData>(File.ReadAllText(SaveFileName()));
+                string saveContent = File.ReadAllText(SaveFileName());
+                _saveData = JsonUtility.FromJson<SaveData>(saveContent);
                 HandleLoadData(GetLoad());
             }
             else
