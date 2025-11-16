@@ -105,7 +105,10 @@ public class TilePainter : MonoBehaviour
 
             if (currentItemName.Contains("Rake"))
             {
-                ghostPlacer.ShowGhost(selectedTile[0]);
+                if (placeFence)
+                    ghostPlacer.ShowGhost(selectedTile[2]);
+                else
+                    ghostPlacer.ShowGhost(selectedTile[0]);
             }
             else if (currentItemName.Contains("Seed"))
             {
@@ -113,7 +116,7 @@ public class TilePainter : MonoBehaviour
             }
             else if (currentItemName.Contains("Fence"))
             {
-                ghostPlacer.ShowGhost(selectedTile[2]);
+                ghostPlacer.ShowGhost(selectedTile[1]);
             }
             else
             {
@@ -183,7 +186,16 @@ public class TilePainter : MonoBehaviour
         {
             if (existingTower == null)
             {
-                map.SetTile(currentCell, placeFence ? selectedTile[2] : selectedTile[0]);
+                map.SetTile(currentCell, selectedTile[0]);
+            }
+            return;
+        }
+
+        if (item.Contains("Fence"))
+        {
+            if (existingTower == null)
+            {
+                map.SetTile(currentCell, selectedTile[2]);
             }
             return;
         }
