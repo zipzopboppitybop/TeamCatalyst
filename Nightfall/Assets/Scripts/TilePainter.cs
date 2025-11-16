@@ -15,8 +15,6 @@ public class TilePainter : MonoBehaviour
 
     [SerializeField] int placeDist;
 
-    [SerializeField] bool placeFence;
-
     //int tileType = 0;
 
     // 0 = Farmland
@@ -105,18 +103,33 @@ public class TilePainter : MonoBehaviour
 
             if (currentItemName.Contains("Rake"))
             {
-                if (placeFence)
-                    ghostPlacer.ShowGhost(selectedTile[2]);
-                else
-                    ghostPlacer.ShowGhost(selectedTile[0]);
+                ghostPlacer.ShowGhost(selectedTile[0]);
             }
             else if (currentItemName.Contains("Seed"))
             {
                 ghostPlacer.ShowGhost(selectedTile[1]);
+                InventorySlot slot = inv.GetSelectedSlot();
+
+                slot.RemoveFromStack(1);
+
+                if (slot.StackSize <= 0)
+                    slot.UpdateInventorySlot(null, 0);
+
+                inv.hotBarInventory.OnInventorySlotChanged?.Invoke(slot);
+                inv.RefreshInventory();
             }
             else if (currentItemName.Contains("Fence"))
             {
-                ghostPlacer.ShowGhost(selectedTile[1]);
+                ghostPlacer.ShowGhost(selectedTile[2]);
+                InventorySlot slot = inv.GetSelectedSlot();
+
+                slot.RemoveFromStack(1);
+
+                if (slot.StackSize <= 0)
+                    slot.UpdateInventorySlot(null, 0);
+
+                inv.hotBarInventory.OnInventorySlotChanged?.Invoke(slot);
+                inv.RefreshInventory();
             }
             else
             {
@@ -207,8 +220,7 @@ public class TilePainter : MonoBehaviour
                 map.SetTile(currentCell, selectedTile[1]);
                 Catalyst.Player.PlayerController player = GameManager.instance.player.GetComponent<Catalyst.Player.PlayerController>();
 
-                PlayerInventoryUI playerInventory = player.GetHotBar();
-                InventorySlot slot = playerInventory.GetSelectedSlot();
+                InventorySlot slot = inv.GetSelectedSlot();
 
                 slot.RemoveFromStack(1);
 
@@ -218,8 +230,8 @@ public class TilePainter : MonoBehaviour
                 if (slot.StackSize <= 0)
                     slot.UpdateInventorySlot(null, 0);
 
-                playerInventory.hotBarInventory.OnInventorySlotChanged?.Invoke(slot);
-                playerInventory.RefreshInventory();
+                inv.hotBarInventory.OnInventorySlotChanged?.Invoke(slot);
+                inv.RefreshInventory();
             }
             else
             {

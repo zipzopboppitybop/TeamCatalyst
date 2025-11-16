@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Fence
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   Icon: {fileID: 21300000, guid: aa2735995d4018f46913d40f8b2706db, type: 3}
-  itemType: 0
-  dropPrefab: {fileID: 0}
+  itemType: 3
+  dropPrefab: {fileID: 5579366857209404794, guid: 5f2548cb26c6634498a2baf2039c5bed, type: 3}
   pickupSound: {fileID: 0}
   audVol: 0
   displayName: Fence
