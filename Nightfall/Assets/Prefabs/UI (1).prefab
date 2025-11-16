@@ -533,15 +533,20 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9134455b50eaecd4f8f1655262ce501a, type: 2}
   - {fileID: 11400000, guid: 228abfdab391bf54a8a2d29d3d511d78, type: 2}
   - {fileID: 11400000, guid: 8913f8c9c048928409b008c1f0a38575, type: 2}
+  - {fileID: 11400000, guid: ecd45f4f272546544b9292e609fa4200, type: 2}
+  - {fileID: 11400000, guid: a87ac07c4364a4d4e99bf1b70b7d2082, type: 2}
+  - {fileID: 11400000, guid: b883cc5ffbafb6d458971ae8f10c288b, type: 2}
+  - {fileID: 11400000, guid: 969524daaf1aa984aa8765e278fdc84d, type: 2}
   chest: {fileID: 0}
   playerInventory: {fileID: 3747099447879639113}
   playerData: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
   chickenCoop: {fileID: 4824343773323084103, guid: e3249ac7036e0df4e83049cd667ed280, type: 3}
   doghouse: {fileID: 8273397980556303868, guid: d30a70c163f64be4e89d14ae3a75af06, type: 3}
-  barn: {fileID: 0}
+  barn: {fileID: 7737835375307640627, guid: 4639e1775937c464cb5787b15d4160e5, type: 3}
   livestock:
   - {fileID: 5650438882327132379, guid: 795ba094a2ca8dd4ba8ef921ca01c742, type: 3}
   - {fileID: 7934035346412971381, guid: 34052a25c83a55841ac10cd3362ef328, type: 3}
+  - {fileID: 4161425625369006990, guid: 35811745b01149143b631a343511be0f, type: 3}
   shopOpen: 0
 --- !u!114 &7972685819394791535
 MonoBehaviour:
