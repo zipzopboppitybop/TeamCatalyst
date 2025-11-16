@@ -56,47 +56,46 @@ namespace Catalyst.Player.Pickups
 
         public void Interact()
         {
+            if (_player == null || _gunManager == null)
+            {
+                GameObject playerObj = GameManager.instance.playerController.gameObject;
+                _player = playerObj.GetComponent<PlayerController>();
+                _gunManager = playerObj.GetComponent<GunManager>();
+            }
+
             switch (type)
             {
                 case pickupType.health:
                     _player.Heal(value);
                     Destroy(gameObject);
                     break;
+
                 case pickupType.ammo:
                     _gunManager.AddMagazine(value);
+                    Destroy(gameObject);
+                    break;
 
-                    Destroy(gameObject);
-                    break;
                 case pickupType.stealth:
-                    //_player.ActivateStealth(value);
                     Destroy(gameObject);
                     break;
+
                 case pickupType.gun:
                     if (_gunManager.HasGun(gunData))
                     {
                         if (_gunManager.ReloadWeapon(gunData))
                         {
-                            Debug.Log("Reloaded existing weapon");
                             Destroy(gameObject);
                         }
                         else
                         {
                             _gunManager.AddMagazine(1);
-                            Debug.Log("Already have this weapon with max ammo, Adding to your magazine stack");
                             Destroy(gameObject);
                         }
-
                         return;
                     }
 
                     _gunManager.GetWeaponData(gunData);
-                    Debug.Log("Picked Up " + gunData.name);
                     Destroy(gameObject);
-                    Debug.Log("Object destroyed after pickup");
-                    break;
-
-                default:
-                    Debug.LogWarning("Unknown pickup type");
                     break;
             }
         }
