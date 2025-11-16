@@ -216,4 +216,19 @@ public class Livestock : MonoBehaviour, IDamage
         roamPauseTime = roamTimeOrig;
         isScared = false;
     }
+
+    public void OnDayStart()
+    {
+        if (hp <= 0) return;
+
+        if (hunger <= 30) return;
+
+        DropItem();
+    }
+
+    protected void DropItem()
+    {
+        Vector3 dropPosition = transform.position + new Vector3(0, 1f, 0);
+        Instantiate(itemDrop, dropPosition, Quaternion.identity);
+    }
 }

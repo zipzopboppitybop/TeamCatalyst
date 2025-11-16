@@ -239,6 +239,12 @@ public class GameManager : MonoBehaviour
             day += 1;
             moneyOnStart = playerData.Currency;
             ShopUI.instance.SellItems();
+            Livestock[] allLivestock = Object.FindObjectsByType<Livestock>(FindObjectsSortMode.None);
+
+            foreach (Livestock livestock in allLivestock)
+            {
+                livestock.OnDayStart();
+            }
         }
 
         cycle.DayText = "Day " + day.ToString();
