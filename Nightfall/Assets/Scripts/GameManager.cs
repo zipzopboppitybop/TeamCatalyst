@@ -287,8 +287,7 @@ public class GameManager : MonoBehaviour
     {
         return cropsDestroyed;
     }
-
-
+    public float TimePercent { get { return timeOfDay / 24f; } }
 
     bool IsNightHour(int hour, int startHour, int endHour)
     {

@@ -15,6 +15,8 @@ public class HealthBarUI : MonoBehaviour
     private VisualElement staminaBar;
     private VisualElement takingDamage;
     private VisualElement lowHealth;
+    private VisualElement dayImage;
+    private VisualElement nightImage;
    
     private VisualElement _weaponContainer;
     private VisualElement _reticleContainer;
@@ -37,6 +39,8 @@ public class HealthBarUI : MonoBehaviour
         healthBar = root.Q<VisualElement>("HealthBarGREEN");
         staminaBar = root.Q<VisualElement>("StamBarFront");
         currencyLabel = root.Q<Label>("moneyText");
+        dayImage = root.Q<VisualElement>("dayImage");
+        nightImage = root.Q<VisualElement>("nightImage");
 
         takingDamage = root.Q<VisualElement>("TakingDamage");
         lowHealth = root.Q<VisualElement>("LowHealth");
@@ -59,6 +63,7 @@ public class HealthBarUI : MonoBehaviour
         UpdateCurrency();
         UpdateDamageTaken();
         UpdateLowHealthAlert();
+        UpdateDayCycleImages();
 
     }
 
@@ -140,5 +145,19 @@ public class HealthBarUI : MonoBehaviour
             lowHealth.style.display = DisplayStyle.Flex;
         else
             lowHealth.style.display = DisplayStyle.None;
+    }
+    private void UpdateDayCycleImages()
+    {
+        bool isNight = GameManager.instance != null && GameManager.instance.IsNight;
+        if (isNight)
+        {
+            dayImage.style.display = DisplayStyle.None;
+            nightImage.style.display = DisplayStyle.Flex;
+        }
+        else
+        {
+            dayImage.style.display = DisplayStyle.Flex;
+            nightImage.style.display =DisplayStyle.None;
+        }
     }
 }

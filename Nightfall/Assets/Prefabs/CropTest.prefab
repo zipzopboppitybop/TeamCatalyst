@@ -130,13 +130,15 @@ MonoBehaviour:
   hpMax: 10
   damage: 0
   healAmt: 1
-  phases: 0
+  phases: 2
   attSpeed: 0
   healSpeed: 1
   itemDrop: {fileID: 11400000, guid: 9134455b50eaecd4f8f1655262ce501a, type: 2}
   bullet: {fileID: 0}
   shootPos: {fileID: 0}
   model: {fileID: 8349249998730958434}
+  audBreak: []
+  audSrc: {fileID: 0}
   isFullyGrown: 0
   isWatered: 0
   isFertilized: 0
