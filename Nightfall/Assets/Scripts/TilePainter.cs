@@ -105,14 +105,15 @@ public class TilePainter : MonoBehaviour
 
             if (currentItemName.Contains("Rake"))
             {
-                if (placeFence)
-                    ghostPlacer.ShowGhost(selectedTile[2]);
-                else
-                    ghostPlacer.ShowGhost(selectedTile[0]);
+                ghostPlacer.ShowGhost(selectedTile[0]);
             }
             else if (currentItemName.Contains("Seed"))
             {
                 ghostPlacer.ShowGhost(selectedTile[1]);
+            }
+            else if (currentItemName.Contains("Fence"))
+            {
+                ghostPlacer.ShowGhost(selectedTile[2]);
             }
             else
             {
