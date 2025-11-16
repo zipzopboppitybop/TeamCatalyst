@@ -31,7 +31,6 @@ public class GameManager : MonoBehaviour
     public bool isPaused = false;
     private bool Won = false;
     private bool Lost = false;
-    private bool endByLose = false;
     public bool wasNight;
     public bool IsNight;
 
@@ -46,7 +45,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         player = GameObject.FindWithTag("Player");
-        playerController = player.GetComponent<PlayerController>();
+        //playerController = player.GetComponent<PlayerController>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
     }
 
@@ -136,10 +135,10 @@ public class GameManager : MonoBehaviour
     }
     public void YouWin()
     {
-        if (Lost || Won)
-            return;
+        if(Won)
+          return;
 
-        if(day >= 2 && timeOfDay == nightEnd && PauseMenuUI.instance != null && !PauseMenuUI.instance.IsScreenOpen)
+        if(day >= 2 && PauseMenuUI.instance != null && !PauseMenuUI.instance.IsScreenOpen)
         {
             Won = true;
             StatePause();
@@ -151,17 +150,10 @@ public class GameManager : MonoBehaviour
     {
         if (Won || Lost)
             return;
+
         Lost = true;
-        endByLose = true;
-        //StatePause();
-
-        timeOfDay = nightEnd;
-        UpdateGameClock();
-
+    
         StatePause();
-        timeOfDay = nightEnd;
-        day += 1;
-        UpdateGameClock();
 
 
 
@@ -245,14 +237,15 @@ public class GameManager : MonoBehaviour
             {
                 livestock.OnDayStart();
             }
+
+            if(!Lost && !Won)
+            {
+                YouWin();
+            }
         }
 
         cycle.DayText = "Day " + day.ToString();
 
-        if(!Lost && !Won && !endByLose)
-        {
-            YouWin();
-        }
         wasNight = isNight;
 
         if(day == 2 && PlayerInventoryUI.Instance != null)
@@ -278,9 +271,9 @@ public class GameManager : MonoBehaviour
         return playerData.Currency - moneyOnStart;
     }
 
-    public int UpdateCropCount()
+    public int GetCropCount()
     {
-        return cropCount;
+        return crops.Count;
     }
 
     public int UpdateCropsDestroyed()

@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: FarmlandTile
   m_EditorClassIdentifier: Unity.2D.Tilemap.Extras::UnityEngine.RuleTile
   m_DefaultSprite: {fileID: 0}
-  m_DefaultGameObject: {fileID: 3884130914123833004, guid: e66fded5ead68c74cbbd304ff95793d9, type: 3}
+  m_DefaultGameObject: {fileID: 6343158320685437046, guid: bd5a31c87b616584e9f540dab12b291c, type: 3}
   m_DefaultColliderType: 0
   m_TilingRules: []

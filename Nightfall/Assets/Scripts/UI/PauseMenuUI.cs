@@ -214,7 +214,7 @@ public class PauseMenuUI : MonoBehaviour
     private void UpdateStats()
     {
         int day = GameManager.instance.GetDay();
-        int cropCount = GameManager.instance.UpdateCropCount();
+        int cropCount = GameManager.instance.GetCropCount();
         float moneyEarned = GameManager.instance.UpdateMoneyEarned();
         int cropsDestroyed = GameManager.instance.UpdateCropsDestroyed();
 

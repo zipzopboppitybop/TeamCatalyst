@@ -15,8 +15,8 @@ MonoBehaviour:
   playerPrefab: {fileID: 906805268855091345, guid: eaf5f98a6c4086243ba6a00eab852236, type: 3}
   nameTag: Mr. Farmer
   score: 0
-  health: 50
-  healthMax: 50
+  health: 99
+  healthMax: 100
   healthRegen: 10
   stamina: 10
   staminaRegen: 10
@@ -72,4 +72,4 @@ MonoBehaviour:
   roomsClear: 0
   respawnPosition: {x: 0, y: 0, z: 0}
   guns: []
-  currentGun: {fileID: 11400000, guid: 3a6e640c33d1c3c4ca60828f6a4cb69b, type: 2}
+  currentGun: {fileID: 0}
