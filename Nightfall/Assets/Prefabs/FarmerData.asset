@@ -22,24 +22,42 @@ MonoBehaviour:
   staminaRegen: 10
   staminaMax: 10
   stealth: 5
-  interactRange: 3
+  interactRange: 4
   currency: 100
   currentFarmingState: 0
   shootDamage: 15
   shootRate: 1.5
   shootDist: 10
-  ammoCount: 3
+  ammoCount: 5
   ammoMax: 5
   magazineSize: 6
   walkingSpeed: 2
-  sprintSpeed: 5
+  sprintSpeed: 3
   dashSpeed: 3
   footstepSounds:
   - {fileID: 8300000, guid: 622ab24136cc36b4790c3235230ebdee, type: 3}
   - {fileID: 8300000, guid: d0a7ff52415391d4e9bed4314f9686fd, type: 3}
   - {fileID: 8300000, guid: b9360cc45e5abf7408dc0d0902fe4b29, type: 3}
   - {fileID: 8300000, guid: b4962676e0e70b943abb4ba8aafaeb4e, type: 3}
-  footstepVolume: 0.5
+  movementVolume: 0.3
+  pitchVariation: 0.1
+  jumpSound:
+  - {fileID: 8300000, guid: 66873dbad997f6543ad23ddf8e347d23, type: 3}
+  - {fileID: 8300000, guid: a62565c5f63603b47ab33f8e16c2b22e, type: 3}
+  - {fileID: 8300000, guid: 8d00b4213ee479441805e0433425afa3, type: 3}
+  landSound:
+  - {fileID: 8300000, guid: f463d69818fcca64e9fdc90de4d40c03, type: 3}
+  dashSound:
+  - {fileID: 8300000, guid: 99ee69e20ee5b2c40b52b50e501a4cb8, type: 3}
+  jumpTrailSound:
+  - {fileID: 8300000, guid: 427fe6da005bd564aabf5c608e08772d, type: 3}
+  hurtSound:
+  - {fileID: 8300000, guid: 34dc3bdf6a15a0946a2534464a8de43e, type: 3}
+  - {fileID: 8300000, guid: ec25a048a87b5a4459b4228d76831065, type: 3}
+  - {fileID: 8300000, guid: 0cad3cbd018280c429189d869e454c1c, type: 3}
+  - {fileID: 8300000, guid: 2f858cf975075ad419c71264f6830e1a, type: 3}
+  - {fileID: 8300000, guid: 10f06ac7cefd9084099a5f0e8802e757, type: 3}
+  - {fileID: 8300000, guid: 9a782232ee81d0042a8b4c6a4f644fac, type: 3}
   jumpForce: 5
   gravityMultiplier: 1
   jumpMax: 1
@@ -52,6 +70,6 @@ MonoBehaviour:
   keysCollected: 0
   notesCollected: 0
   roomsClear: 0
-  guns:
-  - {fileID: 11400000, guid: 3a6e640c33d1c3c4ca60828f6a4cb69b, type: 2}
+  respawnPosition: {x: 0, y: 0, z: 0}
+  guns: []
   currentGun: {fileID: 11400000, guid: 3a6e640c33d1c3c4ca60828f6a4cb69b, type: 2}

@@ -830,7 +830,7 @@ MonoBehaviour:
   hpMax: 5
   hunger: 100
   hungerMax: 100
-  hungerRate: 1
+  hungerRate: 0.0833
   faceTargetSpeed: 5
   FOV: 90
   roamDist: 10

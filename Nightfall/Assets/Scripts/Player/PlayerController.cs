@@ -36,6 +36,12 @@ namespace Catalyst.Player
         private CharacterController characterController;
         private Vector3 playerDir;
 
+        private void Awake()
+        {
+            aud = GetComponent<AudioSource>();
+            GameManager.instance.playerController = this;
+        }
+
         private void Start()
         {
             characterController = GetComponent<CharacterController>();
@@ -247,6 +253,16 @@ namespace Catalyst.Player
             //    playerData.Health = playerData.HealthMax;
             //}
         }
+        public void PlayHurtSound()
+        {
+            // Play hurt sound with pitch variation
+            if (aud != null && playerData.HurtSound.Length > 0)
+            {
+                int index = Random.Range(0, playerData.HurtSound.Length);
+                aud.pitch = 2f + Random.Range(-playerData.PitchVariation, playerData.PitchVariation);
+                aud.PlayOneShot(playerData.HurtSound[index], playerData.MovementVolume);
+            }
+        }
 
         public void Heal(int amount)
         {
@@ -278,7 +294,52 @@ namespace Catalyst.Player
             if (aud != null && playerData.FootstepSounds.Length > 0)
             {
                 int index = Random.Range(0, playerData.FootstepSounds.Length);
-                aud.PlayOneShot(playerData.FootstepSounds[index], playerData.FootstepVolume);
+                aud.pitch = 1f + Random.Range(-playerData.PitchVariation, playerData.PitchVariation);
+                aud.PlayOneShot(playerData.FootstepSounds[index], playerData.MovementVolume);
+            }
+        }
+
+        public void PlayJumpSound()
+        {
+            // Play jump sound with pitch variation
+            if (aud != null && playerData.JumpSound.Length > 0)
+            {
+                int index = Random.Range(0, playerData.JumpSound.Length);
+                aud.pitch = 1f + Random.Range(-playerData.PitchVariation, playerData.PitchVariation);
+                aud.PlayOneShot(playerData.JumpSound[index], playerData.MovementVolume);
+            }
+
+        }
+
+        public void PlayLandSound()
+        {
+            // Play land sound with pitch variation
+            if (aud != null && playerData.LandSound.Length > 0)
+            {
+                int index = Random.Range(0, playerData.LandSound.Length);
+                aud.pitch = 1f + Random.Range(-playerData.PitchVariation, playerData.PitchVariation);
+                aud.PlayOneShot(playerData.LandSound[index], playerData.MovementVolume);
+            }
+        }
+        public void PlayDashSOund()
+        {
+            // Play dash sound with pitch variation
+            if (aud != null && playerData.DashSound.Length > 0)
+            {
+                int index = Random.Range(0, playerData.DashSound.Length);
+                aud.pitch = 1f + Random.Range(-playerData.PitchVariation, playerData.PitchVariation);
+                aud.PlayOneShot(playerData.DashSound[index], playerData.MovementVolume);
+            }
+        }
+
+        public void PlayJumpTrailSound()
+        {
+            // Play jump trail sound with pitch variation
+            if (aud != null && playerData.JumpTrailSound.Length > 0)
+            {
+                int index = Random.Range(0, playerData.JumpTrailSound.Length);
+                aud.pitch = 1f + Random.Range(-playerData.PitchVariation, playerData.PitchVariation);
+                aud.PlayOneShot(playerData.JumpTrailSound[index], playerData.MovementVolume);
             }
         }
 
