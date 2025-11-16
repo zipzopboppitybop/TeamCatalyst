@@ -417,6 +417,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerInventoryUI
       objectReference: {fileID: 0}
+    - target: {fileID: 7240414844227688231, guid: 4297d5c16dea04741ab2853e3bd05ae5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -437,7 +441,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 891141418627605625, guid: 1cf917a85b15fe54488ed04010e44551, type: 3}
       propertyPath: m_Name
-      value: UIDocument
+      value: HUDManager
       objectReference: {fileID: 0}
     - target: {fileID: 4627583800740158697, guid: 1cf917a85b15fe54488ed04010e44551, type: 3}
       propertyPath: m_LocalPosition.x

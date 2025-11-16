@@ -88,6 +88,13 @@ public class MainMenuController : MonoBehaviour
     }
     private void OnPlayButtonClicked()
     {
+        //if ()
+        //    ShowLoadOption();
+        //else
+        //{
+        //    Hide();
+        //    load.LoadScene(1);
+        //}
         ShowLoadPopup();
         //Hide();
 
