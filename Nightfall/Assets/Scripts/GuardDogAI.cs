@@ -242,7 +242,7 @@ public class GuardDogAI : AILogic, IInteractable
         while (!agent.isOnNavMesh || agent.pathPending)
             yield return null;
 
-        while (Vector3.Distance(transform.position, homePos) > 0.5f)
+        while (Vector3.Distance(transform.position, homePos) > 1f)
             yield return null;
 
         isHealing = true; 
