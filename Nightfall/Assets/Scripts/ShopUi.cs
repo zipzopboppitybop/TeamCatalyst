@@ -212,6 +212,11 @@ public class ShopUI : MonoBehaviour
                 GameObject feedingTrough = GameObject.FindWithTag("FeedingTrough");
                 if (item.name.Contains("Chicken"))
                 {
+                    if (!chickenCoop.activeSelf)
+                    {
+                        chickenCoop.SetActive(true);
+                    }
+
                     Vector3 homePoint = chickenCoop.transform.Find("ChickenCoopHome").position;
                     GameObject chicken = Instantiate(livestock[0], homePoint, Quaternion.identity);
                     Livestock livestockComponent = chicken.GetComponent<Livestock>();
@@ -225,6 +230,11 @@ public class ShopUI : MonoBehaviour
                 }
                 else if (item.name.Contains("GuardDog"))
                 {
+                    if (!doghouse.activeSelf)
+                    {
+                        doghouse.SetActive(true);
+                    }
+
                     Vector3 homePoint = doghouse.transform.Find("DogHouseHomePos").position;
                     GameObject dog = Instantiate(livestock[1], homePoint, Quaternion.identity);
                     GuardDogAI livestockComponent = dog.GetComponent<GuardDogAI>();
@@ -233,6 +243,11 @@ public class ShopUI : MonoBehaviour
                 }
                 else if (item.name.Contains("Cow"))
                 {
+                    if (!barn.activeSelf)
+                    {
+                        barn.SetActive(true);
+                    }
+
                     Vector3 homePoint = barn.transform.Find("BarnHomePos").position;
                     GameObject cow = Instantiate(livestock[2], homePoint, Quaternion.identity);
                     Livestock livestockComponent = cow.GetComponent<Livestock>();
