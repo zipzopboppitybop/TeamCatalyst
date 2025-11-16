@@ -10,7 +10,6 @@ public class Damage : MonoBehaviour
     [SerializeField] int dmgAmt;
     [SerializeField] int speed;
     [SerializeField] int destroyTime;
-    [SerializeField] private LayerMask ignoreLayer;
 
     [SerializeField] float dmgRate;
 
