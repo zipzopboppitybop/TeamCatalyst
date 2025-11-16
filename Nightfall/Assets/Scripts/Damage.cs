@@ -3,13 +3,14 @@ using System.Collections;
 
 public class Damage : MonoBehaviour
 {
-    enum DamageType { Stationary, Moving, Homing, DOT }
+    enum DamageType { Stationary, Moving, Homing, DOT, Sprinkler }
     [SerializeField] DamageType type;
     [SerializeField] Rigidbody rb;
 
     [SerializeField] int dmgAmt;
     [SerializeField] int speed;
     [SerializeField] int destroyTime;
+    [SerializeField] private LayerMask ignoreLayer;
 
     [SerializeField] float dmgRate;
 
@@ -65,6 +66,11 @@ public class Damage : MonoBehaviour
         {
 
             Destroy(gameObject, destroyTime);
+        }
+
+        if(type == DamageType.Sprinkler && !other.CompareTag("Player"))
+        {
+            dmg.takeDamage(dmgAmt);
         }
 
     }
