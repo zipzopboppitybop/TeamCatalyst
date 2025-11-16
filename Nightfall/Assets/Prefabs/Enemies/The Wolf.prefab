@@ -54,7 +54,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: a51c1224e7decca45beee76d04740f1a, type: 2}
     - target: {fileID: 919132149155446097, guid: d7ebdc2b06679a74bbb2c72993395b6b, type: 3}
       propertyPath: m_Name
-      value: Wolf 1 (1)
+      value: The Wolf
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: d7ebdc2b06679a74bbb2c72993395b6b, type: 3}
       propertyPath: m_Layer
@@ -142,7 +142,7 @@ MonoBehaviour:
   audSteps:
   - {fileID: 8300000, guid: 7e6c3277b76a9714898e0bc66d40f0d4, type: 3}
   audBites:
-  - {fileID: 8300000, guid: 76d83118543e6b14bbd0d701e4b90085, type: 3}
+  - {fileID: 8300000, guid: 4a0930e948f886b40a1fee3250269000, type: 3}
   audIdles:
   - {fileID: 8300000, guid: 2a6979ffe6559ce488d9dcde3eca6baf, type: 3}
   - {fileID: 8300000, guid: 58f480ff1efc7a24c950d4abf56c0676, type: 3}
