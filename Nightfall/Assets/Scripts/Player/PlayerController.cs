@@ -15,7 +15,7 @@ namespace Catalyst.Player
 
         [SerializeField] public PlayerInventoryUI playerInventory;
         public AudioSource aud;
-
+        [SerializeField] private TilePainter tilePainter;
         public InputHandler playerInputHandler;
         [SerializeField] private PlayerData playerData;
         [SerializeField] private LayerMask ignoreLayer;
@@ -200,15 +200,13 @@ namespace Catalyst.Player
                 //    target?.Interact();
                 //}
 
-                TilePainter painter = FindAnyObjectByType<TilePainter>();
-                if (painter != null)
+                if (tilePainter != null)
                 {
                     ItemData heldItem = playerInventory?.GetSelectedItem();
-                    if (heldItem != null && heldItem.dropPrefab != null)
-                    {
-                        painter.TryPlaceTile(heldItem.dropPrefab);
-                    }
-                    painter.TryHarvestCrop();
+                    if (heldItem != null)
+                        tilePainter.TryPlaceTile(heldItem.dropPrefab);
+
+                    tilePainter.TryHarvestCrop();
                 }
             }
         }

@@ -65,7 +65,10 @@ public class GuardDogAI : AILogic, IInteractable
             else
             {
                 RotateWhileMoving();
-                CheckRoam();
+                if (agent != null)
+                {
+                    CheckRoam();
+                }
             }
         }
 
