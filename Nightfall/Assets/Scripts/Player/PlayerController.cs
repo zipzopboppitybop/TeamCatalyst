@@ -39,7 +39,7 @@ namespace Catalyst.Player
         private void Awake()
         {
             aud = GetComponent<AudioSource>();
-            GameManager.instance.playerController = this;
+            //GameManager.instance.playerController = this;
         }
 
         private void Start()
