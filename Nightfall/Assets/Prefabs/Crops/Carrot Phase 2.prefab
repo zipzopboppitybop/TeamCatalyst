@@ -1022,9 +1022,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1936571955025308531}
+  - component: {fileID: 8925976588013514488}
   m_Layer: 0
   m_Name: Carrot Phase 2
-  m_TagString: Untagged
+  m_TagString: Crop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1037,8 +1038,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6116929179825794778}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.74, y: 0.22, z: -52.57}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5.48762, y: 0.00672, z: 0.72065}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1054,6 +1055,41 @@ Transform:
   - {fileID: 3458248955768061082}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8925976588013514488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6116929179825794778}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfa1f92794105284e91eeb75d7ced7a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TowerBase
+  typeTower: 0
+  cropPhases:
+  - {fileID: 11400000, guid: 5aa35a19e4c20df41a71816eae922653, type: 2}
+  - {fileID: 11400000, guid: 8b9a9f7b4a2abff41ac0640e6b5494a9, type: 2}
+  - {fileID: 11400000, guid: ed1bd3d561e08d4479a7752369dc88f3, type: 2}
+  map: {fileID: 0}
+  hpMax: 5
+  damage: 0
+  healAmt: 1
+  phases: 0
+  attSpeed: 0
+  healSpeed: 1
+  itemDrop: {fileID: 0}
+  bullet: {fileID: 0}
+  shootPos: {fileID: 0}
+  model: {fileID: 7395872510045445555}
+  audBreak: []
+  audSrc: {fileID: 0}
+  isFullyGrown: 0
+  isWatered: 1
+  isFertilized: 1
+  hp: 5
+  enemyPos: []
 --- !u!1 &6376471911190429272
 GameObject:
   m_ObjectHideFlags: 0
