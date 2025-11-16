@@ -15,6 +15,8 @@ public class TilePainter : MonoBehaviour
 
     [SerializeField] int placeDist;
 
+    [SerializeField] bool placeFence;
+
     //int tileType = 0;
 
     // 0 = Farmland
@@ -108,28 +110,10 @@ public class TilePainter : MonoBehaviour
             else if (currentItemName.Contains("Seed"))
             {
                 ghostPlacer.ShowGhost(selectedTile[1]);
-                InventorySlot slot = inv.GetSelectedSlot();
-
-                slot.RemoveFromStack(1);
-
-                if (slot.StackSize <= 0)
-                    slot.UpdateInventorySlot(null, 0);
-
-                inv.hotBarInventory.OnInventorySlotChanged?.Invoke(slot);
-                inv.RefreshInventory();
             }
             else if (currentItemName.Contains("Fence"))
             {
                 ghostPlacer.ShowGhost(selectedTile[2]);
-                InventorySlot slot = inv.GetSelectedSlot();
-
-                slot.RemoveFromStack(1);
-
-                if (slot.StackSize <= 0)
-                    slot.UpdateInventorySlot(null, 0);
-
-                inv.hotBarInventory.OnInventorySlotChanged?.Invoke(slot);
-                inv.RefreshInventory();
             }
             else
             {
@@ -142,7 +126,7 @@ public class TilePainter : MonoBehaviour
             ghostPlacer.HideGhost();
         }
 
-
+        inv.RefreshInventory();
     }
 
     private void SelectedItemChanged(ItemData newItem)
@@ -209,6 +193,19 @@ public class TilePainter : MonoBehaviour
             if (existingTower == null)
             {
                 map.SetTile(currentCell, selectedTile[2]);
+                InventorySlot slot = inv.GetSelectedSlot();
+
+                slot.RemoveFromStack(1);
+
+                GameObject crop = map.GetInstantiatedObject(currentCell);
+                GameManager.instance.AddCrop(crop);
+
+                if (slot.StackSize <= 0)
+                    slot.UpdateInventorySlot(null, 0);
+
+                inv.hotBarInventory.OnInventorySlotChanged?.Invoke(slot);
+                inv.RefreshHotBar();
+                UpdateCurrentItem(null);
             }
             return;
         }
@@ -218,7 +215,6 @@ public class TilePainter : MonoBehaviour
             if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Farmland && existingTower.isFertilized)
             {
                 map.SetTile(currentCell, selectedTile[1]);
-                Catalyst.Player.PlayerController player = GameManager.instance.player.GetComponent<Catalyst.Player.PlayerController>();
 
                 InventorySlot slot = inv.GetSelectedSlot();
 
@@ -231,7 +227,8 @@ public class TilePainter : MonoBehaviour
                     slot.UpdateInventorySlot(null, 0);
 
                 inv.hotBarInventory.OnInventorySlotChanged?.Invoke(slot);
-                inv.RefreshInventory();
+                inv.RefreshHotBar();
+                UpdateCurrentItem(null);
             }
             else
             {

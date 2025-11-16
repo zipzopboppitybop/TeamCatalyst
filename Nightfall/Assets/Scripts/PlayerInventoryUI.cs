@@ -269,7 +269,14 @@ public class PlayerInventoryUI : MonoBehaviour
                 icon.style.backgroundImage = null;
                 icon.style.opacity = 0f;
             }
+
+            if (i == selectedSlot)
+            {
+                OnSelectedItemChanged?.Invoke(slotData.ItemData);
+            }
         }
+
+
     }
 
     public void RefreshInventory(InventorySlot _ = null)

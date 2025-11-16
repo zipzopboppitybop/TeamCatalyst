@@ -2841,7 +2841,6 @@ MonoBehaviour:
   inv: {fileID: 0}
   ghostPlacer: {fileID: 0}
   placeDist: 20
-  placeFence: 0
 --- !u!4 &1114210119
 Transform:
   m_ObjectHideFlags: 0
@@ -4001,6 +4000,14 @@ PrefabInstance:
       propertyPath: chest
       value: 
       objectReference: {fileID: 832298685}
+    - target: {fileID: 1887192908155863826, guid: ae64640bdbe0bac46b57f16b6a986835, type: 3}
+      propertyPath: itemsForSale.Array.size
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1887192908155863826, guid: ae64640bdbe0bac46b57f16b6a986835, type: 3}
+      propertyPath: 'itemsForSale.Array.data[12]'
+      value: 
+      objectReference: {fileID: 11400000, guid: decf34997773ed94c81cc03822fe88ef, type: 2}
     - target: {fileID: 8764278269619046453, guid: ae64640bdbe0bac46b57f16b6a986835, type: 3}
       propertyPath: m_Name
       value: UI (1)
