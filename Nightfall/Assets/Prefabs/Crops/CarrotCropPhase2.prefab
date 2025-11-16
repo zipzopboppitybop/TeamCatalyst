@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4429862667915173784
+--- !u!1 &4739993816967423431
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 818737697953915184}
-  - component: {fileID: 6886444463078007157}
+  - component: {fileID: 6448433710263214317}
+  - component: {fileID: 3379415359682300507}
   m_Layer: 0
-  m_Name: CarrotCropPhase1
+  m_Name: CarrotCropPhase2
   m_TagString: Crop
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &818737697953915184
+--- !u!4 &6448433710263214317
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4429862667915173784}
+  m_GameObject: {fileID: 4739993816967423431}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -34.22321, y: 1.4, z: 11.13503}
@@ -32,13 +32,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6886444463078007157
+--- !u!114 &3379415359682300507
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4429862667915173784}
+  m_GameObject: {fileID: 4739993816967423431}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dfa1f92794105284e91eeb75d7ced7a1, type: 3}
@@ -50,12 +50,12 @@ MonoBehaviour:
   damage: 0
   healAmt: 1
   phases: 2
-  attSpeed: 1
-  healSpeed: 0
-  itemDrop: {fileID: 0}
+  attSpeed: 0
+  healSpeed: 1
+  itemDrop: {fileID: 11400000, guid: 9134455b50eaecd4f8f1655262ce501a, type: 2}
   bullet: {fileID: 0}
   shootPos: {fileID: 0}
-  model: {fileID: 9139835966693212251, guid: bf1b8c21173815a42a7c629fe33d02b8, type: 3}
+  model: {fileID: 485258501577082909, guid: 4e85cafb5039f5049bbfe8582346e40f, type: 3}
   audBreak: []
   audSrc: {fileID: 0}
   isFullyGrown: 0

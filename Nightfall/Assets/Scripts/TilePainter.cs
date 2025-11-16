@@ -107,16 +107,13 @@ public class TilePainter : MonoBehaviour
             {
                 ghostPlacer.ShowGhost(selectedTile[0]);
             }
-            else if (currentItemName.Contains("Seed"))
-            {
-                ghostPlacer.ShowGhost(selectedTile[1]);
-            }
             else if (currentItemName.Contains("Fence"))
             {
                 ghostPlacer.ShowGhost(selectedTile[2]);
             }
             else
             {
+                ghostPlacer.canShowObj = false;
                 ghostPlacer.HideGhost();
             }
         }
@@ -214,7 +211,7 @@ public class TilePainter : MonoBehaviour
         {
             if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Farmland && existingTower.isFertilized)
             {
-                map.SetTile(currentCell, selectedTile[1]);
+                map.SetTile(currentCell, selectedTile[3]);
 
                 InventorySlot slot = inv.GetSelectedSlot();
 

@@ -10,9 +10,9 @@ public class TowerBase : MonoBehaviour, IDamage
     [SerializeField] public enum TowerType { Crop, Defensive, Sprinkler, Farmland };
 
     [SerializeField] public TowerType typeTower;
-
+    [SerializeField] private RuleTile[] cropPhases;
     [SerializeField] Tilemap map;
-
+    private Vector3Int cellPos;
     [SerializeField] int hpMax;
     [SerializeField] int damage;
     [SerializeField] int healAmt;
@@ -51,7 +51,7 @@ public class TowerBase : MonoBehaviour, IDamage
 
         colorOrig = model.material.color;
         map = (Tilemap)FindAnyObjectByType(typeof(Tilemap));
-
+        cellPos = map.WorldToCell(transform.position);
         if (typeTower == TowerType.Sprinkler)
         {
 
@@ -148,6 +148,10 @@ public class TowerBase : MonoBehaviour, IDamage
 
     public void HarvestCrop(Inventory invent)
     {
+        if (invent != null)
+        {
+            Debug.Log("I have inventory");
+        }
 
         AddItemToInventory(invent, itemDrop, 1);
 
@@ -157,14 +161,21 @@ public class TowerBase : MonoBehaviour, IDamage
 
     public void Grow()
     {
+        if (!isWatered || isFullyGrown)
+            return;
 
-        if (isWatered && !isFullyGrown)
+        towerPhase++;
+
+        if (towerPhase < cropPhases.Length)
         {
-            towerPhase++;
-            if (towerPhase >= phases)
-                isFullyGrown = true;
+            map.SetTile(cellPos, cropPhases[towerPhase]);
         }
-
+        else
+        {
+            isFullyGrown = true;
+            towerPhase = cropPhases.Length - 1;
+            map.SetTile(cellPos, cropPhases[towerPhase]);
+        }
     }
 
     Vector3 ChooseClosestPos()
