@@ -203,6 +203,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player.Controller.PlayerController
   playerInventory: {fileID: 0}
   aud: {fileID: 853817436050279361}
+  tilePainter: {fileID: 0}
   playerInputHandler: {fileID: 3477844435629080077}
   playerData: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
   ignoreLayer:
@@ -1856,7 +1857,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.Rig
-  m_Weight: 1
+  m_Weight: 0
   m_Effectors: []
 --- !u!114 &5348922458394902007
 MonoBehaviour:
