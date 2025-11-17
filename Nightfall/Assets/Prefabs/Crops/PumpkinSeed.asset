@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   Icon: {fileID: 21300000, guid: f03b7c9486052de4cbf33cefc6cafc1e, type: 3}
   itemType: 1
-  dropPrefab: {fileID: 0}
+  dropPrefab: {fileID: 4257451425112880771, guid: 54a8b5282a1e41a4eaeb42268d6cf7ad, type: 3}
   pickupSound: {fileID: 0}
   audVol: 0
   displayName: PumpkinSeed

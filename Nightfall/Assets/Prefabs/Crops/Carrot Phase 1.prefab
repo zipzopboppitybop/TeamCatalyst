@@ -1039,7 +1039,7 @@ Transform:
   m_GameObject: {fileID: 6116929179825794778}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.74, y: 0.22, z: -56.342}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1070,7 +1070,6 @@ MonoBehaviour:
   typeTower: 0
   cropPhases:
   - {fileID: 11400000, guid: 5aa35a19e4c20df41a71816eae922653, type: 2}
-  - {fileID: 11400000, guid: 8b9a9f7b4a2abff41ac0640e6b5494a9, type: 2}
   - {fileID: 11400000, guid: ed1bd3d561e08d4479a7752369dc88f3, type: 2}
   map: {fileID: 0}
   hpMax: 5

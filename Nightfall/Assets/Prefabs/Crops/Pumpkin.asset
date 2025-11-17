@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4fff52d00b5194643aee23e84ee9b49b, type: 3}
-  m_Name: CornSeed
+  m_Name: Pumpkin
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  Icon: {fileID: 21300000, guid: 48e32a99868e2454fa31b12ea2f3e69a, type: 3}
-  itemType: 1
-  dropPrefab: {fileID: 8831301513596165490, guid: b57790988c34753489ed5ebf30d066a8, type: 3}
+  Icon: {fileID: 21300000, guid: 9f9c8d06dd52b054986642c11dcf407b, type: 3}
+  itemType: 3
+  dropPrefab: {fileID: 0}
   pickupSound: {fileID: 0}
   audVol: 0
-  displayName: CornSeed
-  id: 8
+  displayName: Pumpkin
+  id: 76
   price: 1
   maxStackSize: 5
+  harvestAmount: 1

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3194548499690119240
+--- !u!1 &38750719696673653
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,47 +8,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3662401699900106284}
-  - component: {fileID: 2090197449566857033}
-  - component: {fileID: 2490961447178705413}
-  - component: {fileID: 227909363990604568}
+  - component: {fileID: 5991460331479546357}
+  - component: {fileID: 3077739345577042352}
+  - component: {fileID: 2922498400777513274}
+  - component: {fileID: 2508160392483365406}
   m_Layer: 0
-  m_Name: Pumpkin Phase 3
+  m_Name: Dirt (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3662401699900106284
+--- !u!4 &5991460331479546357
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3194548499690119240}
+  m_GameObject: {fileID: 38750719696673653}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -31.09394, y: 0.85321, z: 11.418}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.32361, y: 1.32361, z: 1.32361}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 3662401699900106284}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &2090197449566857033
+--- !u!33 &3077739345577042352
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3194548499690119240}
-  m_Mesh: {fileID: 4300000, guid: b69b26c8b73b8bd49bf243bbe541a2e0, type: 3}
---- !u!23 &2490961447178705413
+  m_GameObject: {fileID: 38750719696673653}
+  m_Mesh: {fileID: -5414655791027698174, guid: c3568e678d846a349a694e4904eb4247, type: 3}
+--- !u!23 &2922498400777513274
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3194548499690119240}
+  m_GameObject: {fileID: 38750719696673653}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -67,7 +67,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d41c833ca4c077c449fc8b214fa60dc0, type: 2}
+  - {fileID: 2100000, guid: 759bda0839684014da802c08b417916d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -90,13 +90,13 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &227909363990604568
+--- !u!64 &2508160392483365406
 MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3194548499690119240}
+  m_GameObject: {fileID: 38750719696673653}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -111,4 +111,146 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: b69b26c8b73b8bd49bf243bbe541a2e0, type: 3}
+  m_Mesh: {fileID: -5414655791027698174, guid: c3568e678d846a349a694e4904eb4247, type: 3}
+--- !u!1 &3194548499690119240
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3662401699900106284}
+  - component: {fileID: 4397388185331370999}
+  m_Layer: 0
+  m_Name: Pumpkin Phase 3
+  m_TagString: Crop
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3662401699900106284
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3194548499690119240}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -31.09394, y: 0.85321, z: 11.418}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 5991460331479546357}
+  - {fileID: 3753547279729906608}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4397388185331370999
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3194548499690119240}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfa1f92794105284e91eeb75d7ced7a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TowerBase
+  typeTower: 0
+  cropPhases:
+  - {fileID: 11400000, guid: 1616764ad4416bf4a8bee5cd3f7c1190, type: 2}
+  - {fileID: 11400000, guid: 0af6396ee484053438d2bdb2a5021908, type: 2}
+  map: {fileID: 0}
+  hpMax: 10
+  damage: 0
+  healAmt: 1
+  phases: 3
+  attSpeed: 0
+  healSpeed: 1
+  itemDrop: {fileID: 11400000, guid: 6c92ace49eb113b47b3c6ebd4af9735e, type: 2}
+  bullet: {fileID: 0}
+  shootPos: {fileID: 0}
+  model: {fileID: 0}
+  audBreak: []
+  audSrc: {fileID: 0}
+  isFullyGrown: 1
+  isWatered: 1
+  isFertilized: 1
+  hp: 5
+  enemyPos: []
+--- !u!1001 &3754157797352269890
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3662401699900106284}
+    m_Modifications:
+    - target: {fileID: 1000012003911730, guid: 0adfa404918648e42a1fb073ef9010d3, type: 3}
+      propertyPath: m_Name
+      value: Pumpkin_Fruit
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011660475378, guid: 0adfa404918648e42a1fb073ef9010d3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011660475378, guid: 0adfa404918648e42a1fb073ef9010d3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011660475378, guid: 0adfa404918648e42a1fb073ef9010d3, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011660475378, guid: 0adfa404918648e42a1fb073ef9010d3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.047
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011660475378, guid: 0adfa404918648e42a1fb073ef9010d3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011660475378, guid: 0adfa404918648e42a1fb073ef9010d3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.06538963
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011660475378, guid: 0adfa404918648e42a1fb073ef9010d3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011660475378, guid: 0adfa404918648e42a1fb073ef9010d3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011660475378, guid: 0adfa404918648e42a1fb073ef9010d3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011660475378, guid: 0adfa404918648e42a1fb073ef9010d3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011660475378, guid: 0adfa404918648e42a1fb073ef9010d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011660475378, guid: 0adfa404918648e42a1fb073ef9010d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000011660475378, guid: 0adfa404918648e42a1fb073ef9010d3, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0adfa404918648e42a1fb073ef9010d3, type: 3}
+--- !u!4 &3753547279729906608 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4000011660475378, guid: 0adfa404918648e42a1fb073ef9010d3, type: 3}
+  m_PrefabInstance: {fileID: 3754157797352269890}
+  m_PrefabAsset: {fileID: 0}
