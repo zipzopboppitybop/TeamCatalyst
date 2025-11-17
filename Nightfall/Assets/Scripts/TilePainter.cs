@@ -194,8 +194,6 @@ public class TilePainter : MonoBehaviour
 
                 slot.RemoveFromStack(1);
 
-                GameObject crop = map.GetInstantiatedObject(currentCell);
-                GameManager.instance.AddCrop(crop);
 
                 if (slot.StackSize <= 0)
                     slot.UpdateInventorySlot(null, 0);
