@@ -189,7 +189,6 @@ namespace Catalyst.CameraController
             else
             {
                 _gunCamera.enabled = true;
-                Debug.Log("Gun cam enabled");
                 // enable ignore layers on main camera 
 
 
@@ -206,7 +205,6 @@ namespace Catalyst.CameraController
             {
                 yield return new WaitForEndOfFrame();
                 _mainCamera.cullingMask |= thirdPersonLayers;
-                Debug.Log("Adding culling layers to main camera");
 
                 foreach (GameObject go in hideInFPS)
                 {

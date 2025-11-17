@@ -125,7 +125,6 @@ public class Spawner : MonoBehaviour
     {
         if (autoSpawnObjects == null || autoSpawnObjects.Length == 0 || autoSpawnCount <= 0)
         {
-            Debug.LogWarning("AutoSpawn-Error. No objects to spawn");
             return;
         }
 
@@ -170,7 +169,6 @@ public class Spawner : MonoBehaviour
     {
         if (bossObjects == null || bossObjects.Length == 0 || bossSpawnPositions == null || bossSpawnPositions.Length == 0)
         {
-            Debug.LogWarning("No Boss objects to spawn.");
             return;
         }
 
@@ -258,7 +256,6 @@ public class Spawner : MonoBehaviour
 
     public void DespawnAll()
     {
-        Debug.Log("Despawn CALLED. spawnedEnemies count: " + spawnedEnemies.Count);
 
         foreach (GameObject go in spawnedEnemies)
         {

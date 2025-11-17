@@ -149,13 +149,9 @@ public class TilePainter : MonoBehaviour
             if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Crop && existingTower.isFullyGrown)
             {
 
-                Debug.Log("Start harvesting Crop!");
                 existingTower.HarvestCrop(inv.playerInventory);
-                Debug.Log("Harvested Crop!");
                 map.SetTile(currentCell, null);
-                Debug.Log("Removed Crop!");
                 map.SetTile(currentCell, selectedTile[0]);
-                Debug.Log("Replaced Farmland!");
 
             }
         }
@@ -247,10 +243,6 @@ public class TilePainter : MonoBehaviour
                 inv.hotBarInventory.OnInventorySlotChanged?.Invoke(slot);
                 inv.RefreshHotBar();
                 UpdateCurrentItem(null);
-            }
-            else
-            {
-                Debug.Log("Need fertilized farmland.");
             }
             return;
         }

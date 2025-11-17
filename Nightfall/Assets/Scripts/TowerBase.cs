@@ -138,15 +138,10 @@ public class TowerBase : MonoBehaviour, IDamage
             }
         }
 
-        Debug.Log("Inventory full!");
     }
 
     public void HarvestCrop(Inventory invent)
     {
-        if (invent != null)
-        {
-            Debug.Log("I have inventory");
-        }
 
         AddItemToInventory(invent, itemDrop, itemDrop.harvestAmount);
 
