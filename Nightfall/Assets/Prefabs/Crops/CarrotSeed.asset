@@ -15,9 +15,10 @@ MonoBehaviour:
   Icon: {fileID: 21300000, guid: 6710f03da17b5474099268832f9fb985, type: 3}
   itemType: 1
   dropPrefab: {fileID: 422205719411807115, guid: bf1b8c21173815a42a7c629fe33d02b8, type: 3}
-  pickupSound: {fileID: 8300000, guid: 81535e34a5a320e4eba0fc963db81088, type: 3}
+  pickupSound: {fileID: 0}
   audVol: 0.098
   displayName: CarrotSeed
   id: 32
-  price: 1
+  price: 25
   maxStackSize: 5
+  harvestAmount: 0

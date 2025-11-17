@@ -19,5 +19,6 @@ MonoBehaviour:
   audVol: 0
   displayName: WateringCan
   id: 90
-  price: 1
+  price: 10
   maxStackSize: 1
+  harvestAmount: 0

@@ -19,5 +19,6 @@ MonoBehaviour:
   audVol: 0
   displayName: Egg
   id: 34
-  price: 1
+  price: 3
   maxStackSize: 1
+  harvestAmount: 0

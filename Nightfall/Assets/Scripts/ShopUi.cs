@@ -131,34 +131,8 @@ public class ShopUI : MonoBehaviour
         float finalPrice = express ? item.price * 1.5f : item.price;
         int days = express ? 0 : 1;
 
-        if (item.itemType == ItemData.ItemType.Livestock)
-        {
-            if (item.name.Contains("Chicken") && boughtChickens < 5)
-            {
-                boughtChickens++;
-                deliveries.Add(new Delivery(item, days));
-                playerData.Currency -= finalPrice;
-            }
-            else if (item.name.Contains("GuardDog") && !boughtDog)
-            {
-                boughtDog = true;
-                deliveries.Add(new Delivery(item, days));
-                playerData.Currency -= finalPrice;
-            }
-            else if (item.name.Contains("Cow") && boughtCow < 2)
-            {
-                boughtCow++;
-                deliveries.Add(new Delivery(item, days));
-                playerData.Currency -= finalPrice;
-            }
-        }
-        else
-        {
-            deliveries.Add(new Delivery(item, days));
-            playerData.Currency -= finalPrice;
-        }
-
-
+        deliveries.Add(new Delivery(item, days));
+        playerData.Currency -= finalPrice;
     }
 
     private void AddItemToInventory(Inventory inventory, ItemData item, int amount)

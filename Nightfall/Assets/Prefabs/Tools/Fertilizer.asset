@@ -19,5 +19,6 @@ MonoBehaviour:
   audVol: 0
   displayName: Fertilizer
   id: 99
-  price: 1
+  price: 15
   maxStackSize: 5
+  harvestAmount: 0
