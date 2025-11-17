@@ -129,7 +129,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5090203682555928608, guid: 990ab44353ac7944f9caf6396c8b0a4e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -960.764
+      value: -955.554
       objectReference: {fileID: 0}
     - target: {fileID: 5090203682555928608, guid: 990ab44353ac7944f9caf6396c8b0a4e, type: 3}
       propertyPath: m_LocalPosition.y
@@ -137,7 +137,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5090203682555928608, guid: 990ab44353ac7944f9caf6396c8b0a4e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2
+      value: -33.04
       objectReference: {fileID: 0}
     - target: {fileID: 5090203682555928608, guid: 990ab44353ac7944f9caf6396c8b0a4e, type: 3}
       propertyPath: m_LocalRotation.w
@@ -624,7 +624,7 @@ MonoBehaviour:
   chest: {fileID: 0}
   playerInventory: {fileID: 3747099447879639113}
   playerData: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
-  chickenCoop: {fileID: 4824343773323084103, guid: e3249ac7036e0df4e83049cd667ed280, type: 3}
+  chickenCoop: {fileID: 0}
   doghouse: {fileID: 8273397980556303868, guid: d30a70c163f64be4e89d14ae3a75af06, type: 3}
   barn: {fileID: 0}
   livestock:
@@ -729,6 +729,22 @@ PrefabInstance:
       propertyPath: inv
       value: 
       objectReference: {fileID: 3747099447879639113}
+    - target: {fileID: 7000775977638857871, guid: 00ab1113783cd4e438b1bb6cb3b23e15, type: 3}
+      propertyPath: selectedTile.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 7000775977638857871, guid: 00ab1113783cd4e438b1bb6cb3b23e15, type: 3}
+      propertyPath: 'selectedTile.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 5aa35a19e4c20df41a71816eae922653, type: 2}
+    - target: {fileID: 7000775977638857871, guid: 00ab1113783cd4e438b1bb6cb3b23e15, type: 3}
+      propertyPath: 'selectedTile.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 8b9a9f7b4a2abff41ac0640e6b5494a9, type: 2}
+    - target: {fileID: 7000775977638857871, guid: 00ab1113783cd4e438b1bb6cb3b23e15, type: 3}
+      propertyPath: 'selectedTile.Array.data[5]'
+      value: 
+      objectReference: {fileID: 11400000, guid: ed1bd3d561e08d4479a7752369dc88f3, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -842,10 +858,44 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3813829923729936855, guid: e3df1092a5edb2f439c2455d31c957a9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7898642631250022399}
   m_SourcePrefab: {fileID: 100100000, guid: e3df1092a5edb2f439c2455d31c957a9, type: 3}
 --- !u!224 &1992048207770885456 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 9108278128045636048, guid: e3df1092a5edb2f439c2455d31c957a9, type: 3}
   m_PrefabInstance: {fileID: 7332484687077418112}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2017152673096391659 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9096262249942515563, guid: e3df1092a5edb2f439c2455d31c957a9, type: 3}
+  m_PrefabInstance: {fileID: 7332484687077418112}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5849971280820843863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3dad75000e9a4f4393aca98b7edd8ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameManager
+--- !u!1 &5849971280820843863 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3813829923729936855, guid: e3df1092a5edb2f439c2455d31c957a9, type: 3}
+  m_PrefabInstance: {fileID: 7332484687077418112}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7898642631250022399
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5849971280820843863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5032256822eb2f4eb386d9b315cdbac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightManager
+  directionalLight: {fileID: 0}
+  preset: {fileID: 11400000, guid: 630a6422bd42f9948bf073dda30cfe62, type: 2}
+  gameManager: {fileID: 2017152673096391659}

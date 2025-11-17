@@ -258,6 +258,8 @@ public class Spawner : MonoBehaviour
 
     public void DespawnAll()
     {
+        Debug.Log("Despawn CALLED. spawnedEnemies count: " + spawnedEnemies.Count);
+
         foreach (GameObject go in spawnedEnemies)
         {
             if (go != null) Destroy(go);

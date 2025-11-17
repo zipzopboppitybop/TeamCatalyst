@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] Cycles cycle;
     [SerializeField] PlayerData playerData;
+    [SerializeField] private Spawner spawner;
 
     [SerializeField] private PauseMenuUI menuPause;
 
@@ -45,7 +46,7 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
 
         player = GameObject.FindWithTag("Player");
-        //playerController = player.GetComponent<PlayerController>();
+        playerController = player.GetComponent<PlayerController>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
     }
 
@@ -152,6 +153,7 @@ public class GameManager : MonoBehaviour
             return;
 
         Lost = true;
+        //timeOfDay = nightEnd;
     
         StatePause();
 
@@ -232,6 +234,7 @@ public class GameManager : MonoBehaviour
             moneyOnStart = playerData.Currency;
             ShopUI.instance.SellItems();
             Livestock[] allLivestock = Object.FindObjectsByType<Livestock>(FindObjectsSortMode.None);
+            spawner.DespawnAll();
 
             foreach (Livestock livestock in allLivestock)
             {
