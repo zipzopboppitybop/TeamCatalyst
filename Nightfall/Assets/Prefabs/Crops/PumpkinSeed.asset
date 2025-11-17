@@ -19,5 +19,6 @@ MonoBehaviour:
   audVol: 0
   displayName: PumpkinSeed
   id: 9
-  price: 1
+  price: 120
   maxStackSize: 5
+  harvestAmount: 0

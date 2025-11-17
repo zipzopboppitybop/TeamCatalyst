@@ -19,6 +19,6 @@ MonoBehaviour:
   audVol: 0
   displayName: Tomato
   id: 23
-  price: 1
+  price: 80
   maxStackSize: 20
   harvestAmount: 16

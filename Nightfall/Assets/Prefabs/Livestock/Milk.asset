@@ -19,5 +19,6 @@ MonoBehaviour:
   audVol: 0
   displayName: Milk
   id: 45
-  price: 1
+  price: 60
   maxStackSize: 5
+  harvestAmount: 0

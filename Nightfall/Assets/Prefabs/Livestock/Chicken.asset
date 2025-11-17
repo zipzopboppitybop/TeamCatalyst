@@ -19,5 +19,6 @@ MonoBehaviour:
   audVol: 0
   displayName: Chicken
   id: 100
-  price: 1
+  price: 50
   maxStackSize: 1
+  harvestAmount: 0
