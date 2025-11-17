@@ -38,11 +38,14 @@ public class RabbitAI : EnemyAI
             newIndex = 0; 
         }
 
-        if (newIndex != lastAnimIndex)
+        if (animator)
         {
-            lastAnimIndex = newIndex;
-            animator.SetInteger("AnimIndex", newIndex);
-            animator.SetTrigger("Next");
+            if (newIndex != lastAnimIndex)
+            {
+                lastAnimIndex = newIndex;
+                animator.SetInteger("AnimIndex", newIndex);
+                animator.SetTrigger("Next");
+            }
         }
     }
 
