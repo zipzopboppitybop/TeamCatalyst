@@ -37,16 +37,13 @@ public class RabbitAI : EnemyAI
         {
             newIndex = 0; 
         }
-
-        if (animator)
-        {
             if (newIndex != lastAnimIndex)
             {
                 lastAnimIndex = newIndex;
                 animator.SetInteger("AnimIndex", newIndex);
                 animator.SetTrigger("Next");
             }
-        }
+        
     }
 
     public override void takeDamage(int amount)
