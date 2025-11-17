@@ -3,7 +3,7 @@ using UnityEngine;
 public class MoleAI : AILogic
 {
 
-    bool isUnderground = false;
+    //bool isUnderground = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
@@ -12,7 +12,7 @@ public class MoleAI : AILogic
         base.Start();
 
         targetsPlayer = false;
-        isUnderground = true;
+        //isUnderground = true;
         FindNearestCrop();
         
     }

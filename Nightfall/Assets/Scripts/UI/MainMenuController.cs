@@ -137,7 +137,7 @@ public class MainMenuController : MonoBehaviour
     {
         HideLoadPopup();
         Hide();
-        load.LoadScene(1);
+        load.LoadScene(2);
     }
     public void Show()
     {
