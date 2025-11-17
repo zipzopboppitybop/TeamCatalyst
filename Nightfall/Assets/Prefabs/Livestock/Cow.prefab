@@ -896,8 +896,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 722d01b13744a8343b1c16202c437dd8, type: 3}
   audHurt:
   - {fileID: 8300000, guid: 052c207e04692f049b8891054e3b1d59, type: 3}
-  idleSoundMinDelay: 10000
-  idleSoundMaxDelay: 100000
+  idleSoundMinDelay: 10
+  idleSoundMaxDelay: 30
 --- !u!195 &408758446433344733
 NavMeshAgent:
   m_ObjectHideFlags: 0

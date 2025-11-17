@@ -98,7 +98,6 @@ namespace Catalyst.GamePlay
         private void ChangeWeapon()
         {
             player.CurrentGun = player.Guns[_gunListPos];
-            Debug.Log("Equipped " + player.CurrentGun.name);
 
             //gunModel = Instantiate(player.CurrentGun.model, gunPos.position, gunPos.rotation, gunPos);
             //gunModel.GetComponent<MeshFilter>().sharedMesh = player.CurrentGun.model.GetComponent<MeshFilter>().sharedMesh;
@@ -169,7 +168,6 @@ namespace Catalyst.GamePlay
             if (playerInputHandler.AimHeld)
             {
                 anim.SetAiming(true);
-                Debug.Log("Aiming");
                 HandleShoot();
 
             }
@@ -196,7 +194,6 @@ namespace Catalyst.GamePlay
 
                 if (player.CurrentGun.ammoCur <= 0)
                 {
-                    Debug.Log("Out of Ammo!");
                     aud.PlayOneShot(player.CurrentGun.emptyClipSound, player.CurrentGun.shootVolume);
                     return;
                 }
@@ -206,7 +203,6 @@ namespace Catalyst.GamePlay
                     anim.TriggerShoot();
                 }
 
-                Debug.Log("Shooting");
 
                 //animator.ResetTrigger("Shoot");
 
@@ -262,7 +258,6 @@ namespace Catalyst.GamePlay
                 player.MagazineSize--;
                 isReloading = true;
                 anim.TriggerReload();
-                Debug.Log("Reloading...");
 
             }
 

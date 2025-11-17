@@ -185,17 +185,12 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            Debug.Log("No Spawner");
-        }
         PauseMenuUI.instance.ShowLoseScreen();
         if (player != null && playerSpawnPos != null)
         {
             player.transform.position = playerSpawnPos.transform.position;
             player.transform.rotation = playerSpawnPos.transform.rotation;
         }
-        Debug.Log("Destroying stuff");
     }
 
     void UpdateGameClock()

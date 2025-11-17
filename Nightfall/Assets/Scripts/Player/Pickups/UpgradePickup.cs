@@ -111,7 +111,6 @@ namespace Catalyst.Player.Pickups
 
                 //HUDManager.instance.UpdateInteractPrompt("Press 'E' to pick up " + gun.itemName);
                 //HUDManager.instance.interactPromptText.color = Color.white;
-                Debug.Log("Player in range to pick up");
 
             }
 

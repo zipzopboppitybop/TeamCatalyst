@@ -153,8 +153,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 66dddd7eade4f024bb0c8b5f7cdd1e79, type: 3}
   audNotice:
   - {fileID: 8300000, guid: 58f480ff1efc7a24c950d4abf56c0676, type: 3}
-  idleSoundMinDelay: 4
-  idleSoundMaxDelay: 20
+  idleSoundMinDelay: 10
+  idleSoundMaxDelay: 40
 --- !u!195 &4470498147274978111
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -190,7 +190,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0

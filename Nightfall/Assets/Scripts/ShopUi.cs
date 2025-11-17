@@ -29,7 +29,7 @@ public class ShopUI : MonoBehaviour
     private bool boughtDog;
 
     private int boughtChickens = 0;
-    private int boughtCow = 0;
+   // private int boughtCow = 0;
 
     [System.Serializable]
     private class Delivery

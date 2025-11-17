@@ -88,7 +88,6 @@ namespace Catalyst.GamePlay.Weapons
             {
                 weaponCollider.enabled = true;
             }
-            Debug.Log("Weapon collider turned on.");
 
         }
 
@@ -98,7 +97,6 @@ namespace Catalyst.GamePlay.Weapons
             {
                 weaponCollider.enabled = false;
             }
-            Debug.Log("Weapon collider turned off.");
         }
     }
 }

@@ -164,7 +164,6 @@ public class AILogic : MonoBehaviour, IDamage
 
             if (Random.Range(1, 100) <= dropChance && itemDrop != null)
             {
-                Debug.Log("Spawn!");
                 Instantiate(itemDrop, headPos.position, transform.rotation);
             }
 
@@ -204,16 +203,13 @@ public class AILogic : MonoBehaviour, IDamage
             if (!attackingWall)
             {
 
-                Debug.Log("Sees crop");
 
                 RaycastHit fenceCheck;
 
                 if (Physics.Raycast(headPos.position, targetObj.transform.position, out fenceCheck))
                 {
 
-                    Debug.Log("Sees fence");
 
-                    Debug.DrawRay(headPos.position, transform.forward * 20, Color.green);
 
                     map = FindFirstObjectByType<Tilemap>();
                     currentCell = map.WorldToCell(fenceCheck.point);
@@ -225,7 +221,6 @@ public class AILogic : MonoBehaviour, IDamage
                     {
 
                         attackingWall = true;
-                        Debug.Log("KILL fence");
                         targetObj = existing;
                         agent.SetDestination(targetObj.transform.position);
 
