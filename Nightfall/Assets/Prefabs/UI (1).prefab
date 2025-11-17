@@ -723,6 +723,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a87ac07c4364a4d4e99bf1b70b7d2082, type: 2}
   - {fileID: 11400000, guid: b883cc5ffbafb6d458971ae8f10c288b, type: 2}
   - {fileID: 11400000, guid: 969524daaf1aa984aa8765e278fdc84d, type: 2}
+  - {fileID: 11400000, guid: decf34997773ed94c81cc03822fe88ef, type: 2}
   chest: {fileID: 0}
   playerInventory: {fileID: 3747099447879639113}
   playerData: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
@@ -783,6 +784,10 @@ PrefabInstance:
       propertyPath: playerData
       value: 
       objectReference: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
+    - target: {fileID: 9096262249942515563, guid: e3df1092a5edb2f439c2455d31c957a9, type: 3}
+      propertyPath: dayLengthMinutes
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 9108278128045636048, guid: e3df1092a5edb2f439c2455d31c957a9, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

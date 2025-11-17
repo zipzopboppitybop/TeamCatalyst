@@ -23,11 +23,11 @@ MonoBehaviour:
   staminaMax: 10
   stealth: 5
   interactRange: 4
-  currency: 1000
+  currency: 10
   currentFarmingState: 0
   shootDamage: 15
   shootRate: 1.5
-  shootDist: 10
+  shootDist: 70
   ammoCount: 5
   ammoMax: 5
   magazineSize: 7
