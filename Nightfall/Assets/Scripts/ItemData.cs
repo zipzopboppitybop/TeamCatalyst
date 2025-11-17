@@ -17,4 +17,5 @@ public class ItemData : ScriptableObject
     public int id;
     public float price;
     public int maxStackSize;
+    public int harvestAmount;
 }

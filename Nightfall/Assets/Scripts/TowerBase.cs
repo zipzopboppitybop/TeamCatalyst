@@ -58,12 +58,6 @@ public class TowerBase : MonoBehaviour, IDamage
             //enemyPos = new List<Transform>();
 
         }
-        if (typeTower == TowerType.Farmland)
-        {
-
-            Fertilize();
-
-        }
         if (typeTower == TowerType.Crop)
         {
 
@@ -111,6 +105,7 @@ public class TowerBase : MonoBehaviour, IDamage
 
         if (typeTower == TowerType.Crop)
         {
+            if (!isWatered) return;
             if (GameManager.instance != null && dayPlanted < GameManager.instance.GetDay() && !isFullyGrown)
             {
                 Grow();
@@ -153,7 +148,7 @@ public class TowerBase : MonoBehaviour, IDamage
             Debug.Log("I have inventory");
         }
 
-        AddItemToInventory(invent, itemDrop, 1);
+        AddItemToInventory(invent, itemDrop, itemDrop.harvestAmount);
 
         Destroy(gameObject);
 

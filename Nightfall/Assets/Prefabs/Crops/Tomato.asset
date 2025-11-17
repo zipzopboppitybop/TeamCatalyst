@@ -20,4 +20,5 @@ MonoBehaviour:
   displayName: Tomato
   id: 23
   price: 1
-  maxStackSize: 5
+  maxStackSize: 20
+  harvestAmount: 16

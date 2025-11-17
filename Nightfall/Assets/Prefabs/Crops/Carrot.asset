@@ -20,4 +20,5 @@ MonoBehaviour:
   displayName: Carrot
   id: 1
   price: 1
-  maxStackSize: 5
+  maxStackSize: 20
+  harvestAmount: 9

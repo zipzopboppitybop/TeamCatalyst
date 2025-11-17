@@ -211,7 +211,23 @@ public class TilePainter : MonoBehaviour
         {
             if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Farmland && existingTower.isFertilized)
             {
-                map.SetTile(currentCell, selectedTile[3]);
+                if (item.Contains("Carrot"))
+                {
+                    map.SetTile(currentCell, selectedTile[3]);
+                }
+                if (item.Contains("Corn"))
+                {
+                    map.SetTile(currentCell, selectedTile[4]);
+                }
+                if (item.Contains("Pumpkin"))
+                {
+                    map.SetTile(currentCell, selectedTile[5]);
+                }
+                if (item.Contains("Tomato"))
+                {
+                    map.SetTile(currentCell, selectedTile[6]);
+                }
+
 
                 InventorySlot slot = inv.GetSelectedSlot();
 
@@ -219,6 +235,13 @@ public class TilePainter : MonoBehaviour
 
                 GameObject crop = map.GetInstantiatedObject(currentCell);
                 GameManager.instance.AddCrop(crop);
+
+                if (crop != null && item.Contains("Carrot"))
+                {
+                    Vector3 pos = crop.transform.localPosition;
+                    pos.y += 0.1f;   
+                    crop.transform.localPosition = pos;
+                }
 
                 if (slot.StackSize <= 0)
                     slot.UpdateInventorySlot(null, 0);
@@ -238,6 +261,12 @@ public class TilePainter : MonoBehaviour
         {
             if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Crop)
                 existingTower.WaterCrop();
+        }
+
+        if (item.Contains("Fertilizer"))
+        {
+            if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Farmland)
+                existingTower.Fertilize();
         }
     }
 
