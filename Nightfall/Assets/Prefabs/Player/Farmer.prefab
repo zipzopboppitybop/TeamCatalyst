@@ -205,7 +205,7 @@ MonoBehaviour:
   aud: {fileID: 853817436050279361}
   tilePainter: {fileID: 0}
   playerInputHandler: {fileID: 3477844435629080077}
-  playerData: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
+  farmerData: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 1048712
