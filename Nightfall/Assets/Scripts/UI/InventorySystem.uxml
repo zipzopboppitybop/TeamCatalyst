@@ -229,35 +229,43 @@
     <ui:VisualElement name="HotBar" style="flex-grow: 1; position: absolute; width: 1230px; height: 200px; top: 842px; left: 341px; bottom: 20px;">
         <ui:VisualElement name="HotBarSlot-0" class="slot" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 80px; top: 60px;">
             <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1; width: 101px;" />
-            <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px;" />
+            <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px; color: rgb(255, 255, 255);" />
+            <ui:Label text="1" name="Slot" parse-escape-sequences="false" style="position: absolute; top: 0; left: 5px; font-size: 30px; -unity-font-style: bold; color: rgb(129, 129, 129);" />
         </ui:VisualElement>
         <ui:VisualElement name="HotBarSlot-1" class="slot" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 220px; top: 60px;">
             <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1; width: 101px;" />
-            <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px;" />
+            <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px; color: rgb(255, 255, 255);" />
+            <ui:Label text="2" name="Slot" style="position: absolute; top: 2px; left: 5px; font-size: 30px; -unity-font-style: bold; color: rgb(129, 129, 129);" />
         </ui:VisualElement>
         <ui:VisualElement name="HotBarSlot-2" class="slot" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 360px; top: 60px;">
             <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1; width: 101px;" />
-            <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px;" />
+            <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px; color: rgb(255, 255, 255);" />
+            <ui:Label text="3" name="Slot" style="position: absolute; top: 0; left: 5px; font-size: 30px; -unity-font-style: bold; color: rgb(129, 129, 129);" />
         </ui:VisualElement>
         <ui:VisualElement name="HotBarSlot-3" class="slot" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 500px; top: 60px;">
             <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1; width: 101px;" />
-            <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px;" />
+            <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px; color: rgb(255, 255, 255);" />
+            <ui:Label text="4" name="Slot" style="position: absolute; top: 0; left: 5px; font-size: 30px; -unity-font-style: bold; color: rgb(129, 129, 129);" />
         </ui:VisualElement>
         <ui:VisualElement name="HotBarSlot-4" class="slot" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 640px; top: 60px;">
             <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1; width: 101px;" />
-            <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px;" />
+            <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px; color: rgb(255, 255, 255);" />
+            <ui:Label text="5" name="Slot" style="position: absolute; top: 0; left: 5px; font-size: 30px; -unity-font-style: bold; color: rgb(129, 129, 129);" />
         </ui:VisualElement>
         <ui:VisualElement name="HotBarSlot-5" class="slot" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 780px; top: 60px;">
             <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1; width: 101px;" />
-            <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px;" />
+            <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px; color: rgb(255, 255, 255);" />
+            <ui:Label text="6" name="Slot" style="position: absolute; top: 0; left: 5px; font-size: 30px; -unity-font-style: bold; color: rgb(129, 129, 129);" />
         </ui:VisualElement>
         <ui:VisualElement name="HotBarSlot-6" class="slot" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 920px; top: 60px;">
             <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1; width: 101px;" />
-            <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px;" />
+            <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px; color: rgb(255, 255, 255);" />
+            <ui:Label text="7" name="Slot" style="position: absolute; top: 0; left: 5px; font-size: 30px; -unity-font-style: bold; color: rgb(129, 129, 129);" />
         </ui:VisualElement>
         <ui:VisualElement name="HotBarSlot-7" class="slot" style="flex-grow: 1; position: absolute; height: 112px; width: 111px; left: 1060px; top: 60px;">
             <ui:VisualElement name="Icon" class="icon" style="flex-grow: 1; width: 101px;" />
-            <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px;" />
+            <ui:Label text="Label" name="Count" class="count" style="position: absolute; top: 62px; left: 62px; color: rgb(255, 255, 255);" />
+            <ui:Label text="8" name="Slot" style="position: absolute; top: 0; left: 5px; font-size: 30px; -unity-font-style: bold; color: rgb(129, 129, 129);" />
         </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>

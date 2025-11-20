@@ -327,6 +327,7 @@ public class AILogic : MonoBehaviour, IDamage
     protected IEnumerator flashRed()
     {
         model.material.color = Color.red;
+        Debug.Log("Wolf Color: " + model.material.color);
         yield return new WaitForSeconds(0.1f);
         model.material.color = colorOrig;
     }
