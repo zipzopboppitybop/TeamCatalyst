@@ -15,7 +15,7 @@ namespace Catalyst.GamePlay
         [SerializeField] private LayerMask ignoreLayer;
         private AudioSource aud;
         private InputHandler playerInputHandler;
-        private PlayerController playerController;
+        //private PlayerController playerController;
         private AnimationHandler anim;
 
 
@@ -32,7 +32,7 @@ namespace Catalyst.GamePlay
 
             aud = GetComponent<AudioSource>();
             playerInputHandler = GetComponent<InputHandler>();
-            playerController = GetComponent<PlayerController>();
+            //playerController = GetComponent<PlayerController>();
             anim = GetComponent<AnimationHandler>();
 
         }

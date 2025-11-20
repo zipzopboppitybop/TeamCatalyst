@@ -122,16 +122,17 @@ namespace Catalyst.Player
         public float DownLookRange => downLookRange;
         public float FPSVerticalRange => fpsVerticalRange;
 
-        public int keysCollected = 0;
-        public int notesCollected = 0;
-
-        public int roomsClear = 0;
+        public int NightsSurvived = 0;
+        public int AnimalCount = 0;
+        public int CropCount = 0;
+        public int PredatorsKilled = 0;
 
         public Vector3 respawnPosition;
 
         [SerializeField] List<WeaponData> guns;
         public List<WeaponData> Guns => guns;
         [SerializeField] private WeaponData currentGun;
+        public List<GameObject> crops;
 
         public WeaponData CurrentGun
         {
@@ -149,11 +150,8 @@ namespace Catalyst.Player
         {
             health = healthMax;
             stamina = staminaMax;
-            ammoCount = ammoMax;
-            score = 0;
-            keysCollected = 0;
-            notesCollected = 0;
-            roomsClear = 0;
+
+            currentFarmingState = FarmingStateMachine.FarmingState.None;
 
         }
 
@@ -182,7 +180,14 @@ namespace Catalyst.Player
         }
         public void Reset()
         {
+
             InitializePlayer();
+            Guns.Clear();
+            currentGun = null;
+            score = 0;
+            NightsSurvived = 0;
+            AnimalCount = 0;
+            PredatorsKilled = 0;
         }
 
     }
