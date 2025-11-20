@@ -15,6 +15,14 @@ namespace Catalyst.Player
         public AudioClip reloadSound;
         public AudioClip loadSound;
         public AudioClip[] shootSounds;
+
+        public AudioClip[] swingSounds;
+        public AudioClip[] hitSounds;
+
+        public float actionVolume = 0.7f;
+        public float PitchRange = 0.2f;
+
+
         [Range(0, 1)] public float shootVolume = 0.5f; // Volume of the shooting sound
 
         public GunType gunType;
@@ -29,6 +37,9 @@ namespace Catalyst.Player
         public float impactForce;
         public ParticleSystem muzzleFlash;
         public Transform muzzleFlashPosition;
+
+
     }
+
 
 }
