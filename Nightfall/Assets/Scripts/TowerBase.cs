@@ -142,8 +142,9 @@ public class TowerBase : MonoBehaviour, IDamage
 
     public void HarvestCrop(Inventory invent)
     {
-
+        audSrc.PlayOneShot(audBreak[1]);
         AddItemToInventory(invent, itemDrop, itemDrop.harvestAmount);
+
 
         Destroy(gameObject);
 
