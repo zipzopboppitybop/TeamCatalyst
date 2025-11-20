@@ -51,6 +51,7 @@ namespace Catalyst.Player
         [SerializeField] private AudioClip[] jumpTrailSound;
         [SerializeField] private AudioClip[] hurtSound;
 
+
         [Header("Jump Parameters")]
         [SerializeField] private float jumpForce;
         [SerializeField] private float gravityMultiplier;
@@ -127,6 +128,13 @@ namespace Catalyst.Player
         public int CropCount = 0;
         public int PredatorsKilled = 0;
 
+        public bool isDashing;
+        public bool isAttacking;
+        public bool isJumping;
+        public bool isSprinting;
+        public bool isAiming;
+        public bool isShooting;
+
         public Vector3 respawnPosition;
 
         [SerializeField] List<WeaponData> guns;
@@ -188,6 +196,8 @@ namespace Catalyst.Player
             NightsSurvived = 0;
             AnimalCount = 0;
             PredatorsKilled = 0;
+            magazineSize = 0;
+
         }
 
     }

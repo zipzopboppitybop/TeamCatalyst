@@ -205,7 +205,7 @@ MonoBehaviour:
   aud: {fileID: 853817436050279361}
   tilePainter: {fileID: 0}
   playerInputHandler: {fileID: 3477844435629080077}
-  playerData: {fileID: 11400000, guid: d878d3d2668f47046b104f86cff853e6, type: 2}
+  farmerData: {fileID: 0}
   ignoreLayer:
     serializedVersion: 2
     m_Bits: 1048712
@@ -3196,95 +3196,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3192623651396433771, guid: de0524e603a1a3e438fb50f45849cada, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 9145204297456202910}
-    - targetCorrespondingSourceObject: {fileID: 3192623651396433771, guid: de0524e603a1a3e438fb50f45849cada, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5093016648507446249}
-    - targetCorrespondingSourceObject: {fileID: 3192623651396433771, guid: de0524e603a1a3e438fb50f45849cada, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2919845317734685547}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: de0524e603a1a3e438fb50f45849cada, type: 3}
 --- !u!1 &2145181983208484462 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3192623651396433771, guid: de0524e603a1a3e438fb50f45849cada, type: 3}
   m_PrefabInstance: {fileID: 3570032815649790213}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &9145204297456202910
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2145181983208484462}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 512
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 2097160
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 0}
---- !u!54 &5093016648507446249
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2145181983208484462}
-  serializedVersion: 5
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &2919845317734685547
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2145181983208484462}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d869a4d48e15db9419d4dd591f7f41e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Swingable
-  type: 0
-  rb: {fileID: 5093016648507446249}
-  dmgAmt: 3
-  speed: 0
-  destroyTime: 0
-  dmgRate: 0
-  swingForce: 10
-  damageAmount: 5
-  swingSounds: []
-  swingVolume: 0.7
-  swingPitchRange: 0.2
-  hitSounds: []
 --- !u!4 &4291862730945198642 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 721859638658786103, guid: de0524e603a1a3e438fb50f45849cada, type: 3}
