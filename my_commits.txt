@@ -1,0 +1,127 @@
+10e03bc 2025-11-17 | MainScene Final Fixes
+ae72db2 2025-11-17 | Main Menu
+f5470d2 2025-11-16 | Merge branch 'dev' into dev-Shayla
+d9cabd7 2025-11-16 | Merge branch 'dev' into dev-Shayla
+2ebcb5e 2025-11-16 | Finished up the Credits
+0f7c5b1 2025-11-16 | Merge branch 'dev' into dev-Shayla
+1aa407e 2025-11-16 | Update MainMenu.unity
+d0f458f 2025-11-16 | Merge branch 'dev' into dev-Shayla
+2740296 2025-11-16 | Update MainScene - Setup.unity
+960f6c5 2025-11-16 | Update MainScene - Setup.unity
+579290e 2025-11-16 | Update MainScene - Setup.unity
+d0afbb1 2025-11-16 | Final Main Scene
+0315437 2025-11-16 | Merge branch 'dev' into dev-Shayla
+8cc6e5e 2025-11-16 | Update MainScene - Setup.unity
+ce559e6 2025-11-16 | Taking out the trash
+3a1ea37 2025-11-16 | main Scene
+054fcdb 2025-11-16 | Main Menu
+a85e98d 2025-11-16 | Merge branch 'dev' into dev-Shayla
+6080425 2025-11-16 | Update MainScene - Setup.unity
+d8963b2 2025-11-16 | Fixed Enemies Despwaning when night is over
+adaa7fe 2025-11-16 | Merge branch 'dev' into dev-Shayla
+45a6a7d 2025-11-16 | Working on Main Scene
+610e736 2025-11-16 | Merge branch 'dev' into dev-Shayla
+01e5cf1 2025-11-16 | Changing the wolf audio
+ec87c83 2025-11-16 | Merge branch 'dev' into dev-Shayla
+ee34771 2025-11-16 | Added Enemy Spawn Points to Scene
+792b7b1 2025-11-16 | Fixed Day/Night Cycle and made the ground Matte
+6f37b38 2025-11-16 | Main Scene
+5208c75 2025-11-15 | Merge branch 'dev' into dev-Shayla
+e71e3ed 2025-11-15 | Working On Main
+bb83245 2025-11-15 | Merge branch 'dev' into dev-Shayla
+b3e7a0e 2025-11-15 | Made Sure the Sprinklers Dont damage Player
+c195411 2025-11-15 | Merge branch 'dev' into dev-Shayla
+8e1b2b1 2025-11-15 | Main Scene SetUp
+45dc742 2025-11-15 | Merge branch 'dev' into dev-Shayla
+e65972e 2025-11-15 | Building Scene
+7c9eb02 2025-11-15 | Merge branch 'dev' of https://github.com/zipzopboppitybop/TeamCatalyst into dev
+d3d313a 2025-11-15 | Barn
+ece406b 2025-11-15 | Merge branch 'dev' into dev-Shayla
+cf26925 2025-11-15 | Added the Back to main Menu Button to the pause menu
+3b419dc 2025-11-15 | Merge branch 'dev-Shayla' into dev
+b3dd998 2025-11-15 | Added Audio To Cow, fixed script duplicate issue
+4bf5d3a 2025-11-15 | Merge branch 'dev-Shayla' into dev
+40664e9 2025-11-15 | Update LivestockAI.cs
+3bb44ee 2025-11-15 | Merge branch 'dev' into dev-Shayla
+fe4611e 2025-11-15 | Cow
+8b687d9 2025-11-15 | Merge branch 'dev' into dev-Shayla
+97ff8b7 2025-11-15 | Merge branch 'dev' of https://github.com/zipzopboppitybop/TeamCatalyst into dev
+9b98290 2025-11-15 | Added Shop Icons
+7252772 2025-11-15 | Merge branch 'dev' into dev-Shayla
+4d3880f 2025-11-15 | Merge branch 'dev' of https://github.com/zipzopboppitybop/TeamCatalyst into dev
+bc87cf9 2025-11-15 | Update MainScene - Setup.unity
+980fa3f 2025-11-15 | Merge branch 'dev' into dev-Shayla
+961f573 2025-11-15 | Working on Credits
+96366ca 2025-11-15 | Achievements Unlockable Now. Added a Cow
+80cd3d9 2025-11-15 | Merge branch 'dev' into dev-Shayla
+8994930 2025-11-15 | Achievements Layout Completed
+bf777a2 2025-11-14 | Completed the Brand Sequence
+76d8868 2025-11-14 | Merge branch 'dev' into dev-Shayla
+847d9d5 2025-11-14 | BrandingSequence
+ce4f244 2025-11-14 | Merge branch 'dev' into dev-Shayla
+e761b0a 2025-11-14 | Added Plant Prefabs and Achievement Icons
+ea56944 2025-11-14 | ui update
+a6f4378 2025-11-14 | Merge branch 'dev' into dev-Shayla
+a9c16a6 2025-11-14 | Scene MockUP
+87983f2 2025-11-14 | Merge branch 'dev' into dev-Shayla
+ab4f574 2025-11-13 | Merge branch 'dev' into dev-Shayla
+a92b283 2025-11-13 | testing in sandbox
+f05f434 2025-11-13 | Merge branch 'dev' into dev-Shayla
+4e81c9f 2025-11-13 | Fixed GameManager
+6c70636 2025-11-13 | Fixed a merge issue
+c2cc9e0 2025-11-13 | Merge branch 'dev' into dev-Shayla
+a0fa2f9 2025-11-13 | Merge branch 'dev' of https://github.com/zipzopboppitybop/TeamCatalyst into dev
+79986bc 2025-11-13 | Merge branch 'dev' into dev-Shayla
+e78082d 2025-11-13 | Updated to the inventory systems
+8e1639c 2025-11-13 | Low Health Detection\ New Inventory System
+c096f42 2025-11-11 | Merge branch 'dev' into dev-Shayla
+304682f 2025-11-11 | Updated the Restart button, Audio Feedback on menus
+aba9e46 2025-11-11 | Merge branch 'dev' into dev-Shayla
+d97821e 2025-11-11 | Switched to new player and applied the scripts/setup
+810cc2a 2025-11-09 | Merge branch 'dev' into dev-Shayla
+5972136 2025-11-09 | Update MainUI.uxml
+b7ba4b5 2025-11-09 | Win/Lose
+c004e18 2025-11-09 | Merge branch 'dev' into dev-Shayla
+b52d2da 2025-11-09 | Fixed Main Menu settings
+ca93425 2025-11-09 | Merge branch 'dev' into dev-Shayla
+3299b26 2025-11-09 | Setting for the Volume Working
+2a7ce0e 2025-11-09 | Merge branch 'dev' into dev-Shayla
+326c6d6 2025-11-09 | working on AudioMixer
+e837004 2025-11-09 | Fixed Transition From MainMenu to ShowcaseLevel
+9bebdff 2025-11-08 | Updating Start Screen
+be2614a 2025-11-08 | Update scene
+b54fd09 2025-11-08 | Merge branch 'dev' into Stage_Shayla
+09c3151 2025-11-08 | Merge branch 'dev' into dev-Shayla
+1c7e3a2 2025-11-08 | Master Volume Work
+535ea8c 2025-11-08 | Merge branch 'dev' into dev-Shayla
+9b33dea 2025-11-08 | Hide UI On Scene Load
+6fd5291 2025-11-08 | Merge branch 'dev' of https://github.com/zipzopboppitybop/TeamCatalyst into dev
+1b139d0 2025-11-08 | Merge branch 'dev' of https://github.com/zipzopboppitybop/TeamCatalyst into dev
+28c7239 2025-11-08 | Pause Menu Fully Functional
+7843492 2025-11-08 | Main Menu Fully Functional
+0c620c6 2025-11-07 | Update MainMenuUI
+cf03c0d 2025-11-07 | MainMenu Running (Play/Quit) working
+9a70638 2025-11-07 | Merge branch 'dev' into dev-Shayla
+ff8d1c7 2025-11-07 | Update ShaylaSandbox.unity
+f394f62 2025-11-07 | MainMenuUI
+1bd21d1 2025-11-07 | Merge branch 'dev-Shayla' into dev
+21c2a4f 2025-11-07 | CurrencyUI and StaminaUI working
+1361e1d 2025-11-07 | Update Main UI and Menus
+ef9d09e 2025-11-07 | Update MainUI.uxml
+1053fef 2025-11-07 | Update MainUI.uxml
+560a65c 2025-11-06 | Fixed Door
+e10fd85 2025-11-06 | Merge branch 'dev' into dev-Shayla
+4ed8cb2 2025-11-06 | Door Opens, Health Bar Reflects Health
+e4837b4 2025-11-06 | door
+4db8837 2025-11-06 | Update ShaylaSandbox.unity
+1647796 2025-11-06 | Merge branch 'dev' into dev-Shayla
+d1bd2bd 2025-11-06 | updated UI
+b83de46 2025-11-06 | PauseMenu
+3ed348d 2025-11-04 | Finished Day/Time Mechanics
+c948015 2025-11-03 | Merge branch 'dev-Shayla' into dev
+5bd49f4 2025-11-03 | Day/Night Clock
+83a343e 2025-10-27 | Enemy Can Take Damage
+4474192 2025-10-27 | Merge branch 'dev' into dev-Shayla
+a27a20e 2025-10-27 | Testing sandbox with a shape
+28aba90 2025-10-27 | Merge branch 'dev-Shayla' into dev
+6fafc9c 2025-10-27 | Set up
