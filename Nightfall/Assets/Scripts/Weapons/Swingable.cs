@@ -4,29 +4,29 @@ using UnityEngine;
 
 namespace Catalyst.GamePlay.Weapons
 {
-    public class Swingable : Damage
+    public class Swingable : MonoBehaviour
     {
-        [SerializeField] private float swingForce = 10f;
-        [SerializeField] private int damageAmount = 5;
-        [SerializeField] private AudioClip[] swingSounds;
-        [SerializeField] private float swingVolume = 0.7f;
-        [SerializeField] private float swingPitchRange = 0.2f;
-        [SerializeField] private AudioClip[] hitSounds;
 
 
         private AudioSource aud;
-        private Collider weaponCollider;
+        [SerializeField] private float swingForce = 10f;
+        [SerializeField] private int damageAmount = 5;
+        private MeshCollider weaponCollider;
 
         private void Awake()
         {
             aud = GetComponent<AudioSource>();
-            weaponCollider = GetComponent<Collider>();
+            weaponCollider = GetComponent<MeshCollider>();
+            SetColliderToggleAs(false);
+
         }
-        private void Start()
+
+        private void OnCollisionEnter(Collision collision)
         {
-            if (weaponCollider != null)
+            if (collision.gameObject.CompareTag("Enemy") || collision.gameObject.CompareTag("Destructible"))
             {
-                weaponCollider.enabled = false; // Disable collider at start
+                ApplyDamage(collision.collider, damageAmount, collision.GetContact(0).point, collision.GetContact(0).normal);
+
             }
         }
 
@@ -48,55 +48,24 @@ namespace Catalyst.GamePlay.Weapons
             }
         }
 
-        public void PlaySwingSound()
-        {
-            if (swingSounds.Length > 0 && aud != null)
-            {
-                AudioClip swingClip = swingSounds[Random.Range(0, swingSounds.Length)];
-                aud.pitch = 1f + Random.Range(-swingPitchRange, swingPitchRange);
-                aud.PlayOneShot(swingClip, swingVolume);
-            }
-        }
-
-        public void PlayHitSound()
-        {
-            if (hitSounds.Length > 0 && aud != null)
-            {
-                AudioClip hitClip = hitSounds[Random.Range(0, hitSounds.Length)];
-                aud.pitch = 1f + Random.Range(-swingPitchRange, swingPitchRange);
-                aud.PlayOneShot(hitClip, swingVolume);
-            }
-        }
-
-        private void OnCollisionEnter(Collision collision)
-        {
-
-
-            ApplyDamage(collision.collider, damageAmount, collision.GetContact(0).point, collision.relativeVelocity);
-        }
-
-        private void OnCollisionExit(Collision collision)
-        {
-            // Optional: Handle logic when collision ends
-        }
-
-
-
-        public void TurnOnCollider()
+        public bool ColliderState(bool state)
         {
             if (weaponCollider != null)
             {
-                weaponCollider.enabled = true;
+                weaponCollider.enabled = state;
+                Debug.Log("Collider state set to: " + state);
+                return true;
             }
-
+            return false;
         }
 
-        public void TurnOffCollider()
+        public void SetColliderToggleAs(bool state)
         {
             if (weaponCollider != null)
             {
-                weaponCollider.enabled = false;
+                weaponCollider.enabled = state;
             }
         }
+
     }
 }
