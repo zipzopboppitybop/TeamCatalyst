@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4fff52d00b5194643aee23e84ee9b49b, type: 3}
-  m_Name: Rake
+  m_Name: Ammo
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  Icon: {fileID: 21300000, guid: c27e50523f35b0c478722fc2511447b2, type: 3}
-  itemType: 0
-  dropPrefab: {fileID: 8863868687598580726, guid: 7414800c68a619c4ba6c0408caf382bf, type: 3}
+  Icon: {fileID: 21300000, guid: 109b7c24ba6b4904dab027a6c0047a9a, type: 3}
+  itemType: 3
+  dropPrefab: {fileID: 0}
   pickupSound: {fileID: 0}
-  interactSound: {fileID: 8300000, guid: a675ea4fcd9d49a44b74704efa0b13fc, type: 3}
-  audVol: 0.105
-  displayName: Rake
-  id: 6
+  audVol: 0
+  displayName: Ammo
+  id: 65
   price: 10
   maxStackSize: 1
   harvestAmount: 0

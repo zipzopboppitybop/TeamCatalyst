@@ -16,6 +16,7 @@ MonoBehaviour:
   itemType: 1
   dropPrefab: {fileID: 8831301513596165490, guid: b57790988c34753489ed5ebf30d066a8, type: 3}
   pickupSound: {fileID: 0}
+  interactSound: {fileID: 8300000, guid: 76380b0df4971684ba9ee14cb627c27a, type: 3}
   audVol: 0
   displayName: CornSeed
   id: 8

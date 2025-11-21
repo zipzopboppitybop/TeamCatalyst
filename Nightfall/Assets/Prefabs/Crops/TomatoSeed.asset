@@ -16,6 +16,7 @@ MonoBehaviour:
   itemType: 1
   dropPrefab: {fileID: 5958555468342446150, guid: ee3eea58831a1a8478b22c0b06667f36, type: 3}
   pickupSound: {fileID: 0}
+  interactSound: {fileID: 8300000, guid: 76380b0df4971684ba9ee14cb627c27a, type: 3}
   audVol: 0
   displayName: TomatoSeed
   id: 5
