@@ -20,23 +20,25 @@ namespace Catalyst.Player.Handlers
         // Update is called once per frame
         void Update()
         {
-            rig.weight = Mathf.Lerp(rig.weight, targetWeight, Time.deltaTime * 1);
+            //rig.weight = Mathf.Lerp(rig.weight, targetWeight, Time.deltaTime * 1);
 
             if (_playerInput.AimHeld) // Right mouse button held
             {
-                targetWeight = 1f;
-
+                //targetWeight = 1f;
+                SetRigWeight(1f);
 
             }
             else
             {
-                targetWeight = 0f;
+                //targetWeight = 0f;
+                SetRigWeight(0f);
             }
         }
 
-        private void SetTargetWeight(float weight)
+        private void SetRigWeight(float weight)
         {
-            targetWeight = weight;
+
+            rig.weight = Mathf.Lerp(rig.weight, weight, Time.deltaTime * 1);
 
         }
 

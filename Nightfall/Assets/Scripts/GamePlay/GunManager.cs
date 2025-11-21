@@ -206,7 +206,7 @@ namespace Catalyst.GamePlay
             if (_shootTimer > player.ShootRate && PlayerCanShoot())
             {
                 _shootTimer = 0f;
-
+                player.isShooting = true;
                 if (player.CurrentGun.ammoCur <= 0)
                 {
                     aud.PlayOneShot(player.CurrentGun.emptyClipSound, player.CurrentGun.shootVolume);
@@ -215,9 +215,16 @@ namespace Catalyst.GamePlay
                 else
                 {
                     //aud.PlayOneShot(player.CurrentGun.shootSounds[Random.Range(0, player.Guns[_gunListPos].shootSounds.Length)], player.CurrentGun.shootVolume);
+
                     anim.TriggerShoot();
+
                 }
             }
+            else
+            {
+                player.isShooting = false;
+            }
+
         }
 
         public void Shoot()

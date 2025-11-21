@@ -253,9 +253,15 @@ namespace Catalyst.CameraController
         {
             // Stop everything a bit to avoid multiple toggles      
             _playerInput.enabled = false;
+
+            //GameManager.instance.timeScaleOrig = Time.timeScale;
+
+            //Time.timeScale = 0.01f;
             cam.gameObject.SetActive(!cam.gameObject.activeSelf);
             ToggleGunCam();
             yield return new WaitForSeconds(1.0f);
+            //Time.timeScale = GameManager.instance.timeScaleOrig;
+
             _playerInput.enabled = true;
         }
 

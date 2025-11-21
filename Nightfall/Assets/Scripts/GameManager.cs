@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
     public PlayerController playerController;
     public GameObject playerSpawnPos;
 
-    float timeScaleOrig;
+    public float timeScaleOrig;
     float timeOfDay = 7;
     int day = 1;
 
