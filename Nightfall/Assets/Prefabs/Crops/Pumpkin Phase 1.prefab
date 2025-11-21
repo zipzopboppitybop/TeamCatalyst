@@ -142,7 +142,7 @@ MonoBehaviour:
   itemDrop: {fileID: 0}
   bullet: {fileID: 0}
   shootPos: {fileID: 0}
-  model: {fileID: 1754544489798246633}
+  model: {fileID: 5272199555880794518}
   audBreak:
   - {fileID: 8300000, guid: 818fcd64c8c99e441b03ac10a233f00c, type: 3}
   - {fileID: 8300000, guid: 818fcd64c8c99e441b03ac10a233f00c, type: 3}
@@ -433,10 +433,5 @@ PrefabInstance:
 --- !u!4 &1731325594168261231 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000011495609478, guid: 8dfbe94bc89610d489620aca436a33ae, type: 3}
-  m_PrefabInstance: {fileID: 1731865543494594281}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &1754544489798246633 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 23000013050269184, guid: 8dfbe94bc89610d489620aca436a33ae, type: 3}
   m_PrefabInstance: {fileID: 1731865543494594281}
   m_PrefabAsset: {fileID: 0}

@@ -62,7 +62,7 @@ MonoBehaviour:
   itemDrop: {fileID: 0}
   bullet: {fileID: 0}
   shootPos: {fileID: 0}
-  model: {fileID: 294976387626084739}
+  model: {fileID: 7320192604267515204}
   audBreak:
   - {fileID: 8300000, guid: 818fcd64c8c99e441b03ac10a233f00c, type: 3}
   - {fileID: 8300000, guid: 818fcd64c8c99e441b03ac10a233f00c, type: 3}
@@ -226,11 +226,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8dfbe94bc89610d489620aca436a33ae, type: 3}
---- !u!23 &294976387626084739 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 23000013050269184, guid: 8dfbe94bc89610d489620aca436a33ae, type: 3}
-  m_PrefabInstance: {fileID: 308005186832721795}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &308625117048435461 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4000011495609478, guid: 8dfbe94bc89610d489620aca436a33ae, type: 3}
@@ -370,5 +365,10 @@ PrefabInstance:
 --- !u!4 &2030348242501792647 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3458248955768061082, guid: 982d86a08033e3e4c81b96929131a643, type: 3}
+  m_PrefabInstance: {fileID: 3734352578268614429}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7320192604267515204 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 6216543643559084633, guid: 982d86a08033e3e4c81b96929131a643, type: 3}
   m_PrefabInstance: {fileID: 3734352578268614429}
   m_PrefabAsset: {fileID: 0}

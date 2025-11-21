@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 using Unity.VisualScripting;
+using TMPro;
+using ColorUtility = UnityEngine.ColorUtility;
 
 public class TowerBase : MonoBehaviour, IDamage
 {
@@ -218,9 +220,16 @@ public class TowerBase : MonoBehaviour, IDamage
 
     public void WaterCrop()
     {
-
         isWatered = true;
 
+        if (model != null)
+        {
+            Color col;
+            if (ColorUtility.TryParseHtmlString("#8E8E8E", out col))
+            {
+                model.material.color = col;
+            }
+        }
     }
 
     public void Fertilize()

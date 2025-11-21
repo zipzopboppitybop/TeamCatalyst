@@ -286,7 +286,7 @@ MonoBehaviour:
   itemDrop: {fileID: 11400000, guid: 063f6c8c87a4e494d81e0d908f156133, type: 2}
   bullet: {fileID: 0}
   shootPos: {fileID: 0}
-  model: {fileID: 3363444398278818721}
+  model: {fileID: 7716540994593953019}
   audBreak:
   - {fileID: 8300000, guid: 818fcd64c8c99e441b03ac10a233f00c, type: 3}
   - {fileID: 8300000, guid: 818fcd64c8c99e441b03ac10a233f00c, type: 3}
