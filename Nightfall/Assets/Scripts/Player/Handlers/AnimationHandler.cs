@@ -122,7 +122,8 @@ namespace Catalyst.Player.Handlers
         IEnumerator Jump()
         {
             _animator.SetTrigger(_animJump);
-            yield return new WaitForSeconds(0.5f);
+            
+            yield return new WaitForSeconds(1f);
             _animator.ResetTrigger(_animJump);
             _playerInputHandler.JumpTriggered = false;
         }

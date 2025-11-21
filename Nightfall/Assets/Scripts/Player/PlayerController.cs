@@ -9,10 +9,6 @@ namespace Catalyst.Player
     public class PlayerController : MonoBehaviour, IDamage
     {
         [Header("References")]
-
-
-
-
         [SerializeField] public PlayerInventoryUI playerInventory;
         public AudioSource aud;
         [SerializeField] private TilePainter tilePainter;
@@ -80,6 +76,7 @@ namespace Catalyst.Player
         {
             _currentMovement = Vector3.zero;
             anim.UpdateMoveAnimations(Vector3.zero);
+
         }
         private void HandleAttack()
         {
@@ -113,18 +110,20 @@ namespace Catalyst.Player
             if (characterController.isGrounded)
             {
                 _jumpCount = 0;
-
-                //_currentMovement.y = -1f; // Small downward force to keep the player grounded
+                farmerData.isJumping = false;
+                _currentMovement.y = -1f; // Small downward force to keep the player grounded
 
                 anim.SetGrounded(true);
 
-                if (playerInputHandler.JumpTriggered && _jumpCount < farmerData.JumpMax)
+                if (playerInputHandler.JumpTriggered && _jumpCount < farmerData.JumpMax && !farmerData.isJumping)
                 {
-
+                    anim.TriggerJump();
                     _currentMovement.y = farmerData.JumpForce;
                     anim.SetGrounded(false);
-                    anim.TriggerJump();
+
+                    farmerData.isJumping = true;
                     _jumpCount++;
+                    
 
                 }
 
@@ -136,6 +135,7 @@ namespace Catalyst.Player
 
                 _currentMovement.y += Physics.gravity.y * farmerData.GravityMultiplier * Time.deltaTime;
                 anim.SetGrounded(false);
+
                 //StopAllPlayerMovement();
                 //anim.ResetTrigger(_animJump);
 
