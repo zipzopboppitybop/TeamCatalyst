@@ -23,6 +23,7 @@ namespace Catalyst.Player
         private Vector3 _currentMovement;
         private CamController camController;
 
+
         private AnimationHandler anim;
 
         public bool isInventoryOpen;
@@ -113,7 +114,7 @@ namespace Catalyst.Player
             {
                 _jumpCount = 0;
 
-                _currentMovement.y = -1f; // Small downward force to keep the player grounded
+                //_currentMovement.y = -1f; // Small downward force to keep the player grounded
 
                 anim.SetGrounded(true);
 
@@ -135,6 +136,7 @@ namespace Catalyst.Player
 
                 _currentMovement.y += Physics.gravity.y * farmerData.GravityMultiplier * Time.deltaTime;
                 anim.SetGrounded(false);
+                //StopAllPlayerMovement();
                 //anim.ResetTrigger(_animJump);
 
             }
@@ -248,7 +250,7 @@ namespace Catalyst.Player
 
             StopAllPlayerMovement();
             characterController.Move(dodgeDirection.normalized * farmerData.DashSpeed * Time.deltaTime);
-            StartCoroutine(EnableInputAfterDelay(0.2f));
+            StartCoroutine(EnableInputAfterDelay(0.5f));
         }
 
 
