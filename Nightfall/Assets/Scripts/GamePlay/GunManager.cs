@@ -279,13 +279,8 @@ namespace Catalyst.GamePlay
             if (_gunListPos < 0 || _gunListPos >= player.Guns.Count) return;
             if (player.CurrentGun.ammoCur >= player.CurrentGun.ammoMax) return;
 
-            if (player.MagazineSize > 0)
-            {
-                player.MagazineSize--;
-                isReloading = true;
-                anim.TriggerReload();
-            }
-
+            isReloading = true;
+            anim.TriggerReload();
         }
 
         public void FinishReload()

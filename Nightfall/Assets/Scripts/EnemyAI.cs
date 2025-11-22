@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class EnemyAI : AILogic
 {
@@ -26,6 +27,30 @@ public class EnemyAI : AILogic
         }
 
     }
+
+    protected override IEnumerator flashRed()
+    {
+        if (targetsPlayer)
+        {
+            foreach (Material mat in model.materials)
+            {
+                mat.EnableKeyword("_EMISSION");
+                mat.SetColor("_EmissionColor", Color.red * 5f);
+            }
+
+            yield return new WaitForSeconds(0.1f);
+
+            foreach (Material mat in model.materials)
+            {
+                mat.SetColor("_EmissionColor", Color.black);
+            }
+        }
+        else
+        {
+            StartCoroutine(base.flashRed());
+        }
+    }
+
 
     protected virtual void HandleAnimation()
     {
