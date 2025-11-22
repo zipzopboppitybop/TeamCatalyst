@@ -277,6 +277,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 721859638658786103}
+  - component: {fileID: 8685992999103231402}
+  - component: {fileID: 1047290194885894464}
   m_Layer: 21
   m_Name: Shotty
   m_TagString: Untagged
@@ -305,6 +307,42 @@ Transform:
   - {fileID: 2774440992403884832}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: -85.511, y: -47.132, z: 227.044}
+--- !u!114 &8685992999103231402
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3192623651396433771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d869a4d48e15db9419d4dd591f7f41e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Catalyst.GamePlay.Weapons.Swingable
+  swingForce: 10
+  damageAmount: 5
+--- !u!64 &1047290194885894464
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3192623651396433771}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 0}
 --- !u!1 &3860314934616676459
 GameObject:
   m_ObjectHideFlags: 0

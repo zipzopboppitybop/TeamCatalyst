@@ -20,6 +20,12 @@ MonoBehaviour:
   loadSound: {fileID: 8300000, guid: 49e1961cd153aa440807cafc6b19cf6a, type: 3}
   shootSounds:
   - {fileID: 8300000, guid: 904e5767e7b1a0849a28505ff0194f51, type: 3}
+  swingSounds:
+  - {fileID: 8300000, guid: a4589dbf888fb9e46a85a2659cf46933, type: 3}
+  hitSounds:
+  - {fileID: 8300000, guid: 9c9d44d4e11b13e4b96c7c7319a4d2f4, type: 3}
+  actionVolume: 0.7
+  PitchRange: 0.2
   shootVolume: 0.5
   gunType: 1
   shootDamage: 15

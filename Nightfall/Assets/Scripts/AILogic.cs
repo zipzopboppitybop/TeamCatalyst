@@ -25,7 +25,7 @@ public class AILogic : MonoBehaviour, IDamage
     [Range(0, 100)][SerializeField] protected int dropChance;
     [SerializeField] protected float biteRate;
 
-    Color colorOrig;
+    protected Color colorOrig;
 
     protected bool playerInRange;
     [SerializeField] protected bool targetsPlayer;
@@ -335,7 +335,7 @@ public class AILogic : MonoBehaviour, IDamage
         }
     }
 
-    protected IEnumerator flashRed()
+    protected virtual IEnumerator flashRed()
     {
         model.material.color = Color.red;
         Debug.Log("Wolf Color: " + model.material.color);

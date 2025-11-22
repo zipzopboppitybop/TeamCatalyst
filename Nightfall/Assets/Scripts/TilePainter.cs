@@ -25,6 +25,9 @@ public class TilePainter : MonoBehaviour
     Vector3Int currentCell;
     string currentItemName;
 
+    [SerializeField] protected AudioSource aud;
+    [SerializeField] protected AudioClip[] audInteractions;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -178,6 +181,8 @@ public class TilePainter : MonoBehaviour
             {
                 map.SetTile(currentCell, selectedTile[0]);
             }
+
+            aud.PlayOneShot(audInteractions[0]);
             return;
         }
 
@@ -197,6 +202,7 @@ public class TilePainter : MonoBehaviour
                 inv.hotBarInventory.OnInventorySlotChanged?.Invoke(slot);
                 inv.RefreshHotBar();
                 UpdateCurrentItem(null);
+                aud.PlayOneShot(audInteractions[4]);
             }
             return;
         }
@@ -243,6 +249,7 @@ public class TilePainter : MonoBehaviour
                 inv.hotBarInventory.OnInventorySlotChanged?.Invoke(slot);
                 inv.RefreshHotBar();
                 UpdateCurrentItem(null);
+                aud.PlayOneShot(audInteractions[2]);
             }
             return;
         }
@@ -250,14 +257,21 @@ public class TilePainter : MonoBehaviour
         if (item.Contains("Watering"))
         {
             if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Crop)
+            {
                 existingTower.WaterCrop();
+                aud.PlayOneShot(audInteractions[3]);
+            }
+
         }
 
-            if (item.Contains("Fertilizer"))
+        if (item.Contains("Fertilizer"))
+        {
+            if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Farmland)
             {
-                if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Farmland)
-                    existingTower.Fertilize();
+                existingTower.Fertilize();
+                aud.PlayOneShot(audInteractions[1]);
             }
+
         }
     }
 

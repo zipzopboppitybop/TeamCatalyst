@@ -56,14 +56,16 @@ namespace Catalyst.Player
 
         void Update()
         {
-            if (!GameManager.instance.isPaused)
+            if (!GameManager.instance.isPaused && !isInventoryOpen)
             {
-
                 HandleMovement();
                 HandleAttack();
                 HandleDash();
                 UpdateInteract();
-
+            }
+            else
+            {
+                StopAllPlayerMovement();
             }
         }
 
@@ -73,7 +75,11 @@ namespace Catalyst.Player
         {
             playerInputHandler.enabled = enabled;
         }
-
+        public void StopAllPlayerMovement()
+        {
+            _currentMovement = Vector3.zero;
+            anim.UpdateMoveAnimations(Vector3.zero);
+        }
         private void HandleAttack()
         {
 
@@ -84,6 +90,9 @@ namespace Catalyst.Player
 
             if (playerInputHandler.AttackTriggered)
             {
+                if (farmerData.isAttacking || farmerData.isAiming)
+                    return;
+
                 anim.TriggerAttack();
             }
 
@@ -112,7 +121,7 @@ namespace Catalyst.Player
                 {
 
                     _currentMovement.y = farmerData.JumpForce;
-
+                    anim.SetGrounded(false);
                     anim.TriggerJump();
                     _jumpCount++;
 
@@ -126,13 +135,16 @@ namespace Catalyst.Player
 
                 _currentMovement.y += Physics.gravity.y * farmerData.GravityMultiplier * Time.deltaTime;
                 anim.SetGrounded(false);
-                //animator.ResetTrigger(_animJump);
+                //anim.ResetTrigger(_animJump);
 
             }
         }
 
         private void HandleDash()
         {             // Dash logic here
+            if (!characterController.isGrounded)
+                return;
+
             if (playerInputHandler.DashTriggered)
             {
                 anim.TriggerDash();
@@ -162,13 +174,12 @@ namespace Catalyst.Player
             HandleJumping();
 
             characterController.Move(_currentMovement * Time.deltaTime);
-
             anim.UpdateMoveAnimations(_currentMovement);
         }
 
         public void UpdateInteract()
         {
-            if (isInventoryOpen || (playerInventory != null && playerInventory.isChestOpen))
+            if (isInventoryOpen || (playerInventory != null && playerInventory.isChestOpen) || GameManager.instance.isPaused)
             {
                 return;
             }
@@ -219,15 +230,33 @@ namespace Catalyst.Player
         public void PlayerDash()
         {
             Vector3 dodgeDirection = CalculateMoveDirection();
+
             if (dodgeDirection == Vector3.zero)
             {
                 dodgeDirection = -transform.forward;
             }
+            // Dont include forwward movement in dash
+
+
+
+
+            if (dodgeDirection.y < 0)
+                dodgeDirection.y = -dodgeDirection.y;
+
+            playerInputHandler.enabled = false;
+            // Disable player input for the dash duration
+
+            StopAllPlayerMovement();
             characterController.Move(dodgeDirection.normalized * farmerData.DashSpeed * Time.deltaTime);
+            StartCoroutine(EnableInputAfterDelay(0.2f));
         }
 
 
-
+        IEnumerator EnableInputAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            playerInputHandler.enabled = true;
+        }
 
 
 
