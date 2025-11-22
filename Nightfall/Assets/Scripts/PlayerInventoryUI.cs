@@ -170,7 +170,20 @@ public class PlayerInventoryUI : MonoBehaviour
 
     private void HandleInventoryInput()
     {
-        if (inputHandler == null)
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Cancel")) && menuSystemUI.style.display == DisplayStyle.Flex)
+        {
+            InventoryDragManager.EndDrag();
+
+            toggleInventory = false;
+            playerController.isInventoryOpen = false;
+            menuSystemUI.style.display = DisplayStyle.None;
+            CloseChest();
+            inputHandler.InteractTriggered = false;
+
+            return;
+        }
+
+        if (inputHandler == null || GameManager.instance.isPaused)
         {
             return;
         }
@@ -204,11 +217,10 @@ public class PlayerInventoryUI : MonoBehaviour
             inputHandler.ToggleInventoryTriggered = false;
         }
 
-
-        if (isChestOpen && inputHandler.InteractTriggered)
+        if (isChestOpen && (inputHandler.InteractTriggered || Input.GetKeyDown(KeyCode.Escape)))
         {
             CloseChest();
-            inputHandler.InteractTriggered = false; 
+            inputHandler.InteractTriggered = false;
         }
     }
 

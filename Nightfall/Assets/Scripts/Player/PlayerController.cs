@@ -179,7 +179,7 @@ namespace Catalyst.Player
 
         public void UpdateInteract()
         {
-            if (isInventoryOpen || (playerInventory != null && playerInventory.isChestOpen))
+            if (isInventoryOpen || (playerInventory != null && playerInventory.isChestOpen) || GameManager.instance.isPaused)
             {
                 return;
             }
