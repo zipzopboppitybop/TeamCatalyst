@@ -1,8 +1,7 @@
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Tilemaps;
-using Unity.VisualScripting;
 
 public class TowerBase : MonoBehaviour, IDamage
 {
@@ -35,6 +34,7 @@ public class TowerBase : MonoBehaviour, IDamage
     bool EnemyInRange = false;
     public bool isWatered = false;
     public bool isFertilized = false;
+    private bool tutorialChecked = false;
 
     int towerPhase = 0;
     int enemiesInRange;
@@ -219,12 +219,14 @@ public class TowerBase : MonoBehaviour, IDamage
     {
 
         isWatered = true;
+        CheckTutorialState();
 
     }
 
     public void Fertilize()
     {
         isFertilized = true;
+        CheckTutorialState();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -322,6 +324,23 @@ public class TowerBase : MonoBehaviour, IDamage
         model.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         model.material.color = colorOrig;
+    }
+
+    private void CheckTutorialState()
+    {
+        if (tutorialChecked)
+            return;
+
+        if(isFertilized && isWatered)
+        {
+            tutorialChecked = true;
+
+            if(TutorialManager.Instance != null)
+            {
+                TutorialManager.Instance.OnCropFullyPlanted();
+            }
+        }
+       
     }
 
 }

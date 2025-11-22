@@ -137,6 +137,9 @@ public class PauseMenuUI : MonoBehaviour
     }
     private void OnRestartButtonClicked()
     {
+        Time.timeScale = 1f;
+        UnityEngine.Cursor.lockState = CursorLockMode.Locked;
+        UnityEngine.Cursor.visible = false;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     private void OnBackButtonClicked()

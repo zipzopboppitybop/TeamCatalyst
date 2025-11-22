@@ -14,6 +14,18 @@ public class InventoryHolder : MonoBehaviour
 
     protected virtual void Awake()
     {
-        primaryInventory = new Inventory(primaryInventorySize);
+        if (PrimaryInventory != null && primaryInventory.InventorySlots != null && primaryInventory.InventorySlots.Count > 0)
+        {
+            int missing = primaryInventorySize  - primaryInventory.InventorySlots.Count;
+
+            for (int i = 0; i < missing; i++)
+            {
+                primaryInventory.InventorySlots.Add(new InventorySlot());
+            }
+        }
+        else
+        {
+            primaryInventory = new Inventory(primaryInventorySize);
+        }
     }
 }
