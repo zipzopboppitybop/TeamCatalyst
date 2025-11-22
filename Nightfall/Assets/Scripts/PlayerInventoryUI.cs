@@ -101,6 +101,7 @@ public class PlayerInventoryUI : MonoBehaviour
         hotBarSlots = new VisualElement[hotBarSlotCount];
         playerInventorySlotCount = playerInventory.InventorySize;
         playerInventorySlots = new VisualElement[playerInventorySlotCount];
+        root.RegisterCallback<PointerUpEvent>(OnGlobalPointerUp);
 
         for (int i = 0; i < hotBarSlotCount; i++)
         {
@@ -544,5 +545,22 @@ public class PlayerInventoryUI : MonoBehaviour
     public void OnLivestockOwnedAchieved()
     {
         OnUnlocked(livestockOwnedLocked, livestockOwnedUnlocked);
+    }
+
+    private void OnGlobalPointerUp(PointerUpEvent evt)
+    {
+        if (!InventoryDragManager.IsDragging)
+        {
+            return;
+        }
+
+        InventoryDragManager.EndDrag();
+
+        draggingSlotOriginal = null;
+        draggingSlotIndex = -1;
+        draggingFromInventory = null;
+
+        RefreshHotBar();
+        RefreshInventory();
     }
 }
