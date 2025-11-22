@@ -173,11 +173,13 @@ public class PlayerInventoryUI : MonoBehaviour
         {
             return;
         }
-          
+
         if (inputHandler.ToggleInventoryTriggered)
         {
             toggleInventory = !toggleInventory;
             playerController.isInventoryOpen = toggleInventory;
+
+            InventoryDragManager.EndDrag();
 
             menuSystemUI.style.display = toggleInventory ? DisplayStyle.Flex : DisplayStyle.None;
 
@@ -194,12 +196,13 @@ public class PlayerInventoryUI : MonoBehaviour
                 if (isChestOpen)
                 {
                     CloseChest();
-                    inputHandler.InteractTriggered = false; 
+                    inputHandler.InteractTriggered = false;
                 }
             }
 
             inputHandler.ToggleInventoryTriggered = false;
         }
+
 
         if (isChestOpen && inputHandler.InteractTriggered)
         {
