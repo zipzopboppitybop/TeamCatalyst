@@ -33,8 +33,9 @@ public class AILogic : MonoBehaviour, IDamage
     protected bool isHealing;
     protected bool isPlayingSteps;
     protected bool attackingWall;
+    protected bool attackMode;
 
-    protected float biteTimer;
+    protected float biteTimer = 0f;
     protected float roamTimer;
     protected float angleToTarget;
     protected float stoppingDistOrg;
@@ -84,7 +85,12 @@ public class AILogic : MonoBehaviour, IDamage
     // Update is called once per frame
     protected virtual void Update()
     {
-        biteTimer += Time.deltaTime;
+
+        if (attackMode)
+        {
+            biteTimer += Time.deltaTime;
+        }
+
         cropSearchTimer += Time.deltaTime;
 
         if (agent == null || !agent.isOnNavMesh) return;
@@ -101,6 +107,7 @@ public class AILogic : MonoBehaviour, IDamage
 
     protected virtual void LookForTarget()
     {
+
         if (!targetsPlayer)
         {
             FindNearestCrop();
@@ -247,8 +254,10 @@ public class AILogic : MonoBehaviour, IDamage
                     {
                         if (targetObj)
                         {
+
                             attack(targetObj);
                             biteTimer = 0;
+                            
                         }
                     }
 
@@ -259,6 +268,7 @@ public class AILogic : MonoBehaviour, IDamage
                     }
 
                     agent.stoppingDistance = stoppingDistOrg;
+                    attackMode = true;
                     return true;
                 }
 
@@ -266,6 +276,7 @@ public class AILogic : MonoBehaviour, IDamage
         }
 
         agent.stoppingDistance = 0;
+        attackMode = false;
         return false;
     }
 

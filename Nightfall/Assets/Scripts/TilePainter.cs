@@ -164,8 +164,8 @@ public class TilePainter : MonoBehaviour
 
         if (!Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, placeDist, ~ignoreLayer))
             return;
-
-        currentCell = map.WorldToCell(hit.point);
+        else
+{        currentCell = map.WorldToCell(hit.point);
 
         GameObject existing = map.GetInstantiatedObject(currentCell);
         TowerBase existingTower = existing ? existing.GetComponent<TowerBase>() : null;
@@ -253,10 +253,11 @@ public class TilePainter : MonoBehaviour
                 existingTower.WaterCrop();
         }
 
-        if (item.Contains("Fertilizer"))
-        {
-            if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Farmland)
-                existingTower.Fertilize();
+            if (item.Contains("Fertilizer"))
+            {
+                if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Farmland)
+                    existingTower.Fertilize();
+            }
         }
     }
 
