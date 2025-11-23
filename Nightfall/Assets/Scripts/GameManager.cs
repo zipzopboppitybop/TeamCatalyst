@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     public bool wasNight;
     public bool IsNight;
 
-    public List<GameObject> crops = new List<GameObject>();
+    public List<GameObject> crops;
 
     void Awake()
     {
@@ -48,15 +48,17 @@ public class GameManager : MonoBehaviour
         player = GameObject.FindWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
         playerSpawnPos = GameObject.FindWithTag("Player Spawn Pos");
+        playerData = playerController.GetPlayerData();
     }
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
-        cropCount = crops.Count;
+        crops = playerData.crops;
+        cropCount = playerData.crops.Count;
         moneyOnStart = playerData.Currency;
+        playerData.Reset();
     }
 
     // Update is called once per frame
@@ -136,10 +138,10 @@ public class GameManager : MonoBehaviour
     }
     public void YouWin()
     {
-        if(Won)
-          return;
+        if (Won)
+            return;
 
-        if(day >= 2 && PauseMenuUI.instance != null && !PauseMenuUI.instance.IsScreenOpen)
+        if (day >= 2 && PauseMenuUI.instance != null && !PauseMenuUI.instance.IsScreenOpen)
         {
             Won = true;
             StatePause();
@@ -154,7 +156,7 @@ public class GameManager : MonoBehaviour
 
         Lost = true;
         //timeOfDay = nightEnd;
-    
+
         StatePause();
 
 
@@ -169,14 +171,14 @@ public class GameManager : MonoBehaviour
                 totalEnemies += spawner.GetCurrentEnemyCount();
                 spawner.DespawnAll();
 
-                int cropsToDestroy = Mathf.Min(crops.Count, totalEnemies);
+                int cropsToDestroy = Mathf.Min(playerData.crops.Count, totalEnemies);
 
                 cropsDestroyed = cropsToDestroy;
 
                 for (int i = 0; i < cropsToDestroy; i++)
                 {
-                    GameObject crop = crops[crops.Count - 1];
-                    crops.RemoveAt(crops.Count - 1);
+                    GameObject crop = playerData.crops[playerData.crops.Count - 1];
+                    playerData.crops.RemoveAt(playerData.crops.Count - 1);
 
                     if (crop != null)
                     {
@@ -241,7 +243,7 @@ public class GameManager : MonoBehaviour
                 livestock.OnDayStart();
             }
 
-            if(!Lost && !Won)
+            if (!Lost && !Won)
             {
                 YouWin();
             }
@@ -251,7 +253,7 @@ public class GameManager : MonoBehaviour
 
         wasNight = isNight;
 
-        if(day == 2 && PlayerInventoryUI.Instance != null)
+        if (day == 2 && PlayerInventoryUI.Instance != null)
         {
             PlayerInventoryUI.Instance.OnDayOneAchieved();
         }
@@ -261,6 +263,8 @@ public class GameManager : MonoBehaviour
     public void UpdateCropCount(int amt)
     {
         cropCount += amt;
+        playerData.CropCount = cropCount;
+        crops = playerData.crops;
     }
     public int GetDay()
     {
@@ -276,7 +280,7 @@ public class GameManager : MonoBehaviour
 
     public int GetCropCount()
     {
-        return crops.Count;
+        return playerData.crops.Count;
     }
 
     public int UpdateCropsDestroyed()
@@ -303,15 +307,7 @@ public class GameManager : MonoBehaviour
 
     public void AddCrop(GameObject crop)
     {
-        crops.Add(crop);
+        playerData.crops.Add(crop);
     }
-
-
-
-    //public void TogglePlayerController()
-    //{
-
-    //    Catalyst.Player.PlayerController = player.GetComponent<Catalyst.Player.PlayerController>();
-    //}
 
 }

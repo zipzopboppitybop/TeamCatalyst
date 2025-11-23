@@ -16,6 +16,7 @@ MonoBehaviour:
   itemType: 1
   dropPrefab: {fileID: 4257451425112880771, guid: 54a8b5282a1e41a4eaeb42268d6cf7ad, type: 3}
   pickupSound: {fileID: 0}
+  interactSound: {fileID: 8300000, guid: 76380b0df4971684ba9ee14cb627c27a, type: 3}
   audVol: 0
   displayName: PumpkinSeed
   id: 9

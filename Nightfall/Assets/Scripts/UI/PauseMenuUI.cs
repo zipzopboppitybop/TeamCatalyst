@@ -149,8 +149,8 @@ public class PauseMenuUI : MonoBehaviour
     }
     private void OnQuitButtonClicked()
     {
-        ShowSavePopup();
-
+        //ShowSavePopup();
+        OnQuitConfirmed();
 
     }
 

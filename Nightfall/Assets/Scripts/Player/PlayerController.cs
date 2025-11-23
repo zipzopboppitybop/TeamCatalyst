@@ -17,7 +17,7 @@ namespace Catalyst.Player
         public AudioSource aud;
         [SerializeField] private TilePainter tilePainter;
         public InputHandler playerInputHandler;
-        [SerializeField] private PlayerData playerData;
+        [SerializeField] private PlayerData farmerData;
         [SerializeField] private LayerMask ignoreLayer;
 
         private Vector3 _currentMovement;
@@ -51,19 +51,21 @@ namespace Catalyst.Player
 
         }
 
-        private float CurrentSpeed => playerData.Speed * (playerInputHandler.SprintHeld ? playerData.SprintSpeed : 1);
+        private float CurrentSpeed => farmerData.Speed * (playerInputHandler.SprintHeld ? farmerData.SprintSpeed : 1);
 
 
         void Update()
         {
-            if (!GameManager.instance.isPaused)
+            if (!GameManager.instance.isPaused && !isInventoryOpen)
             {
-
                 HandleMovement();
                 HandleAttack();
                 HandleDash();
                 UpdateInteract();
-
+            }
+            else
+            {
+                StopAllPlayerMovement();
             }
         }
 
@@ -73,7 +75,11 @@ namespace Catalyst.Player
         {
             playerInputHandler.enabled = enabled;
         }
-
+        public void StopAllPlayerMovement()
+        {
+            _currentMovement = Vector3.zero;
+            anim.UpdateMoveAnimations(Vector3.zero);
+        }
         private void HandleAttack()
         {
 
@@ -84,6 +90,9 @@ namespace Catalyst.Player
 
             if (playerInputHandler.AttackTriggered)
             {
+                if (farmerData.isAttacking || farmerData.isAiming)
+                    return;
+
                 anim.TriggerAttack();
             }
 
@@ -108,11 +117,11 @@ namespace Catalyst.Player
 
                 anim.SetGrounded(true);
 
-                if (playerInputHandler.JumpTriggered && _jumpCount < playerData.JumpMax)
+                if (playerInputHandler.JumpTriggered && _jumpCount < farmerData.JumpMax)
                 {
 
-                    _currentMovement.y = playerData.JumpForce;
-
+                    _currentMovement.y = farmerData.JumpForce;
+                    anim.SetGrounded(false);
                     anim.TriggerJump();
                     _jumpCount++;
 
@@ -124,15 +133,18 @@ namespace Catalyst.Player
             else if (!characterController.isGrounded)
             {
 
-                _currentMovement.y += Physics.gravity.y * playerData.GravityMultiplier * Time.deltaTime;
+                _currentMovement.y += Physics.gravity.y * farmerData.GravityMultiplier * Time.deltaTime;
                 anim.SetGrounded(false);
-                //animator.ResetTrigger(_animJump);
+                //anim.ResetTrigger(_animJump);
 
             }
         }
 
         private void HandleDash()
         {             // Dash logic here
+            if (!characterController.isGrounded)
+                return;
+
             if (playerInputHandler.DashTriggered)
             {
                 anim.TriggerDash();
@@ -162,13 +174,12 @@ namespace Catalyst.Player
             HandleJumping();
 
             characterController.Move(_currentMovement * Time.deltaTime);
-
             anim.UpdateMoveAnimations(_currentMovement);
         }
 
         public void UpdateInteract()
         {
-            if (isInventoryOpen || (playerInventory != null && playerInventory.isChestOpen))
+            if (isInventoryOpen || (playerInventory != null && playerInventory.isChestOpen) || GameManager.instance.isPaused)
             {
                 return;
             }
@@ -178,9 +189,9 @@ namespace Catalyst.Player
                 Vector3 origin = camController.MainCamera.transform.position;
                 Vector3 direction = camController.MainCamera.transform.forward;
 
-                Debug.DrawRay(origin, direction * playerData.InteractRange, Color.green, 2f);
+                Debug.DrawRay(origin, direction * farmerData.InteractRange, Color.green, 2f);
                 // Raycast to check for interactable objects in a half circle range
-                if (Physics.SphereCast(origin, .25f, direction, out RaycastHit hit, playerData.InteractRange, ~ignoreLayer))
+                if (Physics.SphereCast(origin, .25f, direction, out RaycastHit hit, farmerData.InteractRange, ~ignoreLayer))
                 {
                     IInteractable target = hit.collider.GetComponent<IInteractable>();
                     if (target != null)
@@ -219,21 +230,39 @@ namespace Catalyst.Player
         public void PlayerDash()
         {
             Vector3 dodgeDirection = CalculateMoveDirection();
+
             if (dodgeDirection == Vector3.zero)
             {
                 dodgeDirection = -transform.forward;
             }
-            characterController.Move(dodgeDirection.normalized * playerData.DashSpeed * Time.deltaTime);
+            // Dont include forwward movement in dash
+
+
+
+
+            if (dodgeDirection.y < 0)
+                dodgeDirection.y = -dodgeDirection.y;
+
+            playerInputHandler.enabled = false;
+            // Disable player input for the dash duration
+
+            StopAllPlayerMovement();
+            characterController.Move(dodgeDirection.normalized * farmerData.DashSpeed * Time.deltaTime);
+            StartCoroutine(EnableInputAfterDelay(0.2f));
         }
 
 
-
+        IEnumerator EnableInputAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            playerInputHandler.enabled = true;
+        }
 
 
 
         public void takeDamage(int amount)
         {
-            playerData.Health -= amount;
+            farmerData.Health -= amount;
 
             /*if (isLowHealth && !InfoManager.instance.IsInfoShowing())
             {
@@ -245,20 +274,20 @@ namespace Catalyst.Player
 
             //StartCoroutine(FlashDamageScreen());
 
-            if (playerData.Health <= 0)
+            if (farmerData.Health <= 0)
             {
                 GameManager.instance.YouLose();
-                playerData.Health = playerData.HealthMax;
+                farmerData.Health = farmerData.HealthMax;
             }
         }
         public void PlayHurtSound()
         {
             // Play hurt sound with pitch variation
-            if (aud != null && playerData.HurtSound.Length > 0)
+            if (aud != null && farmerData.HurtSound.Length > 0)
             {
-                int index = Random.Range(0, playerData.HurtSound.Length);
-                aud.pitch = 2f + Random.Range(-playerData.PitchVariation, playerData.PitchVariation);
-                aud.PlayOneShot(playerData.HurtSound[index], playerData.MovementVolume);
+                int index = Random.Range(0, farmerData.HurtSound.Length);
+                aud.pitch = 2f + Random.Range(-farmerData.PitchVariation, farmerData.PitchVariation);
+                aud.PlayOneShot(farmerData.HurtSound[index], farmerData.MovementVolume);
             }
         }
 
@@ -272,16 +301,16 @@ namespace Catalyst.Player
         {
             // Lerp the health increase over time base off playerdata health regen rate
             float healAmount = amount;
-            float healRate = playerData.HealthRegen;
+            float healRate = farmerData.HealthRegen;
 
             while (healAmount > 0)
             {
-                playerData.Health += healRate * Time.deltaTime;
+                farmerData.Health += healRate * Time.deltaTime;
                 healAmount -= healRate * Time.deltaTime;
 
-                if (playerData.Health > playerData.HealthMax)
+                if (farmerData.Health > farmerData.HealthMax)
                 {
-                    playerData.Health = playerData.HealthMax;
+                    farmerData.Health = farmerData.HealthMax;
                     break;
                 }
                 yield return null;
@@ -289,22 +318,22 @@ namespace Catalyst.Player
         }
         public void PlayRandomFootstep()
         {
-            if (aud != null && playerData.FootstepSounds.Length > 0)
+            if (aud != null && farmerData.FootstepSounds.Length > 0)
             {
-                int index = Random.Range(0, playerData.FootstepSounds.Length);
-                aud.pitch = 1f + Random.Range(-playerData.PitchVariation, playerData.PitchVariation);
-                aud.PlayOneShot(playerData.FootstepSounds[index], playerData.MovementVolume);
+                int index = Random.Range(0, farmerData.FootstepSounds.Length);
+                aud.pitch = 1f + Random.Range(-farmerData.PitchVariation, farmerData.PitchVariation);
+                aud.PlayOneShot(farmerData.FootstepSounds[index], farmerData.MovementVolume);
             }
         }
 
         public void PlayJumpSound()
         {
             // Play jump sound with pitch variation
-            if (aud != null && playerData.JumpSound.Length > 0)
+            if (aud != null && farmerData.JumpSound.Length > 0)
             {
-                int index = Random.Range(0, playerData.JumpSound.Length);
-                aud.pitch = 1f + Random.Range(-playerData.PitchVariation, playerData.PitchVariation);
-                aud.PlayOneShot(playerData.JumpSound[index], playerData.MovementVolume);
+                int index = Random.Range(0, farmerData.JumpSound.Length);
+                aud.pitch = 1f + Random.Range(-farmerData.PitchVariation, farmerData.PitchVariation);
+                aud.PlayOneShot(farmerData.JumpSound[index], farmerData.MovementVolume);
             }
 
         }
@@ -312,47 +341,52 @@ namespace Catalyst.Player
         public void PlayLandSound()
         {
             // Play land sound with pitch variation
-            if (aud != null && playerData.LandSound.Length > 0)
+            if (aud != null && farmerData.LandSound.Length > 0)
             {
-                int index = Random.Range(0, playerData.LandSound.Length);
-                aud.pitch = 1f + Random.Range(-playerData.PitchVariation, playerData.PitchVariation);
-                aud.PlayOneShot(playerData.LandSound[index], playerData.MovementVolume);
+                int index = Random.Range(0, farmerData.LandSound.Length);
+                aud.pitch = 1f + Random.Range(-farmerData.PitchVariation, farmerData.PitchVariation);
+                aud.PlayOneShot(farmerData.LandSound[index], farmerData.MovementVolume);
             }
         }
         public void PlayDashSOund()
         {
             // Play dash sound with pitch variation
-            if (aud != null && playerData.DashSound.Length > 0)
+            if (aud != null && farmerData.DashSound.Length > 0)
             {
-                int index = Random.Range(0, playerData.DashSound.Length);
-                aud.pitch = 1f + Random.Range(-playerData.PitchVariation, playerData.PitchVariation);
-                aud.PlayOneShot(playerData.DashSound[index], playerData.MovementVolume);
+                int index = Random.Range(0, farmerData.DashSound.Length);
+                aud.pitch = 1f + Random.Range(-farmerData.PitchVariation, farmerData.PitchVariation);
+                aud.PlayOneShot(farmerData.DashSound[index], farmerData.MovementVolume);
             }
         }
 
         public void PlayJumpTrailSound()
         {
             // Play jump trail sound with pitch variation
-            if (aud != null && playerData.JumpTrailSound.Length > 0)
+            if (aud != null && farmerData.JumpTrailSound.Length > 0)
             {
-                int index = Random.Range(0, playerData.JumpTrailSound.Length);
-                aud.pitch = 1f + Random.Range(-playerData.PitchVariation, playerData.PitchVariation);
-                aud.PlayOneShot(playerData.JumpTrailSound[index], playerData.MovementVolume);
+                int index = Random.Range(0, farmerData.JumpTrailSound.Length);
+                aud.pitch = 1f + Random.Range(-farmerData.PitchVariation, farmerData.PitchVariation);
+                aud.PlayOneShot(farmerData.JumpTrailSound[index], farmerData.MovementVolume);
             }
         }
 
         public void Save(ref PlayerSaveData data)
         {
             data.Position = transform.position;
-            data.playerData = playerData;
+            data.playerData = farmerData;
         }
 
         public void Load(ref PlayerSaveData data)
         {
             characterController.enabled = false;
             transform.position = data.Position;
-            playerData = data.playerData;
+            farmerData = data.playerData;
             characterController.enabled = true;
+        }
+
+        public PlayerData GetPlayerData()
+        {
+            return farmerData;
         }
 
     }
@@ -363,4 +397,6 @@ namespace Catalyst.Player
         public Vector3 Position;
         public PlayerData playerData;
     }
+
+
 }

@@ -16,6 +16,7 @@ MonoBehaviour:
   itemType: 1
   dropPrefab: {fileID: 422205719411807115, guid: bf1b8c21173815a42a7c629fe33d02b8, type: 3}
   pickupSound: {fileID: 0}
+  interactSound: {fileID: 8300000, guid: 76380b0df4971684ba9ee14cb627c27a, type: 3}
   audVol: 0.098
   displayName: CarrotSeed
   id: 32

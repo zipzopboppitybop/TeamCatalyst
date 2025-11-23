@@ -1,4 +1,5 @@
 ﻿
+using Catalyst.GamePlay.Weapons;
 using Catalyst.Player;
 using Catalyst.Player.Handlers;
 using UnityEngine;
@@ -8,6 +9,7 @@ namespace Catalyst.GamePlay
 {
     public class GunManager : MonoBehaviour
     {
+        public static GunManager Instance;
         [SerializeField] private GameObject gunModel;
         [SerializeField] private Transform gunPos;
         [SerializeField] private PlayerData player;
@@ -15,8 +17,9 @@ namespace Catalyst.GamePlay
         [SerializeField] private LayerMask ignoreLayer;
         private AudioSource aud;
         private InputHandler playerInputHandler;
-        private PlayerController playerController;
+        //private PlayerController playerController;
         private AnimationHandler anim;
+        private Swingable swingableWeapon;
 
 
         private int _gunListPos;
@@ -29,11 +32,20 @@ namespace Catalyst.GamePlay
 
         private void Awake()
         {
+            if (Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
 
             aud = GetComponent<AudioSource>();
             playerInputHandler = GetComponent<InputHandler>();
-            playerController = GetComponent<PlayerController>();
+            //playerController = GetComponent<PlayerController>();
             anim = GetComponent<AnimationHandler>();
+            swingableWeapon = gunModel.GetComponent<Swingable>();
 
         }
         private void Start()
@@ -167,12 +179,15 @@ namespace Catalyst.GamePlay
             }
             if (playerInputHandler.AimHeld)
             {
+                player.isAiming = true;
                 anim.SetAiming(true);
-                HandleShoot();
+                if (playerInputHandler.FireHeld)
+                    HandleShoot();
 
             }
             else
             {
+                player.isAiming = false;
                 anim.SetAiming(false);
 
             }
@@ -188,7 +203,7 @@ namespace Catalyst.GamePlay
 
         private void HandleShoot()
         {
-            if (playerInputHandler.FireHeld && _shootTimer > player.ShootRate && PlayerCanShoot())
+            if (_shootTimer > player.ShootRate && PlayerCanShoot())
             {
                 _shootTimer = 0f;
 
@@ -202,10 +217,6 @@ namespace Catalyst.GamePlay
                     //aud.PlayOneShot(player.CurrentGun.shootSounds[Random.Range(0, player.Guns[_gunListPos].shootSounds.Length)], player.CurrentGun.shootVolume);
                     anim.TriggerShoot();
                 }
-
-
-                //animator.ResetTrigger("Shoot");
-
             }
         }
 
@@ -213,6 +224,14 @@ namespace Catalyst.GamePlay
         {
             player.CurrentGun.ammoCur--;
             aud.PlayOneShot(player.CurrentGun.shootSounds[Random.Range(0, player.Guns[_gunListPos].shootSounds.Length)], player.CurrentGun.shootVolume);
+
+            // Show muzzel flash
+            if (player.CurrentGun.muzzleFlash != null && player.CurrentGun.muzzleFlashPosition != null)
+            {
+                ParticleSystem muzzleFlashInstance = Instantiate(player.CurrentGun.muzzleFlash, player.CurrentGun.muzzleFlashPosition.position, player.CurrentGun.muzzleFlashPosition.rotation);
+                muzzleFlashInstance.Play();
+                Destroy(muzzleFlashInstance.gameObject, muzzleFlashInstance.main.duration);
+            }
 
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, player.ShootDist, ~ignoreLayer))
@@ -253,14 +272,8 @@ namespace Catalyst.GamePlay
             if (_gunListPos < 0 || _gunListPos >= player.Guns.Count) return;
             if (player.CurrentGun.ammoCur >= player.CurrentGun.ammoMax) return;
 
-            if (player.MagazineSize > 0)
-            {
-                player.MagazineSize--;
-                isReloading = true;
-                anim.TriggerReload();
-
-            }
-
+            isReloading = true;
+            anim.TriggerReload();
         }
 
         public void FinishReload()
@@ -275,6 +288,17 @@ namespace Catalyst.GamePlay
             player.MagazineSize += amount;
             aud.PlayOneShot(magPickupSound, player.CurrentGun.shootVolume);
 
+        }
+
+        public void ToggleWeaponCollider()
+        {
+            if (player.CurrentGun != null && swingableWeapon != null)
+            {
+                if (swingableWeapon.ColliderState(false))
+                    swingableWeapon.SetColliderToggleAs(true);
+                else
+                    swingableWeapon.SetColliderToggleAs(false);
+            }
         }
 
 
@@ -296,5 +320,25 @@ namespace Catalyst.GamePlay
 
         }
 
+
+
+        public void PlayHitSound()
+        {
+            if (player.CurrentGun.hitSounds.Length > 0 && aud != null)
+            {
+                AudioClip hitClip = player.CurrentGun.hitSounds[Random.Range(0, player.CurrentGun.hitSounds.Length)];
+                aud.pitch = 1f + Random.Range(-player.CurrentGun.PitchRange, player.CurrentGun.PitchRange);
+                aud.PlayOneShot(hitClip, player.CurrentGun.actionVolume);
+            }
+        }
+        public void PlaySwingSound()
+        {
+            if (player.CurrentGun.swingSounds.Length > 0 && aud != null)
+            {
+                AudioClip swingClip = player.CurrentGun.swingSounds[Random.Range(0, player.CurrentGun.swingSounds.Length)];
+                aud.pitch = 1f + Random.Range(-player.CurrentGun.PitchRange, player.CurrentGun.PitchRange);
+                aud.PlayOneShot(swingClip, player.CurrentGun.actionVolume);
+            }
+        }
     }
 }

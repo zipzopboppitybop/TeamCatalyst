@@ -16,6 +16,7 @@ MonoBehaviour:
   itemType: 0
   dropPrefab: {fileID: 8863868687598580726, guid: 7414800c68a619c4ba6c0408caf382bf, type: 3}
   pickupSound: {fileID: 0}
+  interactSound: {fileID: 8300000, guid: a675ea4fcd9d49a44b74704efa0b13fc, type: 3}
   audVol: 0.105
   displayName: Rake
   id: 6

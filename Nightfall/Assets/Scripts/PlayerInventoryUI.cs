@@ -101,6 +101,7 @@ public class PlayerInventoryUI : MonoBehaviour
         hotBarSlots = new VisualElement[hotBarSlotCount];
         playerInventorySlotCount = playerInventory.InventorySize;
         playerInventorySlots = new VisualElement[playerInventorySlotCount];
+        root.RegisterCallback<PointerUpEvent>(OnGlobalPointerUp);
 
         for (int i = 0; i < hotBarSlotCount; i++)
         {
@@ -169,15 +170,30 @@ public class PlayerInventoryUI : MonoBehaviour
 
     private void HandleInventoryInput()
     {
-        if (inputHandler == null)
+        if ((Input.GetKeyDown(KeyCode.Escape) || Input.GetButtonDown("Cancel")) && menuSystemUI.style.display == DisplayStyle.Flex)
+        {
+            InventoryDragManager.EndDrag();
+
+            toggleInventory = false;
+            playerController.isInventoryOpen = false;
+            menuSystemUI.style.display = DisplayStyle.None;
+            CloseChest();
+            inputHandler.InteractTriggered = false;
+
+            return;
+        }
+
+        if (inputHandler == null || GameManager.instance.isPaused)
         {
             return;
         }
-          
+
         if (inputHandler.ToggleInventoryTriggered)
         {
             toggleInventory = !toggleInventory;
             playerController.isInventoryOpen = toggleInventory;
+
+            InventoryDragManager.EndDrag();
 
             menuSystemUI.style.display = toggleInventory ? DisplayStyle.Flex : DisplayStyle.None;
 
@@ -194,17 +210,17 @@ public class PlayerInventoryUI : MonoBehaviour
                 if (isChestOpen)
                 {
                     CloseChest();
-                    inputHandler.InteractTriggered = false; 
+                    inputHandler.InteractTriggered = false;
                 }
             }
 
             inputHandler.ToggleInventoryTriggered = false;
         }
 
-        if (isChestOpen && inputHandler.InteractTriggered)
+        if (isChestOpen && (inputHandler.InteractTriggered || Input.GetKeyDown(KeyCode.Escape)))
         {
             CloseChest();
-            inputHandler.InteractTriggered = false; 
+            inputHandler.InteractTriggered = false;
         }
     }
 
@@ -551,5 +567,22 @@ public class PlayerInventoryUI : MonoBehaviour
     public void OnLivestockOwnedAchieved()
     {
         OnUnlocked(livestockOwnedLocked, livestockOwnedUnlocked);
+    }
+
+    private void OnGlobalPointerUp(PointerUpEvent evt)
+    {
+        if (!InventoryDragManager.IsDragging)
+        {
+            return;
+        }
+
+        InventoryDragManager.EndDrag();
+
+        draggingSlotOriginal = null;
+        draggingSlotIndex = -1;
+        draggingFromInventory = null;
+
+        RefreshHotBar();
+        RefreshInventory();
     }
 }

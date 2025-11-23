@@ -92,10 +92,10 @@ public class MainMenuController : MonoBehaviour
         //    ShowLoadOption();
         //else
         //{
-        //    Hide();
-        //    load.LoadScene(1);
+            Hide();
+            load.LoadScene(2);
         //}
-        ShowLoadPopup();
+        //ShowLoadPopup();
         //Hide();
 
     }

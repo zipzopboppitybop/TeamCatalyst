@@ -16,6 +16,7 @@ MonoBehaviour:
   itemType: 0
   dropPrefab: {fileID: 953752260432473484, guid: 60499e93105b1ea49961930f76fd7e8a, type: 3}
   pickupSound: {fileID: 0}
+  interactSound: {fileID: 8300000, guid: 850dec39cf4c64644b6699f3021e3735, type: 3}
   audVol: 0
   displayName: WateringCan
   id: 90
