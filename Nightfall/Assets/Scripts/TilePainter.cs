@@ -149,14 +149,14 @@ public class TilePainter : MonoBehaviour
 
             if (existing)
                 //Debug.Log(existing.name);
-            if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Crop && existingTower.isFullyGrown)
-            {
+                if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Crop && existingTower.isFullyGrown)
+                {
 
-                existingTower.HarvestCrop(inv.playerInventory);
-                map.SetTile(currentCell, null);
-                map.SetTile(currentCell, selectedTile[0]);
+                    existingTower.HarvestCrop(inv.playerInventory);
+                    map.SetTile(currentCell, null);
+                    map.SetTile(currentCell, selectedTile[0]);
 
-            }
+                }
         }
     }
 
@@ -168,111 +168,114 @@ public class TilePainter : MonoBehaviour
         if (!Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out RaycastHit hit, placeDist, ~ignoreLayer))
             return;
         else
-{        currentCell = map.WorldToCell(hit.point);
-
-        GameObject existing = map.GetInstantiatedObject(currentCell);
-        TowerBase existingTower = existing ? existing.GetComponent<TowerBase>() : null;
-
-        string item = heldItem.name;
-
-        if (item.Contains("Rake"))
         {
-            if (existingTower == null)
+            currentCell = map.WorldToCell(hit.point);
+
+            GameObject existing = map.GetInstantiatedObject(currentCell);
+            TowerBase existingTower = existing ? existing.GetComponent<TowerBase>() : null;
+
+            string item = heldItem.name;
+
+            if (item.Contains("Rake"))
             {
-                map.SetTile(currentCell, selectedTile[0]);
-            }
-
-            aud.PlayOneShot(audInteractions[0]);
-            return;
-        }
-
-        if (item.Contains("Fence"))
-        {
-            if (existingTower == null)
-            {
-                map.SetTile(currentCell, selectedTile[2]);
-                InventorySlot slot = inv.GetSelectedSlot();
-
-                slot.RemoveFromStack(1);
-
-
-                if (slot.StackSize <= 0)
-                    slot.UpdateInventorySlot(null, 0);
-
-                inv.hotBarInventory.OnInventorySlotChanged?.Invoke(slot);
-                inv.RefreshHotBar();
-                UpdateCurrentItem(null);
-                aud.PlayOneShot(audInteractions[4]);
-            }
-            return;
-        }
-
-        if (item.Contains("Seed"))
-        {
-            if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Farmland && existingTower.isFertilized)
-            {
-                if (item.Contains("Carrot"))
+                if (existingTower == null)
                 {
-                    map.SetTile(currentCell, selectedTile[3]);
-                }
-                if (item.Contains("Corn"))
-                {
-                    map.SetTile(currentCell, selectedTile[4]);
-                }
-                if (item.Contains("Pumpkin"))
-                {
-                    map.SetTile(currentCell, selectedTile[5]);
-                }
-                if (item.Contains("Tomato"))
-                {
-                    map.SetTile(currentCell, selectedTile[6]);
+                    map.SetTile(currentCell, selectedTile[0]);
                 }
 
+                aud.PlayOneShot(audInteractions[0]);
+                return;
+            }
 
-                InventorySlot slot = inv.GetSelectedSlot();
-
-                slot.RemoveFromStack(1);
-
-                GameObject crop = map.GetInstantiatedObject(currentCell);
-                GameManager.instance.AddCrop(crop);
-
-                if (crop != null && item.Contains("Carrot"))
+            if (item.Contains("Fence"))
+            {
+                if (existingTower == null)
                 {
-                    Vector3 pos = crop.transform.localPosition;
-                    pos.y += 0.1f;   
-                    crop.transform.localPosition = pos;
+                    map.SetTile(currentCell, selectedTile[2]);
+                    InventorySlot slot = inv.GetSelectedSlot();
+
+                    slot.RemoveFromStack(1);
+
+
+                    if (slot.StackSize <= 0)
+                        slot.UpdateInventorySlot(null, 0);
+
+                    inv.hotBarInventory.OnInventorySlotChanged?.Invoke(slot);
+                    inv.RefreshHotBar();
+                    UpdateCurrentItem(null);
+                    aud.PlayOneShot(audInteractions[4]);
+                }
+                return;
+            }
+
+            if (item.Contains("Seed"))
+            {
+                if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Farmland && existingTower.isFertilized)
+                {
+                    if (item.Contains("Carrot"))
+                    {
+                        map.SetTile(currentCell, selectedTile[3]);
+                    }
+                    if (item.Contains("Corn"))
+                    {
+                        map.SetTile(currentCell, selectedTile[4]);
+                    }
+                    if (item.Contains("Pumpkin"))
+                    {
+                        map.SetTile(currentCell, selectedTile[5]);
+                    }
+                    if (item.Contains("Tomato"))
+                    {
+                        map.SetTile(currentCell, selectedTile[6]);
+                    }
+
+
+                    InventorySlot slot = inv.GetSelectedSlot();
+
+                    slot.RemoveFromStack(1);
+
+                    GameObject crop = map.GetInstantiatedObject(currentCell);
+                    GameManager.instance.AddCrop(crop);
+
+                    if (crop != null && item.Contains("Carrot"))
+                    {
+                        Vector3 pos = crop.transform.localPosition;
+                        pos.y += 0.1f;
+                        crop.transform.localPosition = pos;
+                    }
+
+                    if (slot.StackSize <= 0)
+                        slot.UpdateInventorySlot(null, 0);
+
+                    inv.hotBarInventory.OnInventorySlotChanged?.Invoke(slot);
+                    inv.RefreshHotBar();
+                    UpdateCurrentItem(null);
+                    aud.PlayOneShot(audInteractions[2]);
+                }
+                return;
+            }
+
+            if (item.Contains("Watering"))
+            {
+                if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Crop)
+                {
+                    existingTower.WaterCrop();
+                    aud.PlayOneShot(audInteractions[3]);
                 }
 
-                if (slot.StackSize <= 0)
-                    slot.UpdateInventorySlot(null, 0);
-
-                inv.hotBarInventory.OnInventorySlotChanged?.Invoke(slot);
-                inv.RefreshHotBar();
-                UpdateCurrentItem(null);
-                aud.PlayOneShot(audInteractions[2]);
             }
-            return;
-        }
 
-        if (item.Contains("Watering"))
-        {
-            if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Crop)
+            if (item.Contains("Fertilizer"))
             {
-                existingTower.WaterCrop();
-                aud.PlayOneShot(audInteractions[3]);
-            }
+                if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Farmland)
+                {
+                    existingTower.Fertilize();
+                    aud.PlayOneShot(audInteractions[1]);
+                }
 
+            }
         }
 
-        if (item.Contains("Fertilizer"))
-        {
-            if (existingTower != null && existingTower.typeTower == TowerBase.TowerType.Farmland)
-            {
-                existingTower.Fertilize();
-                aud.PlayOneShot(audInteractions[1]);
-            }
-
-        }
     }
-
 }
+
