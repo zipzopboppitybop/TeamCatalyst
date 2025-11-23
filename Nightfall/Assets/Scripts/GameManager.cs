@@ -226,6 +226,7 @@ public class GameManager : MonoBehaviour
         IsNight = isNight;
         if(isNight)
         {
+            Debug.Log("Calling tutorial is night");
             TutorialManager.Instance.OnNight();
         }
 

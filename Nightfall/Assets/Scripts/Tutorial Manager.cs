@@ -29,6 +29,7 @@ public class TutorialManager : MonoBehaviour
     private bool tutorialEnabled = true;
     private bool tutorialHasRun = false;
     private const string TutorialSeen = "TutorialSeen";
+    private bool mailOpened;
 
     private void Awake()
     {
@@ -46,6 +47,7 @@ public class TutorialManager : MonoBehaviour
         sellNote = root.Q<VisualElement>("NoteHarvestSell");
         fenceNote = root.Q<VisualElement>("NoteDefense");
         tutorial = root.Q<VisualElement>("Tutorial");
+
 
         okTutorial = root.Q<Button>("TutorialOkay");
         cancelTutorial = root.Q<Button>("TutorialSkip");
@@ -86,9 +88,6 @@ public class TutorialManager : MonoBehaviour
         GameManager.instance.StateUnpause();
         UnityEngine.Cursor.lockState = CursorLockMode.Confined;
         UnityEngine.Cursor.visible = false;
-
-        tutorialHasRun = true;
-       
     }
     private void OnSkipButtonClicked()
     {
@@ -97,26 +96,28 @@ public class TutorialManager : MonoBehaviour
         SkipTutorial();
         MarkAsSeen();
 
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.lockState = CursorLockMode.Confined;
         UnityEngine.Cursor.visible = false;
-        
+
+        tutorialHasRun = true;
+        tutorialEnabled = false;
     }
     private void OnHarvestNoteButtonClicked()
     {
         sellNote.style.display = DisplayStyle.None;
         GameManager.instance.StateUnpause();
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.lockState = CursorLockMode.Confined;
         UnityEngine.Cursor.visible = false;
     }
     private void OnFenceNoteButtonClicked()
     {
         fenceNote.style.display = DisplayStyle.None;
 
-
+        Debug.Log("Calling fence not");
         MarkAsSeen();
 
         GameManager.instance.StateUnpause();
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.lockState = CursorLockMode.Confined;
         UnityEngine.Cursor.visible = false;
 
         tutorialEnabled = false;
@@ -124,12 +125,13 @@ public class TutorialManager : MonoBehaviour
     }
     private void OnSurviveButtonClicked()
     {
-
+        Debug.Log("Calling survive button");
+        MarkAsSeen();
         surviveNight.style.display = DisplayStyle.None;
         fenceNote.style.display = DisplayStyle.Flex;
 
         GameManager.instance.StatePause();
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.lockState = CursorLockMode.Confined;
         UnityEngine.Cursor.visible = true;
 
     }
@@ -168,8 +170,7 @@ public class TutorialManager : MonoBehaviour
 
     public void OnMailboxOpened()
     {
-        
-        if (!tutorialEnabled || tutorialHasRun) return;
+        if (!tutorialEnabled || tutorialHasRun || mailOpened) return;
         
             mail.style.display= DisplayStyle.None;
 
@@ -180,47 +181,51 @@ public class TutorialManager : MonoBehaviour
     public void OnMailboxClosed()
     {
         
-        if (!tutorialEnabled || tutorialHasRun) return;
+        if (!tutorialEnabled || tutorialHasRun || mailOpened) return;
 
         grabSupplies.style.display = DisplayStyle.None;
         tutorial.style.display = DisplayStyle.Flex;
         
         GameManager.instance.StatePause();
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.lockState = CursorLockMode.Confined;
         UnityEngine.Cursor.visible = true;
+        mailOpened = true;
     }
     
     public void OnCropFullyPlanted()
     {
+        if (!tutorialEnabled || tutorialHasRun) return;
         plantCrops.style.display = DisplayStyle.None;
 
         GameManager.instance.StatePause();
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.lockState = CursorLockMode.Confined;
         UnityEngine.Cursor.visible = true;
         sellNote.style.display = DisplayStyle.Flex;
     }
 
     public void OnNight()
     {
+        Debug.Log("Calling on night");
         if (!tutorialEnabled || tutorialHasRun) return;
         surviveNight.style.display = DisplayStyle.Flex;
         GameManager.instance.StatePause();
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.lockState = CursorLockMode.Confined;
         UnityEngine.Cursor.visible = true;
 
     }
 
-    public void OnNightEnd()
-    {
-        if (!tutorialEnabled || tutorialHasRun) return;
-        surviveNight.style.display = DisplayStyle.None;
-        fenceNote.style.display = DisplayStyle.Flex;
+    //public void OnNightEnd()
+    //{
+    //    Debug.Log("Calling night end");
+    //    if (!tutorialEnabled || tutorialHasRun) return;
+    //    surviveNight.style.display = DisplayStyle.None;
+    //    fenceNote.style.display = DisplayStyle.Flex;
 
-        GameManager.instance.StatePause();
-        UnityEngine.Cursor.lockState = CursorLockMode.None;
-        UnityEngine.Cursor.visible = true;
+    //    GameManager.instance.StatePause();
+    //    UnityEngine.Cursor.lockState = CursorLockMode.Confined;
+    //    UnityEngine.Cursor.visible = true;
       
-    }
+    //}
     private void MarkAsSeen()
     {
         tutorialEnabled = false;

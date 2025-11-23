@@ -28,6 +28,10 @@ public class TilePainter : MonoBehaviour
     [SerializeField] protected AudioSource aud;
     [SerializeField] protected AudioClip[] audInteractions;
 
+    bool hasWatered;
+    bool hasFertilized;
+    private bool tutorialChecked = false;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -127,6 +131,23 @@ public class TilePainter : MonoBehaviour
         }
 
         inv.RefreshInventory();
+    }
+
+    private void CheckTutorialState()
+    {
+        if (tutorialChecked)
+            return;
+
+        if (hasFertilized && hasWatered)
+        {
+            tutorialChecked = true;
+
+            if (TutorialManager.Instance != null)
+            {
+                TutorialManager.Instance.OnCropFullyPlanted();
+            }
+        }
+
     }
 
     private void SelectedItemChanged(ItemData newItem)
@@ -261,6 +282,8 @@ public class TilePainter : MonoBehaviour
                 {
                     existingTower.WaterCrop();
                     aud.PlayOneShot(audInteractions[3]);
+                    hasWatered = true;
+                    CheckTutorialState();
                 }
 
             }
@@ -271,6 +294,8 @@ public class TilePainter : MonoBehaviour
                 {
                     existingTower.Fertilize();
                     aud.PlayOneShot(audInteractions[1]);
+                    hasFertilized = true;
+                    CheckTutorialState();
                 }
 
             }
