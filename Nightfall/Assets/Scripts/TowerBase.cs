@@ -37,6 +37,7 @@ public class TowerBase : MonoBehaviour, IDamage
     bool EnemyInRange = false;
     public bool isWatered = false;
     public bool isFertilized = false;
+    private bool tutorialChecked = false;
 
     int towerPhase = 0;
     int enemiesInRange;
@@ -86,12 +87,12 @@ public class TowerBase : MonoBehaviour, IDamage
                 Heal();
                 healTime = 0f;
             }
-                
+
 
         }
 
         if (typeTower == TowerType.Sprinkler)
-        {        
+        {
             shootTime += Time.deltaTime;
 
             if (shootTime >= attSpeed && EnemyInRange)
@@ -113,7 +114,7 @@ public class TowerBase : MonoBehaviour, IDamage
                 Grow();
                 dayPlanted++;
             }
-                
+
         }
 
     }
@@ -221,6 +222,8 @@ public class TowerBase : MonoBehaviour, IDamage
     public void WaterCrop()
     {
         isWatered = true;
+        CheckTutorialState();
+
 
         if (model != null)
         {
@@ -235,11 +238,13 @@ public class TowerBase : MonoBehaviour, IDamage
     public void Fertilize()
     {
         isFertilized = true;
+        CheckTutorialState();
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        
+
         if (other.CompareTag("Enemy"))
         {
 
@@ -260,7 +265,7 @@ public class TowerBase : MonoBehaviour, IDamage
 
     private void OnTriggerExit(Collider other)
     {
-        
+
         if (other.CompareTag("Enemy"))
         {
 
@@ -269,7 +274,7 @@ public class TowerBase : MonoBehaviour, IDamage
             CheckForEnemies();
 
         }
-        
+
     }
 
     void CheckForEnemies()
@@ -306,7 +311,7 @@ public class TowerBase : MonoBehaviour, IDamage
                 GameManager.instance.UpdateCropCount(-1);
 
             Destroy(gameObject);
-            
+
         }
 
     }
@@ -334,4 +339,20 @@ public class TowerBase : MonoBehaviour, IDamage
         model.material.color = colorOrig;
     }
 
+    private void CheckTutorialState()
+    {
+        if (tutorialChecked)
+            return;
+
+        if (isFertilized && isWatered)
+        {
+            tutorialChecked = true;
+
+            if (TutorialManager.Instance != null)
+            {
+                TutorialManager.Instance.OnCropFullyPlanted();
+            }
+        }
+
+    }
 }
