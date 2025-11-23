@@ -464,6 +464,11 @@ public class PlayerInventoryUI : MonoBehaviour
             RegisterChestSlotCallbacks(i);
         }
 
+        if(TutorialManager.Instance != null)
+        {
+            TutorialManager.Instance.OnMailboxOpened();
+        }
+
         chestInventory.OnInventorySlotChanged += RefreshChest;
         RefreshChest();
     }
@@ -484,6 +489,11 @@ public class PlayerInventoryUI : MonoBehaviour
         achievementsMenu.style.left = new Length(30, LengthUnit.Percent);
         UnityEngine.Cursor.lockState = CursorLockMode.Locked;
         UnityEngine.Cursor.visible = false;
+
+        if(TutorialManager.Instance != null)
+        {
+            TutorialManager.Instance.OnMailboxClosed();
+        }
 
         chestInventoryMenu.style.display = DisplayStyle.None;
         menuSystemUI.style.display = DisplayStyle.None;

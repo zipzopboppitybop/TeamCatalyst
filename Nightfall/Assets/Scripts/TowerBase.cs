@@ -86,12 +86,12 @@ public class TowerBase : MonoBehaviour, IDamage
                 Heal();
                 healTime = 0f;
             }
-                
+
 
         }
 
         if (typeTower == TowerType.Sprinkler)
-        {        
+        {
             shootTime += Time.deltaTime;
 
             if (shootTime >= attSpeed && EnemyInRange)
@@ -113,7 +113,7 @@ public class TowerBase : MonoBehaviour, IDamage
                 Grow();
                 dayPlanted++;
             }
-                
+
         }
 
     }
@@ -222,6 +222,7 @@ public class TowerBase : MonoBehaviour, IDamage
     {
         isWatered = true;
 
+
         if (model != null)
         {
             Color col;
@@ -235,11 +236,12 @@ public class TowerBase : MonoBehaviour, IDamage
     public void Fertilize()
     {
         isFertilized = true;
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        
+
         if (other.CompareTag("Enemy"))
         {
 
@@ -260,7 +262,7 @@ public class TowerBase : MonoBehaviour, IDamage
 
     private void OnTriggerExit(Collider other)
     {
-        
+
         if (other.CompareTag("Enemy"))
         {
 
@@ -269,7 +271,7 @@ public class TowerBase : MonoBehaviour, IDamage
             CheckForEnemies();
 
         }
-        
+
     }
 
     void CheckForEnemies()
@@ -306,7 +308,7 @@ public class TowerBase : MonoBehaviour, IDamage
                 GameManager.instance.UpdateCropCount(-1);
 
             Destroy(gameObject);
-            
+
         }
 
     }
@@ -333,5 +335,4 @@ public class TowerBase : MonoBehaviour, IDamage
         yield return new WaitForSeconds(0.1f);
         model.material.color = colorOrig;
     }
-
 }
