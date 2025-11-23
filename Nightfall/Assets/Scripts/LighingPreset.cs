@@ -7,9 +7,11 @@ using UnityEngine;
 
 public class LightingPreset : ScriptableObject
 {
-    [SerializeField] private Gradient ambientColor;
+    public Gradient AmbientColor;
+    public Gradient DirectionalColor;
+    public Gradient FogColor;
 
-    public Gradient AmbientColor { get { return ambientColor; } }
+    //public Gradient AmbientColor { get { return ambientColor; } }
 }
 
-   
+
