@@ -24,6 +24,7 @@ public class TutorialManager : MonoBehaviour
     private Button cancelTutorial;
     private Button harvestNoteClose;
     private Button fenceNoteClose;
+    private Button surviveNightClose;
 
     private bool tutorialEnabled = true;
     private bool tutorialHasRun = false;
@@ -50,11 +51,13 @@ public class TutorialManager : MonoBehaviour
         cancelTutorial = root.Q<Button>("TutorialSkip");
         harvestNoteClose = root.Q<Button>("HarvestNoteClosed");
         fenceNoteClose = root.Q<Button>("FenceNoteClosed");
+        surviveNightClose = root.Q<Button>("SurviveClosed");
 
         okTutorial.clicked += () => { OnClickSound(); OnOkButtonClicked(); };
         cancelTutorial.clicked += () => { OnClickSound(); OnSkipButtonClicked(); };
         harvestNoteClose.clicked += () => { OnClickSound(); OnHarvestNoteButtonClicked(); };
         fenceNoteClose.clicked += () => { OnClickSound(); OnFenceNoteButtonClicked(); };
+        surviveNightClose.clicked += () => { OnClickSound(); OnSurviveButtonClicked(); };
 
         HideAll();
 
@@ -109,6 +112,7 @@ public class TutorialManager : MonoBehaviour
     {
         fenceNote.style.display = DisplayStyle.None;
 
+
         MarkAsSeen();
 
         GameManager.instance.StateUnpause();
@@ -117,6 +121,17 @@ public class TutorialManager : MonoBehaviour
 
         tutorialEnabled = false;
         tutorialHasRun = true;
+    }
+    private void OnSurviveButtonClicked()
+    {
+
+        surviveNight.style.display = DisplayStyle.None;
+        fenceNote.style.display = DisplayStyle.Flex;
+
+        GameManager.instance.StatePause();
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.visible = true;
+
     }
    
 
@@ -155,13 +170,11 @@ public class TutorialManager : MonoBehaviour
     {
         
         if (!tutorialEnabled || tutorialHasRun) return;
-
-        if (mail.style.display == DisplayStyle.Flex)
-        {
+        
             mail.style.display= DisplayStyle.None;
 
             grabSupplies.style.display = DisplayStyle.Flex;
-        }
+
     }
 
     public void OnMailboxClosed()
@@ -189,17 +202,23 @@ public class TutorialManager : MonoBehaviour
 
     public void OnNight()
     {
+        if (!tutorialEnabled || tutorialHasRun) return;
         surviveNight.style.display = DisplayStyle.Flex;
+        GameManager.instance.StatePause();
+        UnityEngine.Cursor.lockState = CursorLockMode.None;
+        UnityEngine.Cursor.visible = true;
+
     }
 
     public void OnNightEnd()
     {
+        if (!tutorialEnabled || tutorialHasRun) return;
         surviveNight.style.display = DisplayStyle.None;
+        fenceNote.style.display = DisplayStyle.Flex;
 
         GameManager.instance.StatePause();
         UnityEngine.Cursor.lockState = CursorLockMode.None;
         UnityEngine.Cursor.visible = true;
-        fenceNote.style.display = DisplayStyle.Flex;
       
     }
     private void MarkAsSeen()

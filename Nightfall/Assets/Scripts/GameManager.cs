@@ -222,6 +222,10 @@ public class GameManager : MonoBehaviour
 
         bool isNight = IsNightHour(hour, nightStart, nightEnd);
         IsNight = isNight;
+        if(isNight)
+        {
+            TutorialManager.Instance.OnNight();
+        }
 
         if (wasNight && !isNight)
         {
@@ -230,6 +234,7 @@ public class GameManager : MonoBehaviour
             ShopUI.instance.SellItems();
             Livestock[] allLivestock = Object.FindObjectsByType<Livestock>(FindObjectsSortMode.None);
             spawner.DespawnAll();
+
 
             foreach (Livestock livestock in allLivestock)
             {
