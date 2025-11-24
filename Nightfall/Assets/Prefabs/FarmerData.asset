@@ -23,14 +23,14 @@ MonoBehaviour:
   staminaMax: 10
   stealth: 5
   interactRange: 4
-  currency: 120
+  currency: 20
   currentFarmingState: 0
   shootDamage: 15
   shootRate: 1.5
   shootDist: 10
-  ammoCount: 5
+  ammoCount: 3
   ammoMax: 5
-  magazineSize: 7
+  magazineSize: 0
   walkingSpeed: 2
   sprintSpeed: 3
   dashSpeed: 3
@@ -69,12 +69,31 @@ MonoBehaviour:
   fpsVerticalRange: 60
   NightsSurvived: 0
   AnimalCount: 0
-  CropCount: 12
+  CropCount: 30
   PredatorsKilled: 0
+  isDashing: 0
+  isAttacking: 0
+  isJumping: 0
+  isSprinting: 0
+  isAiming: 0
+  isShooting: 0
   respawnPosition: {x: 0, y: 0, z: 0}
-  guns: []
-  currentGun: {fileID: 0}
+  guns:
+  - {fileID: 11400000, guid: 3a6e640c33d1c3c4ca60828f6a4cb69b, type: 2}
+  currentGun: {fileID: 11400000, guid: 3a6e640c33d1c3c4ca60828f6a4cb69b, type: 2}
   crops:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
