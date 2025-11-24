@@ -53,7 +53,7 @@ namespace Catalyst.GamePlay.Weapons
             if (weaponCollider != null)
             {
                 weaponCollider.enabled = state;
-                Debug.Log("Collider state set to: " + state);
+                //Debug.Log("Collider state set to: " + state);
                 return true;
             }
             return false;

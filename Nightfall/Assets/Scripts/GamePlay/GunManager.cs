@@ -238,7 +238,7 @@ namespace Catalyst.GamePlay
             {
                 Instantiate(player.CurrentGun.hitEffect, hit.point, Quaternion.identity);
 
-                Debug.Log(hit.collider.name);
+                //Debug.Log(hit.collider.name);
 
                 IDamage dmg = hit.collider.GetComponent<IDamage>();
 

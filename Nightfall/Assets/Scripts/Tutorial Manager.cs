@@ -113,7 +113,7 @@ public class TutorialManager : MonoBehaviour
     {
         fenceNote.style.display = DisplayStyle.None;
 
-        Debug.Log("Calling fence not");
+        //Debug.Log("Calling fence not");
         MarkAsSeen();
 
         GameManager.instance.StateUnpause();
@@ -125,7 +125,7 @@ public class TutorialManager : MonoBehaviour
     }
     private void OnSurviveButtonClicked()
     {
-        Debug.Log("Calling survive button");
+        //Debug.Log("Calling survive button");
         MarkAsSeen();
         surviveNight.style.display = DisplayStyle.None;
         fenceNote.style.display = DisplayStyle.Flex;
@@ -205,7 +205,7 @@ public class TutorialManager : MonoBehaviour
 
     public void OnNight()
     {
-        Debug.Log("Calling on night");
+        //Debug.Log("Calling on night");
         if (!tutorialEnabled || tutorialHasRun) return;
         surviveNight.style.display = DisplayStyle.Flex;
         GameManager.instance.StatePause();
