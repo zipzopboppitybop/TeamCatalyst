@@ -8,7 +8,6 @@ public class LightManager : MonoBehaviour
     [SerializeField] private LightingPreset preset;
     [SerializeField] private GameManager gameManager;
 
-
     private void Awake()
     {
         if(gameManager == null )
@@ -25,14 +24,20 @@ public class LightManager : MonoBehaviour
         float timePercent = gameManager.TimePercent;
         UpdateLighting(timePercent);
     }
-    private void UpdateLighting(float timePerecent)
+    private void UpdateLighting(float timePercent)
     {
-        RenderSettings.ambientLight = preset.AmbientColor.Evaluate(timePerecent);
+        RenderSettings.ambientLight = preset.AmbientColor.Evaluate(timePercent);
+        RenderSettings.skybox.SetFloat("_Exposure", Mathf.Lerp(0.3f, 1.3f, preset.LightIntensity.Evaluate(timePercent)));
+        float t = preset.LightIntensity.Evaluate(timePercent);
+        Color tint = Color.Lerp(Color.black, preset.AmbientColor.Evaluate(timePercent), t);
+        RenderSettings.skybox.SetColor("_Tint", tint);
 
-       if(directionalLight != null)
+        if (directionalLight != null)
         {
-            directionalLight.color = preset.AmbientColor.Evaluate(timePerecent);
-            directionalLight.transform.localRotation = Quaternion.Euler(new Vector3((timePerecent * 360f) - 90f, 170f, 0));
+            directionalLight.color = preset.DirectionalColor.Evaluate(timePercent);
+            directionalLight.intensity = preset.LightIntensity.Evaluate(timePercent);
+
+            directionalLight.transform.localRotation = Quaternion.Euler( new Vector3((timePercent * 360f) - 90f, 170f, 0));
         }
     }
 }

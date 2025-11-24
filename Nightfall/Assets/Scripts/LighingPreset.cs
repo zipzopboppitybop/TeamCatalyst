@@ -10,6 +10,8 @@ public class LightingPreset : ScriptableObject
     [SerializeField] private Gradient ambientColor;
 
     public Gradient AmbientColor { get { return ambientColor; } }
+    public Gradient DirectionalColor;     
+    public AnimationCurve LightIntensity;
 }
 
    
