@@ -8,6 +8,13 @@ public class LightManager : MonoBehaviour
     [SerializeField] private LightingPreset preset;
     [SerializeField] private GameManager gameManager;
 
+    private void Awake()
+    {
+        if (gameManager == null)
+        {
+            gameManager = GameManager.instance;
+        }
+    }
 
 
     private void OnValidate()
@@ -39,7 +46,8 @@ public class LightManager : MonoBehaviour
             return;
 
         float timePercent = gameManager.TimePercent;
-        UpdateLighting(timePercent);
+        //timePercent %= 24;
+        UpdateLighting(timePercent / 24f);
     }
 
 
@@ -54,13 +62,6 @@ public class LightManager : MonoBehaviour
         }
     }
 }
-//private void Awake()
-//{
-//    if(gameManager == null )
-//    {
-//        gameManager = GameManager.instance;
-//    }
-//}
 
 //private void UpdateLighting(float timePerecent)
 //{

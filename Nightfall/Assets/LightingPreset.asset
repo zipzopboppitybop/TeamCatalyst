@@ -12,19 +12,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a08088b5c874d743975462faafa1b08, type: 3}
   m_Name: LightingPreset
   m_EditorClassIdentifier: Assembly-CSharp::LighingPreset
-  ambientColor:
+  AmbientColor:
     serializedVersion: 2
-    key0: {r: 0.9098039, g: 0.7882353, b: 1, a: 1}
-    key1: {r: 0.22745098, g: 0.12156863, b: 0.36078432, a: 1}
+    key0: {r: 0.05873976, g: 0.16462494, b: 0.8301887, a: 1}
+    key1: {r: 0.8113208, g: 0.72111326, b: 0.56256676, a: 1}
+    key2: {r: 0.99845856, g: 1, b: 0.9889896, a: 0}
+    key3: {r: 1, g: 0.74509805, b: 0.2901961, a: 0}
+    key4: {r: 0, g: 0.13725491, b: 1, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 7325
+    ctime1: 16769
+    ctime2: 32768
+    ctime3: 49151
+    ctime4: 54934
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 5
+    m_NumAlphaKeys: 2
+  DirectionalColor:
+    serializedVersion: 2
+    key0: {r: 0, g: 0, b: 0, a: 1}
+    key1: {r: 0.745283, g: 0.745283, b: 0.745283, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 0
-    ctime1: 56861
-    ctime2: 0
+    ctime0: 2891
+    ctime1: 32768
+    ctime2: 62644
     ctime3: 0
     ctime4: 0
     ctime5: 0
@@ -40,5 +70,35 @@ MonoBehaviour:
     atime7: 0
     m_Mode: 0
     m_ColorSpace: -1
-    m_NumColorKeys: 2
+    m_NumColorKeys: 3
+    m_NumAlphaKeys: 2
+  FogColor:
+    serializedVersion: 2
+    key0: {r: 0, g: 0, b: 0, a: 1}
+    key1: {r: 0.5377358, g: 0.42996672, b: 0.27647737, a: 1}
+    key2: {r: 0.6556604, g: 0.81724083, b: 1, a: 0}
+    key3: {r: 0.4716981, g: 0.44842613, b: 0.3048238, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 11951
+    ctime1: 21588
+    ctime2: 32768
+    ctime3: 43947
+    ctime4: 55705
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 5
     m_NumAlphaKeys: 2
